@@ -64,6 +64,8 @@ sensor:
         value_template: ' {{ states.sensor.aircon_sensor.attributes["aircons"]["ac1"]["info"]["setTemp"] }}'
         device_class: temperature
         unit_of_measurement: '°C'
+      aircon_run_mode:
+        value_template: ' {{ states.sensor.aircon_sensor.attributes["aircons"]["ac1"]["info"]["mode"] }}'
 
 
 ##################################
@@ -143,6 +145,19 @@ input_number:
     min: 16
     max: 32
     step: 1
+    
+ # AIR CON RUN MODE
+input_select:
+    aircon_run_mode:
+        name: Aircon Run Mode
+        options:
+          - cool
+          - heat
+          - vent
+          - dry
+        initial: cool   
+    
+# AIR CON AUTOMATION    
 automation:
   - alias: Aircon - Adjust Temperature From Slider
     trigger: 
@@ -162,6 +177,27 @@ automation:
         data_template:
           entity_id: input_number.aircon_temperature
           value: "{{ states.sensor.aircon_temperature.state }}"
+
+  - alias: Aircon - Set Run Mode From Selector
+    trigger: 
+      platform: state
+      entity_id: input_select.aircon_run_mode
+    action:
+      - service: rest_command.aircon_control
+        data_template:
+          command: '{"ac1":{"info":{"mode":{{ states.input_select.aircon_run_mode.state }}}}}'
+  
+  - alias: Aircon - Set Run Mode From Sensor
+    trigger: 
+      platform: state
+      entity_id: sensor.aircon_run_mode
+    action:
+      - service: input_select.select_option
+        data_template:
+          entity_id: input_select.aircon_run_mode
+          option: "{{ states.sensor.aircon_run_mode.state }}"
+         
+
 
 ##################################
 
