@@ -33,7 +33,6 @@ tts:
   - platform: google_translate
 
 group: !include groups.yaml
-automation: !include automations.yaml
 script: !include scripts.yaml
 
 
@@ -61,6 +60,11 @@ sensor:
         value_template: '{{ states.sensor.aircon_sensor.attributes["aircons"]["ac1"]["zones"]["z03"]["state"] }}'
       aircon_zone_bed23: #zone z04
         value_template: '{{ states.sensor.aircon_sensor.attributes["aircons"]["ac1"]["zones"]["z04"]["state"] }}'
+      aircon_temperature: #current temperature
+        value_template: ' {{ states.sensor.aircon_sensor.attributes["aircons"]["ac1"]["info"]["setTemp"] }}'
+        device_class: temperature
+        unit_of_measurement: '°C'
+
 
 ##################################
 
@@ -129,6 +133,35 @@ switch:
           service: rest_command.aircon_control
           data:
             command: '{"ac1":{"zones":{"z04":{"state":"close"}}}}'
+
+
+# AIR CON TEMPERATURE DIAL
+input_number:
+  aircon_temperature:
+    name: Aircon Temperature
+    initial: 23
+    min: 16
+    max: 32
+    step: 1
+automation:
+  - alias: Aircon - Adjust Temperature From Slider
+    trigger: 
+      platform: state
+      entity_id: input_number.aircon_temperature
+    action:
+      - service: rest_command.aircon_control
+        data_template:
+          command: '{"ac1":{"info":{"setTemp":{{ states.input_number.aircon_temperature.state | int }}}}}'
+          
+  - alias: Aircon - Adjust Temperature From Sensor
+    trigger: 
+      platform: state
+      entity_id: sensor.aircon_temperature
+    action:
+      - service: input_number.set_value
+        data_template:
+          entity_id: input_number.aircon_temperature
+          value: "{{ states.sensor.aircon_temperature.state }}"
 
 ##################################
 
