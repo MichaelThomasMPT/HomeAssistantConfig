@@ -26,10 +26,7 @@ wake_on_lan:
 # Discover some devices automatically
 discovery:
 
-# Sensors
-sensor:
-  # Weather prediction
-  - platform: yr
+
 
 # Text to speech
 tts:
@@ -38,6 +35,102 @@ tts:
 group: !include groups.yaml
 automation: !include automations.yaml
 script: !include scripts.yaml
+
+
+
+# Sensors
+sensor:
+  # Weather prediction
+  - platform: yr
+  
+  # AIR CON SENSORS
+  - platform: rest
+    resource: http://192.168.1.106:2025/getSystemData
+    name: aircon_sensor
+    value_template: '{{ value_json.aircons.ac1.info.state }}'
+    scan_interval: 5
+    json_attributes:
+      - aircons
+  - platform: template
+    sensors:
+      aircon_zone_living: #zone z01
+        value_template: '{{ states.sensor.aircon_sensor.attributes["aircons"]["ac1"]["zones"]["z01"]["state"] }}'
+      aircon_zone_theatre: #zone z02
+        value_template: '{{ states.sensor.aircon_sensor.attributes["aircons"]["ac1"]["zones"]["z02"]["state"] }}'
+      aircon_zone_master: #zone z03
+        value_template: '{{ states.sensor.aircon_sensor.attributes["aircons"]["ac1"]["zones"]["z03"]["state"] }}'
+      aircon_zone_bed23: #zone z04
+        value_template: '{{ states.sensor.aircon_sensor.attributes["aircons"]["ac1"]["zones"]["z04"]["state"] }}'
+
+##################################
+
+# AIR CON COMMAND
+rest_command:
+  aircon_control:
+    url: 'http://192.168.1.106:2025/setAircon?json={{ command }}'
+    method: 'GET'
+
+# AIR CON SWITCHES
+switch:
+  - platform: template
+    switches:
+    
+      aircon_on_off: #overall aircon control
+        value_template: "{{ is_state('sensor.aircon_sensor', 'on') }}"
+        turn_on:
+          service: rest_command.aircon_control
+          data:
+            command: '{"ac1":{"info":{"state":"on"}}}'
+        turn_off:
+          service: rest_command.aircon_control
+          data:
+            command: '{"ac1":{"info":{"state":"off"}}}'
+            
+      aircon_zone_living: #zone z01
+        value_template: "{{ is_state('sensor.aircon_zone_living', 'open') }}"
+        turn_on:
+          service: rest_command.aircon_control
+          data:
+            command: '{"ac1":{"zones":{"z01":{"state":"open"}}}}'
+        turn_off:
+          service: rest_command.aircon_control
+          data:
+            command: '{"ac1":{"zones":{"z01":{"state":"close"}}}}'
+            
+      aircon_zone_theatre: #zone z02
+        value_template: "{{ is_state('sensor.aircon_zone_theatre', 'open') }}"
+        turn_on:
+          service: rest_command.aircon_control
+          data:
+            command: '{"ac1":{"zones":{"z02":{"state":"open"}}}}'
+        turn_off:
+          service: rest_command.aircon_control
+          data:
+            command: '{"ac1":{"zones":{"z02":{"state":"close"}}}}'      
+            
+      aircon_zone_master: #zone z03
+        value_template: "{{ is_state('sensor.aircon_zone_master', 'open') }}"
+        turn_on:
+          service: rest_command.aircon_control
+          data:
+            command: '{"ac1":{"zones":{"z03":{"state":"open"}}}}'
+        turn_off:
+          service: rest_command.aircon_control
+          data:
+            command: '{"ac1":{"zones":{"z03":{"state":"close"}}}}'  
+       
+      aircon_zone_bed23: #zone z04
+        value_template: "{{ is_state('sensor.aircon_zone_bed23', 'open') }}"
+        turn_on:
+          service: rest_command.aircon_control
+          data:
+            command: '{"ac1":{"zones":{"z04":{"state":"open"}}}}'
+        turn_off:
+          service: rest_command.aircon_control
+          data:
+            command: '{"ac1":{"zones":{"z04":{"state":"close"}}}}'
+
+##################################
 
 # LG TV
 media_player:
@@ -56,37 +149,3 @@ media_player:
         - youtube
         - makotv
         - netflix
-
-
-# AIR CON COMMAND
-rest_command:
-  aircon_on_off:
-    url: 'http://192.168.1.106:2025/setAircon?json={{ command }}'
-    method: 'GET'
-
-# AIR CON SENSOR
-sensor:
-  - platform: rest
-    resource: http://192.168.1.106:2025/getSystemData
-    name: aircon_sensor
-    value_template: '{{ value_json.aircons.ac1.info.state }}'
-    scan_interval: 5
-    
-
-# AIR CON SWITCHES
-switch:
-  - platform: template
-    switches:
-      aircon_on_off:
-        value_template: "{{ is_state('sensor.aircon_sensor', 'on') }}"
-        turn_on:
-          service: rest_command.aircon_on_off
-          data:
-            command: '{"ac1":{"info":{"state":"on"}}}'
-        turn_off:
-          service: rest_command.aircon_on_off
-          data:
-            command: '{"ac1":{"info":{"state":"off"}}}'
-
-        
-
