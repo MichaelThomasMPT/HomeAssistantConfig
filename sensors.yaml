@@ -1,0 +1,30 @@
+# Weather prediction
+- platform: yr
+
+# Ring Doorbell status updates (eg. wifi signal strength)
+- platform: ring
+
+# AIR CON SENSORS
+- platform: rest
+  resource: http://192.168.1.106:2025/getSystemData
+  name: aircon_sensor
+  value_template: '{{ value_json.aircons.ac1.info.state }}'
+  scan_interval: 5
+  json_attributes:
+    - aircons
+- platform: template
+  sensors:
+    aircon_zone_living: #zone z01
+      value_template: '{{ states.sensor.aircon_sensor.attributes["aircons"]["ac1"]["zones"]["z01"]["state"] }}'
+    aircon_zone_theatre: #zone z02
+      value_template: '{{ states.sensor.aircon_sensor.attributes["aircons"]["ac1"]["zones"]["z02"]["state"] }}'
+    aircon_zone_master: #zone z03
+      value_template: '{{ states.sensor.aircon_sensor.attributes["aircons"]["ac1"]["zones"]["z03"]["state"] }}'
+    aircon_zone_bed23: #zone z04
+      value_template: '{{ states.sensor.aircon_sensor.attributes["aircons"]["ac1"]["zones"]["z04"]["state"] }}'
+    aircon_temperature: #current temperature
+      value_template: ' {{ states.sensor.aircon_sensor.attributes["aircons"]["ac1"]["info"]["setTemp"] }}'
+      device_class: temperature
+      unit_of_measurement: '°C'
+    aircon_run_mode:
+      value_template: ' {{ states.sensor.aircon_sensor.attributes["aircons"]["ac1"]["info"]["mode"] }}'

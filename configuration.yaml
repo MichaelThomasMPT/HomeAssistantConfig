@@ -2,8 +2,8 @@ homeassistant:
   # Name of the location where Home Assistant is running
   name: Home
   # Location required to calculate the time the sun rises and sets
-  latitude: -33.3371
-  longitude: 115.6743
+  latitude: -32.117380
+  longitude: 115.882682
   # Impacts weather/sunrise data (altitude above sea level in meters)
   elevation: 0
   # metric for Metric, imperial for Imperial
@@ -16,17 +16,12 @@ homeassistant:
 # Configure a default setup of Home Assistant (frontend, api, etc)
 default_config:
 
-# Turn on wake-on-lan support
-wake_on_lan:
-
 # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
 # http:
 #   base_url: example.duckdns.org:8123
 
 # Discover some devices automatically
 discovery:
-
-
 
 # Text to speech
 tts:
@@ -35,43 +30,17 @@ tts:
 group: !include groups.yaml
 script: !include scripts.yaml
 
-
+# Automation scripts
+automation: !include automations.yaml
 
 # Sensors
-sensor:
-  # Weather prediction
-  - platform: yr
-  
-  # AIR CON SENSORS
-  - platform: rest
-    resource: http://192.168.1.106:2025/getSystemData
-    name: aircon_sensor
-    value_template: '{{ value_json.aircons.ac1.info.state }}'
-    scan_interval: 5
-    json_attributes:
-      - aircons
-  - platform: template
-    sensors:
-      aircon_zone_living: #zone z01
-        value_template: '{{ states.sensor.aircon_sensor.attributes["aircons"]["ac1"]["zones"]["z01"]["state"] }}'
-      aircon_zone_theatre: #zone z02
-        value_template: '{{ states.sensor.aircon_sensor.attributes["aircons"]["ac1"]["zones"]["z02"]["state"] }}'
-      aircon_zone_master: #zone z03
-        value_template: '{{ states.sensor.aircon_sensor.attributes["aircons"]["ac1"]["zones"]["z03"]["state"] }}'
-      aircon_zone_bed23: #zone z04
-        value_template: '{{ states.sensor.aircon_sensor.attributes["aircons"]["ac1"]["zones"]["z04"]["state"] }}'
-      aircon_temperature: #current temperature
-        value_template: ' {{ states.sensor.aircon_sensor.attributes["aircons"]["ac1"]["info"]["setTemp"] }}'
-        device_class: temperature
-        unit_of_measurement: '°C'
-      aircon_run_mode:
-        value_template: ' {{ states.sensor.aircon_sensor.attributes["aircons"]["ac1"]["info"]["mode"] }}'
-
-
-##################################
+sensor: !include sensors.yaml
 binary_sensor:
   # Ring doorbell events (ie. ring/motion)
   - platform: ring
+
+
+############## AIRCON ##############
 
 # AIR CON COMMAND
 rest_command:
@@ -79,66 +48,9 @@ rest_command:
     url: 'http://192.168.1.106:2025/setAircon?json={{ command }}'
     method: 'GET'
 
-# AIR CON SWITCHES
-switch:
-  - platform: template
-    switches:
-    
-      aircon_on_off: #overall aircon control
-        value_template: "{{ is_state('sensor.aircon_sensor', 'on') }}"
-        turn_on:
-          service: rest_command.aircon_control
-          data:
-            command: '{"ac1":{"info":{"state":"on"}}}'
-        turn_off:
-          service: rest_command.aircon_control
-          data:
-            command: '{"ac1":{"info":{"state":"off"}}}'
-            
-      aircon_zone_living: #zone z01
-        value_template: "{{ is_state('sensor.aircon_zone_living', 'open') }}"
-        turn_on:
-          service: rest_command.aircon_control
-          data:
-            command: '{"ac1":{"zones":{"z01":{"state":"open"}}}}'
-        turn_off:
-          service: rest_command.aircon_control
-          data:
-            command: '{"ac1":{"zones":{"z01":{"state":"close"}}}}'
-            
-      aircon_zone_theatre: #zone z02
-        value_template: "{{ is_state('sensor.aircon_zone_theatre', 'open') }}"
-        turn_on:
-          service: rest_command.aircon_control
-          data:
-            command: '{"ac1":{"zones":{"z02":{"state":"open"}}}}'
-        turn_off:
-          service: rest_command.aircon_control
-          data:
-            command: '{"ac1":{"zones":{"z02":{"state":"close"}}}}'      
-            
-      aircon_zone_master: #zone z03
-        value_template: "{{ is_state('sensor.aircon_zone_master', 'open') }}"
-        turn_on:
-          service: rest_command.aircon_control
-          data:
-            command: '{"ac1":{"zones":{"z03":{"state":"open"}}}}'
-        turn_off:
-          service: rest_command.aircon_control
-          data:
-            command: '{"ac1":{"zones":{"z03":{"state":"close"}}}}'  
-       
-      aircon_zone_bed23: #zone z04
-        value_template: "{{ is_state('sensor.aircon_zone_bed23', 'open') }}"
-        turn_on:
-          service: rest_command.aircon_control
-          data:
-            command: '{"ac1":{"zones":{"z04":{"state":"open"}}}}'
-        turn_off:
-          service: rest_command.aircon_control
-          data:
-            command: '{"ac1":{"zones":{"z04":{"state":"close"}}}}'
 
+# AIR CON SWITCHES
+switch: !include switches.yaml
 
 # AIR CON TEMPERATURE DIAL
 input_number:
@@ -160,49 +72,14 @@ input_select:
           - dry
         initial: cool   
     
-# AIR CON AUTOMATION    
-automation:
-  - alias: Aircon - Adjust Temperature From Slider
-    trigger: 
-      platform: state
-      entity_id: input_number.aircon_temperature
-    action:
-      - service: rest_command.aircon_control
-        data_template:
-          command: '{"ac1":{"info":{"setTemp":{{ states.input_number.aircon_temperature.state | int }}}}}'
-          
-  - alias: Aircon - Adjust Temperature From Sensor
-    trigger: 
-      platform: state
-      entity_id: sensor.aircon_temperature
-    action:
-      - service: input_number.set_value
-        data_template:
-          entity_id: input_number.aircon_temperature
-          value: "{{ states.sensor.aircon_temperature.state }}"
 
-  - alias: Aircon - Set Run Mode From Selector
-    trigger: 
-      platform: state
-      entity_id: input_select.aircon_run_mode
-    action:
-      - service: rest_command.aircon_control
-        data_template:
-          command: '{"ac1":{"info":{"mode":{{ states.input_select.aircon_run_mode.state }}}}}'
-  
-  - alias: Aircon - Set Run Mode From Sensor
-    trigger: 
-      platform: state
-      entity_id: sensor.aircon_run_mode
-    action:
-      - service: input_select.select_option
-        data_template:
-          entity_id: input_select.aircon_run_mode
-          option: "{{ states.sensor.aircon_run_mode.state }}"
-         
+############## AIRCON ##############
 
 
-##################################
+############## LG TV ##############
+
+# Turn on wake-on-lan support
+wake_on_lan:
 
 # LG TV
 media_player:
@@ -221,6 +98,11 @@ media_player:
         - youtube
         - makotv
         - netflix
+
+
+############## LG TV ##############
+
+
 ############## DOORBELL ##############
 
 # RING DOORBELL
