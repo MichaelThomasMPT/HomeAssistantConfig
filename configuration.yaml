@@ -116,3 +116,13 @@ ring:
 #    scan_interval: 90
 
 ############## DOORBELL ##############
+
+
+############## ALARM.COM ##############
+
+alarm_control_panel:
+  platform: alarmdotcom
+  username: !secret alarmdotcom_username
+  password: !secret alarmdotcom_password
+
+############## ALARM.COM ##############
