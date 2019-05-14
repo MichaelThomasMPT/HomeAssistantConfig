@@ -69,6 +69,9 @@ sensor:
 
 
 ##################################
+binary_sensor:
+  # Ring doorbell events (ie. ring/motion)
+  - platform: ring
 
 # AIR CON COMMAND
 rest_command:
@@ -218,3 +221,16 @@ media_player:
         - youtube
         - makotv
         - netflix
+############## DOORBELL ##############
+
+# RING DOORBELL
+ring:
+  username: !secret ring_username
+  password: !secret ring_password
+  
+# camera is currently not in use due to raspberry pi hardware limitations
+#camera:
+#  - platform: ring
+#    scan_interval: 90
+
+############## DOORBELL ##############
