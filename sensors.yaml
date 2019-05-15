@@ -41,4 +41,21 @@
         {% else %}
           closed
         {% endif %}
-    
+        
+        
+        
+# BOM Weather Sensor
+- platform: bom_forecast
+  product_id: IDW12300
+  name: Perth Weather
+  forecast_days: 6
+  rest_of_today: TRUE
+  friendly: TRUE
+  friendly_state_format: '{max}, {summary}'
+  monitored_conditions:
+    - 'max'
+    - 'min'
+    - 'chance_of_rain'
+    - 'possible_rainfall'
+    - 'summary'
+    - 'detailed_summary'

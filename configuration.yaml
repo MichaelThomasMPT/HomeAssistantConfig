@@ -126,3 +126,13 @@ alarm_control_panel:
   password: !secret alarmdotcom_password
 
 ############## ALARM.COM ##############
+
+
+############## WEATHER ##############
+
+weather:
+  - platform: bom
+    station: IDW60901.94608
+sun:
+
+############## WEATHER ##############

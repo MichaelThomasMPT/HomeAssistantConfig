@@ -1,3 +1,6 @@
 [submodule "bramkragten_custom-ui"]
 	path = bramkragten_custom-ui
 	url = https://github.com/bramkragten/custom-ui.git
+[submodule "bom_forecast"]
+	path = bom_forecast
+	url = https://github.com/bremor/bom_forecast.git
