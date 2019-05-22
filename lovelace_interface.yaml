@@ -140,6 +140,36 @@ views:
             show_header_toggle: false
             title: Aircon Zones
             type: entities
+          - type: horizontal-stack
+            cards:
+              - type: entity-button
+                tap_action:
+                  action: call-service
+                  service: script.turn_on
+                  service_data:
+                    entity_id: script.aircon_warm_master
+                hold_action:
+                  action: none
+                show_icon: true
+                show_name: true
+                entity: script.aircon_warm_master
+                name: Cold Morning
+                icon: 'mdi:home-automation'
+                icon_height: 60px
+              - type: entity-button
+                tap_action:
+                  action: call-service
+                  service: script.turn_on
+                  service_data:
+                    entity_id: script.aircon_warm_master
+                hold_action:
+                  action: none
+                show_icon: true
+                show_name: true
+                entity: script.aircon_warm_master
+                name: Cold Night
+                icon: 'mdi:home-automation'
+                icon_height: 60px
         title: Aircon
         type: vertical-stack
       - entity: alarm_control_panel.alarm_com

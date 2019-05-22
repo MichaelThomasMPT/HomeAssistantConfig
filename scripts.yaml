@@ -1,12 +1,48 @@
-'1557668142513':
-  alias: aircon_turn_off
+aircon_turn_off:
   sequence:
   - data:
       command: '{"ac1":{"info":{"state":"off"}}}'
     service: rest_command.aircon_on_off
-'1557668166621':
-  alias: aircon_turn_on
+aircon_turn_on:
   sequence:
   - data:
       command: '{"ac1":{"info":{"state":"on"}}}'
     service: rest_command.aircon_on_off
+    
+#Warm the master bedroom for 60 minutes
+aircon_warm_master:
+  sequence:
+  - data:
+      entity_id: input_number.aircon_temperature
+      value: 20
+    service: input_number.set_value
+  - delay:
+      seconds: 1
+  - data:
+      entity_id: input_select.aircon_run_mode
+      option: heat
+    service: input_select.select_option
+  - data:
+      entity_id: switch.aircon_zone_bed23
+    service: switch.turn_off
+  - data:
+      entity_id: switch.aircon_zone_living
+    service: switch.turn_off
+  - data:
+      entity_id: switch.aircon_zone_master
+    service: switch.turn_on
+  - data:
+      entity_id: switch.aircon_zone_theatre
+    service: switch.turn_off
+  - delay:
+      seconds: 1
+  - data:
+      entity_id: switch.aircon_on_off
+    service: switch.turn_on
+  - delay:
+      seconds: 10
+  - data:
+      entity_id: input_number.aircon_countdown_timer
+      value: 60
+    service: input_number.set_value
+  alias: Aircon Warm Master
