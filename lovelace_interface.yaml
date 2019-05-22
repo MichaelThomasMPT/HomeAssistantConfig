@@ -170,6 +170,20 @@ views:
                 name: Cold Night
                 icon: 'mdi:home-automation'
                 icon_height: 60px
+              - type: entity-button
+                tap_action:
+                  action: call-service
+                  service: script.turn_on
+                  service_data:
+                    entity_id: script.aircon_fan_master
+                hold_action:
+                  action: none
+                show_icon: true
+                show_name: true
+                entity: script.aircon_fan_master
+                name: Sleeping Fan
+                icon: 'mdi:home-automation'
+                icon_height: 60px
         title: Aircon
         type: vertical-stack
       - entity: alarm_control_panel.alarm_com
