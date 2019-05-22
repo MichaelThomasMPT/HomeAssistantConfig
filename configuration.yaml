@@ -76,7 +76,8 @@ input_select:
           - heat
           - vent
           - dry
-        initial: cool   
+        initial: cool  
+        icon: mdi:air-conditioner
     
 
 ############## AIRCON ##############
@@ -142,6 +143,7 @@ weather:
 sun:
 
 ############## WEATHER ##############
+
 ############## PEOPLE ##############
 
 ios:
