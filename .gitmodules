@@ -4,3 +4,6 @@
 [submodule "bom_forecast"]
 	path = bom_forecast
 	url = https://github.com/bremor/bom_forecast.git
+[submodule "mini-media-player"]
+	path = mini-media-player
+	url = https://github.com/kalkih/mini-media-player.git
