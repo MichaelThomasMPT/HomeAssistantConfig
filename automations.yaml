@@ -18,6 +18,25 @@
       data_template:
         entity_id: input_number.aircon_temperature
         value: "{{ states.sensor.aircon_temperature.state }}"
+        
+- alias: Aircon - Adjust Countdown Timer From Slider
+  trigger: 
+    platform: state
+    entity_id: input_number.aircon_countdown_timer
+  action:
+    - service: rest_command.aircon_control
+      data_template:
+        command: '{"ac1":{"info":{"countDownToOff":{{ states.input_number.aircon_countdown_timer.state | int }}}}}'
+          
+- alias: Aircon - Adjust Countdown Timer From Sensor
+  trigger: 
+    platform: state
+    entity_id: sensor.aircon_countdown_timer
+  action:
+    - service: input_number.set_value
+      data_template:
+        entity_id: input_number.aircon_countdown_timer
+        value: "{{ states.sensor.aircon_countdown_timer.state }}"
 
 - alias: Aircon - Set Run Mode From Selector
   trigger: 

@@ -1,0 +1,12 @@
+'1557668142513':
+  alias: aircon_turn_off
+  sequence:
+  - data:
+      command: '{"ac1":{"info":{"state":"off"}}}'
+    service: rest_command.aircon_on_off
+'1557668166621':
+  alias: aircon_turn_on
+  sequence:
+  - data:
+      command: '{"ac1":{"info":{"state":"on"}}}'
+    service: rest_command.aircon_on_off

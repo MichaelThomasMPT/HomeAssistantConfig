@@ -30,6 +30,8 @@
       unit_of_measurement: '°C'
     aircon_run_mode: #aircon fan mode sensor
       value_template: ' {{ states.sensor.aircon_sensor.attributes["aircons"]["ac1"]["info"]["mode"] }}'
+    aircon_countdown_timer: #minutes before turning off
+      value_template: ' {{ states.sensor.aircon_sensor.attributes["aircons"]["ac1"]["info"]["countDownToOff"] }}'
 
 - platform: template
   sensors:

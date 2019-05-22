@@ -60,6 +60,12 @@ input_number:
     min: 16
     max: 32
     step: 1
+  aircon_countdown_timer:
+    name: Aircon Countdown Timer
+    initial: 0
+    min: 0
+    max: 300
+    step: 15
     
  # AIR CON RUN MODE
 input_select:
