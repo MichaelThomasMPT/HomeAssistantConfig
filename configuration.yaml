@@ -162,6 +162,7 @@ cloud:
         - switch
         - group
       include_entities:
+        - script.set_movie_lighting
         - script.aircon_warm_master
         - script.aircon_fan_master
         - script.aircon_cool_central_living

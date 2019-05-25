@@ -113,3 +113,11 @@ aircon_cool_central_living:
     service: switch.turn_on
   alias: Aircon Cool Central Living
 
+
+#Trigger the Hue lights scene for movie watching
+set_movie_lighting:
+  sequence:
+  - service: hue.hue_activate_scene
+    data: 
+      group_name: "Theatre Room"
+      scene_name: "Movie Watching"
