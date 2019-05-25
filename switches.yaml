@@ -8,7 +8,8 @@
       turn_on:
         service: rest_command.aircon_control
         data:
-          command: '{"ac1":{"info":{"state":"on"}}}'
+          #when turning on, set the countdown timer to 0
+          command: '{"ac1":{"info":{"state":"on","countDownToOff": 0}}}'
       turn_off:
         service: rest_command.aircon_control
         data:
