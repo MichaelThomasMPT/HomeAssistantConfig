@@ -57,5 +57,17 @@
         entity_id: input_select.aircon_run_mode
         option: "{{ states.sensor.aircon_run_mode.state }}"
 
-
 ############## AIRCON ##############
+
+
+- alias: Morning Warmth
+  trigger:
+  - at: 06:00:00
+    platform: time
+  condition:
+  - below: '6'
+    condition: numeric_state
+    entity_id: weather.bom_perth
+    value_template: '{{ state.attributes.temperature }}'
+  action:
+  - service: script.aircon_warm_master
