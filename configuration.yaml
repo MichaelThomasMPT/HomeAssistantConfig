@@ -149,3 +149,60 @@ sun:
 ios:
 
 ############## PEOPLE ##############
+
+############## GOOGLE ASSISTANT ##############
+
+cloud:
+  google_actions:
+    filter:
+      exclude_domains:
+        - media_player
+        - automation
+        - script
+        - switch
+        - group
+      include_entities:
+        - script.aircon_warm_master
+        - script.aircon_fan_master
+        - script.aircon_cool_central_living
+        - switch.aircon_on_off
+        - switch.aircon_zone_bed23
+        - switch.aircon_zone_living
+        - switch.aircon_zone_master
+        - switch.aircon_zone_theatre
+        - group.aircon_vents
+      exclude_entities:
+        - light.theatre_room_2
+    entity_config:
+      switch.aircon_on_off:
+        name: Aircon
+        aliases:
+          - Aircon
+          - Airconditioner
+      switch.aircon_zone_bed23:
+        name: Front Room Vents
+        aliases:
+          - Front Room Vents
+          - Study Vent
+          - Office Vent
+          - Sewing Room Vent
+      switch.aircon_zone_living:
+        name: Center House Vents
+        aliases:
+          - Center House Vents
+          - Living Room Vent
+          - Dining Room Vent
+          - Central Living Vents
+      switch.aircon_zone_master:
+        name: Master Bedroom Vent
+        aliases:
+          - Master Bedroom Vent
+          - Bedroom Vent
+      switch.aircon_zone_theatre:
+        name: Theatre Room Vent
+        aliases:
+          - Theatre Room Vent
+          - Theatre Vent
+
+############## GOOGLE ASSISTANT ##############
+
