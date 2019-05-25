@@ -121,3 +121,4 @@ set_movie_lighting:
     data: 
       group_name: "Theatre Room"
       scene_name: "Movie Watching"
+  alias: Movie Lighting Scene
