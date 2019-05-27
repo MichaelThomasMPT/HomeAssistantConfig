@@ -207,3 +207,13 @@ cloud:
 
 ############## GOOGLE ASSISTANT ##############
 
+############## ADDITIONAL PANELS ##############
+
+panel_iframe:
+  router:
+    title: 'D-Link Router'
+    url: 'http://192.168.1.1'
+    icon: mdi:router-wireless
+    require_admin: true
+
+############## ADDITIONAL PANELS ##############
