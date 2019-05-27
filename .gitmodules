@@ -7,3 +7,6 @@
 [submodule "mini-media-player"]
 	path = mini-media-player
 	url = https://github.com/kalkih/mini-media-player.git
+[submodule "goodwe-sems-home-assistant"]
+	path = goodwe-sems-home-assistant
+	url = https://github.com/TimSoethout/goodwe-sems-home-assistant.git
