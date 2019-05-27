@@ -25,13 +25,13 @@
     aircon_zone_bed23: #aircon zone z04
       value_template: '{{ states.sensor.aircon_sensor.attributes["aircons"]["ac1"]["zones"]["z04"]["state"] }}'
     aircon_temperature: #aircon current temperature
-      value_template: ' {{ states.sensor.aircon_sensor.attributes["aircons"]["ac1"]["info"]["setTemp"] }}'
+      value_template: '{{ states.sensor.aircon_sensor.attributes["aircons"]["ac1"]["info"]["setTemp"] }}'
       device_class: temperature
       unit_of_measurement: '°C'
     aircon_run_mode: #aircon fan mode sensor
-      value_template: ' {{ states.sensor.aircon_sensor.attributes["aircons"]["ac1"]["info"]["mode"] }}'
+      value_template: '{{ states.sensor.aircon_sensor.attributes["aircons"]["ac1"]["info"]["mode"] }}'
     aircon_countdown_timer: #minutes before turning off
-      value_template: ' {{ states.sensor.aircon_sensor.attributes["aircons"]["ac1"]["info"]["countDownToOff"] }}'
+      value_template: '{{ states.sensor.aircon_sensor.attributes["aircons"]["ac1"]["info"]["countDownToOff"] }}'
 
 - platform: template
   sensors:
@@ -61,3 +61,43 @@
     - 'possible_rainfall'
     - 'summary'
     - 'detailed_summary'
+    
+    
+# Solar Panels
+- platform: sems
+  username: !secret sems_username
+  password: !secret sems_password
+  scan_interval: 60
+- platform: template
+  sensors:
+    sems_name:
+      friendly_name: "Solar Panel - Name"
+      value_template: '{{ states.sensor.sems_portal.attributes["name"] }}'
+    sems_capacity:
+      friendly_name: "Solar Panel - Capacity"
+      value_template: '{{ states.sensor.sems_portal.attributes["capacity"] }}'
+      unit_of_measurement: "kW"
+    sems_output_power:
+      friendly_name: "Solar Panel - Current Output Power"
+      value_template: '{{ states.sensor.sems_portal.attributes["outputpower"] }}'
+      unit_of_measurement: "W"
+    sems_inner_temperature:
+      friendly_name: "Solar Panel - Inner Temperature"
+      value_template: '{{ states.sensor.sems_portal.attributes["tempperature"] }}'
+      unit_of_measurement: "°C"
+    sems_total_generated: 
+      friendly_name: "Solar Panel - Total Electricity Generated"
+      value_template: '{{ states.sensor.sems_portal.attributes["etotal"] }}'     
+      unit_of_measurement: "kWh"
+    sems_today_generated: 
+      friendly_name: "Solar Panel - Electricity Generated Today"
+      value_template: '{{ states.sensor.sems_portal.attributes["eday"] }}'     
+      unit_of_measurement: "kWh"
+    sems_status: 
+      friendly_name: "Solar Panel - Status"
+      value_template: >-
+        {% if is_state_attr("sensor.sems_portal", "status", -1) -%}
+          Offline
+        {%- else -%}
+          Online
+        {%- endif %}
