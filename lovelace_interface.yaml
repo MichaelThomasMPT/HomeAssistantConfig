@@ -30,6 +30,7 @@ views:
       - cards:
           - entities:
               - entity: switch.aircon_on_off
+                icon: 'mdi:power'
                 name: Aircon On/Off
               - entity: input_select.aircon_run_mode
               - entity: sensor.aircon_temperature
@@ -196,9 +197,8 @@ views:
           - arm_away
         type: alarm-panel
       - entities:
-          - entity: sensor.ring_front_door_last_motion
-          - entity: sensor.ring_front_door_last_ding
-          - entity: sensor.ring_downstairs_wifi_signal_category
+          - entity: sensor.ring_last_motion
+          - entity: sensor.ring_last_ding
         show_header_toggle: false
         title: Ring Doorbell
         type: entities
@@ -211,17 +211,27 @@ views:
         show_header_toggle: true
         title: Lights
         type: entities
-      - type: entities
-        entities:
-          - entity: sensor.sems_name
-          - entity: sensor.sems_output_power
+      - entities:
           - entity: sensor.sems_status
-          - entity: sensor.sems_today_generated
-          - entity: sensor.sems_total_generated
+            icon: 'mdi:power'
+            name: Status
           - entity: sensor.sems_capacity
+            icon: 'mdi:battery'
+            name: Capacity
+          - entity: sensor.sems_output_power
+            icon: 'mdi:flash'
+            name: Current Output Power
+          - entity: sensor.sems_today_generated
+            icon: 'mdi:solar-power'
+            name: Electricity Generated Today
+          - entity: sensor.sems_total_generated
+            icon: 'mdi:all-inclusive'
+            name: Total Electricity Generated
           - entity: sensor.sems_inner_temperature
-        title: Solar Panel
+            name: Inner Temperature
         show_header_toggle: false
+        title: Solar Panels
+        type: entities
     path: default_view
     title: Home
   - badges: []
