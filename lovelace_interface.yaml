@@ -198,7 +198,11 @@ views:
         type: alarm-panel
       - entities:
           - entity: sensor.ring_last_motion
+            name: Last Motion
+            icon: 'mdi:motion-sensor'
           - entity: sensor.ring_last_ding
+            name: Last Ring
+            icon: 'mdi:bell-ring'
         show_header_toggle: false
         title: Ring Doorbell
         type: entities
