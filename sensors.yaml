@@ -3,6 +3,13 @@
 
 # Ring Doorbell status updates (eg. wifi signal strength)
 - platform: ring
+- platform: template
+  sensors:
+    ring_last_ding:
+      value_template: '{{ as_timestamp(states.sensor.ring_front_door_last_ding.attributes["created_at"]) | timestamp_custom("%I:%M:%S%p, %a %d %B %Y", True) }}'
+    ring_last_motion:
+      value_template: '{{ as_timestamp(states.sensor.ring_front_door_last_motion.attributes["created_at"]) | timestamp_custom("%I:%M:%S%p, %a %d %B %Y", True) }}'
+
 
 # Aircon State Sensor
 - platform: rest
@@ -12,7 +19,6 @@
   scan_interval: 5
   json_attributes:
     - aircons
-
 
 - platform: template
   sensors:
