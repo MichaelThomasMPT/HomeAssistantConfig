@@ -5,12 +5,7 @@ resources:
     url: /local/mini-media-player-bundle.js?v=1.1.3
 title: Treeby Home
 views:
-  - badges:
-      - person.michael
-      - person.laura
-      - sensor.yr_symbol
-      - sun.sun
-    cards:
+  - cards:
       - cards:
           - entity: weather.bom_perth
             icons: /local/custom-lovelace/weather-card/icons/
@@ -27,6 +22,105 @@ views:
             title: Weather Forecast
             type: entities
         type: vertical-stack
+      - type: glance
+        title: Security
+        entities:
+          - entity: alarm_control_panel.alarm_com
+            name: Alarm
+          - entity: sensor.front_door
+            icon: 'mdi:door'
+          - entity: cover.aeon_labs_zw062_garage_door_controller_barrier_state_label
+      - type: glance
+        entities:
+          - entity: light.fibaro_system_fgd212_dimmer_2_level_2
+          - entity: light.theatre_room
+          - entity: light.theatre_room_left_lamp
+          - entity: light.theatre_room_right_lamp
+        title: Lights
+        columns: 2
+        show_icon: true
+        show_state: false
+      - type: glance
+        title: Air Conditioner
+        entities:
+          - entity: sensor.aircon_sensor
+            icon: 'mdi:power'
+            name: Air-Con
+          - entity: sensor.aircon_run_mode
+            icon: 'mdi:air-conditioner'
+            name: Run Mode
+          - entity: sensor.aircon_temperature
+            name: Temperature
+        show_name: false
+      - type: glance
+        title: Doorbell
+        entities:
+          - entity: sensor.ring_last_ding
+            icon: 'mdi:bell-ring'
+            name: Last Ring
+          - entity: sensor.ring_last_motion
+            icon: 'mdi:motion-sensor'
+            name: Last Motion
+      - entities:
+          - entity: sensor.sems_status
+            icon: 'mdi:power'
+            name: Status
+          - entity: sensor.sems_capacity
+            icon: 'mdi:battery'
+            name: Capacity
+          - entity: sensor.sems_output_power
+            icon: 'mdi:flash'
+            name: Current Output Power
+          - entity: sensor.sems_today_generated
+            icon: 'mdi:solar-power'
+            name: Electricity Generated Today
+          - entity: sensor.sems_total_generated
+            icon: 'mdi:all-inclusive'
+            name: Total Electricity Generated
+          - entity: sensor.sems_inner_temperature
+            name: Inner Temperature
+        show_header_toggle: false
+        title: Solar Panels
+        type: entities
+    badges: []
+    title: Home Status
+  - cards:
+      - type: vertical-stack
+        cards:
+          - type: entities
+            title: Lights
+            entities:
+              - entity: light.theatre_room_left_lamp
+              - entity: light.theatre_room_right_lamp
+              - entity: light.fibaro_system_fgd212_dimmer_2_level_2
+              - entity: light.fibaro_system_fgd212_dimmer_2_level_4
+            show_header_toggle: true
+          - type: horizontal-stack
+            cards:
+              - type: light
+                entity: light.fibaro_system_fgd212_dimmer_2_level_2
+              - type: light
+                entity: light.fibaro_system_fgd212_dimmer_2_level_4
+          - type: horizontal-stack
+            cards:
+              - type: light
+                entity: light.theatre_room_left_lamp
+              - type: light
+                entity: light.theatre_room_right_lamp
+          - type: entity-button
+            entity: script.set_movie_lighting
+            hold_action:
+              action: none
+            icon: 'mdi:theater'
+            icon_height: 60px
+            name: Movie Lights
+            show_icon: true
+            show_name: true
+            tap_action:
+              action: call-service
+              service: script.turn_on
+              service_data:
+                entity_id: script.set_movie_lighting
       - cards:
           - entities:
               - entity: switch.aircon_on_off
@@ -190,54 +284,27 @@ views:
             type: horizontal-stack
         title: Aircon
         type: vertical-stack
-      - entity: alarm_control_panel.alarm_com
-        name: House Alarm
-        states:
-          - arm_home
-          - arm_away
-        type: alarm-panel
-      - entities:
-          - entity: sensor.ring_last_motion
-            name: Last Motion
-            icon: 'mdi:motion-sensor'
-          - entity: sensor.ring_last_ding
-            name: Last Ring
-            icon: 'mdi:bell-ring'
-        show_header_toggle: false
-        title: Ring Doorbell
-        type: entities
-      - entity: sensor.front_door
-        icon: 'mdi:door'
-        type: sensor
-      - entities:
-          - entity: light.theatre_room_left_lamp
-          - entity: light.theatre_room_right_lamp
-        show_header_toggle: true
-        title: Lights
-        type: entities
-      - entities:
-          - entity: sensor.sems_status
-            icon: 'mdi:power'
-            name: Status
-          - entity: sensor.sems_capacity
-            icon: 'mdi:battery'
-            name: Capacity
-          - entity: sensor.sems_output_power
-            icon: 'mdi:flash'
-            name: Current Output Power
-          - entity: sensor.sems_today_generated
-            icon: 'mdi:solar-power'
-            name: Electricity Generated Today
-          - entity: sensor.sems_total_generated
-            icon: 'mdi:all-inclusive'
-            name: Total Electricity Generated
-          - entity: sensor.sems_inner_temperature
-            name: Inner Temperature
-        show_header_toggle: false
-        title: Solar Panels
-        type: entities
+      - type: vertical-stack
+        cards:
+          - entity: alarm_control_panel.alarm_com
+            name: House Alarm
+            states:
+              - arm_home
+              - arm_away
+            type: alarm-panel
+          - type: entities
+            title: Garage Door
+            show_header_toggle: false
+            entities:
+              - entity: >-
+                  cover.aeon_labs_zw062_garage_door_controller_barrier_state_label
+    badges:
+      - person.michael
+      - person.laura
+      - sensor.yr_symbol
+      - sun.sun
     path: default_view
-    title: Home
+    title: Home Control
   - badges: []
     cards:
       - entities:
