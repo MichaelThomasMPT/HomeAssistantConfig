@@ -39,6 +39,10 @@ binary_sensor:
   # Ring doorbell events (ie. ring/motion)
   - platform: ring
 
+# Aeotec Z-Wave Stick
+zwave:
+  usb_path: /dev/ttyACM0
+  device_config: !include zwave_device_config.yaml
 
 ############## AIRCON ##############
 
