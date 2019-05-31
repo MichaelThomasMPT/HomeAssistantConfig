@@ -121,4 +121,10 @@ set_movie_lighting:
     data: 
       group_name: "Theatre Room"
       scene_name: "Movie Watching"
+  - service: light.turn_off
+    data:
+      entity_id: light.fibaro_system_fgd212_dimmer_2_level_2 #Entry hall light
+  - service: light.turn_off
+    data: 
+      entity_id: light.fibaro_system_fgd212_dimmer_2_level_4 #Theatre room lights
   alias: Movie Lighting Scene
