@@ -10,3 +10,6 @@
 [submodule "goodwe-sems-home-assistant"]
 	path = goodwe-sems-home-assistant
 	url = https://github.com/TimSoethout/goodwe-sems-home-assistant.git
+[submodule "secondaryinfo-entity-row"]
+	path = secondaryinfo-entity-row
+	url = https://github.com/custom-cards/secondaryinfo-entity-row.git
