@@ -128,3 +128,34 @@ set_movie_lighting:
     data: 
       entity_id: light.fibaro_system_fgd212_dimmer_2_level_4 #Theatre room lights
   alias: Movie Lighting Scene
+  
+
+#Get the theatre room ready  
+time_for_a_movie:
+  alias: Time For A Movie
+  sequence:
+    - service: script.turn_on #set the lighting
+      entity_id:
+        - script.set_movie_lighting 
+    - service: media_player.turn_on #turn on the TV
+      entity_id:
+        - media_player.theatre_room_tv 
+    - delay: #wait for the tv to switch on
+        seconds: 10
+    - service: media_player.select_source #switch TV to netflix
+      data:
+        entity_id: media_player.theatre_room_tv
+        source: "Netflix"
+
+#Finished with the theatre room  
+done_with_the_theatre_room:
+  alias: Done With The Theatre Room
+  sequence:
+    - service: media_player.turn_off #turn on the TV
+      entity_id:
+        - media_player.theatre_room_tv 
+    - service: light.turn_off
+      entity_id:
+        - light.theatre_room_left_lamp
+        - light.theatre_room_right_lamp
+        - light.fibaro_system_fgd212_dimmer_2_level_4

@@ -165,11 +165,14 @@ cloud:
         - script
         - switch
         - group
+        - cover
       include_entities:
         - script.set_movie_lighting
         - script.aircon_warm_master
         - script.aircon_fan_master
         - script.aircon_cool_central_living
+        - script.time_for_a_movie
+        - script.done_with_the_theatre_room
         - switch.aircon_on_off
         - switch.aircon_zone_bed23
         - switch.aircon_zone_living
@@ -177,7 +180,10 @@ cloud:
         - switch.aircon_zone_theatre
         - group.aircon_vents
       exclude_entities:
+        - light.theatre_room
         - light.theatre_room_2
+        - light.fibaro_system_fgd212_dimmer_2_level
+        - light.fibaro_system_fgd212_dimmer_2_level_3
     entity_config:
       switch.aircon_on_off:
         name: Aircon
@@ -208,6 +214,7 @@ cloud:
         aliases:
           - Theatre Room Vent
           - Theatre Vent
+    
 
 ############## GOOGLE ASSISTANT ##############
 
