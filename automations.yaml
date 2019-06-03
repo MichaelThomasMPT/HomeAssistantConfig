@@ -57,9 +57,6 @@
         entity_id: input_select.aircon_run_mode
         option: "{{ states.sensor.aircon_run_mode.state }}"
 
-############## AIRCON ##############
-
-
 - alias: Morning Warmth
   trigger:
     - platform: time
@@ -78,3 +75,32 @@
       value_template: '{{ state.attributes.temperature }}'
   action:
     - service: script.aircon_warm_master
+
+############## AIRCON ##############
+
+############## DOORS LEFT OPEN ##############
+
+#if garage left open or disconnected, send a push notification.
+- alias: Notify If Garage Door Left Open
+  trigger:
+    platform: time_pattern
+    minutes: '/1' #run every minute
+  condition:
+    condition: or
+    conditions:
+      - condition: state
+        entity_id: cover.aeon_labs_zw062_garage_door_controller_barrier_state_label
+        state: 'open'
+        for:
+          minutes: 5
+      - condition: state
+        entity_id: cover.aeon_labs_zw062_garage_door_controller_barrier_state_label
+        state: 'unknown'
+        for:
+          minutes: 5
+  action:
+    - service: notify.pushbullet
+      data:
+        message: Garage door notify!
+
+############## DOORS LEFT OPEN ##############

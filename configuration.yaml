@@ -43,7 +43,13 @@ binary_sensor:
 zwave:
   usb_path: /dev/ttyACM0
   device_config: !include zwave_device_config.yaml
-
+  
+# Push Notifications  
+notify:
+  - name: pushbullet
+    platform: pushbullet
+    api_key: !secret pushbullet_api_key
+    
 ############## AIRCON ##############
 
 # AIR CON COMMAND
@@ -133,6 +139,7 @@ ring:
 
 alarm_control_panel:
   platform: alarmdotcom
+  scan_interval: 10
   username: !secret alarmdotcom_username
   password: !secret alarmdotcom_password
 
