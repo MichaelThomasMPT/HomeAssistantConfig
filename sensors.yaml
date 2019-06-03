@@ -40,18 +40,42 @@
       value_template: '{{ states.sensor.aircon_sensor.attributes["aircons"]["ac1"]["info"]["countDownToOff"] }}'
 
 - platform: template
+  scan_interval: 10
   sensors:
     front_door: #front door open/closed sensor
       friendly_name: "Front Door"
       value_template: >-
         {% if state_attr('alarm_control_panel.alarm_com', 'sensor_status')|regex_search('Front Door is Open', ignorecase=TRUE) %}
-          open
+          Open
         {% else %}
-          closed
+          Closed
+        {% endif %}
+    motion_sensor_living: #living room motion sensor
+      friendly_name: "Living Room Motion"
+      value_template: >-
+        {% if state_attr('alarm_control_panel.alarm_com', 'sensor_status')|regex_search('Living Sensor is Activated', ignorecase=TRUE) %}
+          Active
+        {% else %}
+          Inactive
+        {% endif %}
+    motion_sensor_master_bedroom: #master bedroom motion sensor
+      friendly_name: "Master Bedroom Motion"
+      value_template: >-
+        {% if state_attr('alarm_control_panel.alarm_com', 'sensor_status')|regex_search('Master Bedroom Sensor is Activated', ignorecase=TRUE) %}
+          Active
+        {% else %}
+          Inactive
+        {% endif %}
+    motion_sensor_entry_hall: #entry hall motion sensor
+      friendly_name: "Entry Hall Motion"
+      value_template: >-
+        {% if state_attr('alarm_control_panel.alarm_com', 'sensor_status')|regex_search('Entry Sensor is Open', ignorecase=TRUE) %}
+          Active
+        {% else %}
+          Inactive
         {% endif %}
         
-        
-        
+
 # BOM Weather Sensor
 - platform: bom_forecast
   product_id: IDW12300
