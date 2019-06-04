@@ -71,7 +71,7 @@
         - fri
     - condition: numeric_state
       entity_id: weather.bom_perth
-      below: '6'
+      below: '8'
       value_template: '{{ state.attributes.temperature }}'
   action:
     - service: script.aircon_warm_master
