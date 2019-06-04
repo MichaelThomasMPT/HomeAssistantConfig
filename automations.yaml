@@ -135,3 +135,27 @@
         message: Garage door was left open.
 
 ############## DOORS LEFT OPEN ##############
+
+############## SWITCH ON HALLWAY LIGHTS ##############
+
+- alias: Turn On Hallway Light If Garage Opened After Sunset
+  trigger:
+    platform: state
+    entity_id: cover.aeon_labs_zw062_garage_door_controller_barrier_state_label
+    to: 'open'
+  condition:
+    condition: and
+    conditions:
+      - condition: state  # from sunset until sunrise
+        entity_id: sun.sun
+        state: 'below_horizon'
+  action:
+    - service: notify.pushbullet
+      data:
+        message: The automation works! 
+    - service: light.turn_on
+      entity_id:
+        - light.fibaro_system_fgd212_dimmer_2_level_2 #hallway light
+    
+############## SWITCH ON HALLWAY LIGHTS ##############
+
