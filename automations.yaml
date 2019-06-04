@@ -163,6 +163,28 @@
     - service: light.turn_on
       entity_id:
         - light.fibaro_system_fgd212_dimmer_2_level_2 #hallway light
+
+- alias: Turn On Hallway Light If Front Door Opened After Sunset
+  trigger:
+    platform: state
+    entity_id: sensor.front_door
+  condition:
+    condition: and
+    conditions:
+      - condition: state  # from sunset until sunrise
+        entity_id: sun.sun
+        state: 'below_horizon'
+      - condition: state
+        entity_id: sensor.front_door
+        state: 'Open'
+  action:
+    - service: notify.pushbullet
+      data:
+        message: The automation works! 
+    - service: light.turn_on
+      entity_id:
+        - light.fibaro_system_fgd212_dimmer_2_level_2 #hallway light        
+        
     
 ############## SWITCH ON HALLWAY LIGHTS ##############
 
