@@ -142,13 +142,20 @@
   trigger:
     platform: state
     entity_id: cover.aeon_labs_zw062_garage_door_controller_barrier_state_label
-    to: 'open'
   condition:
     condition: and
     conditions:
       - condition: state  # from sunset until sunrise
         entity_id: sun.sun
         state: 'below_horizon'
+      - condition: or
+        conditions:
+          - condition: state
+            entity_id: cover.aeon_labs_zw062_garage_door_controller_barrier_state_label
+            state: 'open'
+          - condition: state
+            entity_id: cover.aeon_labs_zw062_garage_door_controller_barrier_state_label
+            state: 'opening'
   action:
     - service: notify.pushbullet
       data:
