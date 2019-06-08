@@ -2,8 +2,8 @@ homeassistant:
   # Name of the location where Home Assistant is running
   name: Home
   # Location required to calculate the time the sun rises and sets
-  latitude: -32.117380
-  longitude: 115.882682
+  latitude: !secret zone_home_latitude
+  longitude: !secret zone_home_longitude
   # Impacts weather/sunrise data (altitude above sea level in meters)
   elevation: 0
   # metric for Metric, imperial for Imperial
@@ -235,3 +235,27 @@ panel_iframe:
     require_admin: true
 
 ############## ADDITIONAL PANELS ##############
+
+############## ZONES ##############
+
+zone:
+  - name: Laura's Work
+    latitude: !secret zone_laura_work_latitude
+    longitude: !secret zone_laura_work_longitude
+    radius: 600
+    icon: mdi:briefcase
+
+  - name: Michael's Work
+    latitude: !secret zone_michael_work_latitude
+    longitude: !secret zone_michael_work_longitude
+    radius: 120
+    icon: mdi:briefcase
+
+  # This will override the default home zone
+  - name: Home
+    latitude: !secret zone_home_latitude
+    longitude: !secret zone_home_longitude
+    radius: 100
+    icon: mdi:home
+
+############## ZONES ##############
