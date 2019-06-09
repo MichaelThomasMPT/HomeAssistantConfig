@@ -22,6 +22,8 @@ default_config:
 
 # Discover some devices automatically
 discovery:
+ssdp:
+zeroconf:
 
 # Text to speech
 tts:
@@ -173,6 +175,8 @@ cloud:
         - switch
         - group
         - cover
+        - input_number
+        - sensor
       include_entities:
         - script.set_movie_lighting
         - script.aircon_warm_master
