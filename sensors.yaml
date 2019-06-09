@@ -1,5 +1,6 @@
 # Weather prediction
 - platform: yr
+  name: Weather
 
 # Ring Doorbell status updates (eg. wifi signal strength)
 - platform: ring

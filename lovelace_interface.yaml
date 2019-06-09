@@ -3,16 +3,16 @@ resources:
     url: /local/custom-lovelace/weather-card/weather-card.js
   - type: module
     url: /local/mini-media-player-bundle.js?v=1.1.3
-  - url: /local/card-tools.js
-    type: js
-  - url: /local/secondaryinfo-entity-row.js
-    type: module
+  - type: js
+    url: /local/card-tools.js
+  - type: module
+    url: /local/secondaryinfo-entity-row.js
 title: Treeby Home
 views:
   - badges:
       - person.michael
       - person.laura
-      - sensor.yr_symbol
+      - sensor.weather_symbol
       - sun.sun
     cards:
       - cards:
@@ -31,12 +31,14 @@ views:
             title: Weather Forecast
             type: entities
         type: vertical-stack
-      - entities:
+      - columns: 3
+        entities:
           - entity: alarm_control_panel.alarm_com
             name: Alarm
           - entity: sensor.front_door
             icon: 'mdi:door'
           - entity: cover.aeon_labs_zw062_garage_door_controller_barrier_state_label
+        show_state: true
         title: Security
         type: glance
       - entities:
@@ -329,11 +331,11 @@ views:
           - entities:
               - entity: >-
                   cover.aeon_labs_zw062_garage_door_controller_barrier_state_label
-                type: 'custom:secondaryinfo-entity-row'
                 secondary_info: >-
                   [[
                   cover.aeon_labs_zw062_garage_door_controller_barrier_state_label.state
                   ]]
+                type: 'custom:secondaryinfo-entity-row'
             show_header_toggle: false
             title: Garage Door
             type: entities
