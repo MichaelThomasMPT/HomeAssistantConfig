@@ -196,3 +196,51 @@
         message: Laura is leaving work.
 
 ############## LAURA LEAVING WORK ##############
+
+############## LEAVING THE HOUSE ##############
+
+- alias: Notify If Alarm Not Set When Nobody Is Home
+  trigger:
+    - platform: zone
+      entity_id: device_tracker.lauras_iphone
+      zone: zone.home
+      event: leave
+    - platform: zone
+      entity_id: device_tracker.michael_michaelgalaxys10
+      zone: zone.home
+      event: leave
+  condition:
+    condition: and
+    conditions:
+      - condition: template
+        value_template: "{{ not is_state('device_tracker.lauras_iphone','home') }}"
+      - condition: template
+        value_template: "{{ not is_state('device_tracker.michael_michaelgalaxys10','home') }}"
+      - condition: state
+        entity_id: alarm_control_panel.alarm_com
+        state: 'disarmed'
+  action:
+    - service: notify.pushbullet #notify Michael
+      data:
+        message: The house alarm was not set.
+    - service: notify.notify # notify Laura
+      data:
+        message: The house alarm was not set.
+        
+- alias: Turn Off House When Alarm Is Set
+  trigger:
+    platform: state
+    entity_id: alarm_control_panel.alarm_com
+    from: 'disarmed'
+    to: 'armed_away'
+  action:
+    - service: light.turn_off #lights
+      entity_id: 
+        - group.all_lights
+    - service: script.aircon_turn_off #aircon
+    - service: media_player.turn_off #tv & speakers
+      entity_id:
+        - media_player.theatre_room_tv 
+        - media_player.all_rooms
+        
+############## LEAVING THE HOUSE ##############

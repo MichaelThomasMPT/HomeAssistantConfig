@@ -255,7 +255,7 @@ zone:
   - name: Home
     latitude: !secret zone_home_latitude
     longitude: !secret zone_home_longitude
-    radius: 100
+    radius: 150
     icon: mdi:home
 
 ############## ZONES ##############
