@@ -182,3 +182,17 @@
     
 ############## SWITCH ON HALLWAY LIGHTS ##############
 
+############## LAURA LEAVING WORK ##############
+
+- alias: Notify Michael If Laura Leaving Work
+  trigger:
+    platform: zone
+    entity_id: device_tracker.lauras_iphone
+    zone: zone.laura_s_work
+    event: leave
+  action:
+    - service: notify.pushbullet
+      data:
+        message: Laura is leaving work.
+
+############## LAURA LEAVING WORK ##############
