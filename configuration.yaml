@@ -237,6 +237,11 @@ panel_iframe:
     url: 'http://192.168.1.1'
     icon: mdi:router-wireless
     require_admin: true
+  sqlite_web:
+    title: SQLite Web
+    icon: mdi:database
+    url: http://192.168.1.52:6210
+    require_admin: true
 
 ############## ADDITIONAL PANELS ##############
 
