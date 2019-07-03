@@ -31,6 +31,11 @@ views:
             title: Weather Forecast
             type: entities
         type: vertical-stack
+      - entities:
+          - entity: sensor.away_from_home_state_validity
+        show_name: false
+        title: House State Validity
+        type: glance
       - columns: 3
         entities:
           - entity: alarm_control_panel.alarm_com
