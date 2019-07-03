@@ -13,3 +13,6 @@
 [submodule "secondaryinfo-entity-row"]
 	path = secondaryinfo-entity-row
 	url = https://github.com/custom-cards/secondaryinfo-entity-row.git
+[submodule "home-assistant-customizer"]
+	path = home-assistant-customizer
+	url = https://github.com/andrey-git/home-assistant-customizer.git
