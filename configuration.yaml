@@ -25,6 +25,10 @@ discovery:
 ssdp:
 zeroconf:
 
+# Home Assistant Customer UI: https://github.com/andrey-git/home-assistant-custom-ui
+customizer:
+  custom_ui: hosted
+
 # Text to speech
 tts:
   - platform: google_translate

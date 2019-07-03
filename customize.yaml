@@ -1,0 +1,10 @@
+sensor.away_from_home_state_validity:
+  custom_ui_state_card: state-card-custom-ui
+  icon: mdi:shield-home
+  templates:
+    hs_color: >
+      if (state === 'Valid State' || state === 'Someone Is Home') return [121,100];
+      else return [0,100];
+    brightness: >
+      if (state === 'Valid State' || state === 'Someone Is Home') return 23;
+      else return 50;

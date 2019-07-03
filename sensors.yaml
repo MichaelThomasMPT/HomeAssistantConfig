@@ -132,3 +132,27 @@
         {%- else -%}
           Online
         {%- endif %}
+        
+
+# Home Away Status
+- platform: template
+  sensors:
+    away_from_home_state_validity:
+      friendly_name: "House State Validity"
+      value_template: >-
+        {% if is_state("person.michael", "home") or is_state("person.laura", "home") -%}
+          Someone Is Home
+        {%- elif is_state("alarm_control_panel.alarm_com", "disarmed") -%}
+          Alarm Disarmed
+        {%- elif is_state("cover.aeon_labs_zw062_garage_door_controller_barrier_state_label", "open") -%}
+          Garage Door Open
+        {%- elif is_state("sensor.aircon_sensor", "on") -%}
+          Aircon On
+        {%- elif states | selectattr('entity_id', 'in', state_attr('group.televisions','entity_id')) | selectattr('state','ne','off') | list | length != 0 -%}
+          Television On
+        {%- elif states | selectattr('entity_id', 'in', state_attr('group.speakers','entity_id')) | selectattr('state','ne','off') | list | length != 0 -%}
+          Speaker Left On
+        {%- else -%}
+          Valid State
+        {%- endif %}
+          
