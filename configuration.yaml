@@ -29,6 +29,11 @@ zeroconf:
 customizer:
   custom_ui: hosted
 
+# Todoist To-Do and Shopping Lists
+calendar:
+  - platform: todoist
+    token: !secret todoist_api_key
+
 # Text to speech
 tts:
   - platform: google_translate

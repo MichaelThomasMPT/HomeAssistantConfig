@@ -16,3 +16,6 @@
 [submodule "home-assistant-customizer"]
 	path = home-assistant-customizer
 	url = https://github.com/andrey-git/home-assistant-customizer.git
+[submodule "Todoist-List"]
+	path = Todoist-List
+	url = https://github.com/Letherwin/Todoist-List.git
