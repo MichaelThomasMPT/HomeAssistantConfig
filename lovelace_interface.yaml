@@ -149,14 +149,14 @@ views:
             type: horizontal-stack
           - cards:
               - entity: light.fibaro_system_fgd212_dimmer_2_level_4
-                type: light
                 name: Theatre Ceiling
+                type: light
               - entity: light.theatre_room_left_lamp
-                type: light
                 name: Theatre Left Lamp
-              - entity: light.theatre_room_right_lamp
                 type: light
+              - entity: light.theatre_room_right_lamp
                 name: Theatre Right Lamp
+                type: light
             type: horizontal-stack
           - entity: script.set_movie_lighting
             hold_action:
@@ -427,4 +427,14 @@ views:
         show_header_toggle: false
         title: Living Room TV
         type: entities
+      - cards:
+          - entities:
+              - entity: input_select.gmusic_player_speakers
+              - entity: input_select.gmusic_player_playlist
+            show_header_toggle: false
+            title: Google Play Music
+            type: entities
+          - entity: media_player.gmusic_player
+            type: media-control
+        type: vertical-stack
     title: Media
