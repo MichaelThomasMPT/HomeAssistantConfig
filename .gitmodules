@@ -19,3 +19,6 @@
 [submodule "Todoist-List"]
 	path = Todoist-List
 	url = https://github.com/Letherwin/Todoist-List.git
+[submodule "GoogleMusic_HomeAssistant"]
+	path = GoogleMusic_HomeAssistant
+	url = https://github.com/tprelog/GoogleMusic_HomeAssistant.git
