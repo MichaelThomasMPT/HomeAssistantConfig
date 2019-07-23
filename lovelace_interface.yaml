@@ -67,12 +67,16 @@ views:
         show_name: false
         title: Air Conditioner
         type: glance
-      - columns: 2
+      - columns: 3
         entities:
-          - entity: light.fibaro_system_fgd212_dimmer_2_level_2
-          - entity: light.theatre_room
+          - entity: light.fibaro_system_fgd212_dimmer_2_level_4
+            name: Theatre Ceiling
           - entity: light.theatre_room_left_lamp
+            name: Theatre Left Lamp
           - entity: light.theatre_room_right_lamp
+            name: Theatre Right Lamp
+          - entity: light.office_lamp
+          - entity: light.fibaro_system_fgd212_dimmer_2_level_2
         show_icon: true
         show_state: false
         title: Lights
@@ -133,20 +137,26 @@ views:
               - entity: light.theatre_room_right_lamp
               - entity: light.fibaro_system_fgd212_dimmer_2_level_2
               - entity: light.fibaro_system_fgd212_dimmer_2_level_4
+              - entity: light.office_lamp
             show_header_toggle: true
             title: Lights
             type: entities
           - cards:
               - entity: light.fibaro_system_fgd212_dimmer_2_level_2
                 type: light
-              - entity: light.fibaro_system_fgd212_dimmer_2_level_4
+              - entity: light.office_lamp
                 type: light
             type: horizontal-stack
           - cards:
+              - entity: light.fibaro_system_fgd212_dimmer_2_level_4
+                type: light
+                name: Theatre Ceiling
               - entity: light.theatre_room_left_lamp
                 type: light
+                name: Theatre Left Lamp
               - entity: light.theatre_room_right_lamp
                 type: light
+                name: Theatre Right Lamp
             type: horizontal-stack
           - entity: script.set_movie_lighting
             hold_action:
