@@ -159,3 +159,20 @@ done_with_the_theatre_room:
         - light.theatre_room_left_lamp
         - light.theatre_room_right_lamp
         - light.fibaro_system_fgd212_dimmer_2_level_4
+
+#Play a particular Google Play Music playlsit on all rooms. Triggered by multiple different Lovelace buttons. 
+play_playlist_on_all_rooms:
+  alias: Play playlist on all rooms
+  sequence:
+    - service: media_player.turn_off
+      entity_id: media_player.gmusic_player
+    - service: input_select.select_option
+      data: 
+        option: all_rooms #this is a hardcoded value which hopefully won't ever change :)
+        entity_id: input_select.gmusic_player_speakers
+    - service: input_select.select_option
+      data_template:
+        option: "{{ playlist }}" #this will be provided by the UI button which triggers this script
+        entity_id: input_select.gmusic_player_playlist
+    - service: media_player.turn_on
+      entity_id: media_player.gmusic_player

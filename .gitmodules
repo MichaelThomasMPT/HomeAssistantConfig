@@ -22,3 +22,6 @@
 [submodule "GoogleMusic_HomeAssistant"]
 	path = GoogleMusic_HomeAssistant
 	url = https://github.com/tprelog/GoogleMusic_HomeAssistant.git
+[submodule "vertical-stack-in-card"]
+	path = vertical-stack-in-card
+	url = https://github.com/custom-cards/vertical-stack-in-card.git

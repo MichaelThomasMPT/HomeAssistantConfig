@@ -7,6 +7,8 @@ resources:
     url: /local/card-tools.js
   - type: module
     url: /local/secondaryinfo-entity-row.js
+  - type: js
+    url: /local/vertical-stack-in-card.js?v=0.1.3
 title: Treeby Home
 views:
   - badges:
@@ -394,6 +396,390 @@ views:
         show_header_toggle: false
         title: Music Players
         type: entities
+      - cards:
+          - entities:
+              - entity: input_select.gmusic_player_speakers
+              - entity: input_select.gmusic_player_playlist
+            show_header_toggle: false
+            title: Google Play Music
+            type: entities
+          - entity: media_player.gmusic_player
+            type: media-control
+        type: vertical-stack
+      - type: 'custom:vertical-stack-in-card'
+        title: Board Game Music Catalog A-I
+        cards:
+          - type: horizontal-stack
+            cards:
+              - type: picture-entity
+                state_image:
+                  'off': /local/images/adventure.jpg
+                tap_action:
+                  action: call-service
+                  service: script.play_playlist_on_all_rooms
+                  service_data:
+                    playlist: Board Games - Adventure
+                hold_action:
+                  action: none
+                show_icon: true
+                show_name: true
+                show_state: false
+                entity: script.play_playlist_on_all_rooms
+                name: Adventure
+              - type: picture-entity
+                state_image:
+                  'off': /local/images/ancient.jpg
+                tap_action:
+                  action: call-service
+                  service: script.play_playlist_on_all_rooms
+                  service_data:
+                    playlist: Board Games - Ancient
+                hold_action:
+                  action: none
+                show_icon: true
+                show_name: true
+                show_state: false
+                entity: script.play_playlist_on_all_rooms
+                name: Ancient
+              - type: picture-entity
+                state_image:
+                  'off': /local/images/battle.jpg
+                tap_action:
+                  action: call-service
+                  service: script.play_playlist_on_all_rooms
+                  service_data:
+                    playlist: Board Games - Battle
+                hold_action:
+                  action: none
+                show_icon: true
+                show_name: true
+                show_state: false
+                entity: script.play_playlist_on_all_rooms
+                name: Battle
+          - type: horizontal-stack
+            cards:
+              - type: picture-entity
+                state_image:
+                  'off': /local/images/cafe.jpg
+                tap_action:
+                  action: call-service
+                  service: script.play_playlist_on_all_rooms
+                  service_data:
+                    playlist: Board Games - Cafe
+                hold_action:
+                  action: none
+                show_icon: true
+                show_name: true
+                show_state: false
+                entity: script.play_playlist_on_all_rooms
+                name: Cafe
+              - type: picture-entity
+                state_image:
+                  'off': /local/images/china.jpg
+                tap_action:
+                  action: call-service
+                  service: script.play_playlist_on_all_rooms
+                  service_data:
+                    playlist: Board Games - China
+                hold_action:
+                  action: none
+                show_icon: true
+                show_name: true
+                show_state: false
+                entity: script.play_playlist_on_all_rooms
+                name: China
+              - type: picture-entity
+                state_image:
+                  'off': /local/images/city.jpg
+                tap_action:
+                  action: call-service
+                  service: script.play_playlist_on_all_rooms
+                  service_data:
+                    playlist: Board Games - Cities
+                hold_action:
+                  action: none
+                show_icon: true
+                show_name: true
+                show_state: false
+                entity: script.play_playlist_on_all_rooms
+                name: Cities
+          - type: horizontal-stack
+            cards:
+              - type: picture-entity
+                state_image:
+                  'off': /local/images/detective.jpg
+                tap_action:
+                  action: call-service
+                  service: script.play_playlist_on_all_rooms
+                  service_data:
+                    playlist: Board Games - Detective
+                hold_action:
+                  action: none
+                show_icon: true
+                show_name: true
+                show_state: false
+                entity: script.play_playlist_on_all_rooms
+                name: Detective
+              - type: picture-entity
+                state_image:
+                  'off': /local/images/dungeon.jpg
+                tap_action:
+                  action: call-service
+                  service: script.play_playlist_on_all_rooms
+                  service_data:
+                    playlist: Board Games - Dungeon
+                hold_action:
+                  action: none
+                show_icon: true
+                show_name: true
+                show_state: false
+                entity: script.play_playlist_on_all_rooms
+                name: Dungeon
+              - type: picture-entity
+                state_image:
+                  'off': /local/images/egypt.jpg
+                tap_action:
+                  action: call-service
+                  service: script.play_playlist_on_all_rooms
+                  service_data:
+                    playlist: Board Games - Egyptian
+                hold_action:
+                  action: none
+                show_icon: true
+                show_name: true
+                show_state: false
+                entity: script.play_playlist_on_all_rooms
+                name: Egypt
+          - type: horizontal-stack
+            cards:
+              - type: picture-entity
+                state_image:
+                  'off': /local/images/gangster.jpg
+                tap_action:
+                  action: call-service
+                  service: script.play_playlist_on_all_rooms
+                  service_data:
+                    playlist: Board Games - Gangster
+                hold_action:
+                  action: none
+                show_icon: true
+                show_name: true
+                show_state: false
+                entity: script.play_playlist_on_all_rooms
+                name: Gangster
+              - type: picture-entity
+                state_image:
+                  'off': /local/images/horror.jpg
+                tap_action:
+                  action: call-service
+                  service: script.play_playlist_on_all_rooms
+                  service_data:
+                    playlist: Board Games - Horror
+                hold_action:
+                  action: none
+                show_icon: true
+                show_name: true
+                show_state: false
+                entity: script.play_playlist_on_all_rooms
+                name: Horror
+              - type: picture-entity
+                state_image:
+                  'off': /local/images/india.jpg
+                tap_action:
+                  action: call-service
+                  service: script.play_playlist_on_all_rooms
+                  service_data:
+                    playlist: Board Games - India
+                hold_action:
+                  action: none
+                show_icon: true
+                show_name: true
+                show_state: false
+                entity: script.play_playlist_on_all_rooms
+                name: India
+      - type: 'custom:vertical-stack-in-card'
+        title: Board Game Music Catalog J-Z
+        cards:
+          - type: horizontal-stack
+            cards:
+              - type: picture-entity
+                state_image:
+                  'off': /local/images/japan.jpg
+                tap_action:
+                  action: call-service
+                  service: script.play_playlist_on_all_rooms
+                  service_data:
+                    playlist: Board Games - Japan
+                hold_action:
+                  action: none
+                show_icon: true
+                show_name: true
+                show_state: false
+                entity: script.play_playlist_on_all_rooms
+                name: Japan
+              - type: picture-entity
+                state_image:
+                  'off': /local/images/magic.jpg
+                tap_action:
+                  action: call-service
+                  service: script.play_playlist_on_all_rooms
+                  service_data:
+                    playlist: Board Games - Magic
+                hold_action:
+                  action: none
+                show_icon: true
+                show_name: true
+                show_state: false
+                entity: script.play_playlist_on_all_rooms
+                name: Magic
+              - type: picture-entity
+                state_image:
+                  'off': /local/images/medieval.jpg
+                tap_action:
+                  action: call-service
+                  service: script.play_playlist_on_all_rooms
+                  service_data:
+                    playlist: Board Games - Medieval Town
+                hold_action:
+                  action: none
+                show_icon: true
+                show_name: true
+                show_state: false
+                entity: script.play_playlist_on_all_rooms
+                name: Medieval Town
+          - type: horizontal-stack
+            cards:
+              - type: picture-entity
+                state_image:
+                  'off': /local/images/meditation.jpg
+                tap_action:
+                  action: call-service
+                  service: script.play_playlist_on_all_rooms
+                  service_data:
+                    playlist: Board Games - Meditation
+                hold_action:
+                  action: none
+                show_icon: true
+                show_name: true
+                show_state: false
+                entity: script.play_playlist_on_all_rooms
+                name: Meditation
+              - type: picture-entity
+                state_image:
+                  'off': /local/images/mythical.jpg
+                tap_action:
+                  action: call-service
+                  service: script.play_playlist_on_all_rooms
+                  service_data:
+                    playlist: Board Games - Mythical
+                hold_action:
+                  action: none
+                show_icon: true
+                show_name: true
+                show_state: false
+                entity: script.play_playlist_on_all_rooms
+                name: Mythical
+              - type: picture-entity
+                state_image:
+                  'off': /local/images/pirate.jpg
+                tap_action:
+                  action: call-service
+                  service: script.play_playlist_on_all_rooms
+                  service_data:
+                    playlist: Board Games - Pirates
+                hold_action:
+                  action: none
+                show_icon: true
+                show_name: true
+                show_state: false
+                entity: script.play_playlist_on_all_rooms
+                name: Pirate
+          - type: horizontal-stack
+            cards:
+              - type: picture-entity
+                state_image:
+                  'off': /local/images/renaissance.jpg
+                tap_action:
+                  action: call-service
+                  service: script.play_playlist_on_all_rooms
+                  service_data:
+                    playlist: Board Games - Renaissance
+                hold_action:
+                  action: none
+                show_icon: true
+                show_name: true
+                show_state: false
+                entity: script.play_playlist_on_all_rooms
+                name: Renaissance
+              - type: picture-entity
+                state_image:
+                  'off': /local/images/space.jpg
+                tap_action:
+                  action: call-service
+                  service: script.play_playlist_on_all_rooms
+                  service_data:
+                    playlist: Board Games - Space
+                hold_action:
+                  action: none
+                show_icon: true
+                show_name: true
+                show_state: false
+                entity: script.play_playlist_on_all_rooms
+                name: Space
+              - type: picture-entity
+                state_image:
+                  'off': /local/images/spy.jpg
+                tap_action:
+                  action: call-service
+                  service: script.play_playlist_on_all_rooms
+                  service_data:
+                    playlist: Board Games - Spy
+                hold_action:
+                  action: none
+                show_icon: true
+                show_name: true
+                show_state: false
+                entity: script.play_playlist_on_all_rooms
+                name: Spy
+          - type: horizontal-stack
+            cards:
+              - type: picture-entity
+                state_image:
+                  'off': /local/images/western.jpg
+                tap_action:
+                  action: call-service
+                  service: script.play_playlist_on_all_rooms
+                  service_data:
+                    playlist: Board Games - Western
+                hold_action:
+                  action: none
+                show_icon: true
+                show_name: true
+                show_state: false
+                entity: script.play_playlist_on_all_rooms
+                name: Western
+              - type: picture-entity
+                state_image:
+                  'off': /local/images/white.jpg
+                tap_action:
+                  action: none
+                hold_action:
+                  action: none
+                show_icon: false
+                show_name: false
+                show_state: false
+                entity: script.play_playlist_on_all_rooms
+              - type: picture-entity
+                state_image:
+                  'off': /local/images/white.jpg
+                tap_action:
+                  action: none
+                hold_action:
+                  action: none
+                show_icon: false
+                show_name: false
+                show_state: false
+                entity: script.play_playlist_on_all_rooms
       - entities:
           - artwork: full-cover
             entity: media_player.theatre_room_tv
@@ -427,14 +813,4 @@ views:
         show_header_toggle: false
         title: Living Room TV
         type: entities
-      - cards:
-          - entities:
-              - entity: input_select.gmusic_player_speakers
-              - entity: input_select.gmusic_player_playlist
-            show_header_toggle: false
-            title: Google Play Music
-            type: entities
-          - entity: media_player.gmusic_player
-            type: media-control
-        type: vertical-stack
     title: Media
