@@ -80,7 +80,6 @@ aircon_fan_master:
     service: input_number.set_value
   alias: Aircon Fan Master
   
-  
 #Run the aircon in the central living area
 aircon_cool_central_living:
   sequence:
@@ -113,6 +112,45 @@ aircon_cool_central_living:
     service: switch.turn_on
   alias: Aircon Cool Central Living
 
+#Run the aircon in cool mode
+aircon_cool:
+  sequence:
+  - data:
+      entity_id: input_number.aircon_temperature
+      value: 20
+    service: input_number.set_value
+  - delay:
+      seconds: 1
+  - data:
+      entity_id: input_select.aircon_run_mode
+      option: cool
+    service: input_select.select_option
+  - delay:
+      seconds: 1
+  - data:
+      entity_id: switch.aircon_on_off
+    service: switch.turn_on
+  alias: Aircon On
+  
+#Run the aircon in hear mode
+aircon_heat:
+  sequence:
+  - data:
+      entity_id: input_number.aircon_temperature
+      value: 24
+    service: input_number.set_value
+  - delay:
+      seconds: 1
+  - data:
+      entity_id: input_select.aircon_run_mode
+      option: heat
+    service: input_select.select_option
+  - delay:
+      seconds: 1
+  - data:
+      entity_id: switch.aircon_on_off
+    service: switch.turn_on
+  alias: Heater On
 
 #Trigger the Hue lights scene for movie watching
 set_movie_lighting:

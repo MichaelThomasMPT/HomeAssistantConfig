@@ -814,3 +814,143 @@ views:
         title: Living Room TV
         type: entities
     title: Media
+  - cards:
+      - type: picture-elements
+        image: /local/floor-plan.png
+        elements:
+          - entity: light.fibaro_system_fgd212_dimmer_2_level_4
+            type: state-icon
+            tap_action:
+              action: toggle
+            style:
+              top: 39.5%
+              left: 60%
+          - entity: light.theatre_room_left_lamp
+            type: state-icon
+            tap_action:
+              action: toggle
+            style:
+              top: 44%
+              left: 74%
+          - entity: light.theatre_room_right_lamp
+            type: state-icon
+            tap_action:
+              action: toggle
+            style:
+              top: 34.5%
+              left: 74%
+          - entity: light.fibaro_system_fgd212_dimmer_2_level_2
+            type: state-icon
+            tap_action:
+              action: toggle
+            style:
+              top: 35%
+              left: 42.5%
+          - entity: light.fibaro_system_fgd212_dimmer_2_level_2
+            type: state-icon
+            tap_action:
+              action: toggle
+            style:
+              top: 25%
+              left: 42.5%
+          - entity: light.office_lamp
+            type: state-icon
+            tap_action:
+              action: toggle
+            style:
+              top: 12.5%
+              left: 66.5%
+          - entity: media_player.theatre_room_tv
+            type: state-icon
+            icon: 'mdi:television-play'
+            style:
+              top: 41%
+              left: 54%
+              '--paper-item-icon-color': white
+          - entity: media_player.living_room_chromecast
+            type: state-icon
+            icon: 'mdi:television-play'
+            style:
+              top: 66%
+              left: 55%
+              '--paper-item-icon-color': white
+          - entity: cover.aeon_labs_zw062_garage_door_controller_barrier_state_label
+            type: state-icon
+            tap_action:
+              action: toggle
+            style:
+              top: 14%
+              left: 17%
+              transform: 'scale(1.5,1.5)'
+              '--paper-item-icon-color': white
+          - entity: switch.aircon_zone_living
+            icon: 'mdi:air-filter'
+            type: state-icon
+            tap_action:
+              action: toggle
+            style:
+              top: 60%
+              left: 38%
+          - entity: switch.aircon_zone_theatre
+            icon: 'mdi:air-filter'
+            type: state-icon
+            tap_action:
+              action: toggle
+            style:
+              top: 36%
+              left: 60%
+          - entity: switch.aircon_zone_master
+            icon: 'mdi:air-filter'
+            type: state-icon
+            tap_action:
+              action: toggle
+            style:
+              top: 85%
+              left: 29%
+          - entity: switch.aircon_zone_bed23
+            icon: 'mdi:air-filter'
+            type: state-icon
+            tap_action:
+              action: toggle
+            style:
+              top: 20%
+              left: 56%
+          - entity: switch.aircon_zone_bed23
+            icon: 'mdi:air-filter'
+            type: state-icon
+            tap_action:
+              action: toggle
+            style:
+              top: 18%
+              left: 73%
+          - entity: switch.aircon_on_off
+            icon: 'mdi:air-conditioner'
+            type: state-icon
+            tap_action:
+              action: toggle
+            style:
+              top: 48%
+              left: 35%
+          - entity: script.aircon_cool
+            icon: 'mdi:snowflake'
+            type: state-icon
+            tap_action:
+              action: toggle
+            style:
+              top: 91.5%
+              left: 83.5%
+              '--paper-item-icon-color': blue
+              transform: 'scale(1.8,1.8)'
+          - entity: script.aircon_heat
+            icon: 'mdi:fire'
+            type: state-icon
+            tap_action:
+              action: toggle
+            style:
+              top: 86%
+              left: 83.5%
+              '--paper-item-icon-color': darkorange
+              transform: 'scale(1.8,1.8)'
+    badges: []
+    title: Floor Plan
+    panel: false
