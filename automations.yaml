@@ -244,3 +244,44 @@
         - media_player.all_rooms
         
 ############## LEAVING THE HOUSE ##############
+
+############## LOVELACE THEME FOR TIME OF DAY ##############
+
+- alias: 'Set theme at startup'
+  initial_state: 'on'
+  trigger:
+   - platform: homeassistant
+     event: start
+  action:
+    service: frontend.set_theme
+    data_template:
+      name: > 
+        {% if is_state('sun.sun', 'above_horizon') %}
+          default
+        {% else %}
+          midnight
+        {% endif %}
+        
+- alias: 'Set dark theme at night'
+  initial_state: true
+  trigger:
+    - platform: state
+      entity_id: sun.sun
+      to: 'below_horizon'
+  action:
+    - service: frontend.set_theme
+      data:
+        name: midnight
+          
+- alias: 'Set light theme at day'
+  initial_state: true
+  trigger:
+    - platform: state
+      entity_id: sun.sun
+      to: 'above_horizon'
+  action:
+    - service: frontend.set_theme
+      data:
+        name: default
+
+############## LOVELACE THEME FOR TIME OF DAY ##############
