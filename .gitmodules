@@ -31,3 +31,6 @@
 [submodule "breaking_changes"]
 	path = breaking_changes
 	url = https://github.com/custom-components/breaking_changes.git
+[submodule "homeassistant-elasticsearch"]
+	path = homeassistant-elasticsearch
+	url = https://github.com/legrego/homeassistant-elasticsearch.git

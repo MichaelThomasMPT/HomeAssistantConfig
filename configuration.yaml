@@ -38,6 +38,12 @@ customizer:
 calendar:
   - platform: todoist
     token: !secret todoist_api_key
+    
+# Elastic search output
+#elastic:
+#    url: http://192.168.1.254:9200
+#    exclude:
+#        entities: ['sensor.es_cluster_health']
 
 # Text to speech
 tts:
@@ -180,7 +186,7 @@ ios:
 ############## BREAKING CHANGES ##############
 
 breaking_changes:
-    scan_interval: 600 #10 minutes
+  scan_interval: 600 #10 minutes
 
 ############## BREAKING CHANGES ##############
 
@@ -265,7 +271,12 @@ panel_iframe:
     icon: mdi:database
     url: http://192.168.1.52:6210
     require_admin: true
-
+  kibana:
+    title: Data Warehouse
+    icon: mdi:chart-line
+    url: http://192.168.1.254:5601
+    require_admin: true
+    
 ############## ADDITIONAL PANELS ##############
 
 ############## ZONES ##############
