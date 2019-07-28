@@ -28,3 +28,6 @@
 [submodule "GoogleGeocode-HASS"]
 	path = GoogleGeocode-HASS
 	url = https://github.com/michaelmcarthur/GoogleGeocode-HASS.git
+[submodule "breaking_changes"]
+	path = breaking_changes
+	url = https://github.com/custom-components/breaking_changes.git
