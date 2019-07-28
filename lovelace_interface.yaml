@@ -406,12 +406,15 @@ views:
           - entity: media_player.gmusic_player
             type: media-control
         type: vertical-stack
-      - type: 'custom:vertical-stack-in-card'
-        title: Board Game Music Catalog A-I
-        cards:
-          - type: horizontal-stack
-            cards:
-              - type: picture-entity
+      - cards:
+          - cards:
+              - entity: script.play_playlist_on_all_rooms
+                hold_action:
+                  action: none
+                name: Adventure
+                show_icon: true
+                show_name: true
+                show_state: false
                 state_image:
                   'off': /local/images/adventure.jpg
                 tap_action:
@@ -419,14 +422,14 @@ views:
                   service: script.play_playlist_on_all_rooms
                   service_data:
                     playlist: Board Games - Adventure
+                type: picture-entity
+              - entity: script.play_playlist_on_all_rooms
                 hold_action:
                   action: none
+                name: Ancient
                 show_icon: true
                 show_name: true
                 show_state: false
-                entity: script.play_playlist_on_all_rooms
-                name: Adventure
-              - type: picture-entity
                 state_image:
                   'off': /local/images/ancient.jpg
                 tap_action:
@@ -434,14 +437,14 @@ views:
                   service: script.play_playlist_on_all_rooms
                   service_data:
                     playlist: Board Games - Ancient
+                type: picture-entity
+              - entity: script.play_playlist_on_all_rooms
                 hold_action:
                   action: none
+                name: Battle
                 show_icon: true
                 show_name: true
                 show_state: false
-                entity: script.play_playlist_on_all_rooms
-                name: Ancient
-              - type: picture-entity
                 state_image:
                   'off': /local/images/battle.jpg
                 tap_action:
@@ -449,16 +452,16 @@ views:
                   service: script.play_playlist_on_all_rooms
                   service_data:
                     playlist: Board Games - Battle
+                type: picture-entity
+            type: horizontal-stack
+          - cards:
+              - entity: script.play_playlist_on_all_rooms
                 hold_action:
                   action: none
+                name: Cafe
                 show_icon: true
                 show_name: true
                 show_state: false
-                entity: script.play_playlist_on_all_rooms
-                name: Battle
-          - type: horizontal-stack
-            cards:
-              - type: picture-entity
                 state_image:
                   'off': /local/images/cafe.jpg
                 tap_action:
@@ -466,14 +469,14 @@ views:
                   service: script.play_playlist_on_all_rooms
                   service_data:
                     playlist: Board Games - Cafe
+                type: picture-entity
+              - entity: script.play_playlist_on_all_rooms
                 hold_action:
                   action: none
+                name: China
                 show_icon: true
                 show_name: true
                 show_state: false
-                entity: script.play_playlist_on_all_rooms
-                name: Cafe
-              - type: picture-entity
                 state_image:
                   'off': /local/images/china.jpg
                 tap_action:
@@ -481,14 +484,14 @@ views:
                   service: script.play_playlist_on_all_rooms
                   service_data:
                     playlist: Board Games - China
+                type: picture-entity
+              - entity: script.play_playlist_on_all_rooms
                 hold_action:
                   action: none
+                name: Cities
                 show_icon: true
                 show_name: true
                 show_state: false
-                entity: script.play_playlist_on_all_rooms
-                name: China
-              - type: picture-entity
                 state_image:
                   'off': /local/images/city.jpg
                 tap_action:
@@ -496,16 +499,16 @@ views:
                   service: script.play_playlist_on_all_rooms
                   service_data:
                     playlist: Board Games - Cities
+                type: picture-entity
+            type: horizontal-stack
+          - cards:
+              - entity: script.play_playlist_on_all_rooms
                 hold_action:
                   action: none
+                name: Detective
                 show_icon: true
                 show_name: true
                 show_state: false
-                entity: script.play_playlist_on_all_rooms
-                name: Cities
-          - type: horizontal-stack
-            cards:
-              - type: picture-entity
                 state_image:
                   'off': /local/images/detective.jpg
                 tap_action:
@@ -513,14 +516,14 @@ views:
                   service: script.play_playlist_on_all_rooms
                   service_data:
                     playlist: Board Games - Detective
+                type: picture-entity
+              - entity: script.play_playlist_on_all_rooms
                 hold_action:
                   action: none
+                name: Dungeon
                 show_icon: true
                 show_name: true
                 show_state: false
-                entity: script.play_playlist_on_all_rooms
-                name: Detective
-              - type: picture-entity
                 state_image:
                   'off': /local/images/dungeon.jpg
                 tap_action:
@@ -528,14 +531,14 @@ views:
                   service: script.play_playlist_on_all_rooms
                   service_data:
                     playlist: Board Games - Dungeon
+                type: picture-entity
+              - entity: script.play_playlist_on_all_rooms
                 hold_action:
                   action: none
+                name: Egypt
                 show_icon: true
                 show_name: true
                 show_state: false
-                entity: script.play_playlist_on_all_rooms
-                name: Dungeon
-              - type: picture-entity
                 state_image:
                   'off': /local/images/egypt.jpg
                 tap_action:
@@ -543,16 +546,16 @@ views:
                   service: script.play_playlist_on_all_rooms
                   service_data:
                     playlist: Board Games - Egyptian
+                type: picture-entity
+            type: horizontal-stack
+          - cards:
+              - entity: script.play_playlist_on_all_rooms
                 hold_action:
                   action: none
+                name: Gangster
                 show_icon: true
                 show_name: true
                 show_state: false
-                entity: script.play_playlist_on_all_rooms
-                name: Egypt
-          - type: horizontal-stack
-            cards:
-              - type: picture-entity
                 state_image:
                   'off': /local/images/gangster.jpg
                 tap_action:
@@ -560,14 +563,14 @@ views:
                   service: script.play_playlist_on_all_rooms
                   service_data:
                     playlist: Board Games - Gangster
+                type: picture-entity
+              - entity: script.play_playlist_on_all_rooms
                 hold_action:
                   action: none
+                name: Horror
                 show_icon: true
                 show_name: true
                 show_state: false
-                entity: script.play_playlist_on_all_rooms
-                name: Gangster
-              - type: picture-entity
                 state_image:
                   'off': /local/images/horror.jpg
                 tap_action:
@@ -575,14 +578,14 @@ views:
                   service: script.play_playlist_on_all_rooms
                   service_data:
                     playlist: Board Games - Horror
+                type: picture-entity
+              - entity: script.play_playlist_on_all_rooms
                 hold_action:
                   action: none
+                name: India
                 show_icon: true
                 show_name: true
                 show_state: false
-                entity: script.play_playlist_on_all_rooms
-                name: Horror
-              - type: picture-entity
                 state_image:
                   'off': /local/images/india.jpg
                 tap_action:
@@ -590,19 +593,19 @@ views:
                   service: script.play_playlist_on_all_rooms
                   service_data:
                     playlist: Board Games - India
+                type: picture-entity
+            type: horizontal-stack
+        title: Board Game Music Catalog A-I
+        type: 'custom:vertical-stack-in-card'
+      - cards:
+          - cards:
+              - entity: script.play_playlist_on_all_rooms
                 hold_action:
                   action: none
+                name: Japan
                 show_icon: true
                 show_name: true
                 show_state: false
-                entity: script.play_playlist_on_all_rooms
-                name: India
-      - type: 'custom:vertical-stack-in-card'
-        title: Board Game Music Catalog J-Z
-        cards:
-          - type: horizontal-stack
-            cards:
-              - type: picture-entity
                 state_image:
                   'off': /local/images/japan.jpg
                 tap_action:
@@ -610,14 +613,14 @@ views:
                   service: script.play_playlist_on_all_rooms
                   service_data:
                     playlist: Board Games - Japan
+                type: picture-entity
+              - entity: script.play_playlist_on_all_rooms
                 hold_action:
                   action: none
+                name: Magic
                 show_icon: true
                 show_name: true
                 show_state: false
-                entity: script.play_playlist_on_all_rooms
-                name: Japan
-              - type: picture-entity
                 state_image:
                   'off': /local/images/magic.jpg
                 tap_action:
@@ -625,14 +628,14 @@ views:
                   service: script.play_playlist_on_all_rooms
                   service_data:
                     playlist: Board Games - Magic
+                type: picture-entity
+              - entity: script.play_playlist_on_all_rooms
                 hold_action:
                   action: none
+                name: Medieval Town
                 show_icon: true
                 show_name: true
                 show_state: false
-                entity: script.play_playlist_on_all_rooms
-                name: Magic
-              - type: picture-entity
                 state_image:
                   'off': /local/images/medieval.jpg
                 tap_action:
@@ -640,16 +643,16 @@ views:
                   service: script.play_playlist_on_all_rooms
                   service_data:
                     playlist: Board Games - Medieval Town
+                type: picture-entity
+            type: horizontal-stack
+          - cards:
+              - entity: script.play_playlist_on_all_rooms
                 hold_action:
                   action: none
+                name: Meditation
                 show_icon: true
                 show_name: true
                 show_state: false
-                entity: script.play_playlist_on_all_rooms
-                name: Medieval Town
-          - type: horizontal-stack
-            cards:
-              - type: picture-entity
                 state_image:
                   'off': /local/images/meditation.jpg
                 tap_action:
@@ -657,14 +660,14 @@ views:
                   service: script.play_playlist_on_all_rooms
                   service_data:
                     playlist: Board Games - Meditation
+                type: picture-entity
+              - entity: script.play_playlist_on_all_rooms
                 hold_action:
                   action: none
+                name: Mythical
                 show_icon: true
                 show_name: true
                 show_state: false
-                entity: script.play_playlist_on_all_rooms
-                name: Meditation
-              - type: picture-entity
                 state_image:
                   'off': /local/images/mythical.jpg
                 tap_action:
@@ -672,14 +675,14 @@ views:
                   service: script.play_playlist_on_all_rooms
                   service_data:
                     playlist: Board Games - Mythical
+                type: picture-entity
+              - entity: script.play_playlist_on_all_rooms
                 hold_action:
                   action: none
+                name: Pirate
                 show_icon: true
                 show_name: true
                 show_state: false
-                entity: script.play_playlist_on_all_rooms
-                name: Mythical
-              - type: picture-entity
                 state_image:
                   'off': /local/images/pirate.jpg
                 tap_action:
@@ -687,16 +690,16 @@ views:
                   service: script.play_playlist_on_all_rooms
                   service_data:
                     playlist: Board Games - Pirates
+                type: picture-entity
+            type: horizontal-stack
+          - cards:
+              - entity: script.play_playlist_on_all_rooms
                 hold_action:
                   action: none
+                name: Renaissance
                 show_icon: true
                 show_name: true
                 show_state: false
-                entity: script.play_playlist_on_all_rooms
-                name: Pirate
-          - type: horizontal-stack
-            cards:
-              - type: picture-entity
                 state_image:
                   'off': /local/images/renaissance.jpg
                 tap_action:
@@ -704,14 +707,14 @@ views:
                   service: script.play_playlist_on_all_rooms
                   service_data:
                     playlist: Board Games - Renaissance
+                type: picture-entity
+              - entity: script.play_playlist_on_all_rooms
                 hold_action:
                   action: none
+                name: Space
                 show_icon: true
                 show_name: true
                 show_state: false
-                entity: script.play_playlist_on_all_rooms
-                name: Renaissance
-              - type: picture-entity
                 state_image:
                   'off': /local/images/space.jpg
                 tap_action:
@@ -719,14 +722,14 @@ views:
                   service: script.play_playlist_on_all_rooms
                   service_data:
                     playlist: Board Games - Space
+                type: picture-entity
+              - entity: script.play_playlist_on_all_rooms
                 hold_action:
                   action: none
+                name: Spy
                 show_icon: true
                 show_name: true
                 show_state: false
-                entity: script.play_playlist_on_all_rooms
-                name: Space
-              - type: picture-entity
                 state_image:
                   'off': /local/images/spy.jpg
                 tap_action:
@@ -734,16 +737,16 @@ views:
                   service: script.play_playlist_on_all_rooms
                   service_data:
                     playlist: Board Games - Spy
+                type: picture-entity
+            type: horizontal-stack
+          - cards:
+              - entity: script.play_playlist_on_all_rooms
                 hold_action:
                   action: none
+                name: Western
                 show_icon: true
                 show_name: true
                 show_state: false
-                entity: script.play_playlist_on_all_rooms
-                name: Spy
-          - type: horizontal-stack
-            cards:
-              - type: picture-entity
                 state_image:
                   'off': /local/images/western.jpg
                 tap_action:
@@ -751,35 +754,32 @@ views:
                   service: script.play_playlist_on_all_rooms
                   service_data:
                     playlist: Board Games - Western
-                hold_action:
-                  action: none
-                show_icon: true
-                show_name: true
-                show_state: false
-                entity: script.play_playlist_on_all_rooms
-                name: Western
-              - type: picture-entity
-                state_image:
-                  'off': /local/images/white.jpg
-                tap_action:
-                  action: none
+                type: picture-entity
+              - entity: script.play_playlist_on_all_rooms
                 hold_action:
                   action: none
                 show_icon: false
                 show_name: false
                 show_state: false
-                entity: script.play_playlist_on_all_rooms
-              - type: picture-entity
                 state_image:
                   'off': /local/images/white.jpg
                 tap_action:
                   action: none
+                type: picture-entity
+              - entity: script.play_playlist_on_all_rooms
                 hold_action:
                   action: none
                 show_icon: false
                 show_name: false
                 show_state: false
-                entity: script.play_playlist_on_all_rooms
+                state_image:
+                  'off': /local/images/white.jpg
+                tap_action:
+                  action: none
+                type: picture-entity
+            type: horizontal-stack
+        title: Board Game Music Catalog J-Z
+        type: 'custom:vertical-stack-in-card'
       - entities:
           - artwork: full-cover
             entity: media_player.theatre_room_tv
@@ -814,143 +814,143 @@ views:
         title: Living Room TV
         type: entities
     title: Media
-  - cards:
-      - type: picture-elements
-        image: /local/floor-plan.png
-        elements:
+  - badges: []
+    cards:
+      - elements:
           - entity: light.fibaro_system_fgd212_dimmer_2_level_4
-            type: state-icon
-            tap_action:
-              action: toggle
             style:
-              top: 39.5%
               left: 60%
-          - entity: light.theatre_room_left_lamp
-            type: state-icon
+              top: 39.5%
             tap_action:
               action: toggle
+            type: state-icon
+          - entity: light.theatre_room
             style:
+              left: 74%
               top: 44%
-              left: 74%
-          - entity: light.theatre_room_right_lamp
-            type: state-icon
             tap_action:
               action: toggle
+            type: state-icon
+          - entity: light.theatre_room
             style:
+              left: 74%
               top: 34.5%
-              left: 74%
-          - entity: light.fibaro_system_fgd212_dimmer_2_level_2
-            type: state-icon
             tap_action:
               action: toggle
+            type: state-icon
+          - entity: light.fibaro_system_fgd212_dimmer_2_level_2
             style:
+              left: 42.5%
               top: 35%
-              left: 42.5%
+            tap_action:
+              action: toggle
+            type: state-icon
           - entity: light.fibaro_system_fgd212_dimmer_2_level_2
-            type: state-icon
-            tap_action:
-              action: toggle
             style:
-              top: 25%
               left: 42.5%
+              top: 25%
+            tap_action:
+              action: toggle
+            type: state-icon
           - entity: light.office_lamp
-            type: state-icon
-            tap_action:
-              action: toggle
             style:
-              top: 12.5%
               left: 66.5%
-          - entity: media_player.theatre_room_tv
-            type: state-icon
-            icon: 'mdi:television-play'
-            style:
-              top: 41%
-              left: 54%
-              '--paper-item-icon-color': white
-          - entity: media_player.living_room_chromecast
-            type: state-icon
-            icon: 'mdi:television-play'
-            style:
-              top: 66%
-              left: 55%
-              '--paper-item-icon-color': white
-          - entity: cover.aeon_labs_zw062_garage_door_controller_barrier_state_label
-            type: state-icon
+              top: 12.5%
             tap_action:
               action: toggle
+            type: state-icon
+          - entity: media_player.theatre_room_tv
+            icon: 'mdi:television-play'
             style:
-              top: 14%
-              left: 17%
-              transform: 'scale(1.5,1.5)'
               '--paper-item-icon-color': white
+              left: 54%
+              top: 41%
+            type: state-icon
+          - entity: media_player.living_room_chromecast
+            icon: 'mdi:television-play'
+            style:
+              '--paper-item-icon-color': white
+              left: 55%
+              top: 66%
+            type: state-icon
+          - entity: cover.aeon_labs_zw062_garage_door_controller_barrier_state_label
+            style:
+              '--paper-item-icon-color': white
+              left: 17%
+              top: 14%
+              transform: 'scale(1.5,1.5)'
+            tap_action:
+              action: toggle
+            type: state-icon
           - entity: switch.aircon_zone_living
             icon: 'mdi:air-filter'
-            type: state-icon
+            style:
+              left: 38%
+              top: 60%
             tap_action:
               action: toggle
-            style:
-              top: 60%
-              left: 38%
+            type: state-icon
           - entity: switch.aircon_zone_theatre
             icon: 'mdi:air-filter'
-            type: state-icon
+            style:
+              left: 60%
+              top: 36%
             tap_action:
               action: toggle
-            style:
-              top: 36%
-              left: 60%
+            type: state-icon
           - entity: switch.aircon_zone_master
             icon: 'mdi:air-filter'
-            type: state-icon
-            tap_action:
-              action: toggle
             style:
-              top: 85%
               left: 29%
-          - entity: switch.aircon_zone_bed23
-            icon: 'mdi:air-filter'
-            type: state-icon
+              top: 85%
             tap_action:
               action: toggle
+            type: state-icon
+          - entity: switch.aircon_zone_bed23
+            icon: 'mdi:air-filter'
             style:
-              top: 20%
               left: 56%
-          - entity: switch.aircon_zone_bed23
-            icon: 'mdi:air-filter'
-            type: state-icon
+              top: 20%
             tap_action:
               action: toggle
+            type: state-icon
+          - entity: switch.aircon_zone_bed23
+            icon: 'mdi:air-filter'
             style:
-              top: 18%
               left: 73%
+              top: 18%
+            tap_action:
+              action: toggle
+            type: state-icon
           - entity: switch.aircon_on_off
             icon: 'mdi:air-conditioner'
-            type: state-icon
+            style:
+              left: 35%
+              top: 48%
             tap_action:
               action: toggle
-            style:
-              top: 48%
-              left: 35%
+            type: state-icon
           - entity: script.aircon_cool
             icon: 'mdi:snowflake'
-            type: state-icon
+            style:
+              '--paper-item-icon-color': blue
+              left: 83.5%
+              top: 91.5%
+              transform: 'scale(1.8,1.8)'
             tap_action:
               action: toggle
-            style:
-              top: 91.5%
-              left: 83.5%
-              '--paper-item-icon-color': blue
-              transform: 'scale(1.8,1.8)'
+            type: state-icon
           - entity: script.aircon_heat
             icon: 'mdi:fire'
-            type: state-icon
+            style:
+              '--paper-item-icon-color': darkorange
+              left: 83.5%
+              top: 86%
+              transform: 'scale(1.8,1.8)'
             tap_action:
               action: toggle
-            style:
-              top: 86%
-              left: 83.5%
-              '--paper-item-icon-color': darkorange
-              transform: 'scale(1.8,1.8)'
-    badges: []
-    title: Floor Plan
+            type: state-icon
+        image: /local/floor-plan.png
+        type: picture-elements
     panel: false
+    title: Floor Plan
