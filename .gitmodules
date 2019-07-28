@@ -25,3 +25,6 @@
 [submodule "vertical-stack-in-card"]
 	path = vertical-stack-in-card
 	url = https://github.com/custom-cards/vertical-stack-in-card.git
+[submodule "GoogleGeocode-HASS"]
+	path = GoogleGeocode-HASS
+	url = https://github.com/michaelmcarthur/GoogleGeocode-HASS.git

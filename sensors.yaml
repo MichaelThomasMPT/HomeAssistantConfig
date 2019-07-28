@@ -156,3 +156,19 @@
           Valid State
         {%- endif %}
           
+      
+# Michael's Location          
+- platform: google_geocode
+  name: michael_location
+  origin: device_tracker.michael_michaelgalaxys10_2
+  options: street_number, street, city
+  display_zone: show
+  api_key: !secret google_maps_api_key
+      
+# Laura's Location          
+- platform: google_geocode
+  name: laura_location
+  origin: device_tracker.lauras_iphone
+  options: street_number, street, city
+  display_zone: show
+  api_key: !secret google_maps_api_key

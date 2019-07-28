@@ -38,6 +38,16 @@ views:
         show_name: false
         title: House State Validity
         type: glance
+      - type: entities
+        entities:
+          - entity: sensor.michael_location
+            name: Michael
+            icon: 'mdi:map-marker'
+          - entity: sensor.laura_location
+            name: Laura
+            icon: 'mdi:map-marker'
+        title: Locations
+        show_header_toggle: false
       - columns: 3
         entities:
           - entity: alarm_control_panel.alarm_com
