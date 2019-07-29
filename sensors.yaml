@@ -98,7 +98,7 @@
 - platform: sems
   username: !secret sems_username
   password: !secret sems_password
-  scan_interval: 60
+  scan_interval: 300
 - platform: template
   sensors:
     sems_name:
