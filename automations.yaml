@@ -159,7 +159,7 @@
   action:
     - service: light.turn_on
       entity_id:
-        - light.fibaro_system_fgd212_dimmer_2_level_2 #hallway light
+        - light.light.entry_hall_lights
 
 - alias: Turn On Hallway Light If Front Door Opened After Sunset
   trigger:
@@ -177,7 +177,7 @@
   action:
     - service: light.turn_on
       entity_id:
-        - light.fibaro_system_fgd212_dimmer_2_level_2 #hallway light        
+        - light.entry_hall_lights
         
     
 ############## SWITCH ON HALLWAY LIGHTS ##############

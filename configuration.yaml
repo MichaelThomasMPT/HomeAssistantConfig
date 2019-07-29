@@ -220,8 +220,8 @@ cloud:
       exclude_entities:
         - light.theatre_room
         - light.theatre_room_2
-        - light.fibaro_system_fgd212_dimmer_2_level
-        - light.fibaro_system_fgd212_dimmer_2_level_3
+        - light.fibaro_system_fgd212_dimmer_2_level_2
+        - light.fibaro_system_fgd212_dimmer_2_level_4
         - light.office
         - light.office_2
     entity_config:

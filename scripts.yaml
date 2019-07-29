@@ -161,10 +161,10 @@ set_movie_lighting:
       scene_name: "Movie Watching"
   - service: light.turn_off
     data:
-      entity_id: light.fibaro_system_fgd212_dimmer_2_level_2 #Entry hall light
+      entity_id: light.entry_hall_lights
   - service: light.turn_off
     data: 
-      entity_id: light.fibaro_system_fgd212_dimmer_2_level_4 #Theatre room lights
+      entity_id: light.theatre_room_ceiling
   alias: Movie Lighting Scene
   
 
@@ -196,7 +196,7 @@ done_with_the_theatre_room:
       entity_id:
         - light.theatre_room_left_lamp
         - light.theatre_room_right_lamp
-        - light.fibaro_system_fgd212_dimmer_2_level_4
+        - light.theatre_room_ceiling
 
 #Play a particular Google Play Music playlsit on all rooms. Triggered by multiple different Lovelace buttons. 
 play_playlist_on_all_rooms:
