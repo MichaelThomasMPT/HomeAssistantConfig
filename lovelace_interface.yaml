@@ -38,16 +38,16 @@ views:
         show_name: false
         title: House State Validity
         type: glance
-      - type: entities
-        entities:
+      - entities:
           - entity: sensor.michael_location
+            icon: 'mdi:map-marker'
             name: Michael
-            icon: 'mdi:map-marker'
           - entity: sensor.laura_location
-            name: Laura
             icon: 'mdi:map-marker'
-        title: Locations
+            name: Laura
         show_header_toggle: false
+        title: Locations
+        type: entities
       - columns: 3
         entities:
           - entity: alarm_control_panel.alarm_com
@@ -81,14 +81,14 @@ views:
         type: glance
       - columns: 3
         entities:
-          - entity: light.fibaro_system_fgd212_dimmer_2_level_4
+          - entity: light.theatre_room_ceiling
             name: Theatre Ceiling
           - entity: light.theatre_room_left_lamp
             name: Theatre Left Lamp
           - entity: light.theatre_room_right_lamp
             name: Theatre Right Lamp
           - entity: light.office_lamp
-          - entity: light.fibaro_system_fgd212_dimmer_2_level_2
+          - entity: light.entry_hall_lights
         show_icon: true
         show_state: false
         title: Lights
@@ -147,20 +147,20 @@ views:
           - entities:
               - entity: light.theatre_room_left_lamp
               - entity: light.theatre_room_right_lamp
-              - entity: light.fibaro_system_fgd212_dimmer_2_level_2
-              - entity: light.fibaro_system_fgd212_dimmer_2_level_4
+              - entity: light.theatre_room_ceiling
+              - entity: light.entry_hall_lights
               - entity: light.office_lamp
             show_header_toggle: true
             title: Lights
             type: entities
           - cards:
-              - entity: light.fibaro_system_fgd212_dimmer_2_level_2
+              - entity: light.entry_hall_lights
                 type: light
               - entity: light.office_lamp
                 type: light
             type: horizontal-stack
           - cards:
-              - entity: light.fibaro_system_fgd212_dimmer_2_level_4
+              - entity: light.theatre_room_ceiling
                 name: Theatre Ceiling
                 type: light
               - entity: light.theatre_room_left_lamp
