@@ -483,6 +483,21 @@ views:
               - entity: script.play_playlist_on_all_rooms
                 hold_action:
                   action: none
+                name: Casino
+                show_icon: true
+                show_name: true
+                show_state: false
+                state_image:
+                  'off': /local/images/casino.jpg
+                tap_action:
+                  action: call-service
+                  service: script.play_playlist_on_all_rooms
+                  service_data:
+                    playlist: Board Games - Casino
+                type: picture-entity
+              - entity: script.play_playlist_on_all_rooms
+                hold_action:
+                  action: none
                 name: China
                 show_icon: true
                 show_name: true
@@ -495,6 +510,8 @@ views:
                   service_data:
                     playlist: Board Games - China
                 type: picture-entity
+            type: horizontal-stack
+          - cards:
               - entity: script.play_playlist_on_all_rooms
                 hold_action:
                   action: none
@@ -510,8 +527,6 @@ views:
                   service_data:
                     playlist: Board Games - Cities
                 type: picture-entity
-            type: horizontal-stack
-          - cards:
               - entity: script.play_playlist_on_all_rooms
                 hold_action:
                   action: none
@@ -542,6 +557,8 @@ views:
                   service_data:
                     playlist: Board Games - Dungeon
                 type: picture-entity
+            type: horizontal-stack
+          - cards:
               - entity: script.play_playlist_on_all_rooms
                 hold_action:
                   action: none
@@ -557,8 +574,21 @@ views:
                   service_data:
                     playlist: Board Games - Egyptian
                 type: picture-entity
-            type: horizontal-stack
-          - cards:
+              - entity: script.play_playlist_on_all_rooms
+                hold_action:
+                  action: none
+                name: French
+                show_icon: true
+                show_name: true
+                show_state: false
+                state_image:
+                  'off': /local/images/french.png
+                tap_action:
+                  action: call-service
+                  service: script.play_playlist_on_all_rooms
+                  service_data:
+                    playlist: Board Games - French
+                type: picture-entity
               - entity: script.play_playlist_on_all_rooms
                 hold_action:
                   action: none
@@ -574,6 +604,11 @@ views:
                   service_data:
                     playlist: Board Games - Gangster
                 type: picture-entity
+            type: horizontal-stack
+        title: Board Game Music Catalog A-G
+        type: 'custom:vertical-stack-in-card'
+      - cards:
+          - cards:
               - entity: script.play_playlist_on_all_rooms
                 hold_action:
                   action: none
@@ -604,11 +639,6 @@ views:
                   service_data:
                     playlist: Board Games - India
                 type: picture-entity
-            type: horizontal-stack
-        title: Board Game Music Catalog A-I
-        type: 'custom:vertical-stack-in-card'
-      - cards:
-          - cards:
               - entity: script.play_playlist_on_all_rooms
                 hold_action:
                   action: none
@@ -624,6 +654,8 @@ views:
                   service_data:
                     playlist: Board Games - Japan
                 type: picture-entity
+            type: horizontal-stack
+          - cards:
               - entity: script.play_playlist_on_all_rooms
                 hold_action:
                   action: none
@@ -654,8 +686,6 @@ views:
                   service_data:
                     playlist: Board Games - Medieval Town
                 type: picture-entity
-            type: horizontal-stack
-          - cards:
               - entity: script.play_playlist_on_all_rooms
                 hold_action:
                   action: none
@@ -671,6 +701,8 @@ views:
                   service_data:
                     playlist: Board Games - Meditation
                 type: picture-entity
+            type: horizontal-stack
+          - cards:
               - entity: script.play_playlist_on_all_rooms
                 hold_action:
                   action: none
@@ -701,8 +733,6 @@ views:
                   service_data:
                     playlist: Board Games - Pirates
                 type: picture-entity
-            type: horizontal-stack
-          - cards:
               - entity: script.play_playlist_on_all_rooms
                 hold_action:
                   action: none
@@ -718,6 +748,8 @@ views:
                   service_data:
                     playlist: Board Games - Renaissance
                 type: picture-entity
+            type: horizontal-stack
+          - cards:
               - entity: script.play_playlist_on_all_rooms
                 hold_action:
                   action: none
@@ -748,8 +780,6 @@ views:
                   service_data:
                     playlist: Board Games - Spy
                 type: picture-entity
-            type: horizontal-stack
-          - cards:
               - entity: script.play_playlist_on_all_rooms
                 hold_action:
                   action: none
@@ -765,30 +795,8 @@ views:
                   service_data:
                     playlist: Board Games - Western
                 type: picture-entity
-              - entity: script.play_playlist_on_all_rooms
-                hold_action:
-                  action: none
-                show_icon: false
-                show_name: false
-                show_state: false
-                state_image:
-                  'off': /local/images/white.jpg
-                tap_action:
-                  action: none
-                type: picture-entity
-              - entity: script.play_playlist_on_all_rooms
-                hold_action:
-                  action: none
-                show_icon: false
-                show_name: false
-                show_state: false
-                state_image:
-                  'off': /local/images/white.jpg
-                tap_action:
-                  action: none
-                type: picture-entity
             type: horizontal-stack
-        title: Board Game Music Catalog J-Z
+        title: Board Game Music Catalog H-Z
         type: 'custom:vertical-stack-in-card'
       - entities:
           - artwork: full-cover
