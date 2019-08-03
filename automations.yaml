@@ -120,7 +120,7 @@
 - alias: Notify If Garage Door Left Open When Leaving Home
   trigger:
     platform: zone
-    entity_id: device_tracker.michael_michaelgalaxys10
+    entity_id: device_tracker.michael_michaelgalaxys10_2
     zone: zone.home
     event: leave
   condition:
@@ -206,7 +206,7 @@
       zone: zone.home
       event: leave
     - platform: zone
-      entity_id: device_tracker.michael_michaelgalaxys10
+      entity_id: device_tracker.michael_michaelgalaxys10_2
       zone: zone.home
       event: leave
   condition:
@@ -215,7 +215,7 @@
       - condition: template
         value_template: "{{ not is_state('device_tracker.lauras_iphone','home') }}"
       - condition: template
-        value_template: "{{ not is_state('device_tracker.michael_michaelgalaxys10','home') }}"
+        value_template: "{{ not is_state('device_tracker.michael_michaelgalaxys10_2','home') }}"
       - condition: state
         entity_id: alarm_control_panel.alarm_com
         state: 'disarmed'
