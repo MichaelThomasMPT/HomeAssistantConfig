@@ -38,16 +38,6 @@ views:
         show_name: false
         title: House State Validity
         type: glance
-      - entities:
-          - entity: sensor.michael_location
-            icon: 'mdi:map-marker'
-            name: Michael
-          - entity: sensor.laura_location
-            icon: 'mdi:map-marker'
-            name: Laura
-        show_header_toggle: false
-        title: Locations
-        type: entities
       - columns: 3
         entities:
           - entity: alarm_control_panel.alarm_com
@@ -835,7 +825,7 @@ views:
   - badges: []
     cards:
       - elements:
-          - entity: light.fibaro_system_fgd212_dimmer_2_level_4
+          - entity: light.theatre_room_ceiling
             style:
               left: 60%
               top: 39.5%
@@ -856,14 +846,14 @@ views:
             tap_action:
               action: toggle
             type: state-icon
-          - entity: light.fibaro_system_fgd212_dimmer_2_level_2
+          - entity: light.entry_hall_lights
             style:
               left: 42.5%
               top: 35%
             tap_action:
               action: toggle
             type: state-icon
-          - entity: light.fibaro_system_fgd212_dimmer_2_level_2
+          - entity: light.entry_hall_lights
             style:
               left: 42.5%
               top: 25%

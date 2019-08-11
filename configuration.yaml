@@ -63,7 +63,7 @@ binary_sensor:
 
 # Aeotec Z-Wave Stick
 zwave:
-  usb_path: /dev/ttyACM0
+  usb_path: /zwaveusbstick
   device_config: !include zwave_device_config.yaml
   
 # Push Notifications  
