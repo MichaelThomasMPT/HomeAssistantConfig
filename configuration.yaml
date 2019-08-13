@@ -148,7 +148,7 @@ media_player:
 ring:
   username: !secret ring_username
   password: !secret ring_password
-  
+
 # camera is currently not in use due to raspberry pi hardware limitations
 #camera:
 #  - platform: ring
@@ -254,27 +254,26 @@ cloud:
         aliases:
           - Theatre Room Vent
           - Theatre Vent
-    
 
 ############## GOOGLE ASSISTANT ##############
 
 ############## ADDITIONAL PANELS ##############
 
 panel_iframe:
-  router:
-    title: 'D-Link Router'
+  router_primary:
+    title: 'Router (Primary)'
     url: 'http://192.168.1.1'
     icon: mdi:router-wireless
     require_admin: true
-  sqlite_web:
-    title: SQLite Web
-    icon: mdi:database
-    url: http://192.168.1.52:6210
+  router_secondary:
+    title: 'Router (Secondary)'
+    url: 'http://192.168.1.2'
+    icon: mdi:router-wireless
     require_admin: true
-  kibana:
-    title: Data Warehouse
-    icon: mdi:chart-line
-    url: http://192.168.1.254:5601
+  portainer:
+    title: Portainer
+    url: 'http://192.168.1.111:9000'
+    icon: mdi:docker
     require_admin: true
     
 ############## ADDITIONAL PANELS ##############
