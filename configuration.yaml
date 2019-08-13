@@ -40,10 +40,10 @@ calendar:
     token: !secret todoist_api_key
     
 # Elastic search output
-elastic:
-  url: http://192.168.1.254:9200
-  exclude:
-    entities: ['sensor.es_cluster_health', 'sensor.es_publish_queue', 'sun.sun']
+#elastic:
+#  url: http://192.168.1.254:9200
+#  exclude:
+#    entities: ['sensor.es_cluster_health', 'sensor.es_publish_queue', 'sun.sun']
 
 # Text to speech
 tts:
