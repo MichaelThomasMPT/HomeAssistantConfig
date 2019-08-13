@@ -149,11 +149,6 @@ ring:
   username: !secret ring_username
   password: !secret ring_password
 
-# camera is currently not in use due to raspberry pi hardware limitations
-#camera:
-#  - platform: ring
-#    scan_interval: 90
-
 ############## DOORBELL ##############
 
 
