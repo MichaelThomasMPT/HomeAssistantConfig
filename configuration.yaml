@@ -206,6 +206,7 @@ cloud:
         - script.aircon_cool_central_living
         - script.time_for_a_movie
         - script.done_with_the_theatre_room
+        - script.roomba_clean
         - switch.aircon_on_off
         - switch.aircon_zone_bed23
         - switch.aircon_zone_living

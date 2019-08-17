@@ -130,234 +130,9 @@ views:
         show_header_toggle: false
         title: Solar Panels
         type: entities
+    icon: 'mdi:home'
     path: default_view
-    title: Home Status
-  - cards:
-      - cards:
-          - entities:
-              - entity: light.theatre_room_left_lamp
-              - entity: light.theatre_room_right_lamp
-              - entity: light.theatre_room_ceiling
-              - entity: light.entry_hall_lights
-              - entity: light.office_lamp
-            show_header_toggle: true
-            title: Lights
-            type: entities
-          - cards:
-              - entity: light.entry_hall_lights
-                type: light
-              - entity: light.office_lamp
-                type: light
-            type: horizontal-stack
-          - cards:
-              - entity: light.theatre_room_ceiling
-                name: Theatre Ceiling
-                type: light
-              - entity: light.theatre_room_left_lamp
-                name: Theatre Left Lamp
-                type: light
-              - entity: light.theatre_room_right_lamp
-                name: Theatre Right Lamp
-                type: light
-            type: horizontal-stack
-          - entity: script.set_movie_lighting
-            hold_action:
-              action: none
-            icon: 'mdi:theater'
-            icon_height: 60px
-            name: Movie Lights
-            show_icon: true
-            show_name: true
-            tap_action:
-              action: call-service
-              service: script.turn_on
-              service_data:
-                entity_id: script.set_movie_lighting
-            type: entity-button
-        type: vertical-stack
-      - cards:
-          - entities:
-              - entity: switch.aircon_on_off
-                icon: 'mdi:power'
-                name: Aircon On/Off
-              - entity: input_select.aircon_run_mode
-              - entity: sensor.aircon_temperature
-                name: Aircon Temperature
-              - entity: input_number.aircon_temperature
-                icon: 'mdi:temperature-celsius'
-                name: Set Temperature
-            show_header_toggle: false
-            title: Aircon Control
-            type: entities
-          - card:
-              cards:
-                - entities:
-                    - entity: input_number.aircon_countdown_timer
-                      icon: 'mdi:timer-sand'
-                  show_header_toggle: false
-                  title: Countdown To Off
-                  type: entities
-                - cards:
-                    - entity: sensor.aircon_countdown_timer
-                      hold_action:
-                        action: none
-                      icon: 'mdi:clock-outline'
-                      name: 30 Minutes
-                      show_icon: true
-                      show_name: true
-                      tap_action:
-                        action: call-service
-                        service: input_number.set_value
-                        service_data:
-                          entity_id: input_number.aircon_countdown_timer
-                          value: 30
-                      type: entity-button
-                    - entity: sensor.aircon_countdown_timer
-                      hold_action:
-                        action: none
-                      icon: 'mdi:clock-outline'
-                      name: 1 Hour
-                      show_icon: true
-                      show_name: true
-                      tap_action:
-                        action: call-service
-                        service: input_number.set_value
-                        service_data:
-                          entity_id: input_number.aircon_countdown_timer
-                          value: 60
-                      type: entity-button
-                    - entity: sensor.aircon_countdown_timer
-                      hold_action:
-                        action: none
-                      icon: 'mdi:clock-outline'
-                      name: 1.5 Hours
-                      show_icon: true
-                      show_name: true
-                      tap_action:
-                        action: call-service
-                        service: input_number.set_value
-                        service_data:
-                          entity_id: input_number.aircon_countdown_timer
-                          value: 90
-                      type: entity-button
-                    - entity: sensor.aircon_countdown_timer
-                      hold_action:
-                        action: none
-                      icon: 'mdi:clock-outline'
-                      name: 2 Hours
-                      show_icon: true
-                      show_name: true
-                      tap_action:
-                        action: call-service
-                        service: input_number.set_value
-                        service_data:
-                          entity_id: input_number.aircon_countdown_timer
-                          value: 120
-                      type: entity-button
-                  type: horizontal-stack
-              type: vertical-stack
-            conditions:
-              - entity: switch.aircon_on_off
-                state: 'on'
-            type: conditional
-          - entities:
-              - entity: switch.aircon_zone_living
-                icon: 'mdi:air-filter'
-                name: Living Area
-              - entity: switch.aircon_zone_theatre
-                icon: 'mdi:air-filter'
-                name: Theatre
-              - entity: switch.aircon_zone_master
-                icon: 'mdi:air-filter'
-                name: Master Bedroom
-              - entity: switch.aircon_zone_bed23
-                icon: 'mdi:air-filter'
-                name: Bedroom 2 & 3
-            show_header_toggle: false
-            title: Aircon Zones
-            type: entities
-          - cards:
-              - entity: script.aircon_warm_master
-                hold_action:
-                  action: none
-                icon: 'mdi:home-automation'
-                icon_height: 60px
-                name: Cold Morning
-                show_icon: true
-                show_name: true
-                tap_action:
-                  action: call-service
-                  service: script.turn_on
-                  service_data:
-                    entity_id: script.aircon_warm_master
-                type: entity-button
-              - entity: script.aircon_warm_master
-                hold_action:
-                  action: none
-                icon: 'mdi:home-automation'
-                icon_height: 60px
-                name: Cold Night
-                show_icon: true
-                show_name: true
-                tap_action:
-                  action: call-service
-                  service: script.turn_on
-                  service_data:
-                    entity_id: script.aircon_warm_master
-                type: entity-button
-            type: horizontal-stack
-          - cards:
-              - entity: script.aircon_fan_master
-                hold_action:
-                  action: none
-                icon: 'mdi:home-automation'
-                icon_height: 60px
-                name: Sleeping Fan
-                show_icon: true
-                show_name: true
-                tap_action:
-                  action: call-service
-                  service: script.turn_on
-                  service_data:
-                    entity_id: script.aircon_fan_master
-                type: entity-button
-              - entity: script.aircon_cool_central_living
-                hold_action:
-                  action: none
-                icon: 'mdi:home-automation'
-                icon_height: 60px
-                name: Cool Centre
-                show_icon: true
-                show_name: true
-                tap_action:
-                  action: call-service
-                  service: script.turn_on
-                  service_data:
-                    entity_id: script.aircon_cool_central_living
-                type: entity-button
-            type: horizontal-stack
-        title: Aircon
-        type: vertical-stack
-      - cards:
-          - entity: alarm_control_panel.alarm_com
-            name: House Alarm
-            states:
-              - arm_home
-              - arm_away
-            type: alarm-panel
-          - entities:
-              - entity: >-
-                  cover.aeon_labs_zw062_garage_door_controller_barrier_state_label
-                secondary_info: >-
-                  [[
-                  cover.aeon_labs_zw062_garage_door_controller_barrier_state_label.state
-                  ]]
-                type: 'custom:secondaryinfo-entity-row'
-            show_header_toggle: false
-            title: Garage Door
-            type: entities
-        type: vertical-stack
-    title: Home Control
+    title: ''
   - badges: []
     cards:
       - entities:
@@ -821,7 +596,8 @@ views:
         show_header_toggle: false
         title: Living Room TV
         type: entities
-    title: Media
+    icon: 'mdi:music'
+    title: ''
   - badges: []
     cards:
       - elements:
@@ -863,7 +639,7 @@ views:
           - entity: light.office_lamp
             style:
               left: 66.5%
-              top: 12.5%
+              top: 11%
             tap_action:
               action: toggle
             type: state-icon
@@ -958,7 +734,256 @@ views:
             tap_action:
               action: toggle
             type: state-icon
+          - entity: script.roomba_clean
+            icon: 'mdi:robot-vacuum'
+            style:
+              left: 66.5%
+              top: 14%
+            tap_action:
+              action: toggle
+            type: state-icon
         image: /local/floor-plan.png
         type: picture-elements
+    icon: 'mdi:floor-plan'
     panel: false
-    title: Floor Plan
+    title: ''
+  - cards:
+      - cards:
+          - entities:
+              - entity: light.theatre_room_left_lamp
+              - entity: light.theatre_room_right_lamp
+              - entity: light.theatre_room_ceiling
+              - entity: light.entry_hall_lights
+              - entity: light.office_lamp
+            show_header_toggle: true
+            title: Lights
+            type: entities
+          - cards:
+              - entity: light.entry_hall_lights
+                type: light
+              - entity: light.office_lamp
+                type: light
+            type: horizontal-stack
+          - cards:
+              - entity: light.theatre_room_ceiling
+                name: Theatre Ceiling
+                type: light
+              - entity: light.theatre_room_left_lamp
+                name: Theatre Left Lamp
+                type: light
+              - entity: light.theatre_room_right_lamp
+                name: Theatre Right Lamp
+                type: light
+            type: horizontal-stack
+          - entity: script.set_movie_lighting
+            hold_action:
+              action: none
+            icon: 'mdi:theater'
+            icon_height: 60px
+            name: Movie Lights
+            show_icon: true
+            show_name: true
+            tap_action:
+              action: call-service
+              service: script.turn_on
+              service_data:
+                entity_id: script.set_movie_lighting
+            type: entity-button
+        type: vertical-stack
+      - cards:
+          - entities:
+              - entity: switch.aircon_on_off
+                icon: 'mdi:power'
+                name: Aircon On/Off
+              - entity: input_select.aircon_run_mode
+              - entity: sensor.aircon_temperature
+                name: Aircon Temperature
+              - entity: input_number.aircon_temperature
+                icon: 'mdi:temperature-celsius'
+                name: Set Temperature
+            show_header_toggle: false
+            title: Aircon Control
+            type: entities
+          - card:
+              cards:
+                - entities:
+                    - entity: input_number.aircon_countdown_timer
+                      icon: 'mdi:timer-sand'
+                  show_header_toggle: false
+                  title: Countdown To Off
+                  type: entities
+                - cards:
+                    - entity: sensor.aircon_countdown_timer
+                      hold_action:
+                        action: none
+                      icon: 'mdi:clock-outline'
+                      name: 30 Minutes
+                      show_icon: true
+                      show_name: true
+                      tap_action:
+                        action: call-service
+                        service: input_number.set_value
+                        service_data:
+                          entity_id: input_number.aircon_countdown_timer
+                          value: 30
+                      type: entity-button
+                    - entity: sensor.aircon_countdown_timer
+                      hold_action:
+                        action: none
+                      icon: 'mdi:clock-outline'
+                      name: 1 Hour
+                      show_icon: true
+                      show_name: true
+                      tap_action:
+                        action: call-service
+                        service: input_number.set_value
+                        service_data:
+                          entity_id: input_number.aircon_countdown_timer
+                          value: 60
+                      type: entity-button
+                    - entity: sensor.aircon_countdown_timer
+                      hold_action:
+                        action: none
+                      icon: 'mdi:clock-outline'
+                      name: 1.5 Hours
+                      show_icon: true
+                      show_name: true
+                      tap_action:
+                        action: call-service
+                        service: input_number.set_value
+                        service_data:
+                          entity_id: input_number.aircon_countdown_timer
+                          value: 90
+                      type: entity-button
+                    - entity: sensor.aircon_countdown_timer
+                      hold_action:
+                        action: none
+                      icon: 'mdi:clock-outline'
+                      name: 2 Hours
+                      show_icon: true
+                      show_name: true
+                      tap_action:
+                        action: call-service
+                        service: input_number.set_value
+                        service_data:
+                          entity_id: input_number.aircon_countdown_timer
+                          value: 120
+                      type: entity-button
+                  type: horizontal-stack
+              type: vertical-stack
+            conditions:
+              - entity: switch.aircon_on_off
+                state: 'on'
+            type: conditional
+          - entities:
+              - entity: switch.aircon_zone_living
+                icon: 'mdi:air-filter'
+                name: Living Area
+              - entity: switch.aircon_zone_theatre
+                icon: 'mdi:air-filter'
+                name: Theatre
+              - entity: switch.aircon_zone_master
+                icon: 'mdi:air-filter'
+                name: Master Bedroom
+              - entity: switch.aircon_zone_bed23
+                icon: 'mdi:air-filter'
+                name: Bedroom 2 & 3
+            show_header_toggle: false
+            title: Aircon Zones
+            type: entities
+          - cards:
+              - entity: script.aircon_warm_master
+                hold_action:
+                  action: none
+                icon: 'mdi:home-automation'
+                icon_height: 60px
+                name: Cold Morning
+                show_icon: true
+                show_name: true
+                tap_action:
+                  action: call-service
+                  service: script.turn_on
+                  service_data:
+                    entity_id: script.aircon_warm_master
+                type: entity-button
+              - entity: script.aircon_warm_master
+                hold_action:
+                  action: none
+                icon: 'mdi:home-automation'
+                icon_height: 60px
+                name: Cold Night
+                show_icon: true
+                show_name: true
+                tap_action:
+                  action: call-service
+                  service: script.turn_on
+                  service_data:
+                    entity_id: script.aircon_warm_master
+                type: entity-button
+            type: horizontal-stack
+          - cards:
+              - entity: script.aircon_fan_master
+                hold_action:
+                  action: none
+                icon: 'mdi:home-automation'
+                icon_height: 60px
+                name: Sleeping Fan
+                show_icon: true
+                show_name: true
+                tap_action:
+                  action: call-service
+                  service: script.turn_on
+                  service_data:
+                    entity_id: script.aircon_fan_master
+                type: entity-button
+              - entity: script.aircon_cool_central_living
+                hold_action:
+                  action: none
+                icon: 'mdi:home-automation'
+                icon_height: 60px
+                name: Cool Centre
+                show_icon: true
+                show_name: true
+                tap_action:
+                  action: call-service
+                  service: script.turn_on
+                  service_data:
+                    entity_id: script.aircon_cool_central_living
+                type: entity-button
+            type: horizontal-stack
+        title: Aircon
+        type: vertical-stack
+      - cards:
+          - entity: alarm_control_panel.alarm_com
+            name: House Alarm
+            states:
+              - arm_home
+              - arm_away
+            type: alarm-panel
+          - entities:
+              - entity: >-
+                  cover.aeon_labs_zw062_garage_door_controller_barrier_state_label
+                secondary_info: >-
+                  [[
+                  cover.aeon_labs_zw062_garage_door_controller_barrier_state_label.state
+                  ]]
+                type: 'custom:secondaryinfo-entity-row'
+            show_header_toggle: false
+            title: Garage Door
+            type: entities
+        type: vertical-stack
+      - entity: script.roomba_clean
+        hold_action:
+          action: more-info
+        icon: 'mdi:robot-vacuum'
+        show_icon: true
+        show_name: true
+        tap_action:
+          action: toggle
+        type: entity-button
+    title: Home Control
+  - badges: []
+    cards: []
+    panel: false
+    path: theatre-room
+    title: Theatre Room

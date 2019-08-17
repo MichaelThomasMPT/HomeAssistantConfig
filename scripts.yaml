@@ -214,3 +214,34 @@ play_playlist_on_all_rooms:
         entity_id: input_select.gmusic_player_playlist
     - service: media_player.turn_on
       entity_id: media_player.gmusic_player
+      
+roomba_clean:
+  alias: Roomba - Clean House
+  sequence: 
+    - data:
+        entity_id: switch.roomba
+      service: switch.turn_on
+
+roomba_return_to_dock:
+  alias: Roomba - Return To Dock
+  sequence: 
+    - data:
+        entity_id: switch.roomba
+      service: switch.turn_off
+    - data:
+        entity_id: switch.roomba
+      service: switch.turn_off
+    - data:
+        entity_id: switch.roomba
+      service: switch.turn_off
+    - delay:
+        seconds: 5
+    - data:
+        entity_id: switch.roomba
+      service: switch.turn_off
+    - data:
+        entity_id: switch.roomba
+      service: switch.turn_off
+    - data:
+        entity_id: switch.roomba
+      service: switch.turn_off
