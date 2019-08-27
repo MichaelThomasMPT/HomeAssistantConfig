@@ -70,35 +70,7 @@ notify:
   - name: pushbullet
     platform: pushbullet
     api_key: !secret pushbullet_api_key
-    
-
-
-############## LG TV ##############
-
-# Turn on wake-on-lan support
-wake_on_lan:
-
-# LG TV
-media_player:
-  - platform: webostv
-    host: 192.168.1.150
-    name: Theatre Room TV
-    filename: webostv.conf
-    timeout: 5
-    turn_on_action:
-      service: wake_on_lan.send_magic_packet
-      data:
-        mac: "A8:23:FE:E4:84:05"
-    customize:
-      sources:
-        - livetv
-        - youtube
-        - makotv
-        - netflix
-
-
-############## LG TV ##############
-
+ 
 
 ############## DOORBELL ##############
 
