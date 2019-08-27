@@ -11,15 +11,12 @@ homeassistant:
 # Configure a default setup of Home Assistant (frontend, api, etc)
 default_config:
 
-frontend:
-  themes: !include themes.yaml
-
-automation: !include automations.yaml
+#Include other configuration files
+#automation: !include automations.yaml
 group: !include groups.yaml
 script: !include scripts.yaml
 sensor: !include sensors.yaml
 #switch: !include switches.yaml
-
 
 # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
 # http:
@@ -29,10 +26,6 @@ sensor: !include sensors.yaml
 discovery:
 ssdp:
 zeroconf:
-
-# Home Assistant Customer UI: https://github.com/andrey-git/home-assistant-custom-ui
-customizer:
-  custom_ui: hosted
 
 # Todoist To-Do and Shopping Lists
 calendar:
@@ -57,41 +50,4 @@ zwave:
 # Check for breaking changes in new HA configuration
 breaking_changes:
   scan_interval: 600 #10 minutes
-
-############## ADDITIONAL PANELS ##############
-
-panel_iframe:
-  router_primary:
-    title: 'Router (Primary)'
-    url: 'http://192.168.1.1'
-    icon: mdi:router-wireless
-    require_admin: true
-  router_secondary:
-    title: 'Router (Secondary)'
-    url: 'http://192.168.1.2'
-    icon: mdi:router-wireless
-    require_admin: true
-  portainer:
-    title: Portainer
-    url: 'http://192.168.1.111:9000'
-    icon: mdi:docker
-    require_admin: true
-  elk:
-    title: ELK
-    url: 'http://192.168.1.111:5601'
-    icon: mdi:database
-    require_admin: true
-  elk_money_balance:
-    title: Money Balance
-    url: 'http://192.168.1.111:5601/app/kibana#/dashboard/d8425c20-5a84-11e7-9da3-818b9c9525ff?_g=(refreshInterval%3A(pause%3A!t%2Cvalue%3A0)%2Ctime%3A(from%3Anow-1y%2Cto%3Anow))'
-    icon: mdi:currency-usd
-    require_admin: true
-  elk_money_spent:
-    title: Money Spent
-    url: 'http://192.168.1.111:5601/app/kibana#/dashboard/0f7fa450-ead0-11e7-bf13-553f043d4230?_g=(refreshInterval%3A(pause%3A!t%2Cvalue%3A0)%2Ctime%3A(from%3Anow-1y%2Cto%3Anow))'
-    icon: mdi:currency-usd-off
-    require_admin: true
-    
-############## ADDITIONAL PANELS ##############
-
 
