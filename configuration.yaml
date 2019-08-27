@@ -54,23 +54,9 @@ zwave:
   usb_path: /zwaveusbstick
   device_config: !include zwave_device_config.yaml
 
-
-############## ALARM.COM ##############
-
-alarm_control_panel:
-  platform: alarmdotcom
-  scan_interval: 10
-  username: !secret alarmdotcom_username
-  password: !secret alarmdotcom_password
-
-############## ALARM.COM ##############
-
-############## BREAKING CHANGES ##############
-
+# Check for breaking changes in new HA configuration
 breaking_changes:
   scan_interval: 600 #10 minutes
-
-############## BREAKING CHANGES ##############
 
 ############## ADDITIONAL PANELS ##############
 
