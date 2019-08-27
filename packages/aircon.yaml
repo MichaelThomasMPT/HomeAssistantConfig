@@ -350,3 +350,13 @@ switch:
           service: rest_command.aircon_control
           data:
             command: '{"ac1":{"zones":{"z04":{"state":"close"}}}}'
+
+group:
+  aircon_vents:
+    name: Aircon Vents
+    entities:
+      - switch.aircon_zone_bed23
+      - switch.aircon_zone_living
+      - switch.aircon_zone_master
+      - switch.aircon_zone_theatre
+    
