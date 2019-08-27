@@ -49,10 +49,6 @@ elastic:
 tts:
   - platform: google_translate
 
-binary_sensor:
-  # Ring doorbell events (ie. ring/motion)
-  - platform: ring
-
 # Aeotec Z-Wave Stick
 zwave:
   usb_path: /zwaveusbstick
