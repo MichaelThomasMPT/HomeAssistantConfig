@@ -18,7 +18,7 @@ automation: !include automations.yaml
 group: !include groups.yaml
 script: !include scripts.yaml
 sensor: !include sensors.yaml
-switch: !include switches.yaml
+#switch: !include switches.yaml
 
 
 # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
@@ -64,15 +64,6 @@ alarm_control_panel:
   password: !secret alarmdotcom_password
 
 ############## ALARM.COM ##############
-
-############## WEATHER ##############
-
-weather:
-  - platform: bom
-    station: IDW60901.94608
-sun:
-
-############## WEATHER ##############
 
 ############## BREAKING CHANGES ##############
 

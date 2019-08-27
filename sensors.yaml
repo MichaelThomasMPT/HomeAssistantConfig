@@ -1,7 +1,3 @@
-# Weather prediction
-- platform: yr
-  name: Weather
-
 - platform: template
   scan_interval: 10
   sensors:
@@ -37,64 +33,6 @@
         {% else %}
           Inactive
         {% endif %}
-        
-
-# BOM Weather Sensor
-- platform: bom_forecast
-  product_id: IDW12300
-  name: Perth Weather
-  forecast_days: 6
-  rest_of_today: TRUE
-  friendly: TRUE
-  friendly_state_format: '{max}, {summary}'
-  monitored_conditions:
-    - 'max'
-    - 'min'
-    - 'chance_of_rain'
-    - 'possible_rainfall'
-    - 'summary'
-    - 'detailed_summary'
-    
-    
-# Solar Panels
-- platform: sems
-  username: !secret sems_username
-  password: !secret sems_password
-  scan_interval: 300
-- platform: template
-  sensors:
-    sems_name:
-      friendly_name: "Solar Panel - Name"
-      value_template: '{{ states.sensor.sems_portal.attributes["name"] }}'
-    sems_capacity:
-      friendly_name: "Solar Panel - Capacity"
-      value_template: '{{ states.sensor.sems_portal.attributes["capacity"] }}'
-      unit_of_measurement: "kW"
-    sems_output_power:
-      friendly_name: "Solar Panel Output"
-      value_template: '{{ states.sensor.sems_portal.attributes["outputpower"] }}'
-      unit_of_measurement: "W"
-    sems_inner_temperature:
-      friendly_name: "Solar Panel - Inner Temperature"
-      value_template: '{{ states.sensor.sems_portal.attributes["tempperature"] }}'
-      unit_of_measurement: "°C"
-    sems_total_generated: 
-      friendly_name: "Solar Panel - Total Electricity Generated"
-      value_template: '{{ states.sensor.sems_portal.attributes["etotal"] }}'     
-      unit_of_measurement: "kWh"
-    sems_today_generated: 
-      friendly_name: "Solar Panel - Electricity Generated Today"
-      value_template: '{{ states.sensor.sems_portal.attributes["eday"] }}'     
-      unit_of_measurement: "kWh"
-    sems_status: 
-      friendly_name: "Solar Panel - Status"
-      value_template: >-
-        {% if is_state_attr("sensor.sems_portal", "status", -1) -%}
-          Offline
-        {%- else -%}
-          Online
-        {%- endif %}
-        
 
 # Home Away Status
 - platform: template
