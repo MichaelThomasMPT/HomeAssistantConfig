@@ -15,13 +15,18 @@ homeassistant:
   # Package config: https://www.home-assistant.io/docs/configuration/packages/#create-a-packages-folder
   packages: !include_dir_named packages 
 
-switch: !include switches.yaml
-
 # Configure a default setup of Home Assistant (frontend, api, etc)
 default_config:
 
 frontend:
   themes: !include themes.yaml
+
+automation: !include automations.yaml
+group: !include groups.yaml
+script: !include scripts.yaml
+sensor: !include sensors.yaml
+switch: !include switches.yaml
+
 
 # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
 # http:
@@ -51,14 +56,6 @@ elastic:
 tts:
   - platform: google_translate
 
-group: !include groups.yaml
-script: !include scripts.yaml
-
-# Automation scripts
-automation: !include automations.yaml
-
-# Sensors
-sensor: !include sensors.yaml
 binary_sensor:
   # Ring doorbell events (ie. ring/motion)
   - platform: ring
