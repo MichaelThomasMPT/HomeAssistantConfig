@@ -65,17 +65,6 @@ zwave:
   usb_path: /zwaveusbstick
   device_config: !include zwave_device_config.yaml
 
- 
-
-############## DOORBELL ##############
-
-# RING DOORBELL
-ring:
-  username: !secret ring_username
-  password: !secret ring_password
-
-############## DOORBELL ##############
-
 
 ############## ALARM.COM ##############
 
