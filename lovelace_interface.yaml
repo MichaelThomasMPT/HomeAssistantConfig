@@ -11,118 +11,92 @@ resources:
     url: /local/vertical-stack-in-card.js?v=0.1.3
 title: Treeby Home
 views:
-  - badges:
-      - person.michael
-      - person.laura
-      - sensor.weather_symbol
-      - sun.sun
-      - sensor.sems_output_power
-    cards:
+  - cards:
       - entity: weather.home
         name: Treeby
         type: weather-forecast
       - entities:
-          - entity: sensor.away_from_home_state_validity
-        show_name: false
-        title: House State Validity
-        type: glance
-      - columns: 3
-        entities:
-          - entity: alarm_control_panel.alarm_com
-            name: Alarm
-          - entity: sensor.front_door
-            icon: 'mdi:door'
-          - entity: cover.aeon_labs_zw062_garage_door_controller_barrier_state_label
-        show_state: true
-        title: Security
-        type: glance
-      - entities:
-          - entity: sensor.ring_last_ding
-            icon: 'mdi:bell-ring'
-            name: Last Ring
-          - entity: sensor.ring_last_motion
-            icon: 'mdi:motion-sensor'
-            name: Last Motion
-        title: Doorbell
-        type: glance
-      - entities:
-          - entity: sensor.aircon_sensor
-            icon: 'mdi:power'
-            name: Air-Con
-          - entity: sensor.aircon_run_mode
-            icon: 'mdi:air-conditioner'
-            name: Run Mode
-          - entity: sensor.aircon_temperature
-            name: Temperature
-        show_name: false
-        title: Air Conditioner
-        type: glance
-      - columns: 3
-        entities:
-          - entity: light.theatre_room_ceiling
-            name: Theatre Ceiling
-          - entity: light.theatre_room_left_lamp
-            name: Theatre Left Lamp
-          - entity: light.theatre_room_right_lamp
-            name: Theatre Right Lamp
-          - entity: light.office_lamp
-          - entity: light.entry_hall_lights
-        show_icon: true
-        show_state: false
-        title: Lights
-        type: glance
-      - entities:
-          - entity: media_player.theatre_room_tv
-            icon: 'mdi:television'
-          - entity: media_player.theatre_room_chromecast
-          - entity: media_player.living_room_chromecast
-        title: TVs
-        type: glance
-      - columns: 5
-        entities:
-          - entity: media_player.kitchen_google_home_hub
-            icon: 'mdi:speaker'
-            name: Kitchen
-          - entity: media_player.master_bedroom_speaker
-            icon: 'mdi:speaker'
-            name: Bedroom
-          - entity: media_player.office_google_home
-            icon: 'mdi:speaker'
-            name: Office
-          - entity: media_player.office_pc_speakers
-            icon: 'mdi:speaker'
-            name: Office PC
-          - entity: media_player.theatre_room_google_home
-            icon: 'mdi:speaker'
-            name: Theatre
-        title: Speakers
-        type: glance
-      - entities:
           - entity: sensor.sems_status
             icon: 'mdi:power'
             name: Status
-          - entity: sensor.sems_capacity
-            icon: 'mdi:battery'
-            name: Capacity
           - entity: sensor.sems_output_power
             icon: 'mdi:flash'
             name: Current Output Power
           - entity: sensor.sems_today_generated
             icon: 'mdi:solar-power'
             name: Electricity Generated Today
-          - entity: sensor.sems_total_generated
-            icon: 'mdi:all-inclusive'
-            name: Total Electricity Generated
-          - entity: sensor.sems_inner_temperature
-            name: Inner Temperature
         show_header_toggle: false
         title: Solar Panels
         type: entities
+      - entities:
+          - entity: sensor.away_from_home_state_validity
+        show_name: false
+        title: House State Validity
+        type: glance
+      - cards:
+          - entity: alarm_control_panel.alarm_com
+            name: House Alarm
+            states:
+              - arm_home
+              - arm_away
+            type: alarm-panel
+          - entities:
+              - entity: sensor.front_door
+                icon: 'mdi:door'
+              - entity: sensor.ring_last_ding
+                icon: 'mdi:bell-ring'
+                name: Last Ring
+              - entity: sensor.ring_last_motion
+                icon: 'mdi:motion-sensor'
+                name: Last Motion
+            title: Front Door
+            type: glance
+        type: vertical-stack
+      - type: vertical-stack
+        cards:
+          - title: Lights
+            show_header_toggle: true
+            type: entities
+            entities:
+              - entity: light.theatre_room_left_lamp
+              - entity: light.theatre_room_right_lamp
+              - entity: light.theatre_room_ceiling
+              - entity: light.entry_hall_lights
+              - entity: light.office_lamp
+          - type: horizontal-stack
+            cards:
+              - type: light
+                entity: light.entry_hall_lights
+              - type: light
+                entity: light.office_lamp
+      - entities:
+          - entity: cover.aeon_labs_zw062_garage_door_controller_barrier_state_label
+            secondary_info: >-
+              [[
+              cover.aeon_labs_zw062_garage_door_controller_barrier_state_label.state
+              ]]
+            type: 'custom:secondaryinfo-entity-row'
+        show_header_toggle: false
+        title: Garage Door
+        type: entities
+      - entity: script.roomba_clean
+        hold_action:
+          action: more-info
+        icon: 'mdi:robot-vacuum'
+        show_icon: true
+        show_name: true
+        tap_action:
+          action: toggle
+        type: entity-button
+    badges:
+      - person.michael
+      - person.laura
+      - sensor.weather_symbol
+      - sun.sun
     icon: 'mdi:home'
     path: default_view
-    title: ''
-  - badges: []
-    cards:
+    title: Home
+  - cards:
       - entities:
           - artwork: cover
             entity: media_player.all_rooms
@@ -584,10 +558,11 @@ views:
         show_header_toggle: false
         title: Living Room TV
         type: entities
+    badges: []
     icon: 'mdi:music'
-    title: ''
-  - badges: []
-    cards:
+    title: Media
+    path: media
+  - cards:
       - elements:
           - entity: light.theatre_room_ceiling
             style:
@@ -732,68 +707,12 @@ views:
             type: state-icon
         image: /local/floor-plan.png
         type: picture-elements
+    badges: []
     icon: 'mdi:floor-plan'
     panel: false
-    title: ''
+    title: Floor Plan
+    path: floor-plan
   - cards:
-      - cards:
-          - entities:
-              - entity: light.theatre_room_left_lamp
-              - entity: light.theatre_room_right_lamp
-              - entity: light.theatre_room_ceiling
-              - entity: light.entry_hall_lights
-              - entity: light.office_lamp
-            show_header_toggle: true
-            title: Lights
-            type: entities
-          - cards:
-              - entity: light.entry_hall_lights
-                type: light
-              - entity: light.office_lamp
-                type: light
-            type: horizontal-stack
-          - cards:
-              - entity: light.theatre_room_ceiling
-                name: Theatre Ceiling
-                type: light
-              - entity: light.theatre_room_left_lamp
-                name: Theatre Left Lamp
-                type: light
-              - entity: light.theatre_room_right_lamp
-                name: Theatre Right Lamp
-                type: light
-            type: horizontal-stack
-          - cards:
-              - entity: script.set_movie_lighting
-                hold_action:
-                  action: none
-                icon: 'mdi:theater'
-                icon_height: 60px
-                name: Movie Lights
-                show_icon: true
-                show_name: true
-                tap_action:
-                  action: call-service
-                  service: script.turn_on
-                  service_data:
-                    entity_id: script.set_movie_lighting
-                type: entity-button
-              - entity: script.movie_has_finished
-                hold_action:
-                  action: none
-                icon: 'mdi:filmstrip-off'
-                icon_height: 60px
-                name: Movie Has Finished
-                show_icon: true
-                show_name: true
-                tap_action:
-                  action: call-service
-                  service: script.turn_on
-                  service_data:
-                    entity_id: script.movie_has_finished
-                type: entity-button
-            type: horizontal-stack
-        type: vertical-stack
       - cards:
           - entities:
               - entity: switch.aircon_on_off
@@ -879,22 +798,25 @@ views:
               - entity: switch.aircon_on_off
                 state: 'on'
             type: conditional
-          - entities:
-              - entity: switch.aircon_zone_living
-                icon: 'mdi:air-filter'
-                name: Living Area
-              - entity: switch.aircon_zone_theatre
-                icon: 'mdi:air-filter'
-                name: Theatre
-              - entity: switch.aircon_zone_master
-                icon: 'mdi:air-filter'
-                name: Master Bedroom
-              - entity: switch.aircon_zone_bed23
-                icon: 'mdi:air-filter'
-                name: Bedroom 2 & 3
-            show_header_toggle: false
-            title: Aircon Zones
-            type: entities
+        title: Aircon
+        type: vertical-stack
+      - entities:
+          - entity: switch.aircon_zone_living
+            icon: 'mdi:air-filter'
+            name: Living Area
+          - entity: switch.aircon_zone_theatre
+            icon: 'mdi:air-filter'
+            name: Theatre
+          - entity: switch.aircon_zone_master
+            icon: 'mdi:air-filter'
+            name: Master Bedroom
+          - entity: switch.aircon_zone_bed23
+            icon: 'mdi:air-filter'
+            name: Bedroom 2 & 3
+        show_header_toggle: false
+        title: Aircon Zones
+        type: entities
+      - cards:
           - cards:
               - entity: script.aircon_warm_master
                 hold_action:
@@ -955,34 +877,116 @@ views:
                     entity_id: script.aircon_cool_central_living
                 type: entity-button
             type: horizontal-stack
-        title: Aircon
-        type: vertical-stack
+          - cards:
+              - entity: script.aircon_cool
+                hold_action:
+                  action: none
+                icon: 'mdi:snowflake'
+                icon_height: 60px
+                name: Run Cold
+                show_icon: true
+                show_name: true
+                tap_action:
+                  action: call-service
+                  service: script.turn_on
+                  service_data:
+                    entity_id: script.aircon_cool
+                type: entity-button
+              - entity: script.aircon_heat
+                hold_action:
+                  action: none
+                icon: 'mdi:fire'
+                icon_height: 60px
+                name: Run Hot
+                show_icon: true
+                show_name: true
+                tap_action:
+                  action: call-service
+                  service: script.turn_on
+                  service_data:
+                    entity_id: script.aircon_heat
+                type: entity-button
+            type: horizontal-stack
+        title: Presets
+        type: 'custom:vertical-stack-in-card'
+    badges: []
+    path: aircon
+    title: Aircon
+    icon: 'mdi:air-conditioner'
+  - badges: []
+    cards:
       - cards:
-          - entity: alarm_control_panel.alarm_com
-            name: House Alarm
-            states:
-              - arm_home
-              - arm_away
-            type: alarm-panel
           - entities:
-              - entity: >-
-                  cover.aeon_labs_zw062_garage_door_controller_barrier_state_label
-                secondary_info: >-
-                  [[
-                  cover.aeon_labs_zw062_garage_door_controller_barrier_state_label.state
-                  ]]
-                type: 'custom:secondaryinfo-entity-row'
-            show_header_toggle: false
-            title: Garage Door
+              - entity: light.theatre_room_left_lamp
+              - entity: light.theatre_room_right_lamp
+              - entity: light.theatre_room_ceiling
+            show_header_toggle: true
+            title: Lights
             type: entities
+          - cards:
+              - entity: light.theatre_room_ceiling
+                name: Theatre Ceiling
+                type: light
+            type: horizontal-stack
+          - cards:
+              - entity: light.theatre_room_left_lamp
+                name: Theatre Left Lamp
+                type: light
+              - entity: light.theatre_room_right_lamp
+                name: Theatre Right Lamp
+                type: light
+            type: horizontal-stack
+          - cards:
+              - entity: script.set_movie_lighting
+                hold_action:
+                  action: none
+                icon: 'mdi:theater'
+                icon_height: 60px
+                name: Movie Lights
+                show_icon: true
+                show_name: true
+                tap_action:
+                  action: call-service
+                  service: script.turn_on
+                  service_data:
+                    entity_id: script.set_movie_lighting
+                type: entity-button
+              - entity: script.movie_has_finished
+                hold_action:
+                  action: none
+                icon: 'mdi:filmstrip-off'
+                icon_height: 60px
+                name: Movie Has Finished
+                show_icon: true
+                show_name: true
+                tap_action:
+                  action: call-service
+                  service: script.turn_on
+                  service_data:
+                    entity_id: script.movie_has_finished
+                type: entity-button
+            type: horizontal-stack
         type: vertical-stack
-      - entity: script.roomba_clean
-        hold_action:
-          action: more-info
-        icon: 'mdi:robot-vacuum'
-        show_icon: true
-        show_name: true
-        tap_action:
-          action: toggle
-        type: entity-button
-    title: Home Control
+      - entities:
+          - artwork: full-cover
+            entity: media_player.theatre_room_tv
+            hide:
+              mute: true
+              power_state: false
+            icon: 'mdi:television'
+            info: short
+            name: LG TV
+            type: 'custom:mini-media-player'
+          - artwork: full-cover
+            entity: media_player.theatre_room_chromecast
+            hide:
+              mute: true
+              power_state: false
+            info: short
+            name: Chromecast
+            type: 'custom:mini-media-player'
+        show_header_toggle: false
+        title: Theatre Room TV
+        type: entities
+    path: theatre
+    title: Theatre
