@@ -16,23 +16,11 @@ views:
       - person.laura
       - sensor.weather_symbol
       - sun.sun
+      - sensor.sems_output_power
     cards:
-      - cards:
-          - entity: weather.bom_perth
-            icons: /local/custom-lovelace/weather-card/icons/
-            name: Treeby
-            type: 'custom:weather-card'
-          - entities:
-              - entity: sensor.bom_forecast_perth_weather_1
-              - entity: sensor.bom_forecast_perth_weather_2
-              - entity: sensor.bom_forecast_perth_weather_3
-              - entity: sensor.bom_forecast_perth_weather_4
-              - entity: sensor.bom_forecast_perth_weather_5
-              - entity: sensor.bom_forecast_perth_weather_6
-            show_header_toggle: false
-            title: Weather Forecast
-            type: entities
-        type: vertical-stack
+      - entity: weather.home
+        name: Treeby
+        type: weather-forecast
       - entities:
           - entity: sensor.away_from_home_state_validity
         show_name: false
@@ -775,20 +763,36 @@ views:
                 name: Theatre Right Lamp
                 type: light
             type: horizontal-stack
-          - entity: script.set_movie_lighting
-            hold_action:
-              action: none
-            icon: 'mdi:theater'
-            icon_height: 60px
-            name: Movie Lights
-            show_icon: true
-            show_name: true
-            tap_action:
-              action: call-service
-              service: script.turn_on
-              service_data:
-                entity_id: script.set_movie_lighting
-            type: entity-button
+          - cards:
+              - entity: script.set_movie_lighting
+                hold_action:
+                  action: none
+                icon: 'mdi:theater'
+                icon_height: 60px
+                name: Movie Lights
+                show_icon: true
+                show_name: true
+                tap_action:
+                  action: call-service
+                  service: script.turn_on
+                  service_data:
+                    entity_id: script.set_movie_lighting
+                type: entity-button
+              - entity: script.movie_has_finished
+                hold_action:
+                  action: none
+                icon: 'mdi:filmstrip-off'
+                icon_height: 60px
+                name: Movie Has Finished
+                show_icon: true
+                show_name: true
+                tap_action:
+                  action: call-service
+                  service: script.turn_on
+                  service_data:
+                    entity_id: script.movie_has_finished
+                type: entity-button
+            type: horizontal-stack
         type: vertical-stack
       - cards:
           - entities:
@@ -982,8 +986,3 @@ views:
           action: toggle
         type: entity-button
     title: Home Control
-  - badges: []
-    cards: []
-    panel: false
-    path: theatre-room
-    title: Theatre Room
