@@ -11,7 +11,12 @@ resources:
     url: /local/vertical-stack-in-card.js?v=0.1.3
 title: The Treehouse
 views:
-  - cards:
+  - badges:
+      - person.michael
+      - person.laura
+      - sensor.weather_symbol
+      - sun.sun
+    cards:
       - entity: weather.home
         name: Treeby
         type: weather-forecast
@@ -52,23 +57,23 @@ views:
             title: Front Door
             type: glance
         type: vertical-stack
-      - type: vertical-stack
-        cards:
-          - title: Lights
-            show_header_toggle: true
-            type: entities
-            entities:
+      - cards:
+          - entities:
               - entity: light.theatre_room_left_lamp
               - entity: light.theatre_room_right_lamp
               - entity: light.theatre_room_ceiling
               - entity: light.entry_hall_lights
               - entity: light.office_lamp
-          - type: horizontal-stack
-            cards:
-              - type: light
-                entity: light.entry_hall_lights
-              - type: light
-                entity: light.office_lamp
+            show_header_toggle: true
+            title: Lights
+            type: entities
+          - cards:
+              - entity: light.entry_hall_lights
+                type: light
+              - entity: light.office_lamp
+                type: light
+            type: horizontal-stack
+        type: vertical-stack
       - entities:
           - entity: cover.aeon_labs_zw062_garage_door_controller_barrier_state_label
             secondary_info: >-
@@ -88,15 +93,11 @@ views:
         tap_action:
           action: toggle
         type: entity-button
-    badges:
-      - person.michael
-      - person.laura
-      - sensor.weather_symbol
-      - sun.sun
     icon: 'mdi:home'
     path: default_view
     title: Home
-  - cards:
+  - badges: []
+    cards:
       - entities:
           - artwork: cover
             entity: media_player.all_rooms
@@ -558,11 +559,11 @@ views:
         show_header_toggle: false
         title: Living Room TV
         type: entities
-    badges: []
     icon: 'mdi:music'
-    title: Media
     path: media
-  - cards:
+    title: Media
+  - badges: []
+    cards:
       - elements:
           - entity: light.theatre_room_ceiling
             style:
@@ -707,12 +708,12 @@ views:
             type: state-icon
         image: /local/floor-plan.png
         type: picture-elements
-    badges: []
     icon: 'mdi:floor-plan'
     panel: false
-    title: Floor Plan
     path: floor-plan
-  - cards:
+    title: Floor Plan
+  - badges: []
+    cards:
       - cards:
           - entities:
               - entity: switch.aircon_on_off
@@ -909,10 +910,9 @@ views:
             type: horizontal-stack
         title: Presets
         type: 'custom:vertical-stack-in-card'
-    badges: []
+    icon: 'mdi:air-conditioner'
     path: aircon
     title: Aircon
-    icon: 'mdi:air-conditioner'
   - badges: []
     cards:
       - cards:
