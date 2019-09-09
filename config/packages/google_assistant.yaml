@@ -16,6 +16,7 @@ cloud:
         - script.aircon_fan_master
         - script.aircon_cool_central_living
         - script.time_for_a_movie
+        - script.movie_has_finished
         - script.done_with_the_theatre_room
         - script.roomba_clean
         - switch.aircon_on_off
