@@ -9,7 +9,7 @@ resources:
     url: /local/secondaryinfo-entity-row.js
   - type: js
     url: /local/vertical-stack-in-card.js?v=0.1.3
-title: Treeby Home
+title: The Treehouse
 views:
   - cards:
       - entity: weather.home
