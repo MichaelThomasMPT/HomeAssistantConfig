@@ -38,6 +38,11 @@ elastic:
   exclude:
     entities: ['sensor.es_cluster_health', 'sensor.es_publish_queue', 'sun.sun']
 
+hue:
+  bridges:
+    - host: !secret hue_bridge_ip_address
+      filename: phue.conf
+
 # Text to speech
 tts:
   - platform: google_translate
