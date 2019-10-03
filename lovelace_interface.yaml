@@ -17,7 +17,7 @@ views:
       - sensor.weather_symbol
       - sun.sun
     cards:
-      - entity: weather.home
+      - entity: weather.treeby_house
         name: Treeby
         type: weather-forecast
       - entities:
@@ -62,13 +62,16 @@ views:
               - entity: light.theatre_room_left_lamp
               - entity: light.theatre_room_right_lamp
               - entity: light.theatre_room_ceiling
+                name: Theatre Room Ceiling
               - entity: light.entry_hall_lights
+                name: Entry Hall Lights
               - entity: light.office_lamp
             show_header_toggle: true
             title: Lights
             type: entities
           - cards:
               - entity: light.entry_hall_lights
+                name: Entry Hall
                 type: light
               - entity: light.office_lamp
                 type: light
@@ -76,6 +79,7 @@ views:
         type: vertical-stack
       - entities:
           - entity: cover.aeon_labs_zw062_garage_door_controller_barrier_state_label
+            name: Garage Door
             secondary_info: >-
               [[
               cover.aeon_labs_zw062_garage_door_controller_barrier_state_label.state
