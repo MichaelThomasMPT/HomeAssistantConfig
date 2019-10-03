@@ -924,6 +924,7 @@ views:
               - entity: light.theatre_room_left_lamp
               - entity: light.theatre_room_right_lamp
               - entity: light.theatre_room_ceiling
+                name: Theatre Room Ceiling
             show_header_toggle: true
             title: Lights
             type: entities
