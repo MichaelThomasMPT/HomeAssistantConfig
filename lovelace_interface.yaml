@@ -830,10 +830,12 @@ views:
             title: Home Temperature
             type: history-graph
           - entities:
-              - entity: sensor.lumi_lumi_sens_02281d85_1_1026
-                name: Current Inside Temperature
               - entity: sensor.current_outdoor_temperature
-                name: Current Outside Temperature
+                name: Temperature Outside
+              - entity: sensor.lumi_lumi_sens_02281d85_1_1026
+                name: Temperature Inside
+              - entity: sensor.lumi_lumi_sens_02281d85_1_1029
+                name: Humidity Inside
             type: glance
         type: vertical-stack
       - cards:
