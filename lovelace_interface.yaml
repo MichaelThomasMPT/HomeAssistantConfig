@@ -837,6 +837,17 @@ views:
               - entity: sensor.lumi_lumi_sens_02281d85_1_1029
                 name: Humidity Inside
             type: glance
+          - entities:
+              - entity: sensor.sems_output_power
+                name: Solar Output
+            title: Solar Output
+            type: history-graph
+          - entities:
+              - entity: switch.aircon_on_off
+                icon: 'mdi:power'
+                name: Aircon On/Off
+            title: Aircon Running State
+            type: history-graph
         type: vertical-stack
       - cards:
           - cards:
