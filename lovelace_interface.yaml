@@ -822,6 +822,21 @@ views:
         title: Aircon Zones
         type: entities
       - cards:
+          - entities:
+              - entity: sensor.lumi_lumi_sens_02281d85_1_1026
+                name: Inside Temperature
+              - entity: sensor.current_outdoor_temperature
+                name: Outside Temperature
+            title: Home Temperature
+            type: history-graph
+          - entities:
+              - entity: sensor.lumi_lumi_sens_02281d85_1_1026
+                name: Current Inside Temperature
+              - entity: sensor.current_outdoor_temperature
+                name: Current Outside Temperature
+            type: glance
+        type: vertical-stack
+      - cards:
           - cards:
               - entity: script.aircon_warm_master
                 hold_action:
