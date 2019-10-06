@@ -566,6 +566,85 @@ views:
     icon: 'mdi:music'
     path: media
     title: Media
+  - cards:
+      - cards:
+          - entities:
+              - entity: light.theatre_room_left_lamp
+              - entity: light.theatre_room_right_lamp
+              - entity: light.theatre_room_ceiling
+                name: Theatre Room Ceiling
+            show_header_toggle: true
+            title: Lights
+            type: entities
+          - cards:
+              - entity: light.theatre_room_ceiling
+                name: Theatre Ceiling
+                type: light
+            type: horizontal-stack
+          - cards:
+              - entity: light.theatre_room_left_lamp
+                name: Theatre Left Lamp
+                type: light
+              - entity: light.theatre_room_right_lamp
+                name: Theatre Right Lamp
+                type: light
+            type: horizontal-stack
+          - cards:
+              - entity: script.set_movie_lighting
+                hold_action:
+                  action: none
+                icon: 'mdi:theater'
+                icon_height: 60px
+                name: Movie Lights
+                show_icon: true
+                show_name: true
+                tap_action:
+                  action: call-service
+                  service: script.turn_on
+                  service_data:
+                    entity_id: script.set_movie_lighting
+                type: entity-button
+              - entity: script.movie_has_finished
+                hold_action:
+                  action: none
+                icon: 'mdi:filmstrip-off'
+                icon_height: 60px
+                name: Movie Has Finished
+                show_icon: true
+                show_name: true
+                tap_action:
+                  action: call-service
+                  service: script.turn_on
+                  service_data:
+                    entity_id: script.movie_has_finished
+                type: entity-button
+            type: horizontal-stack
+        type: vertical-stack
+      - entities:
+          - artwork: full-cover
+            entity: media_player.theatre_room_tv
+            hide:
+              mute: true
+              power_state: false
+            icon: 'mdi:television'
+            info: short
+            name: LG TV
+            type: 'custom:mini-media-player'
+          - artwork: full-cover
+            entity: media_player.theatre_room_chromecast
+            hide:
+              mute: true
+              power_state: false
+            info: short
+            name: Chromecast
+            type: 'custom:mini-media-player'
+        show_header_toggle: false
+        title: Theatre Room TV
+        type: entities
+    badges: []
+    path: theatre
+    title: Theatre
+    icon: 'mdi:theater'
   - badges: []
     cards:
       - elements:
@@ -945,81 +1024,11 @@ views:
     icon: 'mdi:air-conditioner'
     path: aircon
     title: Aircon
-  - badges: []
-    cards:
-      - cards:
-          - entities:
-              - entity: light.theatre_room_left_lamp
-              - entity: light.theatre_room_right_lamp
-              - entity: light.theatre_room_ceiling
-                name: Theatre Room Ceiling
-            show_header_toggle: true
-            title: Lights
-            type: entities
-          - cards:
-              - entity: light.theatre_room_ceiling
-                name: Theatre Ceiling
-                type: light
-            type: horizontal-stack
-          - cards:
-              - entity: light.theatre_room_left_lamp
-                name: Theatre Left Lamp
-                type: light
-              - entity: light.theatre_room_right_lamp
-                name: Theatre Right Lamp
-                type: light
-            type: horizontal-stack
-          - cards:
-              - entity: script.set_movie_lighting
-                hold_action:
-                  action: none
-                icon: 'mdi:theater'
-                icon_height: 60px
-                name: Movie Lights
-                show_icon: true
-                show_name: true
-                tap_action:
-                  action: call-service
-                  service: script.turn_on
-                  service_data:
-                    entity_id: script.set_movie_lighting
-                type: entity-button
-              - entity: script.movie_has_finished
-                hold_action:
-                  action: none
-                icon: 'mdi:filmstrip-off'
-                icon_height: 60px
-                name: Movie Has Finished
-                show_icon: true
-                show_name: true
-                tap_action:
-                  action: call-service
-                  service: script.turn_on
-                  service_data:
-                    entity_id: script.movie_has_finished
-                type: entity-button
-            type: horizontal-stack
-        type: vertical-stack
-      - entities:
-          - artwork: full-cover
-            entity: media_player.theatre_room_tv
-            hide:
-              mute: true
-              power_state: false
-            icon: 'mdi:television'
-            info: short
-            name: LG TV
-            type: 'custom:mini-media-player'
-          - artwork: full-cover
-            entity: media_player.theatre_room_chromecast
-            hide:
-              mute: true
-              power_state: false
-            info: short
-            name: Chromecast
-            type: 'custom:mini-media-player'
-        show_header_toggle: false
-        title: Theatre Room TV
-        type: entities
-    path: theatre
-    title: Theatre
+  - cards:
+      - type: glance
+        entities:
+          - entity: sensor.lumi_lumi_sens_02281d85_1_1
+            name: Xiaomi Mi Sensor
+    badges: []
+    icon: 'mdi:battery-unknown'
+    path: batteries
