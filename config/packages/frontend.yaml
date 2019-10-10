@@ -117,6 +117,11 @@ panel_iframe:
     url: 'http://192.168.1.111:9000'
     icon: mdi:docker
     require_admin: true
+  fileexplorer:
+    title: File Explorer
+    url: 'http://192.168.1.111:80'
+    icon: mdi:folder-search
+    require_admin: true
   elk:
     title: ELK
     url: 'http://192.168.1.111:5601'
