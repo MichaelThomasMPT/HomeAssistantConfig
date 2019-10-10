@@ -34,3 +34,6 @@
 [submodule "homeassistant-elasticsearch"]
 	path = dependent_projects/homeassistant-elasticsearch
 	url = https://github.com/legrego/homeassistant-elasticsearch.git
+[submodule "dependent_projects/hass-variables"]
+	path = dependent_projects/hass-variables
+	url = https://github.com/rogro82/hass-variables.git

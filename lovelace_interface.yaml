@@ -85,8 +85,10 @@ views:
               cover.aeon_labs_zw062_garage_door_controller_barrier_state_label.state
               ]]
             type: 'custom:secondaryinfo-entity-row'
+          - entity: binary_sensor.garage_external_door
+            name: External Door
         show_header_toggle: false
-        title: Garage Door
+        title: Garage
         type: entities
       - entity: script.roomba_clean
         hold_action:
@@ -100,6 +102,156 @@ views:
     icon: 'mdi:home'
     path: default_view
     title: Home
+  - badges: []
+    cards:
+      - elements:
+          - entity: light.theatre_room_ceiling
+            style:
+              left: 60%
+              top: 39.5%
+            tap_action:
+              action: toggle
+            type: state-icon
+          - entity: light.theatre_room
+            style:
+              left: 74%
+              top: 44%
+            tap_action:
+              action: toggle
+            type: state-icon
+          - entity: light.theatre_room
+            style:
+              left: 74%
+              top: 34.5%
+            tap_action:
+              action: toggle
+            type: state-icon
+          - entity: light.entry_hall_lights
+            style:
+              left: 42.5%
+              top: 35%
+            tap_action:
+              action: toggle
+            type: state-icon
+          - entity: light.entry_hall_lights
+            style:
+              left: 42.5%
+              top: 25%
+            tap_action:
+              action: toggle
+            type: state-icon
+          - entity: light.office_lamp
+            style:
+              left: 66.5%
+              top: 11%
+            tap_action:
+              action: toggle
+            type: state-icon
+          - entity: media_player.theatre_room_tv
+            icon: 'mdi:television-play'
+            style:
+              '--paper-item-icon-color': white
+              left: 54%
+              top: 41%
+            type: state-icon
+          - entity: media_player.living_room_chromecast
+            icon: 'mdi:television-play'
+            style:
+              '--paper-item-icon-color': white
+              left: 55%
+              top: 66%
+            type: state-icon
+          - entity: cover.aeon_labs_zw062_garage_door_controller_barrier_state_label
+            style:
+              '--paper-item-icon-color': white
+              left: 17%
+              top: 14%
+              transform: 'scale(1.5,1.5)'
+            tap_action:
+              action: toggle
+            type: state-icon
+          - entity: switch.aircon_zone_living
+            icon: 'mdi:air-filter'
+            style:
+              left: 38%
+              top: 60%
+            tap_action:
+              action: toggle
+            type: state-icon
+          - entity: switch.aircon_zone_theatre
+            icon: 'mdi:air-filter'
+            style:
+              left: 60%
+              top: 36%
+            tap_action:
+              action: toggle
+            type: state-icon
+          - entity: switch.aircon_zone_master
+            icon: 'mdi:air-filter'
+            style:
+              left: 29%
+              top: 85%
+            tap_action:
+              action: toggle
+            type: state-icon
+          - entity: switch.aircon_zone_bed23
+            icon: 'mdi:air-filter'
+            style:
+              left: 56%
+              top: 20%
+            tap_action:
+              action: toggle
+            type: state-icon
+          - entity: switch.aircon_zone_bed23
+            icon: 'mdi:air-filter'
+            style:
+              left: 73%
+              top: 18%
+            tap_action:
+              action: toggle
+            type: state-icon
+          - entity: switch.aircon_on_off
+            icon: 'mdi:air-conditioner'
+            style:
+              left: 35%
+              top: 48%
+            tap_action:
+              action: toggle
+            type: state-icon
+          - entity: script.aircon_cool
+            icon: 'mdi:snowflake'
+            style:
+              '--paper-item-icon-color': blue
+              left: 83.5%
+              top: 91.5%
+              transform: 'scale(1.8,1.8)'
+            tap_action:
+              action: toggle
+            type: state-icon
+          - entity: script.aircon_heat
+            icon: 'mdi:fire'
+            style:
+              '--paper-item-icon-color': darkorange
+              left: 83.5%
+              top: 86%
+              transform: 'scale(1.8,1.8)'
+            tap_action:
+              action: toggle
+            type: state-icon
+          - entity: script.roomba_clean
+            icon: 'mdi:robot-vacuum'
+            style:
+              left: 66.5%
+              top: 14%
+            tap_action:
+              action: toggle
+            type: state-icon
+        image: /local/floor-plan.png
+        type: picture-elements
+    icon: 'mdi:floor-plan'
+    panel: false
+    path: floor_plan
+    title: Floor Plan
   - badges: []
     cards:
       - entities:
@@ -566,7 +718,8 @@ views:
     icon: 'mdi:music'
     path: media
     title: Media
-  - cards:
+  - badges: []
+    cards:
       - cards:
           - entities:
               - entity: light.theatre_room_left_lamp
@@ -641,160 +794,9 @@ views:
         show_header_toggle: false
         title: Theatre Room TV
         type: entities
-    badges: []
+    icon: 'mdi:theater'
     path: theatre
     title: Theatre
-    icon: 'mdi:theater'
-  - badges: []
-    cards:
-      - elements:
-          - entity: light.theatre_room_ceiling
-            style:
-              left: 60%
-              top: 39.5%
-            tap_action:
-              action: toggle
-            type: state-icon
-          - entity: light.theatre_room
-            style:
-              left: 74%
-              top: 44%
-            tap_action:
-              action: toggle
-            type: state-icon
-          - entity: light.theatre_room
-            style:
-              left: 74%
-              top: 34.5%
-            tap_action:
-              action: toggle
-            type: state-icon
-          - entity: light.entry_hall_lights
-            style:
-              left: 42.5%
-              top: 35%
-            tap_action:
-              action: toggle
-            type: state-icon
-          - entity: light.entry_hall_lights
-            style:
-              left: 42.5%
-              top: 25%
-            tap_action:
-              action: toggle
-            type: state-icon
-          - entity: light.office_lamp
-            style:
-              left: 66.5%
-              top: 11%
-            tap_action:
-              action: toggle
-            type: state-icon
-          - entity: media_player.theatre_room_tv
-            icon: 'mdi:television-play'
-            style:
-              '--paper-item-icon-color': white
-              left: 54%
-              top: 41%
-            type: state-icon
-          - entity: media_player.living_room_chromecast
-            icon: 'mdi:television-play'
-            style:
-              '--paper-item-icon-color': white
-              left: 55%
-              top: 66%
-            type: state-icon
-          - entity: cover.aeon_labs_zw062_garage_door_controller_barrier_state_label
-            style:
-              '--paper-item-icon-color': white
-              left: 17%
-              top: 14%
-              transform: 'scale(1.5,1.5)'
-            tap_action:
-              action: toggle
-            type: state-icon
-          - entity: switch.aircon_zone_living
-            icon: 'mdi:air-filter'
-            style:
-              left: 38%
-              top: 60%
-            tap_action:
-              action: toggle
-            type: state-icon
-          - entity: switch.aircon_zone_theatre
-            icon: 'mdi:air-filter'
-            style:
-              left: 60%
-              top: 36%
-            tap_action:
-              action: toggle
-            type: state-icon
-          - entity: switch.aircon_zone_master
-            icon: 'mdi:air-filter'
-            style:
-              left: 29%
-              top: 85%
-            tap_action:
-              action: toggle
-            type: state-icon
-          - entity: switch.aircon_zone_bed23
-            icon: 'mdi:air-filter'
-            style:
-              left: 56%
-              top: 20%
-            tap_action:
-              action: toggle
-            type: state-icon
-          - entity: switch.aircon_zone_bed23
-            icon: 'mdi:air-filter'
-            style:
-              left: 73%
-              top: 18%
-            tap_action:
-              action: toggle
-            type: state-icon
-          - entity: switch.aircon_on_off
-            icon: 'mdi:air-conditioner'
-            style:
-              left: 35%
-              top: 48%
-            tap_action:
-              action: toggle
-            type: state-icon
-          - entity: script.aircon_cool
-            icon: 'mdi:snowflake'
-            style:
-              '--paper-item-icon-color': blue
-              left: 83.5%
-              top: 91.5%
-              transform: 'scale(1.8,1.8)'
-            tap_action:
-              action: toggle
-            type: state-icon
-          - entity: script.aircon_heat
-            icon: 'mdi:fire'
-            style:
-              '--paper-item-icon-color': darkorange
-              left: 83.5%
-              top: 86%
-              transform: 'scale(1.8,1.8)'
-            tap_action:
-              action: toggle
-            type: state-icon
-          - entity: script.roomba_clean
-            icon: 'mdi:robot-vacuum'
-            style:
-              left: 66.5%
-              top: 14%
-            tap_action:
-              action: toggle
-            type: state-icon
-        image: /local/floor-plan.png
-        type: picture-elements
-    icon: 'mdi:floor-plan'
-    panel: false
-    path: floor-plan
-    title: Floor Plan
   - badges: []
     cards:
       - cards:
@@ -1024,11 +1026,22 @@ views:
     icon: 'mdi:air-conditioner'
     path: aircon
     title: Aircon
-  - cards:
-      - type: glance
-        entities:
+  - badges: []
+    cards:
+      - entities:
           - entity: sensor.lumi_lumi_sens_02281d85_1_1
             name: Xiaomi Mi Sensor
-    badges: []
+        type: glance
+      - entities:
+          - entity: binary_sensor.swann_door_1
+          - entity: binary_sensor.swann_door_2
+        type: glance
+      - entities:
+          - binary_sensor.swann_door_1
+          - binary_sensor.swann_door_2
+          - binary_sensor.swann_motion_1
+          - binary_sensor.swann_motion_2
+          - binary_sensor.swann_motion_3
+        type: history-graph
     icon: 'mdi:battery-unknown'
     path: batteries

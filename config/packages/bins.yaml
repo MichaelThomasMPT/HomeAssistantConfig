@@ -1,0 +1,72 @@
+variable:
+  bins_were_moved_today:
+    name: Bins Were Moved Today
+    value: False
+
+automation:
+  #If both doors were open at the same time, then the bins were moved today
+  - alias: Were Bins Moved Today?
+    trigger: 
+      - platform: state
+        entity_id: binary_sensor.garage_external_door
+        to: "on"
+      - platform: state
+        entity_id: cover.aeon_labs_zw062_garage_door_controller_barrier_state_label
+        to: "open"
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: 'binary_sensor.garage_external_door'
+          state: 'on'
+        - condition: state
+          entity_id: 'cover.aeon_labs_zw062_garage_door_controller_barrier_state_label'
+          state: 'open'
+    action:
+      - service: variable.set_variable
+        data:
+          variable: bins_were_moved_today
+          value: True
+ 
+  #At midnight, reset the bins_were_moved_today variable
+  - alias: Reset Bins Variable
+    trigger:
+      - platform: time
+        at: '00:00:00'
+    action:
+      - service: variable.set_variable
+        data:
+          variable: bins_were_moved_today
+          value: False
+
+  #Alert me if the bins need taking out
+  - alias: Bins Reminder
+    trigger:
+      - platform: time
+        at: '18:30:00'
+      - platform: time
+        at: '19:30:00'
+      - platform: time
+        at: '20:30:00'
+      - platform: time
+        at: '21:00:00'
+      - platform: time
+        at: '21:30:00'
+      - platform: time
+        at: '22:00:00'
+      - platform: time
+        at: '22:30:00'
+      - platform: time
+        at: '23:00:00'
+    condition:
+      condition: and
+      conditions:
+        - condition: time
+          weekday:
+            - sun
+        - condition: template
+          value_template: '{{ (states.variable.bins_were_moved_today.state) == "False" }}'
+    action:
+      - service: notify.pushbullet
+        data:
+          message: Don't forget to take the bins out!
