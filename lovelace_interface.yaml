@@ -9,6 +9,8 @@ resources:
     url: /local/secondaryinfo-entity-row.js
   - type: js
     url: /local/vertical-stack-in-card.js?v=0.1.3
+  - type: module
+    url: /local/slider-entity-row.js
 title: The Treehouse
 views:
   - badges:
@@ -773,6 +775,16 @@ views:
                 type: entity-button
             type: horizontal-stack
         type: vertical-stack
+      - title: Theatre Room Blinds
+        show_header_toggle: false
+        type: entities
+        entities:
+          - type: 'custom:slider-entity-row'
+            entity: light.axis_gear_00144dc3_1
+            min: 0
+            step: 1
+            hide_state: true
+            name: Shutter Level
       - entities:
           - artwork: full-cover
             entity: media_player.theatre_room_tv

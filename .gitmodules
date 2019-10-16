@@ -37,3 +37,6 @@
 [submodule "dependent_projects/hass-variables"]
 	path = dependent_projects/hass-variables
 	url = https://github.com/rogro82/hass-variables.git
+[submodule "dependent_projects/lovelace-slider-entity-row"]
+	path = dependent_projects/lovelace-slider-entity-row
+	url = https://github.com/thomasloven/lovelace-slider-entity-row.git
