@@ -90,3 +90,10 @@ media_player:
         - netflix
 
 ############## LG TV ##############
+
+# The theatre room blinds have to be manually set up as a light, as 
+# by default they are a switch which cannot control the blind height
+zha:
+  device_config:
+    00:24:46:00:00:14:4d:c3-1:
+       type: 'light' #FIXME when ZHA covers are supported
