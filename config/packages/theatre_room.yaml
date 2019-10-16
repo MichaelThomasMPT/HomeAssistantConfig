@@ -19,6 +19,8 @@ script:
   time_for_a_movie:
     alias: Time For A Movie
     sequence:
+      - service: light.turn_off #this would be triggered anyway, but this call makes it occur faster
+        entity_id: light.axis_gear_00144dc3_1 
       - service: script.turn_on #set the lighting
         entity_id:
           - script.set_movie_lighting 
@@ -65,6 +67,52 @@ script:
         data:
           brightness_pct: 1
 
+
+
+automation:
+  - alias: Theatre Room Blinds - Close
+    trigger:
+      - platform: sun
+        event: sunset
+      - platform: state
+        entity_id: alarm_control_panel.alarm_com
+        to: 'armed'
+      - platform: state
+        entity_id: media_player.theatre_room_tv
+        from: 'off' #turning on
+    action:
+      - service: light.turn_off
+        entity_id: light.axis_gear_00144dc3_1
+        
+  - alias: Theatre Room Blinds - Open
+    trigger:
+      - platform: sun
+        event: sunrise
+      - platform: state
+        entity_id: alarm_control_panel.alarm_com
+        to: 'disarmed'
+      - platform: state
+        entity_id: media_player.theatre_room_tv
+        to: 'off'
+    condition:
+      condition: and #ONLY open if house is disarmed AND TV is off AND it's day time
+      conditions:
+        - condition: state 
+          entity_id: sun.sun
+          state: 'above_horizon' #day time
+        - condition: state
+          entity_id: alarm_control_panel.alarm_com
+          state: 'disarmed'
+        - condition: state
+          entity_id: media_player.theatre_room_tv
+          state: 'off'
+    action:
+      - service: light.turn_on
+        entity_id: light.axis_gear_00144dc3_1
+        data:
+          brightness: 254 #maximum
+        
+            
 
 ############## LG TV ##############
 
