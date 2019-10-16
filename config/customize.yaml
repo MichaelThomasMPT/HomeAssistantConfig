@@ -12,7 +12,7 @@ sensor.away_from_home_state_validity:
 #FIXME: Remove when ZHA covers are supported
 light.axis_gear_00144dc3_1:
   friendly_name: Theatre Room Blinds
-  icon_color: white
+  icon_color: '#706e67'
   templates:
     icon: >
       if (attributes.brightness > 50) return 'mdi:window-shutter-open';
