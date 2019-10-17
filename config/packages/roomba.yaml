@@ -5,6 +5,12 @@ script:
       - data:
           entity_id: switch.roomba
         service: switch.turn_on
+      - data:
+          entity_id: switch.roomba
+        service: switch.turn_on
+      - data:
+          entity_id: switch.roomba
+        service: switch.turn_on
 
   roomba_return_to_dock:
     alias: Roomba - Return To Dock
