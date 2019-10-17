@@ -4,4 +4,5 @@ binary_sensor:
       garage_external_door:
         friendly_name: Garage External Door
         device_class: door
-        value_template: "{{ is_state('binary_sensor.swann_door_2', 'on') }}"
+        value_template: "{{ is_state('binary_sensor.swann_door_1', 'on') }}"
+        availability_template: "{{ not is_state('binary_sensor.swann_door_1', 'unavailable') }}"
