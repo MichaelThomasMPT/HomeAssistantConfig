@@ -20,7 +20,7 @@ script:
     alias: Time For A Movie
     sequence:
       - service: light.turn_off #this would be triggered anyway, but this call makes it occur faster
-        entity_id: light.axis_gear_00144dc3_1 
+        entity_id: light.axis_gear_034e1400_1 
       - service: script.turn_on #set the lighting
         entity_id:
           - script.set_movie_lighting 
@@ -79,10 +79,10 @@ automation:
         to: 'armed'
       - platform: state
         entity_id: media_player.theatre_room_tv
-        from: 'off' #turning on
+        from: 'off' #from off = turning on
     action:
       - service: light.turn_off
-        entity_id: light.axis_gear_00144dc3_1
+        entity_id: light.axis_gear_034e1400_1
         
   - alias: Theatre Room Blinds - Open
     trigger:
@@ -108,7 +108,7 @@ automation:
           state: 'off'
     action:
       - service: light.turn_on
-        entity_id: light.axis_gear_00144dc3_1
+        entity_id: light.axis_gear_034e1400_1
         data:
           brightness: 254 #maximum
         
@@ -143,5 +143,5 @@ media_player:
 # by default they are a switch which cannot control the blind height
 zha:
   device_config:
-    00:24:46:00:00:14:4d:c3-1:
-       type: 'light' #FIXME when ZHA covers are supported
+    00:24:46:00:00:14:4e:03-1:
+      type: 'light' #FIXME when ZHA covers are supported

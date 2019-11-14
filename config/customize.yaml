@@ -10,7 +10,7 @@ sensor.away_from_home_state_validity:
       else return 50;
 
 #FIXME: Remove when ZHA covers are supported
-light.axis_gear_00144dc3_1:
+light.axis_gear_034e1400_1:
   friendly_name: Theatre Room Blinds
   icon_color: '#706e67'
   templates:
