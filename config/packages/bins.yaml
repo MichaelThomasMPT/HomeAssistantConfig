@@ -8,7 +8,7 @@ automation:
   - alias: Were Bins Moved Today?
     trigger: 
       - platform: state
-        entity_id: binary_sensor.garage_external_door
+        entity_id: binary_sensor.lumi_lumi_sensor_magnet_fe5df303_on_off
         to: "on"
       - platform: state
         entity_id: cover.aeon_labs_zw062_garage_door_controller_barrier_state_label
@@ -17,7 +17,7 @@ automation:
       condition: and
       conditions:
         - condition: state
-          entity_id: 'binary_sensor.garage_external_door'
+          entity_id: 'binary_sensor.lumi_lumi_sensor_magnet_fe5df303_on_off'
           state: 'on'
         - condition: state
           entity_id: 'cover.aeon_labs_zw062_garage_door_controller_barrier_state_label'
