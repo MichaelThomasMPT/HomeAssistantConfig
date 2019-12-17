@@ -1,0 +1,39 @@
+#Christmas Tree Switch
+tplink:
+    discovery: false
+    switch:
+      - host: 192.168.1.188
+
+
+automation:
+  - alias: Christmas Tree - On
+    trigger:
+      - platform: sun
+        event: sunset
+      - platform: state
+        entity_id: alarm_control_panel.alarm_com
+        to: 'disarmed'
+    condition:
+      condition: and #ONLY turn on if house is disarmed AND it's night time
+      conditions:
+        - condition: state 
+          entity_id: sun.sun
+          state: 'below_horizon' #night time
+        - condition: state
+          entity_id: alarm_control_panel.alarm_com
+          state: 'disarmed'
+    action:
+      - entity_id: switch.christmas_tree
+        service: switch.turn_on
+
+  - alias: Christmas Tree - Off
+    trigger:
+      - platform: sun
+        event: sunrise
+      - platform: state
+        entity_id: alarm_control_panel.alarm_com
+        to: 'armed'
+    action:
+      - entity_id: switch.christmas_tree
+        service: switch.turn_off
+        

@@ -35,6 +35,15 @@ views:
         show_header_toggle: false
         title: Solar Panels
         type: entities
+      - entity: switch.christmas_tree
+        hold_action:
+          action: more-info
+        icon: 'mdi:pine-tree'
+        show_icon: true
+        show_name: true
+        tap_action:
+          action: toggle
+        type: entity-button
       - entities:
           - entity: sensor.away_from_home_state_validity
         show_name: false
@@ -929,7 +938,8 @@ views:
                 name: Outside Temperature
             title: Home Temperature
             type: history-graph
-          - entities:
+          - columns: 3
+            entities:
               - entity: sensor.current_outdoor_temperature
                 name: Temperature Outside
               - entity: sensor.lumi_lumi_sens_2fa41804_temperature
@@ -943,7 +953,6 @@ views:
               - entity: sensor.lumi_lumi_sens_02281d85_1_1026
                 name: Living Room Temperature
             type: glance
-            columns: 3
           - entities:
               - entity: sensor.sems_output_power
                 name: Solar Output
