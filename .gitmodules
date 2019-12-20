@@ -40,3 +40,6 @@
 [submodule "dependent_projects/lovelace-slider-entity-row"]
 	path = dependent_projects/lovelace-slider-entity-row
 	url = https://github.com/thomasloven/lovelace-slider-entity-row.git
+[submodule "dependent_projects/list-card"]
+	path = dependent_projects/list-card
+	url = https://github.com/iantrich/list-card.git

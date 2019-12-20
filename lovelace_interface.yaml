@@ -11,6 +11,8 @@ resources:
     url: /local/vertical-stack-in-card.js?v=0.1.3
   - type: module
     url: /local/slider-entity-row.js
+  - type: js
+    url: /local/list-card.js?v=0
 title: The Treehouse
 views:
   - badges:
@@ -1103,5 +1105,24 @@ views:
         state_filter:
           - unavailable
         type: entity-filter
+      - type: vertical-stack
+        cards:
+          - type: sensor
+            entity: sensor.potential_breaking_changes
+            name: Potential Breaking Changes
+          - type: conditional
+            conditions:
+              - entity: sensor.potential_breaking_changes
+                state_not: '0'
+            card:
+              type: 'custom:list-card'
+              entity: sensor.potential_breaking_changes
+              columns:
+                - title: Component
+                  add_link: doclink
+                  field: component
+                - title: Description
+                  add_link: prlink
+                  field: description
     icon: 'mdi:battery-unknown'
     path: batteries
