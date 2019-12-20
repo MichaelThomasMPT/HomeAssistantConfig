@@ -1078,8 +1078,7 @@ views:
             name: Garage External Door Sensor
         title: Battery Status
         type: glance
-      - type: history-graph
-        entities:
+      - entities:
           - entity: sensor.lumi_lumi_sens_02281d85_1_1
             name: Living Room Temp Sensor
           - entity: sensor.lumi_lumi_sens_2fa41804_power
@@ -1093,6 +1092,7 @@ views:
         hours_to_show: 336
         refresh_interval: 10
         title: Battery Percentage Over Time
+        type: history-graph
       - card:
           show_header_toggle: false
           title: Unavailable Devices
@@ -1120,24 +1120,24 @@ views:
         state_filter:
           - unavailable
         type: entity-filter
-      - type: vertical-stack
-        cards:
-          - type: sensor
-            entity: sensor.potential_breaking_changes
+      - cards:
+          - entity: sensor.potential_breaking_changes
             name: Potential Breaking Changes
-          - type: conditional
+            type: sensor
+          - card:
+              columns:
+                - add_link: doclink
+                  field: component
+                  title: Component
+                - add_link: prlink
+                  field: description
+                  title: Description
+              entity: sensor.potential_breaking_changes
+              type: 'custom:list-card'
             conditions:
               - entity: sensor.potential_breaking_changes
                 state_not: '0'
-            card:
-              type: 'custom:list-card'
-              entity: sensor.potential_breaking_changes
-              columns:
-                - title: Component
-                  add_link: doclink
-                  field: component
-                - title: Description
-                  add_link: prlink
-                  field: description
+            type: conditional
+        type: 'custom:vertical-stack-in-card'
     icon: 'mdi:battery-unknown'
     path: batteries
