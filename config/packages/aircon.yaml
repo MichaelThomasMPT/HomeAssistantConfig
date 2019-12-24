@@ -317,7 +317,24 @@ automation:
         data_template: 
           entity_id: input_number.aircon_countdown_timer
           value: 15
-    
+
+#NOTE: This automation probably won't work correctly until I get a more reliable means of prescence detection in the master bedroom
+  - alias: Auto Bedroom Fan 
+    trigger:
+      - platform: state
+        entity_id: sensor.motion_sensor_master_bedroom
+        to: 'Active' #motion was detected in the master bedroom
+    condition:
+      - condition: time
+        after: '21:30:00' #it's after 9.30pm
+      - condition: template
+        value_template: '{{ (states.sensor.lumi_lumi_sens_2fa41804_temperature.state | float) > 25.0 }}' #the bedroom temperature is > 25 degrees  
+      - condition: state
+        entity_id: 'switch.aircon_on_off'
+        state: 'off' #don't run the script if the fan is already on, as it will restart the countdown timer
+    action:
+      - service: script.aircon_fan_master #run the fan in the master bedroom
+
 
 sensor:
   # Aircon State Sensor
