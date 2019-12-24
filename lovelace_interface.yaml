@@ -928,7 +928,6 @@ views:
               - entity: switch.aircon_on_off
                 state: 'on'
             type: conditional
-        title: Aircon
         type: vertical-stack
       - entities:
           - entity: switch.aircon_zone_living
@@ -947,13 +946,6 @@ views:
         title: Aircon Zones
         type: entities
       - cards:
-          - entities:
-              - entity: sensor.lumi_lumi_sens_02281d85_1_1026
-                name: Inside Temperature (Living Room)
-              - entity: sensor.current_outdoor_temperature
-                name: Outside Temperature
-            title: Home Temperature
-            type: history-graph
           - columns: 3
             entities:
               - entity: sensor.current_outdoor_temperature
@@ -968,11 +960,13 @@ views:
                 name: Office Temperature
               - entity: sensor.lumi_lumi_sens_02281d85_1_1026
                 name: Living Room Temperature
+            title: Home Temperature
             type: glance
           - entities:
-              - entity: sensor.sems_output_power
-                name: Solar Output
-            title: Solar Output
+              - entity: sensor.lumi_lumi_sens_02281d85_1_1026
+                name: Inside Temperature (Living Room)
+              - entity: sensor.current_outdoor_temperature
+                name: Outside Temperature
             type: history-graph
           - entities:
               - entity: switch.aircon_on_off
@@ -980,7 +974,12 @@ views:
                 name: Aircon On/Off
             title: Aircon Running State
             type: history-graph
-        type: vertical-stack
+          - entities:
+              - entity: sensor.sems_output_power
+                name: Solar Output
+            title: Solar Output
+            type: history-graph
+        type: 'custom:vertical-stack-in-card'
       - cards:
           - cards:
               - entity: script.aircon_warm_master
