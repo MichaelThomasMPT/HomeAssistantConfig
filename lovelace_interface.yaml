@@ -803,6 +803,20 @@ views:
         show_header_toggle: false
         title: Theatre Room Blinds
         type: entities
+      - entity: script.aircon_cool_theatre
+        hold_action:
+          action: none
+        icon: 'mdi:home-automation'
+        icon_height: 60px
+        name: Cool Theatre
+        show_icon: true
+        show_name: true
+        tap_action:
+          action: call-service
+          service: script.turn_on
+          service_data:
+            entity_id: script.aircon_cool_theatre
+        type: entity-button
       - entities:
           - artwork: full-cover
             entity: media_player.theatre_room_tv
@@ -974,7 +988,7 @@ views:
                   action: none
                 icon: 'mdi:home-automation'
                 icon_height: 60px
-                name: Cold Morning
+                name: Warm Bedroom
                 show_icon: true
                 show_name: true
                 tap_action:
@@ -983,22 +997,6 @@ views:
                   service_data:
                     entity_id: script.aircon_warm_master
                 type: entity-button
-              - entity: script.aircon_warm_master
-                hold_action:
-                  action: none
-                icon: 'mdi:home-automation'
-                icon_height: 60px
-                name: Cold Night
-                show_icon: true
-                show_name: true
-                tap_action:
-                  action: call-service
-                  service: script.turn_on
-                  service_data:
-                    entity_id: script.aircon_warm_master
-                type: entity-button
-            type: horizontal-stack
-          - cards:
               - entity: script.aircon_fan_master
                 hold_action:
                   action: none
@@ -1012,6 +1010,22 @@ views:
                   service: script.turn_on
                   service_data:
                     entity_id: script.aircon_fan_master
+                type: entity-button
+            type: horizontal-stack
+          - cards:
+              - entity: script.aircon_cool_theatre
+                hold_action:
+                  action: none
+                icon: 'mdi:home-automation'
+                icon_height: 60px
+                name: Cool Theatre
+                show_icon: true
+                show_name: true
+                tap_action:
+                  action: call-service
+                  service: script.turn_on
+                  service_data:
+                    entity_id: script.aircon_cool_theatre
                 type: entity-button
               - entity: script.aircon_cool_central_living
                 hold_action:
