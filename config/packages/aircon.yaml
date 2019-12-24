@@ -305,7 +305,7 @@ automation:
         value_template: '{{ (states.sensor.sems_output_power.state | float) > 2000.0 }}' #if the solar panels are running well
       - condition: state
         entity_id: 'alarm_control_panel.alarm_com'
-        state: 'armed' #nobody is home
+        state: 'armed_away' #nobody is home
       - condition: state
         entity_id: 'switch.aircon_on_off'
         state: 'off' #don't run the script if the aircon is already on, as it will restart the 20 minute timer
