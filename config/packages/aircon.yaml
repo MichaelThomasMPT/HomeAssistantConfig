@@ -308,7 +308,7 @@ automation:
         state: 'armed_away' #nobody is home
       - condition: state
         entity_id: 'switch.aircon_on_off'
-        state: 'off' #don't run the script if the aircon is already on, as it will restart the 20 minute timer
+        state: 'off' #don't run the script if the aircon is already on, as it will restart the countdown timer
     action:
       - service: script.aircon_cool_central_living #run the aircon in the central living area
       - delay: #wait until it's up and running
