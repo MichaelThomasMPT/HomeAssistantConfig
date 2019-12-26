@@ -27,10 +27,11 @@ discovery:
 ssdp:
 zeroconf:
 
-# Todoist To-Do and Shopping Lists
-calendar:
-  - platform: todoist
-    token: !secret todoist_api_key
+# Todoist To-Do and Shopping Lists 
+# FIXME: This broke with version 0.103 of Home Assistant. A fix should be included in version 0.104
+#calendar:
+#  - platform: todoist
+#    token: !secret todoist_api_key
     
 # Elastic search output
 elastic:
