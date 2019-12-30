@@ -24,19 +24,15 @@ views:
       - entity: weather.treeby_house
         name: Treeby
         type: weather-forecast
-      - entities:
-          - entity: sensor.sems_status
-            icon: 'mdi:power'
-            name: Status
-          - entity: sensor.sems_output_power
-            icon: 'mdi:flash'
-            name: Current Output Power
-          - entity: sensor.sems_today_generated
-            icon: 'mdi:solar-power'
-            name: Electricity Generated Today
-        show_header_toggle: false
-        title: Solar Panels
-        type: entities
+      - entity: script.roomba_clean
+        hold_action:
+          action: more-info
+        icon: 'mdi:robot-vacuum'
+        show_icon: true
+        show_name: true
+        tap_action:
+          action: toggle
+        type: entity-button
       - entity: switch.christmas_tree
         hold_action:
           action: more-info
@@ -51,25 +47,38 @@ views:
         show_name: false
         title: House State Validity
         type: glance
-      - cards:
-          - entity: alarm_control_panel.alarm_com
-            name: House Alarm
-            states:
-              - arm_home
-              - arm_away
-            type: alarm-panel
-          - entities:
-              - entity: sensor.front_door
-                icon: 'mdi:door'
-              - entity: sensor.ring_last_ding
-                icon: 'mdi:bell-ring'
-                name: Last Ring
-              - entity: sensor.ring_last_motion
-                icon: 'mdi:motion-sensor'
-                name: Last Motion
-            title: Front Door
-            type: glance
-        type: vertical-stack
+      - type: vertical-stack
+        cards:
+          - type: conditional
+            conditions:
+              - entity: sensor.sems_status
+                state: Offline
+            card:
+              type: entities
+              entities:
+                - entity: sensor.sems_status
+                  icon: 'mdi:power'
+                  name: Status
+              show_header_toggle: false
+              title: Solar Panels
+          - type: conditional
+            conditions:
+              - entity: sensor.sems_status
+                state: Online
+            card:
+              type: entities
+              entities:
+                - entity: sensor.sems_status
+                  icon: 'mdi:power'
+                  name: Status
+                - entity: sensor.sems_output_power
+                  icon: 'mdi:flash'
+                  name: Current Output Power
+                - entity: sensor.sems_today_generated
+                  icon: 'mdi:solar-power'
+                  name: Electricity Generated Today
+              show_header_toggle: false
+              title: Solar Panels
       - cards:
           - entities:
               - entity: light.theatre_room_left_lamp
@@ -103,15 +112,25 @@ views:
         show_header_toggle: false
         title: Garage
         type: entities
-      - entity: script.roomba_clean
-        hold_action:
-          action: more-info
-        icon: 'mdi:robot-vacuum'
-        show_icon: true
-        show_name: true
-        tap_action:
-          action: toggle
-        type: entity-button
+      - cards:
+          - entity: alarm_control_panel.alarm_com
+            name: House Alarm
+            states:
+              - arm_home
+              - arm_away
+            type: alarm-panel
+          - entities:
+              - entity: sensor.front_door
+                icon: 'mdi:door'
+              - entity: sensor.ring_last_ding
+                icon: 'mdi:bell-ring'
+                name: Last Ring
+              - entity: sensor.ring_last_motion
+                icon: 'mdi:motion-sensor'
+                name: Last Motion
+            title: Front Door
+            type: glance
+        type: vertical-stack
     icon: 'mdi:home'
     path: default_view
     title: Home
@@ -928,7 +947,7 @@ views:
               - entity: switch.aircon_on_off
                 state: 'on'
             type: conditional
-        type: vertical-stack
+        type: 'custom:vertical-stack-in-card'
       - entities:
           - entity: switch.aircon_zone_living
             icon: 'mdi:air-filter'
