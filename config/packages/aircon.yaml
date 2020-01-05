@@ -118,7 +118,7 @@ script:
     sequence:
     - data:
         entity_id: input_number.aircon_temperature
-        value: 19
+        value: 21
       service: input_number.set_value
     - delay:
         seconds: 1
