@@ -1,3 +1,5 @@
 *secrets.yaml
 *webostv.conf
 *phue.conf
+.vscode/*
+/config/.vscode/*
