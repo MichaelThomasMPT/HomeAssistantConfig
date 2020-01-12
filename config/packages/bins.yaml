@@ -2,6 +2,7 @@ variable:
   bins_were_moved_today:
     name: Bins Were Moved Today
     value: False
+    restore: true #when the server restarts, make sure state is maintained
 
 automation:
   #If both doors were open at the same time, then the bins were moved today
