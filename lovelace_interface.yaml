@@ -33,15 +33,6 @@ views:
         tap_action:
           action: toggle
         type: entity-button
-      - entity: switch.christmas_tree
-        hold_action:
-          action: more-info
-        icon: 'mdi:pine-tree'
-        show_icon: true
-        show_name: true
-        tap_action:
-          action: toggle
-        type: entity-button
       - entities:
           - entity: sensor.away_from_home_state_validity
         show_name: false
