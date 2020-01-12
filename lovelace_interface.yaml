@@ -38,26 +38,20 @@ views:
         show_name: false
         title: House State Validity
         type: glance
-      - type: vertical-stack
-        cards:
-          - type: conditional
-            conditions:
-              - entity: sensor.sems_status
-                state: Offline
-            card:
-              type: entities
+      - cards:
+          - card:
               entities:
                 - entity: sensor.sems_status
                   icon: 'mdi:power'
                   name: Status
               show_header_toggle: false
               title: Solar Panels
-          - type: conditional
+              type: entities
             conditions:
               - entity: sensor.sems_status
-                state: Online
-            card:
-              type: entities
+                state: Offline
+            type: conditional
+          - card:
               entities:
                 - entity: sensor.sems_status
                   icon: 'mdi:power'
@@ -70,6 +64,12 @@ views:
                   name: Electricity Generated Today
               show_header_toggle: false
               title: Solar Panels
+              type: entities
+            conditions:
+              - entity: sensor.sems_status
+                state: Online
+            type: conditional
+        type: vertical-stack
       - cards:
           - entities:
               - entity: light.theatre_room_left_lamp
