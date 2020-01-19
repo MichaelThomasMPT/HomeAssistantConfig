@@ -127,12 +127,9 @@ automation:
 wake_on_lan:
 
 # LG TV
-media_player:
-  - platform: webostv
+webostv:
     host: 192.168.1.150
     name: Theatre Room TV
-    filename: webostv.conf
-    timeout: 5
     turn_on_action:
       service: wake_on_lan.send_magic_packet
       data:

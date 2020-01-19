@@ -41,8 +41,8 @@ automation:
       to: 'armed_away'
     action:
       - service: light.turn_off #lights
-        entity_id: 
-          - group.all_lights
+        data_template: 
+          entity_id: "{{ states.light | map(attribute='entity_id') | list | join(', ') }}"
       - service: script.aircon_turn_off #aircon
       - service: media_player.turn_off #tv & speakers
         entity_id:

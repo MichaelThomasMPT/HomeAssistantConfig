@@ -42,7 +42,8 @@ elastic:
 hue:
   bridges:
     - host: !secret hue_bridge_ip_address
-      filename: phue.conf
+      allow_unreachable: true
+      allow_hue_groups: true
 
 # Text to speech
 tts:
