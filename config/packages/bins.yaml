@@ -39,9 +39,13 @@ automation:
         data:
           variable: bins_were_moved_today
           value: False
+      #if notification automation was disabled, turn it back on
+      - service: automation.turn_on
+        entity_id:
+          - automation.bins_notify_if_bins_not_taken_out
 
   #Alert me if the bins need taking out
-  - alias: Bins - Bins Reminder
+  - alias: Bins - Notify If Bins Not Taken Out
     trigger:
       - platform: time
         at: '18:30:00'

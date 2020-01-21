@@ -1165,6 +1165,7 @@ views:
       - type: entities
         entities:
           - entity: automation.garage_notify_if_garage_door_left_open_for_5_minutes
+          - entity: automation.bins_notify_if_bins_not_taken_out
         title: Temporarily Disable Automations
         show_header_toggle: false
     icon: 'mdi:battery-unknown'
