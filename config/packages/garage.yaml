@@ -16,7 +16,18 @@ automation:
       - service: notify.pushbullet
         data:
           message: Garage door was left open.
-          
+
+  #In case I've manually disabled the garage door alerting notification, re-enable it when the garage door closes
+  - alias: Activate Garage Door Alert Automation When Garage Door Closed
+    trigger:
+      platform: state
+      entity_id: cover.aeon_labs_zw062_garage_door_controller_barrier_state_label
+      to: "closed"
+    action:
+      - service: automation.turn_on
+        entity_id:
+          - automation.notify_if_garage_door_left_open_for_5_minutes
+    
   #if garage door unreachable, send a push notification.
   - alias: Notify If Garage Door Is Unreachable
     trigger:
@@ -94,4 +105,4 @@ automation:
         entity_id:
           - light.entry_hall_lights
           
-    
+

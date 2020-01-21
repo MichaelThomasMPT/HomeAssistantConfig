@@ -1162,5 +1162,10 @@ views:
                 state_not: '0'
             type: conditional
         type: 'custom:vertical-stack-in-card'
+      - type: entities
+        entities:
+          - entity: automation.notify_if_garage_door_left_open_for_5_minutes
+        title: Temporarily Disable Automations
+        show_header_toggle: false
     icon: 'mdi:battery-unknown'
     path: batteries
