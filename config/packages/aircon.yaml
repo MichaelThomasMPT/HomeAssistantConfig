@@ -218,7 +218,7 @@ script:
     alias: Heater On
 
 automation:
-  - alias: Aircon - Adjust Temperature From Slider
+  - alias: Aircon Control - Adjust Temperature From Slider
     trigger: 
       platform: state
       entity_id: input_number.aircon_temperature
@@ -227,7 +227,7 @@ automation:
         data_template:
           command: '{"ac1":{"info":{"setTemp":{{ states.input_number.aircon_temperature.state | int }}}}}'
             
-  - alias: Aircon - Adjust Temperature From Sensor
+  - alias: Aircon Control - Adjust Temperature From Sensor
     trigger: 
       platform: state
       entity_id: sensor.aircon_temperature
@@ -237,7 +237,7 @@ automation:
           entity_id: input_number.aircon_temperature
           value: "{{ states.sensor.aircon_temperature.state }}"
           
-  - alias: Aircon - Adjust Countdown Timer From Slider
+  - alias: Aircon Control - Adjust Countdown Timer From Slider
     trigger: 
       platform: state
       entity_id: input_number.aircon_countdown_timer
@@ -246,7 +246,7 @@ automation:
         data_template:
           command: '{"ac1":{"info":{"countDownToOff":{{ states.input_number.aircon_countdown_timer.state | int }}}}}'
             
-  - alias: Aircon - Adjust Countdown Timer From Sensor
+  - alias: Aircon Control - Adjust Countdown Timer From Sensor
     trigger: 
       platform: state
       entity_id: sensor.aircon_countdown_timer
@@ -256,7 +256,7 @@ automation:
           entity_id: input_number.aircon_countdown_timer
           value: "{{ states.sensor.aircon_countdown_timer.state }}"
 
-  - alias: Aircon - Set Run Mode From Selector
+  - alias: Aircon Control - Set Run Mode From Selector
     trigger: 
       platform: state
       entity_id: input_select.aircon_run_mode
@@ -265,7 +265,7 @@ automation:
         data_template:
           command: '{"ac1":{"info":{"mode":{{ states.input_select.aircon_run_mode.state }}}}}'
 
-  - alias: Aircon - Set Run Mode From Sensor
+  - alias: Aircon Control - Set Run Mode From Sensor
     trigger: 
       platform: state
       entity_id: sensor.aircon_run_mode
@@ -275,7 +275,7 @@ automation:
           entity_id: input_select.aircon_run_mode
           option: "{{ states.sensor.aircon_run_mode.state }}"
 
-  - alias: Morning Warmth
+  - alias: Temperature - Morning Warmth
     trigger:
       - platform: time
         at: '06:00:00'
@@ -294,7 +294,7 @@ automation:
     action:
       - service: script.aircon_warm_master
 
-  - alias: Solar Cooling
+  - alias: Temperature - Solar Cooling
     trigger:
       platform: time_pattern
       minutes: "/1" #This will match every 1 minutes
@@ -319,7 +319,7 @@ automation:
           value: 15
 
 #NOTE: This automation probably won't work correctly until I get a more reliable means of prescence detection in the master bedroom
-  - alias: Auto Bedroom Fan 
+  - alias: Temperature - Auto Bedroom Fan 
     trigger:
       - platform: state
         entity_id: sensor.motion_sensor_master_bedroom

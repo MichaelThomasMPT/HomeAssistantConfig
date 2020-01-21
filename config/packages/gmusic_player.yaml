@@ -80,7 +80,7 @@ sensor:
         value_template: "{{ states.media_player.gmusic_player.attributes._player_state }}"
 
 automation old:
-  - alias: "gmusic_player_auto_advance"
+  - alias: Google Music Player - gmusic_player_auto_advance
     hide_entity: true
     initial_state: 'on'
     trigger:
@@ -99,7 +99,7 @@ automation old:
       - service: media_player.media_next_track
         entity_id: 'media_player.gmusic_player'
 
-  - alias: "gmusic_player_auto_play"
+  - alias: Google Music Player - gmusic_player_auto_play
     hide_entity: true
     initial_state: 'on'
     trigger:

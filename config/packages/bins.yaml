@@ -6,7 +6,7 @@ variable:
 
 automation:
   #If both doors were open at the same time, then the bins were moved today
-  - alias: Were Bins Moved Today?
+  - alias: Bins - Were Bins Moved Today?
     trigger: 
       - platform: state
         entity_id: binary_sensor.lumi_lumi_sensor_magnet_fe5df303_on_off
@@ -30,7 +30,7 @@ automation:
           value: True
  
   #At midnight, reset the bins_were_moved_today variable
-  - alias: Reset Bins Variable
+  - alias: Bins - Reset Bins Variable
     trigger:
       - platform: time
         at: '00:00:00'
@@ -41,7 +41,7 @@ automation:
           value: False
 
   #Alert me if the bins need taking out
-  - alias: Bins Reminder
+  - alias: Bins - Bins Reminder
     trigger:
       - platform: time
         at: '18:30:00'

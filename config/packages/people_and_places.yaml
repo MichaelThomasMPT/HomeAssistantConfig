@@ -36,7 +36,7 @@ zone:
     icon: mdi:home
 
 automation:
-  - alias: Notify Michael If Laura Leaving Work
+  - alias: Location - Notify Michael If Laura Leaving Work
     trigger:
       platform: zone
       entity_id: device_tracker.lauras_iphone

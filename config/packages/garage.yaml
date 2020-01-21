@@ -1,6 +1,6 @@
 automation:
   #if garage door left open, send a push notification.
-  - alias: Notify If Garage Door Left Open For 5 Minutes
+  - alias: Garage - Notify If Garage Door Left Open For 5 Minutes
     trigger:
       platform: time_pattern
       minutes: '/1' #run every minute
@@ -18,7 +18,7 @@ automation:
           message: Garage door was left open.
 
   #In case I've manually disabled the garage door alerting notification, re-enable it when the garage door closes
-  - alias: Activate Garage Door Alert Automation When Garage Door Closed
+  - alias: Garage - Activate Garage Door Alert Automation When Garage Door Closed
     trigger:
       platform: state
       entity_id: cover.aeon_labs_zw062_garage_door_controller_barrier_state_label
@@ -26,10 +26,10 @@ automation:
     action:
       - service: automation.turn_on
         entity_id:
-          - automation.notify_if_garage_door_left_open_for_5_minutes
+          - automation.garage_notify_if_garage_door_left_open_for_5_minutes
     
   #if garage door unreachable, send a push notification.
-  - alias: Notify If Garage Door Is Unreachable
+  - alias: Garage - Notify If Garage Door Is Unreachable
     trigger:
       platform: time_pattern
       minutes: '/1' #run every minute
@@ -47,7 +47,7 @@ automation:
           message: Garage door cannot be reached.
           
   #if not closing garage when leaving home, send a notification. 
-  - alias: Notify If Garage Door Left Open When Leaving Home
+  - alias: Garage - Notify If Garage Door Left Open When Leaving Home
     trigger:
       platform: zone
       entity_id: device_tracker.michael_michaelgalaxys10_2
@@ -64,7 +64,7 @@ automation:
         data:
           message: Garage door was left open.
 
-  - alias: Turn On Hallway Light If Garage Opened After Sunset
+  - alias: Front Hall - Turn On Hallway Light If Garage Opened After Sunset
     trigger:
       platform: state
       entity_id: cover.aeon_labs_zw062_garage_door_controller_barrier_state_label
@@ -87,7 +87,7 @@ automation:
         entity_id:
           - light.entry_hall_lights
 
-  - alias: Turn On Hallway Light If Front Door Opened After Sunset
+  - alias: Front Hall - Turn On Hallway Light If Front Door Opened After Sunset
     trigger:
       platform: state
       entity_id: sensor.front_door

@@ -5,7 +5,7 @@ alarm_control_panel:
   password: !secret alarmdotcom_password
 
 automation:
-  - alias: Notify If Alarm Not Set When Nobody Is Home
+  - alias: Alarm System - Notify If Alarm Not Set When Nobody Is Home
     trigger:
       - platform: zone
         entity_id: device_tracker.lauras_iphone
@@ -33,7 +33,7 @@ automation:
         data:
           message: The house alarm was not set.
           
-  - alias: Turn Off House When Alarm Is Set
+  - alias: Alarm System - Turn Off House When Alarm Is Set
     trigger:
       platform: state
       entity_id: alarm_control_panel.alarm_com
