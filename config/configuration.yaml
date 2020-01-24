@@ -59,7 +59,3 @@ zha:
   usb_path: /nortecusbstick0
   database_path: /config/zigbee.db
 
-
-# Check for breaking changes in new HA configuration
-breaking_changes:
-  scan_interval: 600 #10 minutes

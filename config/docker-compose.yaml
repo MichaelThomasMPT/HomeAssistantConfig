@@ -1,0 +1,20 @@
+version: '3.3'
+services:
+    home-assistant:
+        container_name: home-assistant-prod
+        restart: always
+        network_mode: host
+        environment:
+            - TZ=Australia/Perth
+        volumes:
+            - '/home/micker/DockerData/HomeAssistant:/config'
+            - '/home/HAVersionUpdate:/HAVersionUpdate'
+        devices:
+            - '/dev/ttyACM0:/zwaveusbstick'
+            - '/dev/ttyUSB0:/nortecusbstick0'
+            - '/dev/ttyUSB1:/nortecusbstick1'
+        image: homeassistant/home-assistant:stable
+
+
+
+

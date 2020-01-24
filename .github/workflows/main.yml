@@ -29,9 +29,6 @@ jobs:
         if: github.event.client_payload.branch == 'dev'
         run: pip3 install git+git://github.com/home-assistant/home-assistant.git@dev
 
-      - name: DEBUG - Print Directory
-        run: ls -al
-
       - name: Check Config
         run: |
           mv ./config/secrets.yaml.template ./config/secrets.yaml
