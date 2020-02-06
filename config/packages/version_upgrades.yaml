@@ -62,7 +62,7 @@ automation:
           # Options are: dev, rc, stable
           branch: stable
           # If release is "minor" we auto-apply the update
-          release_type: '{% if states.sensor.ha_docker_version_stable.state[-2:] == ".0" %}major{% else %}minor{% endif %}'
+          release_type: '{% if states.sensor.ha_version.state[:-2] == states.sensor.ha_docker_version_stable.state[:-2] %}minor{% else %}major{% endif %}'
           version: '{{ states.sensor.ha_docker_version_stable.state }}'
       # Delay to allow action to finish
       - delay:
