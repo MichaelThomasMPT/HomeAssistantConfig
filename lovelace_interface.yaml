@@ -269,7 +269,7 @@ views:
             tap_action:
               action: toggle
             type: state-icon
-          - entity: light.theatre_room_blinds
+          - entity: cover.axis_gear_034e1400_window_covering
             style:
               left: 75%
               top: 39%
@@ -804,7 +804,7 @@ views:
             type: horizontal-stack
         type: vertical-stack
       - entities:
-          - entity: light.axis_gear_034e1400_1
+          - entity: cover.axis_gear_034e1400_window_covering
             hide_state: true
             min: 0
             name: Shutter Level
@@ -1123,7 +1123,7 @@ views:
           title: Unavailable Devices
           type: entities
         entities:
-          - light.axis_gear_034e1400_1
+          - cover.axis_gear_034e1400_window_covering
           - binary_sensor.garage_external_door
           - sensor.sems_output_power
           - light.theatre_room_left_lamp
@@ -1145,30 +1145,40 @@ views:
         state_filter:
           - unavailable
         type: entity-filter
-      - cards:
-          - entity: sensor.potential_breaking_changes
-            name: Potential Breaking Changes
-            type: sensor
-          - card:
-              columns:
-                - add_link: doclink
-                  field: component
-                  title: Component
-                - add_link: prlink
-                  field: description
-                  title: Description
-              entity: sensor.potential_breaking_changes
-              type: 'custom:list-card'
-            conditions:
-              - entity: sensor.potential_breaking_changes
-                state_not: '0'
-            type: conditional
-        type: 'custom:vertical-stack-in-card'
-      - type: entities
-        entities:
+      - entities:
           - entity: automation.garage_notify_if_garage_door_left_open_for_5_minutes
           - entity: automation.bins_notify_if_bins_not_taken_out
-        title: Temporarily Disable Automations
         show_header_toggle: false
+        title: Temporarily Disable Automations
+        type: entities
+      - cards:
+          - entities:
+              - entity: sensor.ha_version
+              - entity: sensor.ha_docker_version_stable
+              - entity: sensor.ha_docker_version_beta
+              - entity: sensor.ha_github_version
+            show_header_toggle: false
+            title: Home Assistant Versions
+            type: entities
+          - cards:
+              - entity: sensor.potential_breaking_changes
+                name: Potential Breaking Changes
+                type: sensor
+              - card:
+                  columns:
+                    - add_link: doclink
+                      field: component
+                      title: Component
+                    - add_link: prlink
+                      field: description
+                      title: Description
+                  entity: sensor.potential_breaking_changes
+                  type: 'custom:list-card'
+                conditions:
+                  - entity: sensor.potential_breaking_changes
+                    state_not: '0'
+                type: conditional
+            type: 'custom:vertical-stack-in-card'
+        type: vertical-stack
     icon: 'mdi:battery-unknown'
     path: batteries
