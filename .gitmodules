@@ -43,3 +43,6 @@
 [submodule "dependent_projects/list-card"]
 	path = dependent_projects/list-card
 	url = https://github.com/iantrich/list-card.git
+[submodule "dependent_projects/lovelace-card-tools"]
+	path = dependent_projects/lovelace-card-tools
+	url = https://github.com/thomasloven/lovelace-card-tools.git
