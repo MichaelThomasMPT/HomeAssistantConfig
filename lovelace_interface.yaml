@@ -858,6 +858,7 @@ views:
               - entity: switch.aircon_on_off
                 icon: 'mdi:power'
                 name: Aircon On/Off
+                state_color: true
               - entity: input_select.aircon_run_mode
               - entity: sensor.aircon_temperature
                 name: Aircon Temperature
@@ -955,6 +956,7 @@ views:
         show_header_toggle: false
         title: Aircon Zones
         type: entities
+        state_color: true
       - cards:
           - columns: 3
             entities:
