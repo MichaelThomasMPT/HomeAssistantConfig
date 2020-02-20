@@ -113,10 +113,10 @@ views:
           - entities:
               - entity: sensor.front_door
                 icon: 'mdi:door'
-              - entity: sensor.ring_last_ding
+              - entity: sensor.front_door_last_ding
                 icon: 'mdi:bell-ring'
                 name: Last Ring
-              - entity: sensor.ring_last_motion
+              - entity: sensor.front_door_last_motion
                 icon: 'mdi:motion-sensor'
                 name: Last Motion
             title: Front Door
@@ -1190,5 +1190,12 @@ views:
                 type: conditional
             type: 'custom:vertical-stack-in-card'
         type: vertical-stack
+      - type: glance
+        entities:
+          - entity: sensor.archer_d5_bytes_received
+          - entity: sensor.archer_d5_bytes_sent
+          - entity: sensor.archer_d5_packets_received
+          - entity: sensor.archer_d5_packets_sent
+        title: Secondary Router Traffic Results
     icon: 'mdi:battery-unknown'
     path: batteries
