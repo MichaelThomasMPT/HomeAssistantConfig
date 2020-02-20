@@ -300,7 +300,7 @@ automation:
       minutes: "/1" #This will match every 1 minutes
     condition:
       - condition: template
-        value_template: '{{ (states.sensor.lumi_lumi_sens_02281d85_1_1026.state | float) > 25.0 }}' #if the inside temperature is > 25 degrees  
+        value_template: '{{ (states.sensor.living_room_temperature.state | float) > 25.0 }}' #if the inside temperature is > 25 degrees  
       - condition: template
         value_template: '{{ (states.sensor.sems_output_power.state | float) > 2000.0 }}' #if the solar panels are running well
       - condition: state
@@ -328,7 +328,7 @@ automation:
       - condition: time
         after: '21:30:00' #it's after 9.30pm
       - condition: template
-        value_template: '{{ (states.sensor.lumi_lumi_sens_2fa41804_temperature.state | float) > 25.0 }}' #the bedroom temperature is > 25 degrees  
+        value_template: '{{ (states.sensor.theatre_temperature.state | float) > 25.0 }}' #the bedroom temperature is > 25 degrees  
       - condition: state
         entity_id: 'switch.aircon_on_off'
         state: 'off' #don't run the script if the fan is already on, as it will restart the countdown timer

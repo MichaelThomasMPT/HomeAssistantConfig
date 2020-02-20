@@ -36,7 +36,7 @@ script:
       - condition: or #all further steps will only run if this condition is true
         conditions:
           - condition: template
-            value_template: '{{ (states.sensor.lumi_lumi_sens_2fa41804_temperature.state | float) > 25.0 }}' #if theatre room temperature is > 25 degrees
+            value_template: '{{ (states.sensor.theatre_temperature.state | float) > 25.0 }}' #if theatre room temperature is > 25 degrees
       - service: script.turn_on #cool the theatre room
         entity_id:
           - script.aircon_cool_theatre         

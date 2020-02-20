@@ -98,7 +98,7 @@ views:
               cover.aeon_labs_zw062_garage_door_controller_barrier_state_label.state
               ]]
             type: 'custom:secondaryinfo-entity-row'
-          - entity: binary_sensor.lumi_lumi_sensor_magnet_fe5df303_on_off
+          - entity: binary_sensor.garage_door_external
             name: External Door
         show_header_toggle: false
         title: Garage
@@ -122,6 +122,10 @@ views:
             title: Front Door
             type: glance
         type: vertical-stack
+      - entities:
+          - entity: binary_sensor.letterbox_vibration
+            name: Letterbox Sensor
+        type: glance
     icon: 'mdi:home'
     path: default_view
     title: Home
@@ -805,11 +809,7 @@ views:
         type: vertical-stack
       - entities:
           - entity: cover.axis_gear_034e1400_window_covering
-            hide_state: true
-            min: 0
-            name: Shutter Level
-            step: 1
-            type: 'custom:slider-entity-row'
+          - entity: light.axis_gear_034e1400_level_on_off
         show_header_toggle: false
         title: Theatre Room Blinds
         type: entities
@@ -954,23 +954,23 @@ views:
             icon: 'mdi:air-filter'
             name: Bedroom 2 & 3
         show_header_toggle: false
+        state_color: true
         title: Aircon Zones
         type: entities
-        state_color: true
       - cards:
           - columns: 3
             entities:
               - entity: sensor.current_outdoor_temperature
                 name: Temperature Outside
-              - entity: sensor.lumi_lumi_sens_2fa41804_temperature
+              - entity: sensor.theatre_temperature
                 name: Theatre Temperature
-              - entity: sensor.lumi_lumi_sens_4adf2404_temperature
+              - entity: sensor.master_bedroom_temperature
                 name: Master Bedroom Temperature
-              - entity: sensor.lumi_lumi_sens_02281d85_1_1029
+              - entity: sensor.master_bedroom_temperature
                 name: Humidity Inside
-              - entity: sensor.lumi_lumi_sens_c96dfa03_temperature
+              - entity: sensor.office_temperature
                 name: Office Temperature
-              - entity: sensor.lumi_lumi_sens_02281d85_1_1026
+              - entity: sensor.living_room_temperature
                 name: Living Room Temperature
             title: Home Temperature
             type: glance
@@ -1090,30 +1090,35 @@ views:
     title: Aircon
   - badges: []
     cards:
-      - entities:
-          - entity: sensor.lumi_lumi_sens_02281d85_1_1
+      - columns: 3
+        entities:
+          - entity: sensor.living_room_temperature_sensor_battery_level
             name: Living Room Temp Sensor
-          - entity: sensor.lumi_lumi_sens_2fa41804_power
+          - entity: sensor.master_bedroom_temp_sensor_battery_level
             name: Theatre Temp Sensor
-          - entity: sensor.lumi_lumi_sens_4adf2404_power
+          - entity: sensor.theatre_room_temperature_sensor_battery_level
             name: Master Bedroom Temp Sensor
-          - entity: sensor.lumi_lumi_sens_c96dfa03_power
+          - entity: sensor.office_temperature_sensor_battery_level
             name: Office Temp Sensor
-          - entity: sensor.lumi_lumi_sensor_magnet_fe5df303_power
+          - entity: sensor.vibration_sensor_battery_level
             name: Garage External Door Sensor
+          - entity: sensor.garage_external_door_battery_level
+            name: Mailbox Vibration Sensor
         title: Battery Status
         type: glance
       - entities:
-          - entity: sensor.lumi_lumi_sens_02281d85_1_1
+          - entity: sensor.living_room_temperature_sensor_battery_level
             name: Living Room Temp Sensor
-          - entity: sensor.lumi_lumi_sens_2fa41804_power
+          - entity: sensor.master_bedroom_temp_sensor_battery_level
             name: Theatre Temp Sensor
-          - entity: sensor.lumi_lumi_sens_4adf2404_power
+          - entity: sensor.theatre_room_temperature_sensor_battery_level
             name: Master Bedroom Temp Sensor
-          - entity: sensor.lumi_lumi_sens_c96dfa03_power
+          - entity: sensor.office_temperature_sensor_battery_level
             name: Office Temp Sensor
-          - entity: sensor.lumi_lumi_sensor_magnet_fe5df303_power
+          - entity: sensor.vibration_sensor_battery_level
             name: Garage External Door Sensor
+          - entity: sensor.garage_external_door_battery_level
+            name: Mailbox Vibration Sensor
         hours_to_show: 336
         refresh_interval: 10
         title: Battery Percentage Over Time
@@ -1124,7 +1129,6 @@ views:
           type: entities
         entities:
           - cover.axis_gear_034e1400_window_covering
-          - binary_sensor.garage_external_door
           - sensor.sems_output_power
           - light.theatre_room_left_lamp
           - light.theatre_room_right_lamp
@@ -1138,10 +1142,12 @@ views:
           - media_player.office_google_home
           - media_player.office_pc_speakers
           - media_player.theatre_room_google_home
-          - sensor.lumi_lumi_sens_02281d85_1_1026
-          - sensor.lumi_lumi_sens_4adf2404_temperature
-          - sensor.lumi_lumi_sens_2fa41804_temperature
-          - sensor.lumi_lumi_sens_c96dfa03_temperature
+          - sensor.living_room_temperature
+          - sensor.master_bedroom_temperature
+          - sensor.office_temperature
+          - sensor.vibration_sensor
+          - sensor.theatre_room_temperature
+          - binary_sensor.garage_door_external
         state_filter:
           - unavailable
         type: entity-filter
