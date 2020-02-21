@@ -103,25 +103,34 @@ views:
         show_header_toggle: false
         title: Garage
         type: entities
-      - cards:
+      - type: vertical-stack
+        cards:
           - entity: alarm_control_panel.alarm_com
             name: House Alarm
             states:
               - arm_home
               - arm_away
             type: alarm-panel
-          - entities:
-              - entity: sensor.front_door
-                icon: 'mdi:door'
-              - entity: sensor.front_door_last_ding
-                icon: 'mdi:bell-ring'
-                name: Last Ring
-              - entity: sensor.front_door_last_motion
-                icon: 'mdi:motion-sensor'
-                name: Last Motion
-            title: Front Door
-            type: glance
-        type: vertical-stack
+          - type: 'custom:vertical-stack-in-card'
+            cards:
+              - entities:
+                  - entity: sensor.front_door
+                    icon: 'mdi:door'
+                  - entity: sensor.front_door_last_ding
+                    icon: 'mdi:bell-ring'
+                    name: Last Ring
+                  - entity: sensor.front_door_last_motion
+                    icon: 'mdi:motion-sensor'
+                    name: Last Motion
+                title: Front Door
+                type: glance
+              - type: picture-entity
+                entity: camera.front_door
+                aspect_ratio: 50%
+                name: Last Activity at Front Door
+                camera_image: camera.front_door
+                camera_view: live
+                show_state: true
       - entities:
           - entity: binary_sensor.letterbox_vibration
             name: Letterbox Sensor
