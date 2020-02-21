@@ -102,39 +102,13 @@ automation:
 
 # Additional Panels
 panel_iframe:
-  router_primary:
-    title: 'Router (Primary)'
-    url: 'http://192.168.1.1'
-    icon: mdi:router-wireless
+  home_server_dashboard:
+    title: Home Server Dashboard
+    url: 'http://192.168.1.111/'
+    icon: mdi:monitor-dashboard
     require_admin: true
-  router_secondary:
-    title: 'Router (Secondary)'
-    url: 'http://192.168.1.2'
-    icon: mdi:router-wireless
-    require_admin: true
-  portainer:
-    title: Portainer
-    url: 'http://192.168.1.111:9000'
-    icon: mdi:docker
-    require_admin: true
-  fileexplorer:
-    title: File Explorer
-    url: 'http://192.168.1.111:80'
-    icon: mdi:folder-search
-    require_admin: true
-  elk:
-    title: ELK
-    url: 'http://192.168.1.111:5601'
-    icon: mdi:database
-    require_admin: true
-  elk_money_balance:
-    title: Money Balance
-    url: 'http://192.168.1.111:5601/app/kibana#/dashboard/d8425c20-5a84-11e7-9da3-818b9c9525ff?_g=(refreshInterval%3A(pause%3A!t%2Cvalue%3A0)%2Ctime%3A(from%3Anow-1y%2Cto%3Anow))'
-    icon: mdi:currency-usd
-    require_admin: true
-  elk_money_spent:
-    title: Money Spent
-    url: 'http://192.168.1.111:5601/app/kibana#/dashboard/0f7fa450-ead0-11e7-bf13-553f043d4230?_g=(refreshInterval%3A(pause%3A!t%2Cvalue%3A0)%2Ctime%3A(from%3Anow-1y%2Cto%3Anow))'
-    icon: mdi:currency-usd-off
-    require_admin: true
-    
+  recipe_manager:
+    title: Recipe Manager
+    url: 'http://192.168.1.111:4000/beta/'
+    icon: mdi:food-variant
+    require_admin: false
