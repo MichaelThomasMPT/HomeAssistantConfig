@@ -1,0 +1,41 @@
+variable:
+  mail_was_delivered_today:
+    name: Mail Was Delivered Today
+    value: False
+    restore: true #when the server restarts, make sure state is maintained
+
+
+automation:
+  #if mail is delivered, send a push notification
+  - alias: Letterbox - Notify If Post Delivered
+    trigger:
+      platform: state
+      entity_id: binary_sensor.letterbox_vibration
+      to: "on"
+    action:
+      - service: notify.pushbullet
+        data:
+          message: You have mail! 
+      - service: variable.set_variable
+        data:
+          variable: mail_was_delivered_today
+          value: True
+      - service: light.turn_on
+        data:
+          entity_id: light.office_lamp
+          brightness_pct: 30
+          rgb_color: [0,255,0] 
+
+ #At midnight, reset the mail_was_delivered_today variable
+  - alias: Letterbox - Reset Letterbox Variable
+    trigger:
+      - platform: time
+        at: '00:00:00'
+    action:
+      - service: variable.set_variable
+        data:
+          variable: mail_was_delivered_today
+          value: False
+      - service: light.turn_off
+        data:
+          entity_id: light.office_lamp
