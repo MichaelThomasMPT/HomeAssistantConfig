@@ -217,6 +217,42 @@ script:
       service: switch.turn_on
     alias: Heater On
 
+  #Save the current aircon state, blast aircon for 10 min, then restore state.
+  aircon_blast_cold_for_ten_minutes:
+    sequence:
+      - service: scene.create
+        data:
+          scene_id: aircon_saved_state
+          snapshot_entities:
+            - switch.aircon_on_off
+            - input_select.aircon_run_mode
+            - input_number.aircon_temperature
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.aircon_run_mode
+          option: "cool"
+      - delay:
+          seconds: 1
+      - service: input_number.set_value
+        data:
+          entity_id: input_number.aircon_temperature
+          value: 21
+      - delay:
+          seconds: 1
+      - service: switch.turn_on
+        data:
+          entity_id: switch.aircon_on_off
+      - delay:
+          minutes: 10
+      - service: scene.turn_on
+        data:
+          entity_id: scene.aircon_saved_state
+      - delay:
+          seconds: 1
+      - service: scene.turn_on #dodgy workaround to avoid sending too many requests to the AC controller at once.
+        data:
+          entity_id: scene.aircon_saved_state
+          
 automation:
   - alias: Aircon Control - Adjust Temperature From Slider
     trigger: 
