@@ -112,3 +112,8 @@ panel_iframe:
     url: 'http://192.168.1.111:4000/beta/'
     icon: mdi:food-variant
     require_admin: false
+  mybgg:
+    title: My Board Games
+    url: 'http://192.168.1.111:1234'
+    icon: mdi:cards
+    require_admin: false
