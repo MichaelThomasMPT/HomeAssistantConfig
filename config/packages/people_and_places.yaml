@@ -47,7 +47,6 @@ automation:
         data:
           message: Laura is leaving work.
 
-          
   #Notify when someone comes homes
   - alias: Location - Notify When Someone Comes Home
     initial_state: false
