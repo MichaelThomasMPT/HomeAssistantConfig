@@ -296,6 +296,11 @@ views:
             tap_action:
               action: toggle
             type: state-icon
+          - entity: binary_sensor.back_door_glass
+            style:
+              left: 48.5%
+              top: 73%
+            type: state-icon
         image: /local/floor-plan.png
         type: picture-elements
     icon: 'mdi:floor-plan'
@@ -974,28 +979,34 @@ views:
         title: Aircon Zones
         type: entities
       - cards:
-          - columns: 3
-            entities:
-              - entity: sensor.current_outdoor_temperature
-                name: Temperature Outside
-              - entity: sensor.theatre_temperature
-                name: Theatre Temperature
-              - entity: sensor.master_bedroom_temperature
-                name: Master Bedroom Temperature
-              - entity: sensor.living_room_humidity
-                name: Humidity Inside
-              - entity: sensor.office_temperature
-                name: Office Temperature
-              - entity: sensor.living_room_temperature
-                name: Living Room Temperature
-            title: Home Temperature
-            type: glance
-          - entities:
-              - entity: sensor.lumi_lumi_sens_02281d85_1_1026
-                name: Inside Temperature (Living Room)
-              - entity: sensor.current_outdoor_temperature
-                name: Outside Temperature
-            type: history-graph
+          - detail: 2
+            entity: sensor.current_outdoor_temperature
+            graph: line
+            name: Outside
+            type: sensor
+          - detail: 2
+            entity: sensor.theatre_temperature
+            graph: line
+            name: Theatre Room
+            type: sensor
+          - detail: 2
+            entity: sensor.master_bedroom_temperature
+            graph: line
+            name: Master Bedroom
+            type: sensor
+          - detail: 2
+            entity: sensor.living_room_temperature
+            graph: line
+            name: Living Bedroom
+            type: sensor
+          - detail: 2
+            entity: sensor.office_temperature
+            graph: line
+            name: Office
+            type: sensor
+        title: Temperature
+        type: 'custom:vertical-stack-in-card'
+      - cards:
           - entities:
               - entity: switch.aircon_on_off
                 icon: 'mdi:power'
@@ -1117,6 +1128,11 @@ views:
             type: horizontal-stack
         title: Presets
         type: 'custom:vertical-stack-in-card'
+      - detail: 2
+        entity: sensor.living_room_humidity
+        graph: line
+        name: Humidity Indoors
+        type: sensor
     icon: 'mdi:air-conditioner'
     path: aircon
     title: Aircon
