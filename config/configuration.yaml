@@ -53,9 +53,3 @@ tts:
 zwave:
   usb_path: /zwaveusbstick
   device_config: !include zwave_device_config.yaml
-
-# Nortek ZigBee Stick
-zha:
-  usb_path: /nortecusbstick0
-  database_path: /config/zigbee.db
-
