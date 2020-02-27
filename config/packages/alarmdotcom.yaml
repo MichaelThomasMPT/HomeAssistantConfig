@@ -50,6 +50,20 @@ automation:
           - media_player.theatre_room_tv 
           - media_player.all_rooms
         
+  - alias: Alarm System - Alert If Doors Left Open
+    trigger:
+      platform: state
+      entity_id: alarm_control_panel.alarm_com
+      to: 'armed_away'
+    condition:
+      - condition: state
+        entity_id: binary_sensor.back_door_glass
+        state: 'on'
+    action:
+      - service: notify.pushbullet #notify Michael
+        data:
+          message: A door was left open when the house alarm was set.
+
 sensor:
   - platform: template
     scan_interval: 10
