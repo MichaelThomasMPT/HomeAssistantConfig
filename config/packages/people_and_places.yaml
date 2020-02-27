@@ -47,7 +47,8 @@ automation:
         data:
           message: Laura is leaving work.
 
-    
+          
+  #Notify when someone comes homes
   - alias: Location - Notify When Someone Comes Home
     initial_state: false
     trigger:
@@ -65,19 +66,17 @@ automation:
         entity_id:
           - automation.location_notify_when_someone_comes_home
 
-
-# Michael's Location          
-#- platform: google_geocode
-#  name: michael_location
-#  origin: device_tracker.michael_michaelgalaxys10_2
-#  options: street_number, street, city
-#  display_zone: show
-#  api_key: !secret google_maps_api_key
-      
-# Laura's Location          
-#- platform: google_geocode
-#  name: laura_location
-#  origin: device_tracker.lauras_iphone
-#  options: street_number, street, city
-#  display_zone: show
-#  api_key: !secret google_maps_api_key
+person:
+  - name: Michael
+    id: michael
+    user_id: 0e77a256b08c47f7989413c4599cc865
+    device_trackers:
+      - device_tracker.michael_galaxy_s10
+  - name: Laura
+    id: laura
+    user_id: ead041f22a374460ab79813d29df70e8
+  - name: Christian
+    id: christian
+    user_id: 7c4efbecd6fa4af38f2b79fa859af76d
+    device_trackers:
+      - device_tracker.iphone
