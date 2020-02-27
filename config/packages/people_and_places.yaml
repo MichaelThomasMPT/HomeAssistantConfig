@@ -74,7 +74,9 @@ person:
       - device_tracker.michael_galaxy_s10
   - name: Laura
     id: laura
-    user_id: ead041f22a374460ab79813d29df70e8
+    user_id: c93d4309ba8141eabe4a306b2fb5ecc7
+    device_trackers:
+      - device_tracker.lauras_iphone
   - name: Christian
     id: christian
     user_id: 7c4efbecd6fa4af38f2b79fa859af76d
