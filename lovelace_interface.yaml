@@ -89,7 +89,7 @@ views:
               - entity: light.office_lamp
                 type: light
             type: horizontal-stack
-        type: vertical-stack
+        type: 'custom:vertical-stack-in-card'
       - entities:
           - entity: cover.aeon_labs_zw062_garage_door_controller_barrier_state_label
             name: Garage Door
@@ -103,16 +103,14 @@ views:
         show_header_toggle: false
         title: Garage
         type: entities
-      - type: vertical-stack
-        cards:
+      - cards:
           - entity: alarm_control_panel.alarm_com
             name: House Alarm
             states:
               - arm_home
               - arm_away
             type: alarm-panel
-          - type: 'custom:vertical-stack-in-card'
-            cards:
+          - cards:
               - entities:
                   - entity: sensor.front_door
                     icon: 'mdi:door'
@@ -124,16 +122,25 @@ views:
                     name: Last Motion
                 title: Front Door
                 type: glance
-              - type: picture-entity
-                entity: camera.front_door
-                aspect_ratio: 50%
-                name: Last Activity at Front Door
+              - aspect_ratio: 50%
                 camera_image: camera.front_door
                 camera_view: live
+                entity: camera.front_door
+                name: Last Activity at Front Door
                 show_state: true
+                type: picture-entity
+            type: 'custom:vertical-stack-in-card'
+        type: vertical-stack
+      - entities:
+          - entity: binary_sensor.back_door_glass
+          - entity: binary_sensor.back_door_flyscreen
+        title: Back Door
+        type: glance
       - entities:
           - entity: binary_sensor.letterbox_vibration
             name: Letterbox Sensor
+          - entity: variable.mail_was_delivered_today
+        title: Letterbox
         type: glance
     icon: 'mdi:home'
     path: default_view
@@ -975,7 +982,7 @@ views:
                 name: Theatre Temperature
               - entity: sensor.master_bedroom_temperature
                 name: Master Bedroom Temperature
-              - entity: sensor.master_bedroom_temperature
+              - entity: sensor.living_room_humidity
                 name: Humidity Inside
               - entity: sensor.office_temperature
                 name: Office Temperature
@@ -1092,6 +1099,22 @@ views:
                     entity_id: script.aircon_heat
                 type: entity-button
             type: horizontal-stack
+          - cards:
+              - entity: script.aircon_blast_cold_for_ten_minutes
+                hold_action:
+                  action: none
+                icon: 'mdi:snowflake'
+                icon_height: 60px
+                name: 10 Min of Cold
+                show_icon: true
+                show_name: true
+                tap_action:
+                  action: call-service
+                  service: script.turn_on
+                  service_data:
+                    entity_id: script.aircon_blast_cold_for_ten_minutes
+                type: entity-button
+            type: horizontal-stack
         title: Presets
         type: 'custom:vertical-stack-in-card'
     icon: 'mdi:air-conditioner'
@@ -1128,6 +1151,8 @@ views:
             name: Garage External Door Sensor
           - entity: sensor.garage_external_door_battery_level
             name: Mailbox Vibration Sensor
+          - entity: sensor.back_door_glass_battery
+          - entity: sensor.back_door_flyscreen_battery
         hours_to_show: 336
         refresh_interval: 10
         title: Battery Percentage Over Time
@@ -1157,6 +1182,8 @@ views:
           - sensor.vibration_sensor
           - sensor.theatre_room_temperature
           - binary_sensor.garage_door_external
+          - binary_sensor.back_door_flyscreen
+          - binary_sensor.back_door_glass
         state_filter:
           - unavailable
         type: entity-filter
@@ -1199,12 +1226,10 @@ views:
                 type: conditional
             type: 'custom:vertical-stack-in-card'
         type: vertical-stack
-      - type: glance
-        entities:
-          - entity: sensor.archer_d5_bytes_received
+      - entities:
           - entity: sensor.archer_d5_bytes_sent
-          - entity: sensor.archer_d5_packets_received
           - entity: sensor.archer_d5_packets_sent
         title: Secondary Router Traffic Results
+        type: glance
     icon: 'mdi:battery-unknown'
     path: batteries
