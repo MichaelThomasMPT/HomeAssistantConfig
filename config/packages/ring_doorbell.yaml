@@ -1,9 +1,4 @@
 
-# RING DOORBELL
-ring:
-  username: !secret ring_username
-  password: !secret ring_password
-
 # Ring Doorbell status updates (eg. wifi signal strength)
 sensor:
   - platform: ring
