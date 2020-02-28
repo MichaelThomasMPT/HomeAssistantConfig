@@ -29,10 +29,10 @@ script:
           - media_player.theatre_room_tv 
       - delay: #wait for the tv to switch on
           seconds: 10
-      - service: media_player.select_source #switch TV to netflix
+      - service: media_player.select_source #switch TV to Plex
         data:
           entity_id: media_player.theatre_room_tv
-          source: "Netflix"
+          source: "Plex"
       - condition: or #all further steps will only run if this condition is true
         conditions:
           - condition: template
@@ -73,8 +73,6 @@ script:
           - light.theatre_room_ceiling
         data:
           brightness_pct: 1
-
-
 
 automation:
   - alias: Theatre Room Blinds - Close
@@ -118,8 +116,7 @@ automation:
         entity_id: light.axis_gear_034e1400_1
         data:
           brightness: 254 #maximum
-        
-            
+
 
 ############## LG TV ##############
 
@@ -136,10 +133,14 @@ webostv:
         mac: "A8:23:FE:E4:84:05"
     customize:
       sources:
-        - livetv
-        - youtube
-        - makotv
-        - netflix
+        - 'ABC iview'
+        - 'Amazon Prime Video'
+        - Chromecast
+        - 'Live TV'
+        - Netflix
+        - Plex
+        - Stan
+        - YouTube
 
 ############## LG TV ##############
 
