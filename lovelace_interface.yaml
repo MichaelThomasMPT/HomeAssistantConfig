@@ -1,4 +1,8 @@
 title: The Treehouse
+preload:
+  - card-tools
+  - secondaryinfo-entity-row
+  - vertical-stack-in-card
 views:
   - badges:
       - person.michael
