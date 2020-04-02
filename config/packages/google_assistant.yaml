@@ -12,10 +12,12 @@ cloud:
         - sensor
       include_entities:
         - script.set_movie_lighting
+        - script.set_tv_dinner_lighting
         - script.aircon_warm_master
         - script.aircon_fan_master
         - script.aircon_cool_central_living
         - script.time_for_a_movie
+        - script.time_for_a_tv_dinner
         - script.movie_has_finished
         - script.done_with_the_theatre_room
         - script.roomba_clean

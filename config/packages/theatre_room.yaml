@@ -13,6 +13,21 @@ script:
       data: 
         entity_id: light.theatre_room_ceiling
     alias: Movie Lighting Scene
+
+  #Trigger the Hue lights scene for movie watching
+  set_tv_dinner_lighting:
+    sequence:
+    - service: hue.hue_activate_scene
+      data: 
+        group_name: "Theatre Room"
+        scene_name: "Movie Watching"
+    - service: light.turn_off
+      data:
+        entity_id: light.entry_hall_lights
+    - service: light.turn_on
+      data: 
+        entity_id: light.theatre_room_ceiling
+    alias: TV Dinner Lighting Scene
     
 
   #Get the theatre room ready  
@@ -40,6 +55,32 @@ script:
       - service: script.turn_on #cool the theatre room
         entity_id:
           - script.aircon_cool_theatre         
+
+  #Get the theatre room ready  
+  time_for_a_tv_dinner:
+    alias: Time For A TV Dinner
+    sequence:
+      - service: light.turn_off #this would be triggered anyway, but this call makes it occur faster
+        entity_id: light.axis_gear_034e1400_1 
+      - service: script.turn_on #set the lighting
+        entity_id:
+          - script.set_tv_dinner_lighting 
+      - service: media_player.turn_on #turn on the TV
+        entity_id:
+          - media_player.theatre_room_tv 
+      - delay: #wait for the tv to switch on
+          seconds: 10
+      - service: media_player.select_source #switch TV to Plex
+        data:
+          entity_id: media_player.theatre_room_tv
+          source: "Plex"
+      - condition: or #all further steps will only run if this condition is true
+        conditions:
+          - condition: template
+            value_template: '{{ (states.sensor.theatre_temperature.state | float) > 25.0 }}' #if theatre room temperature is > 25 degrees
+      - service: script.turn_on #cool the theatre room
+        entity_id:
+          - script.aircon_cool_theatre
 
   #Finished with the theatre room  
   done_with_the_theatre_room:
