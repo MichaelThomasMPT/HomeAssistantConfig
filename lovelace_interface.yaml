@@ -1,8 +1,8 @@
-title: The Treehouse
 preload:
   - card-tools
   - secondaryinfo-entity-row
   - vertical-stack-in-card
+title: The Treehouse
 views:
   - badges:
       - person.michael
@@ -992,47 +992,6 @@ views:
         title: Aircon Zones
         type: entities
       - cards:
-          - detail: 2
-            entity: sensor.current_outdoor_temperature
-            graph: line
-            name: Outside
-            type: sensor
-          - detail: 2
-            entity: sensor.theatre_temperature
-            graph: line
-            name: Theatre Room
-            type: sensor
-          - detail: 2
-            entity: sensor.master_bedroom_temperature
-            graph: line
-            name: Master Bedroom
-            type: sensor
-          - detail: 2
-            entity: sensor.living_room_temperature
-            graph: line
-            name: Living Room
-            type: sensor
-          - detail: 2
-            entity: sensor.office_temperature
-            graph: line
-            name: Office
-            type: sensor
-        title: Temperature
-        type: 'custom:vertical-stack-in-card'
-      - cards:
-          - entities:
-              - entity: switch.aircon_on_off
-                icon: 'mdi:power'
-                name: Aircon On/Off
-            title: Aircon Running State
-            type: history-graph
-          - entities:
-              - entity: sensor.sems_output_power
-                name: Solar Output
-            title: Solar Output
-            type: history-graph
-        type: 'custom:vertical-stack-in-card'
-      - cards:
           - cards:
               - entity: script.aircon_warm_master
                 hold_action:
@@ -1140,6 +1099,47 @@ views:
                 type: entity-button
             type: horizontal-stack
         title: Presets
+        type: 'custom:vertical-stack-in-card'
+      - cards:
+          - detail: 2
+            entity: sensor.current_outdoor_temperature
+            graph: line
+            name: Outside
+            type: sensor
+          - detail: 2
+            entity: sensor.theatre_temperature
+            graph: line
+            name: Theatre Room
+            type: sensor
+          - detail: 2
+            entity: sensor.master_bedroom_temperature
+            graph: line
+            name: Master Bedroom
+            type: sensor
+          - detail: 2
+            entity: sensor.living_room_temperature
+            graph: line
+            name: Living Room
+            type: sensor
+          - detail: 2
+            entity: sensor.office_temperature
+            graph: line
+            name: Office
+            type: sensor
+        title: Temperature
+        type: 'custom:vertical-stack-in-card'
+      - cards:
+          - entities:
+              - entity: switch.aircon_on_off
+                icon: 'mdi:power'
+                name: Aircon On/Off
+            title: Aircon Running State
+            type: history-graph
+          - entities:
+              - entity: sensor.sems_output_power
+                name: Solar Output
+            title: Solar Output
+            type: history-graph
         type: 'custom:vertical-stack-in-card'
       - detail: 2
         entity: sensor.living_room_humidity
