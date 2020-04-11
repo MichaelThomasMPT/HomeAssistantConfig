@@ -66,11 +66,11 @@ automation:
           version: '{{ states.sensor.ha_docker_version_stable.state }}'
       # Delay to allow action to finish
       - delay:
-          minutes: 6
+          minutes: 30
       - service: notify.pushbullet
         data_template:
           message: >-
-            New Version Not Auto-Applied: {{ trigger.from_state.state }} --> {{ trigger.to_state.state }} Changes: https://git.io/JvkT4 Tested: https://git.io/Jvt3w
+            New Version Auto-Apply Timed Out: {{ trigger.from_state.state }} --> {{ trigger.to_state.state }} Changes: https://git.io/JvkT4 Tested: https://git.io/Jvt3w
 
   - alias: "Version Update - Github Action Docker Beta"
     initial_state: 'on'
