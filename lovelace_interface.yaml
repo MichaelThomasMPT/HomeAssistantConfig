@@ -79,19 +79,27 @@ views:
                 type: light
             type: horizontal-stack
         type: 'custom:vertical-stack-in-card'
-      - entities:
-          - entity: cover.aeon_labs_zw062_garage_door_controller_barrier_state_label
-            name: Garage Door
-            secondary_info: >-
-              [[
-              cover.aeon_labs_zw062_garage_door_controller_barrier_state_label.state
-              ]]
-            type: 'custom:secondaryinfo-entity-row'
-          - entity: binary_sensor.garage_door_external
-            name: External Door
-        show_header_toggle: false
-        title: Garage
-        type: entities
+      - type: vertical-stack
+        cards:
+          - entities:
+              - entity: >-
+                  cover.aeon_labs_zw062_garage_door_controller_barrier_state_label
+                name: Garage Door
+                secondary_info: >-
+                  [[
+                  cover.aeon_labs_zw062_garage_door_controller_barrier_state_label.state
+                  ]]
+                type: 'custom:secondaryinfo-entity-row'
+              - entity: binary_sensor.garage_door_external
+                name: External Door
+            show_header_toggle: false
+            title: Garage
+            type: entities
+          - camera_image: camera.garage
+            entity: camera.garage
+            name: Garage Camera
+            type: picture-entity
+            aspect_ratio: 70%
       - cards:
           - entity: alarm_control_panel.alarm_com
             name: House Alarm
