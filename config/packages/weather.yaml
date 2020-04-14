@@ -38,7 +38,7 @@ sensor:
   - platform: sems
     username: !secret sems_username
     password: !secret sems_password
-    id: !secret sems_station_id
+    station_id: !secret sems_station_id
     scan_interval: 300
     
   #Solar Panel Attributes
