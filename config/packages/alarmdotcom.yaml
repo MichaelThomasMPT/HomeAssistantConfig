@@ -1,5 +1,5 @@
 alarm_control_panel:
-  platform: alarmdotcom
+  platform: alarmdotcomajax
   scan_interval: 10
   username: !secret alarmdotcom_username
   password: !secret alarmdotcom_password
