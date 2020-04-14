@@ -11,6 +11,10 @@ homeassistant:
 # Configure a default setup of Home Assistant (frontend, api, etc)
 default_config:
 
+# Import themes from the themes directory managed by HACS
+frontend:
+  themes: !include_dir_merge_named themes
+
 #Include other configuration files
 #automation: !include automations.yaml
 group: !include groups.yaml
