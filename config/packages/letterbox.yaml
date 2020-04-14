@@ -1,7 +1,7 @@
-variable:
+var:
   mail_was_delivered_today:
-    name: Mail Was Delivered Today
-    value: False
+    friendly_name: Mail Was Delivered Today
+    initial_value: False
     restore: true #when the server restarts, make sure state is maintained
 
 
@@ -16,9 +16,9 @@ automation:
       - service: notify.pushbullet
         data:
           message: You have mail! 
-      - service: variable.set_variable
+      - service: var.set
         data:
-          variable: mail_was_delivered_today
+          entity_id: var.mail_was_delivered_today
           value: True
       - service: light.turn_on
         data:
@@ -26,15 +26,15 @@ automation:
           brightness_pct: 30
           rgb_color: [0,255,0] 
 
- #At midnight, reset the mail_was_delivered_today variable
-  - alias: Letterbox - Reset Letterbox Variable
+ #At midnight, reset the mail_was_delivered_today var
+  - alias: Letterbox - Reset Letterbox var
     trigger:
       - platform: time
         at: '00:00:00'
     action:
-      - service: variable.set_variable
+      - service: var.set
         data:
-          variable: mail_was_delivered_today
+          entity_id: var.mail_was_delivered_today
           value: False
       - service: light.turn_off
         data:

@@ -1,7 +1,7 @@
-variable:
+var:
   bins_were_moved_today:
-    name: Bins Were Moved Today
-    value: False
+    friendly_name: Bins Were Moved Today
+    initial_value: False
     restore: true #when the server restarts, make sure state is maintained
 
 automation:
@@ -24,20 +24,20 @@ automation:
           entity_id: 'cover.aeon_labs_zw062_garage_door_controller_barrier_state_label'
           state: 'open'
     action:
-      - service: variable.set_variable
+      - service: var.set
         data:
-          variable: bins_were_moved_today
+          entity_id: var.bins_were_moved_today
           value: True
  
-  #At midnight, reset the bins_were_moved_today variable
-  - alias: Bins - Reset Bins Variable
+  #At midnight, reset the bins_were_moved_today var
+  - alias: Bins - Reset Bins var
     trigger:
       - platform: time
         at: '00:00:00'
     action:
-      - service: variable.set_variable
+      - service: var.set
         data:
-          variable: bins_were_moved_today
+          entity_id: var.bins_were_moved_today
           value: False
       #if notification automation was disabled, turn it back on
       - service: automation.turn_on
@@ -70,7 +70,7 @@ automation:
           weekday:
             - sun
         - condition: template
-          value_template: '{{ (states.variable.bins_were_moved_today.state) == "False" }}'
+          value_template: '{{ (states.var.bins_were_moved_today.state) == "False" }}'
     action:
       - service: notify.pushbullet
         data:
