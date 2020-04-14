@@ -79,8 +79,7 @@ views:
                 type: light
             type: horizontal-stack
         type: 'custom:vertical-stack-in-card'
-      - type: vertical-stack
-        cards:
+      - cards:
           - entities:
               - entity: >-
                   cover.aeon_labs_zw062_garage_door_controller_barrier_state_label
@@ -95,11 +94,12 @@ views:
             show_header_toggle: false
             title: Garage
             type: entities
-          - camera_image: camera.garage
+          - aspect_ratio: 70%
+            camera_image: camera.garage
             entity: camera.garage
             name: Garage Camera
             type: picture-entity
-            aspect_ratio: 70%
+        type: vertical-stack
       - cards:
           - entity: alarm_control_panel.alarm_com
             name: House Alarm
@@ -1270,5 +1270,8 @@ views:
           - entity: sensor.archer_d5_packets_sent
         title: Secondary Router Traffic Results
         type: glance
+      - type: entity
+        entity: sensor.hacs
+        name: HACS Pending Updates
     icon: 'mdi:battery-unknown'
     path: batteries
