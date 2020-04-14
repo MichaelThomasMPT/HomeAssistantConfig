@@ -1,7 +1,3 @@
-preload:
-  - card-tools
-  - secondaryinfo-entity-row
-  - vertical-stack-in-card
 title: The Treehouse
 views:
   - badges:
@@ -80,26 +76,32 @@ views:
             type: horizontal-stack
         type: 'custom:vertical-stack-in-card'
       - cards:
-          - entities:
+          - type: entities
+            entities:
               - entity: >-
                   cover.aeon_labs_zw062_garage_door_controller_barrier_state_label
                 name: Garage Door
-                secondary_info: >-
-                  [[
-                  cover.aeon_labs_zw062_garage_door_controller_barrier_state_label.state
-                  ]]
-                type: 'custom:secondaryinfo-entity-row'
               - entity: binary_sensor.garage_door_external
                 name: External Door
-            show_header_toggle: false
-            title: Garage
-            type: entities
           - aspect_ratio: 70%
             camera_image: camera.garage
             entity: camera.garage
             name: Garage Camera
             type: picture-entity
-        type: vertical-stack
+        type: 'custom:vertical-stack-in-card'
+        show_header_toggle: false
+        title: Garage
+      - entities:
+          - entity: binary_sensor.back_door_glass
+          - entity: binary_sensor.back_door_flyscreen
+        title: Back Door
+        type: glance
+      - entities:
+          - entity: binary_sensor.letterbox_vibration
+            name: Letterbox Sensor
+          - entity: var.mail_was_delivered_today
+        title: Letterbox
+        type: glance
       - cards:
           - entity: alarm_control_panel.alarm_com
             name: House Alarm
@@ -128,17 +130,6 @@ views:
                 type: picture-entity
             type: 'custom:vertical-stack-in-card'
         type: vertical-stack
-      - entities:
-          - entity: binary_sensor.back_door_glass
-          - entity: binary_sensor.back_door_flyscreen
-        title: Back Door
-        type: glance
-      - entities:
-          - entity: binary_sensor.letterbox_vibration
-            name: Letterbox Sensor
-          - entity: variable.mail_was_delivered_today
-        title: Letterbox
-        type: glance
     icon: 'mdi:home'
     path: default_view
     title: Home
@@ -1264,14 +1255,14 @@ views:
                     state_not: '0'
                 type: conditional
             type: 'custom:vertical-stack-in-card'
+          - type: entity
+            entity: sensor.hacs
+            name: HACS Pending Updates
         type: vertical-stack
       - entities:
           - entity: sensor.archer_d5_bytes_sent
           - entity: sensor.archer_d5_packets_sent
         title: Secondary Router Traffic Results
         type: glance
-      - type: entity
-        entity: sensor.hacs
-        name: HACS Pending Updates
     icon: 'mdi:battery-unknown'
     path: batteries
