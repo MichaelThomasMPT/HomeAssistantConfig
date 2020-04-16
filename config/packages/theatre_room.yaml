@@ -34,8 +34,8 @@ script:
   time_for_a_movie:
     alias: Time For A Movie
     sequence:
-      - service: light.turn_off #this would be triggered anyway, but this call makes it occur faster
-        entity_id: light.axis_gear_034e1400_1 
+      - service: cover.close_cover #this would be triggered anyway, but this call makes it occur faster
+        entity_id: cover.theatre_blinds 
       - service: script.turn_on #set the lighting
         entity_id:
           - script.set_movie_lighting 
@@ -60,8 +60,8 @@ script:
   time_for_a_tv_dinner:
     alias: Time For A TV Dinner
     sequence:
-      - service: light.turn_off #this would be triggered anyway, but this call makes it occur faster
-        entity_id: light.axis_gear_034e1400_1 
+      - service: cover.close_cover #this would be triggered anyway, but this call makes it occur faster
+        entity_id: cover.theatre_blinds 
       - service: script.turn_on #set the lighting
         entity_id:
           - script.set_tv_dinner_lighting 
@@ -127,8 +127,8 @@ automation:
         entity_id: media_player.theatre_room_tv
         from: 'off' #from off = turning on
     action:
-      - service: light.turn_off
-        entity_id: light.axis_gear_034e1400_1
+      - service: cover.close_cover
+        entity_id: cover.theatre_blinds
         
   - alias: Theatre Room Blinds - Open
     trigger:
@@ -153,10 +153,8 @@ automation:
           entity_id: media_player.theatre_room_tv
           state: 'off'
     action:
-      - service: light.turn_on
-        entity_id: light.axis_gear_034e1400_1
-        data:
-          brightness: 254 #maximum
+      - service: cover.open_cover
+        entity_id: cover.theatre_blinds
 
 
 ############## LG TV ##############
