@@ -1,0 +1,6 @@
+
+sensor:
+  - platform: rest
+    name: healthcheckio
+    resource: !secret healthcheckio_ping_location
+    scan_interval: 300

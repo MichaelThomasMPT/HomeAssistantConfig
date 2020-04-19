@@ -76,21 +76,21 @@ views:
             type: horizontal-stack
         type: 'custom:vertical-stack-in-card'
       - cards:
-          - type: entities
-            entities:
+          - entities:
               - entity: >-
                   cover.aeon_labs_zw062_garage_door_controller_barrier_state_label
                 name: Garage Door
               - entity: binary_sensor.garage_door_external
                 name: External Door
+            type: entities
           - aspect_ratio: 70%
             camera_image: camera.garage
             entity: camera.garage
             name: Garage Camera
             type: picture-entity
-        type: 'custom:vertical-stack-in-card'
         show_header_toggle: false
         title: Garage
+        type: 'custom:vertical-stack-in-card'
       - entities:
           - entity: binary_sensor.back_door_glass
           - entity: binary_sensor.back_door_flyscreen
@@ -1150,6 +1150,30 @@ views:
     title: Aircon
   - badges: []
     cards:
+      - type: horizontal-stack
+        title: Server Health Checks
+        cards:
+          - type: picture
+            image: >-
+              http://192.168.1.111:112/badge/3f66d990-6c1b-44e0-bd49-e31b43/qFGWAmFz.svg
+            tap_action:
+              action: none
+            hold_action:
+              action: none
+          - type: picture
+            image: >-
+              http://192.168.1.111:112/badge/3f66d990-6c1b-44e0-bd49-e31b43/ZkwS39cc/cron.svg
+            tap_action:
+              action: none
+            hold_action:
+              action: none
+          - type: picture
+            image: >-
+              http://192.168.1.111:112/badge/3f66d990-6c1b-44e0-bd49-e31b43/c2I31vCW/docker.svg
+            tap_action:
+              action: none
+            hold_action:
+              action: none
       - columns: 3
         entities:
           - entity: sensor.living_room_temperature_sensor_battery_level
@@ -1255,9 +1279,9 @@ views:
                     state_not: '0'
                 type: conditional
             type: 'custom:vertical-stack-in-card'
-          - type: entity
-            entity: sensor.hacs
+          - entity: sensor.hacs
             name: HACS Pending Updates
+            type: entity
         type: vertical-stack
       - entities:
           - entity: sensor.archer_d5_bytes_sent
