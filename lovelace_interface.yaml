@@ -18,6 +18,14 @@ views:
         tap_action:
           action: toggle
         type: entity-button
+      - title: Time In Quarantine
+        type: vertical-stack
+        cards:
+          - type: gauge
+            entity: sensor.quarantine_meter_michael
+            min: 0
+            max: 100
+            name: Michael (last 7 days)
       - entities:
           - entity: sensor.away_from_home_state_validity
         show_name: false
@@ -121,13 +129,6 @@ views:
                     name: Last Motion
                 title: Front Door
                 type: glance
-              - aspect_ratio: 50%
-                camera_image: camera.front_door
-                camera_view: live
-                entity: camera.front_door
-                name: Last Activity at Front Door
-                show_state: true
-                type: picture-entity
             type: 'custom:vertical-stack-in-card'
         type: vertical-stack
     icon: 'mdi:home'
@@ -1149,30 +1150,30 @@ views:
     title: Aircon
   - badges: []
     cards:
-      - type: horizontal-stack
-        title: Server Health Checks
-        cards:
-          - type: picture
+      - cards:
+          - hold_action:
+              action: none
             image: >-
               http://192.168.1.111:112/badge/3f66d990-6c1b-44e0-bd49-e31b43/qFGWAmFz.svg
             tap_action:
               action: none
-            hold_action:
+            type: picture
+          - hold_action:
               action: none
-          - type: picture
             image: >-
               http://192.168.1.111:112/badge/3f66d990-6c1b-44e0-bd49-e31b43/ZkwS39cc/cron.svg
             tap_action:
               action: none
-            hold_action:
+            type: picture
+          - hold_action:
               action: none
-          - type: picture
             image: >-
               http://192.168.1.111:112/badge/3f66d990-6c1b-44e0-bd49-e31b43/c2I31vCW/docker.svg
             tap_action:
               action: none
-            hold_action:
-              action: none
+            type: picture
+        title: Server Health Checks
+        type: horizontal-stack
       - columns: 3
         entities:
           - entity: sensor.living_room_temperature_sensor_battery_level
