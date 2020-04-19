@@ -18,14 +18,14 @@ views:
         tap_action:
           action: toggle
         type: entity-button
-      - title: Time In Quarantine
-        type: vertical-stack
-        cards:
-          - type: gauge
-            entity: sensor.quarantine_meter_michael
-            min: 0
+      - cards:
+          - entity: sensor.quarantine_meter_michael
             max: 100
+            min: 0
             name: Michael (last 7 days)
+            type: gauge
+        title: Time In Quarantine
+        type: vertical-stack
       - entities:
           - entity: sensor.away_from_home_state_validity
         show_name: false
@@ -105,8 +105,6 @@ views:
         title: Back Door
         type: glance
       - entities:
-          - entity: binary_sensor.letterbox_vibration
-            name: Letterbox Sensor
           - entity: var.mail_was_delivered_today
         title: Letterbox
         type: glance
