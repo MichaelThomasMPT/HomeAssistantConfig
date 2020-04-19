@@ -1,3 +1,14 @@
+automation:
+    
+  - alias: DEBUGGING - alert when blinds unavailable
+    trigger:
+      - platform: state
+        entity_id: cover.theatre_blinds
+        to: "unknown"
+    action:
+      - service: notify.pushbullet
+        data:
+          message: The theatre room blinds have disconnected.
 
 sensor:
   - platform: rest

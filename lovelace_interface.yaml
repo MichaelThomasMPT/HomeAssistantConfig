@@ -277,7 +277,7 @@ views:
             tap_action:
               action: toggle
             type: state-icon
-          - entity: cover.axis_gear_034e1400_window_covering
+          - entity: cover.theatre_blinds
             style:
               left: 75%
               top: 39%
@@ -841,8 +841,7 @@ views:
             type: horizontal-stack
         type: vertical-stack
       - entities:
-          - entity: cover.axis_gear_034e1400_window_covering
-          - entity: light.axis_gear_034e1400_level_on_off
+          - entity: cover.theatre_blinds
         show_header_toggle: false
         title: Theatre Room Blinds
         type: entities
