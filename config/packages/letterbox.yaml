@@ -9,9 +9,8 @@ automation:
   #if mail is delivered, send a push notification
   - alias: Letterbox - Notify If Post Delivered
     trigger:
-      platform: state
-      entity_id: binary_sensor.letterbox_vibration
-      to: "on"
+      platform: template
+      value_template: "{{ state_attr('binary_sensor.letterbox_vibration', 'tiltangle') > 40 and state_attr('binary_sensor.letterbox_vibration', 'tiltangle') < 360 }}"
     action:
       - service: notify.pushbullet
         data:
