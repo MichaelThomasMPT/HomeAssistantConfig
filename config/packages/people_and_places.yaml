@@ -81,3 +81,21 @@ person:
     user_id: 7c4efbecd6fa4af38f2b79fa859af76d
     device_trackers:
       - device_tracker.iphone
+
+sensor:
+  - platform: history_stats
+    name: Quarantine Meter Michael
+    entity_id: person.michael
+    state: "home"
+    type: ratio
+    duration:
+      days: 7
+    end: "{{ now() }}"
+  - platform: history_stats
+    name: Quarantine Meter Laura
+    entity_id: person.laura
+    state: "home"
+    type: ratio
+    duration:
+      days: 7
+    end: "{{ now() }}"
