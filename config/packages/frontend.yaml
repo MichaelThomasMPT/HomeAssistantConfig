@@ -2,6 +2,14 @@
 customizer:
   custom_ui: hosted
 
+# Blank sensor to make the room headers look good
+sensor:
+  - platform: template
+    sensors:
+      blank:
+        value_template: ''
+        friendly_name: ''
+
 # Lovelace Theme For Time Of Day
 automation:
   - alias: Home Assistant Frontend - Set Theme at Startup
@@ -14,7 +22,7 @@ automation:
       data_template:
         name: > 
           {% if is_state('sun.sun', 'above_horizon') %}
-            default
+            midnight
           {% else %}
             midnight
           {% endif %}
@@ -39,7 +47,7 @@ automation:
     action:
       - service: frontend.set_theme
         data:
-          name: default
+          name: midnight
 
 # Additional Panels
 panel_iframe:
