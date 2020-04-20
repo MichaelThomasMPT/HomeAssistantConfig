@@ -1,10 +1,6 @@
+title: The Treehouse
 views:
-  - path: testing
-    title: Overview
-    visible:
-      - user: 0e77a256b08c47f7989413c4599cc865
-    panel: false
-    badges: []
+  - badges: []
     cards:
       - cards:
           - elements:
@@ -33,7 +29,8 @@ views:
                 type: state-label
             image: /local/header-image-dark.png
             type: picture-elements
-          - entities:
+          - columns: 3
+            entities:
               - entity: sensor.front_door
                 icon: 'mdi:door'
               - entity: binary_sensor.back_door_glass
@@ -44,9 +41,8 @@ views:
               - entity: sensor.front_door_last_motion
                 icon: 'mdi:motion-sensor'
                 name: Doorbell Motion
-            type: glance
-            columns: 3
             state_color: true
+            type: glance
         title: null
         type: 'custom:vertical-stack-in-card'
       - cards:
@@ -81,16 +77,16 @@ views:
               - entity: >-
                   cover.aeon_labs_zw062_garage_door_controller_barrier_state_label
                 hide_when_off: true
-                toggle: true
                 name: Garage Door
+                toggle: true
               - entity: camera.garage
                 hide_when_off: true
-                toggle: true
                 name: Camera
+                toggle: true
+            show_header_toggle: false
             show_name: true
             show_state: true
             state_color: true
-            show_header_toggle: false
             type: entities
         title: null
         type: 'custom:vertical-stack-in-card'
@@ -100,7 +96,7 @@ views:
                 style:
                   bottom: 20%
                   font-weight: bold
-                  right: 17%
+                  right: 18%
                   transform: initial
                 type: state-label
               - entity: sensor.theatre_humidity
@@ -124,24 +120,23 @@ views:
           - entities:
               - entity: light.theatre_room_ceiling
                 hide_when_off: true
+                name: Ceiling
                 toggle: true
                 type: 'custom:slider-entity-row'
-                name: Ceiling
               - entity: light.theatre_room
                 hide_when_off: true
+                name: Lamps
                 toggle: true
                 type: 'custom:slider-entity-row'
-                name: Lamps
               - entity: cover.theatre_blinds
                 hide_when_off: true
-                toggle: true
-                type: 'custom:slider-entity-row'
                 name: Blinds
+                toggle: true
               - entity: switch.aircon_zone_theatre
                 hide_when_off: true
-                toggle: true
                 icon: 'mdi:air-filter'
                 name: Aircon Vent
+                toggle: true
               - artwork: full-cover
                 entity: media_player.theatre_room_tv
                 hide:
@@ -157,13 +152,19 @@ views:
                   power_state: false
                 info: short
                 name: Chromecast
+              - artwork: full-cover
+                entity: media_player.theatre_room_google_home
+                hide:
+                  mute: true
+                  power_state: false
+                info: short
+                name: Google Home
+            show_header_toggle: false
             show_name: true
             show_state: false
             state_color: true
-            show_header_toggle: false
             type: entities
-          - type: horizontal-stack
-            cards:
+          - cards:
               - entity: script.set_movie_lighting
                 hold_action:
                   action: none
@@ -206,6 +207,7 @@ views:
                   service_data:
                     entity_id: script.aircon_cool_theatre
                 type: entity-button
+            type: horizontal-stack
         title: null
         type: 'custom:vertical-stack-in-card'
       - cards:
@@ -214,7 +216,7 @@ views:
                 style:
                   bottom: 20%
                   font-weight: bold
-                  right: 17%
+                  right: 18%
                   transform: initial
                 type: state-label
               - entity: sensor.living_room_humidity
@@ -238,8 +240,8 @@ views:
           - entities:
               - entity: media_player.living_room_chromecast
                 hide_when_off: true
-                toggle: true
                 name: TV - Chromecast
+                toggle: true
               - entity: media_player.kitchen_google_home_hub
                 group: true
                 hide:
@@ -247,16 +249,15 @@ views:
                 type: 'custom:mini-media-player'
               - entity: switch.aircon_zone_living
                 hide_when_off: true
-                toggle: true
                 icon: 'mdi:air-filter'
                 name: Aircon Vent
+                toggle: true
+            show_header_toggle: false
             show_name: true
             show_state: false
             state_color: true
-            show_header_toggle: false
             type: entities
-          - type: horizontal-stack
-            cards:
+          - cards:
               - entity: script.roomba_clean
                 hold_action:
                   action: more-info
@@ -279,6 +280,7 @@ views:
                   service_data:
                     entity_id: script.aircon_cool_central_living
                 type: entity-button
+            type: horizontal-stack
         title: null
         type: 'custom:vertical-stack-in-card'
       - cards:
@@ -287,7 +289,7 @@ views:
                 style:
                   bottom: 20%
                   font-weight: bold
-                  right: 17%
+                  right: 18%
                   transform: initial
                 type: state-label
               - entity: sensor.office_humidity
@@ -311,13 +313,13 @@ views:
           - entities:
               - entity: light.office_lamp
                 hide_when_off: true
-                toggle: true
                 name: Lamp
+                toggle: true
               - entity: switch.aircon_zone_bed23
                 hide_when_off: true
-                toggle: true
                 icon: 'mdi:air-filter'
                 name: Aircon Vent
+                toggle: true
               - entity: media_player.office_google_home
                 group: true
                 hide:
@@ -328,10 +330,10 @@ views:
                 hide:
                   controls: true
                 type: 'custom:mini-media-player'
+            show_header_toggle: false
             show_name: true
             show_state: false
             state_color: true
-            show_header_toggle: false
             type: entities
         title: null
         type: 'custom:vertical-stack-in-card'
@@ -341,7 +343,7 @@ views:
                 style:
                   bottom: 20%
                   font-weight: bold
-                  right: 17%
+                  right: 18%
                   transform: initial
                 type: state-label
               - entity: sensor.master_bedroom_humidity
@@ -365,22 +367,25 @@ views:
           - entities:
               - entity: switch.aircon_zone_master
                 hide_when_off: true
-                toggle: true
                 icon: 'mdi:air-filter'
                 name: Aircon Vent
+                toggle: true
               - entity: media_player.master_bedroom_speaker
                 group: true
                 hide:
                   controls: true
-                name: Google Home Mini
-                type: 'custom:mini-media-player'
+                name: Bedroom Google Home
+              - entity: media_player.ensuite_google_home
+                group: true
+                hide:
+                  controls: true
+                name: Ensuite Google Home
+            show_header_toggle: false
             show_name: true
             show_state: false
             state_color: true
-            show_header_toggle: false
             type: entities
-          - type: horizontal-stack
-            cards:
+          - cards:
               - entity: script.aircon_warm_master
                 hold_action:
                   action: none
@@ -409,23 +414,17 @@ views:
                   service_data:
                     entity_id: script.aircon_fan_master
                 type: entity-button
+            type: horizontal-stack
         title: null
         type: 'custom:vertical-stack-in-card'
       - cards:
           - elements:
-              - entity: sun.sun
+              - entity: sensor.bom_forecast_perth_weather_0
                 style:
                   bottom: 20%
-                  right: 15%
-                  transform: initial
-                type: state-label
-              - entity: sensor.weather_symbol
-                style:
-                  bottom: 20%
-                  font-weight: bold
                   right: 5%
                   transform: initial
-                type: state-icon
+                type: state-label
               - entity: sensor.blank
                 hold-action: none
                 prefix: Weather
@@ -481,23 +480,22 @@ views:
                 style:
                   bottom: 20%
                   font-weight: bold
-                  right: 24%
+                  right: 28%
                   transform: initial
                 type: state-label
               - entity: sensor.aircon_temperature
                 style:
                   bottom: 20%
-                  font-weight: bold
-                  right: 12%
+                  right: 13%
                   transform: initial
                 type: state-label
               - entity: switch.aircon_on_off
+                icon: 'mdi:power'
                 style:
                   bottom: 20%
                   right: 5%
                   transform: initial
                 type: state-icon
-                icon: 'mdi:power'
               - entity: sensor.blank
                 hold-action: none
                 prefix: Air Conditioning
@@ -516,11 +514,9 @@ views:
                 name: Aircon On/Off
                 state_color: true
               - entity: input_select.aircon_run_mode
-              - entity: sensor.aircon_temperature
-                name: Aircon Temperature
               - entity: input_number.aircon_temperature
                 icon: 'mdi:temperature-celsius'
-                name: Set Temperature
+                name: Temperature
             show_header_toggle: false
             title: Controls
             type: entities
@@ -747,18 +743,18 @@ views:
           - entities:
               - entity: var.mail_was_delivered_today
                 hide_when_off: true
-                toggle: true
-                name: Mail was delivered today?
                 icon: 'mdi:mailbox'
+                name: Mail was delivered today?
+                toggle: true
               - entity: var.bins_were_moved_today
                 hide_when_off: true
-                toggle: true
-                name: Bins were moved today?
                 icon: 'mdi:delete'
+                name: Bins were moved today?
+                toggle: true
+            show_header_toggle: false
             show_name: true
             show_state: false
             state_color: true
-            show_header_toggle: false
             type: entities
           - cards:
               - entity: sensor.quarantine_meter_michael
@@ -769,4 +765,8 @@ views:
             type: vertical-stack
         title: null
         type: 'custom:vertical-stack-in-card'
-title: The Treehouse
+    panel: false
+    path: testing
+    title: Overview
+    visible:
+      - user: 0e77a256b08c47f7989413c4599cc865
