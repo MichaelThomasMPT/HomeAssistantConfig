@@ -786,10 +786,17 @@ views:
                 icon: 'mdi:delete'
                 name: Bins were moved today?
                 toggle: true
+              - entity: >-
+                  automation.garage_notify_if_garage_door_left_open_for_5_minutes
+                name: Garage Left Open Alerts
+              - entity: automation.bins_notify_if_bins_not_taken_out
+                name: Take Bins Out Alerts
+              - entity: automation.location_notify_when_someone_comes_home
+                name: Notify When Someone Arrives Home (default off)
             show_header_toggle: false
             show_name: true
             show_state: false
-            state_color: true
+            state_color: false
             type: entities
           - cards:
               - entity: sensor.quarantine_meter_michael
