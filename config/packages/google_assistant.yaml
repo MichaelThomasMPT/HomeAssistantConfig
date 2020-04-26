@@ -28,6 +28,7 @@ cloud:
         - switch.aircon_zone_theatre
         - switch.christmas_tree
         - group.aircon_vents
+        - cover.theatre_blinds
       exclude_entities:
         - light.theatre_room
         - light.theatre_room_2
