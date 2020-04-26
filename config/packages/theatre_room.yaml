@@ -94,6 +94,23 @@ script:
           - light.theatre_room_left_lamp
           - light.theatre_room_right_lamp
           - light.theatre_room_ceiling
+      - service: switch.turn_off 
+        entity_id:
+          - switch.aircon_zone_theatre
+      - condition: and #if all aircon only running in theatre, switch it off
+        conditions:
+          - condition: state
+            entity_id: switch.aircon_zone_living
+            state: 'off'
+          - condition: state
+            entity_id: switch.aircon_zone_master
+            state: 'off'
+          - condition: state
+            entity_id: switch.aircon_zone_bed23
+            state: 'off'
+      - service: switch.turn_off 
+        entity_id:
+          - switch.aircon_on_off
 
   #Slowly fade in the lights after the movie has finished
   movie_has_finished:
