@@ -47,6 +47,41 @@ views:
         type: 'custom:vertical-stack-in-card'
       - cards:
           - elements:
+              - entity: sensor.front_door
+                icon: 'mdi:door'
+                style:
+                  bottom: 20%
+                  font-weight: bold
+                  right: 5%
+                  transform: initial
+                type: state-icon
+              - entity: sensor.blank
+                hold-action: none
+                prefix: Front Door
+                style:
+                  bottom: 20%
+                  font-size: 150%
+                  left: 5%
+                  transform: initial
+                tap-action: none
+                type: state-label
+            image: /local/header-image-dark.png
+            type: picture-elements
+          - entities:
+              - entity: light.entry_hall_lights
+                name: Entry Hall Lights
+              - entity: sensor.front_door_last_ding
+                icon: 'mdi:bell-ring'
+                name: Doorbell - Last Ring
+              - entity: sensor.front_door_last_motion
+                icon: 'mdi:motion-sensor'
+                name: Doorbell - Last Motion
+            show_header_toggle: false
+            type: entities
+        title: null
+        type: 'custom:vertical-stack-in-card'
+      - cards:
+          - elements:
               - entity: >-
                   cover.aeon_labs_zw062_garage_door_controller_barrier_state_label
                 style:
