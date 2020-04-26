@@ -281,7 +281,6 @@ views:
                 group: true
                 hide:
                   controls: true
-                type: 'custom:mini-media-player'
               - entity: switch.aircon_zone_living
                 hide_when_off: true
                 icon: 'mdi:air-filter'
@@ -359,12 +358,10 @@ views:
                 group: true
                 hide:
                   controls: true
-                type: 'custom:mini-media-player'
               - entity: media_player.office_pc_speakers
                 group: true
                 hide:
                   controls: true
-                type: 'custom:mini-media-player'
             show_header_toggle: false
             show_name: true
             show_state: false
@@ -808,7 +805,7 @@ views:
         title: null
         type: 'custom:vertical-stack-in-card'
     panel: false
-    path: testing
+    path: ''
     title: Overview
     visible:
       - user: 0e77a256b08c47f7989413c4599cc865
