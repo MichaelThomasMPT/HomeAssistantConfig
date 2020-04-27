@@ -1286,5 +1286,14 @@ views:
           - entity: sensor.archer_d5_packets_sent
         title: Secondary Router Traffic Results
         type: glance
+      - entities:
+          - entity: sensor.canon_ts3300_series
+            name: Canon TS3300
+          - entity: sensor.canon_ts3300_series_black
+            name: Black Ink
+          - entity: sensor.canon_ts3300_series_color
+            name: Colour Ink
+        title: Printer
+        type: glance
     icon: 'mdi:battery-unknown'
     path: batteries

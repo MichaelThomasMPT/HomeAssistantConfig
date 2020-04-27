@@ -367,6 +367,16 @@ views:
             show_state: false
             state_color: true
             type: entities
+          - columns: 3
+            entities:
+              - entity: sensor.canon_ts3300_series
+                name: Canon TS3300
+              - entity: sensor.canon_ts3300_series_black
+                name: Black Ink
+              - entity: sensor.canon_ts3300_series_color
+                name: Colour Ink
+            state_color: true
+            type: glance
         title: null
         type: 'custom:vertical-stack-in-card'
       - cards:
