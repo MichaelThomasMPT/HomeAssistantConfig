@@ -16,12 +16,6 @@ notify:
     api_key: !secret pushbullet_api_key
 
 zone:
-  - name: Laura's Work
-    latitude: !secret zone_laura_work_latitude
-    longitude: !secret zone_laura_work_longitude
-    radius: 600
-    icon: mdi:briefcase
-
   - name: Michael's Work
     latitude: !secret zone_michael_work_latitude
     longitude: !secret zone_michael_work_longitude
@@ -36,16 +30,16 @@ zone:
     icon: mdi:home
 
 automation:
-  - alias: Location - Notify Michael If Laura Leaving Work
-    trigger:
-      platform: zone
-      entity_id: device_tracker.lauras_iphone
-      zone: zone.laura_s_work
-      event: leave
-    action:
-      - service: notify.pushbullet
-        data:
-          message: Laura is leaving work.
+  # - alias: Location - Notify Michael If Laura Leaving Work
+  #   trigger:
+  #     platform: zone
+  #     entity_id: device_tracker.lauras_iphone
+  #     zone: zone.laura_s_work
+  #     event: leave
+  #   action:
+  #     - service: notify.pushbullet
+  #       data:
+  #         message: Laura is leaving work.
 
   #Notify when someone comes homes
   - alias: Location - Notify When Someone Comes Home
@@ -71,16 +65,20 @@ person:
     user_id: 0e77a256b08c47f7989413c4599cc865
     device_trackers:
       - device_tracker.michael_galaxy_s10
+      - device_tracker.phone_ping_michael
   - name: Laura
     id: laura
     user_id: c93d4309ba8141eabe4a306b2fb5ecc7
     device_trackers:
-      - device_tracker.lauras_iphone
-  - name: Christian
-    id: christian
-    user_id: 7c4efbecd6fa4af38f2b79fa859af76d
-    device_trackers:
-      - device_tracker.iphone
+      - device_tracker.phone_ping_laura
+
+device_tracker:
+  - platform: ping
+    hosts:
+      phone_ping_michael: !secret device_michael_phone_ip_address
+  - platform: ping
+    hosts:
+      phone_ping_laura: !secret device_laura_phone_ip_address
 
 sensor:
   - platform: history_stats

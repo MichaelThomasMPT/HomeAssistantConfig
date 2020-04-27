@@ -804,6 +804,36 @@ views:
             type: vertical-stack
         title: null
         type: 'custom:vertical-stack-in-card'
+      - cards:
+          - elements:
+              - entity: person.laura
+                style:
+                  bottom: 20%
+                  font-weight: bold
+                  right: 5%
+                  transform: initial
+                type: state-label
+              - entity: sensor.blank
+                hold-action: none
+                prefix: Laura
+                style:
+                  bottom: 20%
+                  font-size: 150%
+                  left: 5%
+                  transform: initial
+                tap-action: none
+                type: state-label
+            image: /local/header-image-dark.png
+            type: picture-elements
+          - cards:
+              - entity: sensor.quarantine_meter_laura
+                max: 100
+                min: 0
+                name: Time In Quarantime (last 7 days)
+                type: gauge
+            type: vertical-stack
+        title: null
+        type: 'custom:vertical-stack-in-card'
     panel: false
     path: ''
     title: Overview
