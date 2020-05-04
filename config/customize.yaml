@@ -4,20 +4,11 @@ sensor.away_from_home_state_validity:
   templates:
     hs_color: 'if (state === ''Valid State'' || state === ''Someone Is Home'') return
       [121,100]; else return [0,100];
-
       '
     brightness: 'if (state === ''Valid State'' || state === ''Someone Is Home'') return
       23; else return 50;
-
       '
-light.axis_gear_034e1400_1:
-  friendly_name: Theatre Room Blinds
-  icon_color: '#706e67'
-  templates:
-    icon: 'if (attributes.brightness > 50) return ''mdi:window-shutter-open''; else
-      return ''mdi:window-shutter'';
-
-      '
+      
 binary_sensor.back_door_glass:
   device_class: door
 binary_sensor.back_door_flyscreen:
@@ -26,4 +17,3 @@ binary_sensor.letterbox_vibration:
   device_class: vibration
 binary_sensor.garage_door_external:
   device_class: door
-  
