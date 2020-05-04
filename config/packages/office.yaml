@@ -1,0 +1,26 @@
+binary_sensor:
+  - platform: ping
+    host: !secret device_michael_pc_ip_address
+    name: Michael PC
+    count: 2
+    scan_interval: 5
+
+automation:
+  - alias: Front Hall - Turn On Hallway Light If PC Turned Off At Night
+    trigger:
+      platform: state
+      entity_id: binary_sensor.michael_pc
+      to: "off"
+    condition:
+      condition: state  # from sunset until sunrise
+      entity_id: sun.sun
+      state: 'below_horizon'
+    action:
+      - service: light.turn_on
+        entity_id:
+          - light.entry_hall_lights
+      - delay:
+          minutes: 5
+      - service: light.turn_off
+        entity_id:
+          - light.entry_hall_lights

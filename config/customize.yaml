@@ -8,7 +8,9 @@ sensor.away_from_home_state_validity:
     brightness: 'if (state === ''Valid State'' || state === ''Someone Is Home'') return
       23; else return 50;
       '
-      
+
+binary_sensor.michael_pc:
+  icon: mdi:desktop-tower-monitor
 binary_sensor.back_door_glass:
   device_class: door
 binary_sensor.back_door_flyscreen:
