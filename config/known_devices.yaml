@@ -1,0 +1,28 @@
+
+phone_ping_michael:
+  icon:
+  mac:
+  name: phone_ping_michael
+  picture:
+  track: true
+
+phone_ping_laura:
+  icon:
+  mac:
+  name: phone_ping_laura
+  picture:
+  track: true
+
+michael_s_galaxy_s10:
+  icon:
+  mac: BT_CC:21:19:F3:60:88
+  name: Michael's Galaxy S10
+  picture:
+  track: true
+
+ble_car_michael:
+  icon:
+  mac: BLE_FF:FF:C2:28:11:19
+  name: Michael's Car BLE
+  picture:
+  track: true

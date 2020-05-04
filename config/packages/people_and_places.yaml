@@ -79,6 +79,8 @@ device_tracker:
   - platform: ping
     hosts:
       phone_ping_laura: !secret device_laura_phone_ip_address
+  - platform: bluetooth_le_tracker
+    track_new_devices: false
 
 sensor:
   - platform: history_stats

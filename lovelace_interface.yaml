@@ -90,6 +90,8 @@ views:
                 name: Garage Door
               - entity: binary_sensor.garage_door_external
                 name: External Door
+              - entity: device_tracker.ble_car_michael
+                name: Michael's Car
             type: entities
           - aspect_ratio: 70%
             camera_image: camera.garage

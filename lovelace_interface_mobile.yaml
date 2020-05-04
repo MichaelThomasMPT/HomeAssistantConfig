@@ -82,6 +82,13 @@ views:
         type: 'custom:vertical-stack-in-card'
       - cards:
           - elements:
+              - entity: device_tracker.ble_car_michael
+                style:
+                  bottom: 22%
+                  font-weight: bold
+                  right: 20%
+                  transform: initial
+                type: state-icon
               - entity: >-
                   cover.aeon_labs_zw062_garage_door_controller_barrier_state_label
                 style:
@@ -369,18 +376,18 @@ views:
             show_state: false
             state_color: true
             type: entities
-          - type: 'custom:dual-gauge-card'
-            title: Printer Ink
-            min: 0
+          - inner:
+              entity: sensor.canon_ts3300_series_black
+              label: Black
+              unit: '%'
             max: 100
+            min: 0
             outer:
               entity: sensor.canon_ts3300_series_color
               label: Colour
               unit: '%'
-            inner:
-              entity: sensor.canon_ts3300_series_black
-              label: Black
-              unit: '%'
+            title: Printer Ink
+            type: 'custom:dual-gauge-card'
         title: null
         type: 'custom:vertical-stack-in-card'
       - cards:
@@ -767,6 +774,13 @@ views:
         type: 'custom:vertical-stack-in-card'
       - cards:
           - elements:
+              - entity: device_tracker.ble_car_michael
+                style:
+                  bottom: 22%
+                  font-weight: bold
+                  right: 16%
+                  transform: initial
+                type: state-icon
               - entity: person.michael
                 style:
                   bottom: 20%

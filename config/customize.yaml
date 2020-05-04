@@ -17,3 +17,8 @@ binary_sensor.letterbox_vibration:
   device_class: vibration
 binary_sensor.garage_door_external:
   device_class: door
+
+device_tracker.ble_car_michael:
+  templates:
+    icon: 'if (state === ''home'') return ''mdi:car-connected''; else return ''mdi:car-off'';
+      '
