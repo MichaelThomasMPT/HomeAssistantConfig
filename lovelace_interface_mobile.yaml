@@ -326,6 +326,13 @@ views:
         type: 'custom:vertical-stack-in-card'
       - cards:
           - elements:
+              - entity: binary_sensor.michael_pc
+                style:
+                  bottom: 20%
+                  font-weight: bold
+                  right: 32%
+                  transform: initial
+                type: state-icon
               - entity: sensor.office_temperature
                 style:
                   bottom: 20%
@@ -776,9 +783,9 @@ views:
           - elements:
               - entity: device_tracker.ble_car_michael
                 style:
-                  bottom: 22%
+                  bottom: 24%
                   font-weight: bold
-                  right: 16%
+                  right: 17%
                   transform: initial
                 type: state-icon
               - entity: person.michael
