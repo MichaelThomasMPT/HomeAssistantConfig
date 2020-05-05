@@ -862,6 +862,38 @@ views:
             type: vertical-stack
         title: null
         type: 'custom:vertical-stack-in-card'
+      - cards:
+          - elements:
+              - entity: sensor.blank
+                hold-action: none
+                prefix: Shopping Lists
+                style:
+                  bottom: 20%
+                  font-size: 150%
+                  left: 5%
+                  transform: initial
+                tap-action: none
+                type: state-label
+            image: /local/header-image-dark.png
+            type: picture-elements
+          - cards:
+              - columns:
+                  - attr_as_list: all_tasks
+                    id: groceries
+                    name: Groceries
+                entities:
+                  include: calendar.groceries_list
+                type: 'custom:flex-table-card'
+              - columns:
+                  - attr_as_list: all_tasks
+                    id: house_stuff
+                    name: House Stuff
+                entities:
+                  include: calendar.house_shopping_list
+                type: 'custom:flex-table-card'
+            type: vertical-stack
+        title: null
+        type: 'custom:vertical-stack-in-card'
     panel: false
     path: ''
     title: Overview

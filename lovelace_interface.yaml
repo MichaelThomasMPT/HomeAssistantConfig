@@ -131,6 +131,23 @@ views:
                 type: glance
             type: 'custom:vertical-stack-in-card'
         type: vertical-stack
+      - type: 'custom:vertical-stack-in-card'
+        title: Shopping Lists
+        cards:
+          - columns:
+              - attr_as_list: all_tasks
+                id: groceries
+                name: Groceries
+            entities:
+              include: calendar.groceries_list
+            type: 'custom:flex-table-card'
+          - columns:
+              - attr_as_list: all_tasks
+                id: house_stuff
+                name: House Stuff
+            entities:
+              include: calendar.house_shopping_list
+            type: 'custom:flex-table-card'
     icon: 'mdi:home'
     path: default_view
     title: Home
