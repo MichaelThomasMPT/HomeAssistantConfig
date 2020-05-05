@@ -871,6 +871,17 @@ views:
         type: 'custom:vertical-stack-in-card'
       - cards:
           - elements:
+              - entity: var.show_shopping_list_house_stuff
+                style:
+                  bottom: 20%
+                  font-weight: bold
+                  right: 5%
+                  transform: initial
+                type: service-button
+                service: script.turn_on
+                title: Toggle House Stuff
+                service_data:
+                  entity_id: script.toggle_var_show_shopping_list_house_stuff
               - entity: sensor.blank
                 hold-action: none
                 prefix: Shopping Lists
@@ -891,13 +902,18 @@ views:
                 entities:
                   include: calendar.groceries_list
                 type: 'custom:flex-table-card'
-              - columns:
-                  - attr_as_list: all_tasks
-                    id: house_stuff
-                    name: House Stuff
-                entities:
-                  include: calendar.house_shopping_list
-                type: 'custom:flex-table-card'
+              - type: conditional
+                conditions:
+                  - entity: var.show_shopping_list_house_stuff
+                    state: 'True'
+                card:
+                  columns:
+                    - attr_as_list: all_tasks
+                      id: house_stuff
+                      name: House Stuff
+                  entities:
+                    include: calendar.house_shopping_list
+                  type: 'custom:flex-table-card'
             type: vertical-stack
         title: null
         type: 'custom:vertical-stack-in-card'

@@ -30,11 +30,6 @@ sensor: !include sensors.yaml
 discovery:
 ssdp:
 zeroconf:
-
-# Todoist To-Do and Shopping Lists 
-calendar:
- - platform: todoist
-   token: !secret todoist_api_key
     
 # Elastic search output
 elastic:
