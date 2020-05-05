@@ -24,3 +24,29 @@ automation:
       - service: light.turn_off
         entity_id:
           - light.entry_hall_lights
+  - alias: Office - When Black Ink Low, Add To List
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.canon_ts3300_series_black
+      below: 20
+    action:
+      - service: todoist.new_task
+        data:
+          content: Black ink (PG-645 or PG-645XL)
+          project: Alexa Shopping List
+      - service: notify.pushbullet
+        data:
+          message: Black printer ink is running low and has been added to your shopping list.
+  - alias: Office - When Colour Ink Low, Add To List
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.canon_ts3300_series_color
+      below: 20
+    action:
+      - service: todoist.new_task
+        data:
+          content: Colour ink (PG-646 or PG-646XL)
+          project: Alexa Shopping List
+      - service: notify.pushbullet
+        data:
+          message: Colour printer ink is running low and has been added to your shopping list.
