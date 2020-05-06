@@ -82,12 +82,21 @@ views:
         type: 'custom:vertical-stack-in-card'
       - cards:
           - elements:
+              - entity: device_tracker.ble_car_laura
+                style:
+                  bottom: 22%
+                  font-weight: bold
+                  right: 28%
+                  transform: initial
+                  '--paper-item-icon-color': pink
+                type: state-icon
               - entity: device_tracker.ble_car_michael
                 style:
                   bottom: 22%
                   font-weight: bold
                   right: 20%
                   transform: initial
+                  '--paper-item-icon-color': skyblue
                 type: state-icon
               - entity: >-
                   cover.aeon_labs_zw062_garage_door_controller_barrier_state_label
@@ -841,6 +850,13 @@ views:
         type: 'custom:vertical-stack-in-card'
       - cards:
           - elements:
+              - entity: device_tracker.ble_car_laura
+                style:
+                  bottom: 24%
+                  font-weight: bold
+                  right: 17%
+                  transform: initial
+                type: state-icon
               - entity: person.laura
                 style:
                   bottom: 20%
@@ -872,16 +888,16 @@ views:
       - cards:
           - elements:
               - entity: var.show_shopping_list_house_stuff
+                service: script.turn_on
+                service_data:
+                  entity_id: script.toggle_var_show_shopping_list_house_stuff
                 style:
                   bottom: 20%
                   font-weight: bold
                   right: 5%
                   transform: initial
-                type: service-button
-                service: script.turn_on
                 title: Toggle House Stuff
-                service_data:
-                  entity_id: script.toggle_var_show_shopping_list_house_stuff
+                type: service-button
               - entity: sensor.blank
                 hold-action: none
                 prefix: Shopping Lists
@@ -902,11 +918,7 @@ views:
                 entities:
                   include: calendar.groceries_list
                 type: 'custom:flex-table-card'
-              - type: conditional
-                conditions:
-                  - entity: var.show_shopping_list_house_stuff
-                    state: 'True'
-                card:
+              - card:
                   columns:
                     - attr_as_list: all_tasks
                       id: house_stuff
@@ -914,6 +926,10 @@ views:
                   entities:
                     include: calendar.house_shopping_list
                   type: 'custom:flex-table-card'
+                conditions:
+                  - entity: var.show_shopping_list_house_stuff
+                    state: 'True'
+                type: conditional
             type: vertical-stack
         title: null
         type: 'custom:vertical-stack-in-card'

@@ -24,3 +24,7 @@ device_tracker.ble_car_michael:
   templates:
     icon: 'if (state === ''home'') return ''mdi:car-connected''; else return ''mdi:car-off'';
       '
+device_tracker.ble_car_laura:
+  templates:
+    icon: 'if (state === ''home'') return ''mdi:car-connected''; else return ''mdi:car-off'';
+      '

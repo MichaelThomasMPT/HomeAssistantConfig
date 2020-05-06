@@ -26,3 +26,10 @@ ble_car_michael:
   name: Michael's Car BLE
   picture:
   track: true
+
+ble_car_laura:
+  icon:
+  mac: BLE_FF:FF:C0:2A:FB:A0
+  name: Laura's Car BLE
+  picture:
+  track: true
