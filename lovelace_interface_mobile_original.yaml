@@ -42,10 +42,7 @@ views:
                 icon: 'mdi:motion-sensor'
                 name: Doorbell Motion
             state_color: true
-            head:
-              type: section
-              label: Details
-            type: 'custom:fold-entity-row'
+            type: glance
         title: null
         type: 'custom:vertical-stack-in-card'
       - cards:
@@ -73,12 +70,6 @@ views:
           - entities:
               - entity: light.entry_hall_lights
                 name: Entry Hall Lights
-            show_header_toggle: false
-            head:
-              type: section
-              label: Lights
-            type: 'custom:fold-entity-row'
-          - entities:
               - entity: sensor.front_door_last_ding
                 icon: 'mdi:bell-ring'
                 name: Doorbell - Last Ring
@@ -86,29 +77,26 @@ views:
                 icon: 'mdi:motion-sensor'
                 name: Doorbell - Last Motion
             show_header_toggle: false
-            head:
-              type: section
-              label: Doorbell
-            type: 'custom:fold-entity-row'
+            type: entities
         title: null
         type: 'custom:vertical-stack-in-card'
       - cards:
           - elements:
               - entity: device_tracker.ble_car_laura
                 style:
-                  '--paper-item-icon-color': pink
                   bottom: 22%
                   font-weight: bold
                   right: 28%
                   transform: initial
+                  '--paper-item-icon-color': pink
                 type: state-icon
               - entity: device_tracker.ble_car_michael
                 style:
-                  '--paper-item-icon-color': skyblue
                   bottom: 22%
                   font-weight: bold
                   right: 20%
                   transform: initial
+                  '--paper-item-icon-color': skyblue
                 type: state-icon
               - entity: >-
                   cover.aeon_labs_zw062_garage_door_controller_barrier_state_label
@@ -142,10 +130,6 @@ views:
                 hide_when_off: true
                 name: Garage Door
                 toggle: true
-              - entity: light.garage_light
-                hide_when_off: true
-                name: Ceiling Light
-                toggle: true
               - entity: camera.garage
                 hide_when_off: true
                 name: Camera
@@ -154,10 +138,7 @@ views:
             show_name: true
             show_state: true
             state_color: true
-            head:
-              type: section
-              label: Details
-            type: 'custom:fold-entity-row'
+            type: entities
         title: null
         type: 'custom:vertical-stack-in-card'
       - cards:
@@ -207,15 +188,6 @@ views:
                 icon: 'mdi:air-filter'
                 name: Aircon Vent
                 toggle: true
-            show_header_toggle: false
-            show_name: true
-            show_state: false
-            state_color: true
-            head:
-              type: section
-              label: Room
-            type: 'custom:fold-entity-row'
-          - entities:
               - artwork: full-cover
                 entity: media_player.theatre_room_tv
                 hide:
@@ -242,11 +214,8 @@ views:
             show_name: true
             show_state: false
             state_color: true
-            head:
-              type: section
-              label: Media
-            type: 'custom:fold-entity-row'
-          - entities:
+            type: entities
+          - cards:
               - entity: script.set_movie_lighting
                 hold_action:
                   action: none
@@ -260,7 +229,7 @@ views:
                   service: script.turn_on
                   service_data:
                     entity_id: script.set_movie_lighting
-                type: button
+                type: entity-button
               - entity: script.movie_has_finished
                 hold_action:
                   action: none
@@ -274,7 +243,7 @@ views:
                   service: script.turn_on
                   service_data:
                     entity_id: script.movie_has_finished
-                type: button
+                type: entity-button
               - entity: script.aircon_cool_theatre
                 hold_action:
                   action: none
@@ -288,11 +257,8 @@ views:
                   service: script.turn_on
                   service_data:
                     entity_id: script.aircon_cool_theatre
-                type: button
-            head:
-              type: section
-              label: Presets
-            type: 'custom:fold-entity-row'
+                type: entity-button
+            type: horizontal-stack
         title: null
         type: 'custom:vertical-stack-in-card'
       - cards:
@@ -323,30 +289,6 @@ views:
             image: /local/header-image-dark.png
             type: picture-elements
           - entities:
-              - entity: switch.aircon_zone_living
-                hide_when_off: true
-                icon: 'mdi:air-filter'
-                name: Aircon Vent
-                toggle: true
-              - entity: script.roomba_clean
-                name: Roomba
-                hold_action:
-                  action: more-info
-                icon: 'mdi:robot-vacuum'
-                show_icon: true
-                show_name: true
-                tap_action:
-                  action: toggle
-                type: button
-            show_header_toggle: false
-            show_name: true
-            show_state: false
-            state_color: true
-            head:
-              type: section
-              label: Room
-            type: 'custom:fold-entity-row'
-          - entities:
               - entity: media_player.living_room_chromecast
                 hide_when_off: true
                 name: TV - Chromecast
@@ -355,15 +297,26 @@ views:
                 group: true
                 hide:
                   controls: true
+              - entity: switch.aircon_zone_living
+                hide_when_off: true
+                icon: 'mdi:air-filter'
+                name: Aircon Vent
+                toggle: true
             show_header_toggle: false
             show_name: true
             show_state: false
             state_color: true
-            head:
-              type: section
-              label: Media
-            type: 'custom:fold-entity-row'
-          - entities:
+            type: entities
+          - cards:
+              - entity: script.roomba_clean
+                hold_action:
+                  action: more-info
+                icon: 'mdi:robot-vacuum'
+                show_icon: true
+                show_name: true
+                tap_action:
+                  action: toggle
+                type: entity-button
               - entity: script.aircon_cool_central_living
                 hold_action:
                   action: none
@@ -376,11 +329,8 @@ views:
                   service: script.turn_on
                   service_data:
                     entity_id: script.aircon_cool_central_living
-                type: button
-            head:
-              type: section
-              label: Presets
-            type: 'custom:fold-entity-row'
+                type: entity-button
+            type: horizontal-stack
         title: null
         type: 'custom:vertical-stack-in-card'
       - cards:
@@ -441,10 +391,19 @@ views:
             show_name: true
             show_state: false
             state_color: true
-            head:
-              type: section
-              label: Details
-            type: 'custom:fold-entity-row'
+            type: entities
+          - inner:
+              entity: sensor.canon_ts3300_series_black
+              label: Black
+              unit: '%'
+            max: 100
+            min: 0
+            outer:
+              entity: sensor.canon_ts3300_series_color
+              label: Colour
+              unit: '%'
+            title: Printer Ink
+            type: 'custom:dual-gauge-card'
         title: null
         type: 'custom:vertical-stack-in-card'
       - cards:
@@ -494,11 +453,8 @@ views:
             show_name: true
             show_state: false
             state_color: true
-            head:
-              type: section
-              label: Room & Media
-            type: 'custom:fold-entity-row'
-          - entities:
+            type: entities
+          - cards:
               - entity: script.aircon_warm_master
                 hold_action:
                   action: none
@@ -512,7 +468,7 @@ views:
                   service: script.turn_on
                   service_data:
                     entity_id: script.aircon_warm_master
-                type: button
+                type: entity-button
               - entity: script.aircon_fan_master
                 hold_action:
                   action: none
@@ -526,11 +482,8 @@ views:
                   service: script.turn_on
                   service_data:
                     entity_id: script.aircon_fan_master
-                type: button
-            head:
-              type: section
-              label: Presets
-            type: 'custom:fold-entity-row'
+                type: entity-button
+            type: horizontal-stack
         title: null
         type: 'custom:vertical-stack-in-card'
       - cards:
@@ -556,20 +509,38 @@ views:
           - entity: weather.treeby_house
             name: Treeby
             type: weather-forecast
-          - type: 'custom:fold-entity-row'
-            entities:
-              - entity: sensor.sems_status
-                icon: 'mdi:power'
-                name: Status
-              - entity: sensor.sems_output_power
-                icon: 'mdi:flash'
-                name: Current Output Power
-              - entity: sensor.sems_today_generated
-                icon: 'mdi:solar-power'
-                name: Electricity Generated Today
-            head:
-              type: section
-              label: Solar Panels
+          - cards:
+              - card:
+                  entities:
+                    - entity: sensor.sems_status
+                      icon: 'mdi:power'
+                      name: Status
+                  show_header_toggle: false
+                  title: Solar Panels
+                  type: entities
+                conditions:
+                  - entity: sensor.sems_status
+                    state: Offline
+                type: conditional
+              - card:
+                  entities:
+                    - entity: sensor.sems_status
+                      icon: 'mdi:power'
+                      name: Status
+                    - entity: sensor.sems_output_power
+                      icon: 'mdi:flash'
+                      name: Current Output Power
+                    - entity: sensor.sems_today_generated
+                      icon: 'mdi:solar-power'
+                      name: Electricity Generated Today
+                  show_header_toggle: false
+                  title: Solar Panels
+                  type: entities
+                conditions:
+                  - entity: sensor.sems_status
+                    state: Online
+                type: conditional
+            type: vertical-stack
         title: null
         type: 'custom:vertical-stack-in-card'
       - cards:
@@ -617,10 +588,7 @@ views:
                 name: Temperature
             show_header_toggle: false
             title: Controls
-            head:
-              type: section
-              label: Controls
-            type: 'custom:fold-entity-row'
+            type: entities
           - card:
               cards:
                 - entities:
@@ -708,114 +676,116 @@ views:
             show_header_toggle: false
             state_color: true
             title: Zones
-            head:
-              type: section
-              label: Zones
-            type: 'custom:fold-entity-row'
-          - entities:
-              - entity: script.aircon_warm_master
-                hold_action:
-                  action: none
-                icon: 'mdi:home-automation'
-                icon_height: 60px
-                name: Warm Bedroom
-                show_icon: true
-                show_name: true
-                tap_action:
-                  action: call-service
-                  service: script.turn_on
-                  service_data:
-                    entity_id: script.aircon_warm_master
-                type: button
-              - entity: script.aircon_fan_master
-                hold_action:
-                  action: none
-                icon: 'mdi:home-automation'
-                icon_height: 60px
-                name: Sleeping Fan
-                show_icon: true
-                show_name: true
-                tap_action:
-                  action: call-service
-                  service: script.turn_on
-                  service_data:
-                    entity_id: script.aircon_fan_master
-                type: button
-              - entity: script.aircon_cool_theatre
-                hold_action:
-                  action: none
-                icon: 'mdi:home-automation'
-                icon_height: 60px
-                name: Cool Theatre
-                show_icon: true
-                show_name: true
-                tap_action:
-                  action: call-service
-                  service: script.turn_on
-                  service_data:
-                    entity_id: script.aircon_cool_theatre
-                type: button
-              - entity: script.aircon_cool_central_living
-                hold_action:
-                  action: none
-                icon: 'mdi:home-automation'
-                icon_height: 60px
-                name: Cool Centre
-                show_icon: true
-                show_name: true
-                tap_action:
-                  action: call-service
-                  service: script.turn_on
-                  service_data:
-                    entity_id: script.aircon_cool_central_living
-                type: button
-              - entity: script.aircon_cool
-                hold_action:
-                  action: none
-                icon: 'mdi:snowflake'
-                icon_height: 60px
-                name: Run Cold
-                show_icon: true
-                show_name: true
-                tap_action:
-                  action: call-service
-                  service: script.turn_on
-                  service_data:
-                    entity_id: script.aircon_cool
-                type: button
-              - entity: script.aircon_heat
-                hold_action:
-                  action: none
-                icon: 'mdi:fire'
-                icon_height: 60px
-                name: Run Hot
-                show_icon: true
-                show_name: true
-                tap_action:
-                  action: call-service
-                  service: script.turn_on
-                  service_data:
-                    entity_id: script.aircon_heat
-                type: button
-              - entity: script.aircon_blast_cold_for_ten_minutes
-                hold_action:
-                  action: none
-                icon: 'mdi:snowflake'
-                icon_height: 60px
-                name: 10 Min of Cold
-                show_icon: true
-                show_name: true
-                tap_action:
-                  action: call-service
-                  service: script.turn_on
-                  service_data:
-                    entity_id: script.aircon_blast_cold_for_ten_minutes
-                type: button
+            type: entities
+          - cards:
+              - cards:
+                  - entity: script.aircon_warm_master
+                    hold_action:
+                      action: none
+                    icon: 'mdi:home-automation'
+                    icon_height: 60px
+                    name: Warm Bedroom
+                    show_icon: true
+                    show_name: true
+                    tap_action:
+                      action: call-service
+                      service: script.turn_on
+                      service_data:
+                        entity_id: script.aircon_warm_master
+                    type: entity-button
+                  - entity: script.aircon_fan_master
+                    hold_action:
+                      action: none
+                    icon: 'mdi:home-automation'
+                    icon_height: 60px
+                    name: Sleeping Fan
+                    show_icon: true
+                    show_name: true
+                    tap_action:
+                      action: call-service
+                      service: script.turn_on
+                      service_data:
+                        entity_id: script.aircon_fan_master
+                    type: entity-button
+                type: horizontal-stack
+              - cards:
+                  - entity: script.aircon_cool_theatre
+                    hold_action:
+                      action: none
+                    icon: 'mdi:home-automation'
+                    icon_height: 60px
+                    name: Cool Theatre
+                    show_icon: true
+                    show_name: true
+                    tap_action:
+                      action: call-service
+                      service: script.turn_on
+                      service_data:
+                        entity_id: script.aircon_cool_theatre
+                    type: entity-button
+                  - entity: script.aircon_cool_central_living
+                    hold_action:
+                      action: none
+                    icon: 'mdi:home-automation'
+                    icon_height: 60px
+                    name: Cool Centre
+                    show_icon: true
+                    show_name: true
+                    tap_action:
+                      action: call-service
+                      service: script.turn_on
+                      service_data:
+                        entity_id: script.aircon_cool_central_living
+                    type: entity-button
+                type: horizontal-stack
+              - cards:
+                  - entity: script.aircon_cool
+                    hold_action:
+                      action: none
+                    icon: 'mdi:snowflake'
+                    icon_height: 60px
+                    name: Run Cold
+                    show_icon: true
+                    show_name: true
+                    tap_action:
+                      action: call-service
+                      service: script.turn_on
+                      service_data:
+                        entity_id: script.aircon_cool
+                    type: entity-button
+                  - entity: script.aircon_heat
+                    hold_action:
+                      action: none
+                    icon: 'mdi:fire'
+                    icon_height: 60px
+                    name: Run Hot
+                    show_icon: true
+                    show_name: true
+                    tap_action:
+                      action: call-service
+                      service: script.turn_on
+                      service_data:
+                        entity_id: script.aircon_heat
+                    type: entity-button
+                type: horizontal-stack
+              - cards:
+                  - entity: script.aircon_blast_cold_for_ten_minutes
+                    hold_action:
+                      action: none
+                    icon: 'mdi:snowflake'
+                    icon_height: 60px
+                    name: 10 Min of Cold
+                    show_icon: true
+                    show_name: true
+                    tap_action:
+                      action: call-service
+                      service: script.turn_on
+                      service_data:
+                        entity_id: script.aircon_blast_cold_for_ten_minutes
+                    type: entity-button
+                type: horizontal-stack
             title: Presets
-            head:
-              type: section
-              label: Presets
-            type: 'custom:fold-entity-row'
+            type: 'custom:vertical-stack-in-card'
         title: null
         type: 'custom:vertical-stack-in-card'
       - cards:
@@ -868,10 +838,7 @@ views:
             show_name: true
             show_state: false
             state_color: false
-            head:
-              type: section
-              label: Automation Control
-            type: 'custom:fold-entity-row'
+            type: entities
           - cards:
               - entity: sensor.quarantine_meter_michael
                 max: 100
