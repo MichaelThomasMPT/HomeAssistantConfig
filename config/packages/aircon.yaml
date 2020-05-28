@@ -48,7 +48,7 @@ script:
     sequence:
     - data:
         entity_id: input_number.aircon_temperature
-        value: 18
+        value: 22
       service: input_number.set_value
     - delay:
         seconds: 1
@@ -324,8 +324,8 @@ automation:
           - thu
           - fri
       - condition: numeric_state
-        entity_id: weather.bom_perth
-        below: '8'
+        entity_id: sensor.master_bedroom_temperature
+        below: '14'
         value_template: '{{ state.attributes.temperature }}'
     action:
       - service: script.aircon_warm_master
