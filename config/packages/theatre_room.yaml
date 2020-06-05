@@ -82,6 +82,41 @@ script:
         entity_id:
           - script.aircon_cool_theatre
 
+          
+  #Start Star Wras playing
+  time_for_star_wars:
+    alias: Time For Star Wars
+    sequence:
+      - service: cover.close_cover #this would be triggered anyway, but this call makes it occur faster
+        entity_id: cover.theatre_blinds 
+      - service: script.turn_on #set the lighting
+        entity_id:
+          - script.set_tv_dinner_lighting 
+      - service: media_player.turn_on #turn on the TV
+        entity_id:
+          - media_player.theatre_room_tv 
+      - delay: #wait for the tv to switch on
+          seconds: 10
+      - service: media_player.select_source #switch TV to Plex
+        data:
+          entity_id: media_player.theatre_room_tv
+          source: "Plex"
+      - delay: #wait for the tv to switch channel
+          seconds: 20
+      - service: media_player.play_media
+        data:
+          entity_id: media_player.plex_for_lg
+          media_content_type: PLAYLIST
+          media_content_id: '{ "playlist_name": "Star Wars - The Clone Wars", "shuffle": "0" }'
+      - condition: or #all further steps will only run if this condition is true
+        conditions:
+          - condition: template
+            value_template: '{{ (states.sensor.theatre_temperature.state | float) > 25.0 }}' #if theatre room temperature is > 25 degrees
+      - service: script.turn_on #cool the theatre room
+        entity_id:
+          - script.aircon_cool_theatre
+
+
   #Finished with the theatre room  
   done_with_the_theatre_room:
     alias: Done With The Theatre Room

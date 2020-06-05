@@ -18,6 +18,7 @@ cloud:
         - script.aircon_cool_central_living
         - script.time_for_a_movie
         - script.time_for_a_tv_dinner
+        - script.time_for_star_wars
         - script.movie_has_finished
         - script.done_with_the_theatre_room
         - script.roomba_clean
