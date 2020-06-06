@@ -822,23 +822,25 @@ views:
         type: 'custom:vertical-stack-in-card'
       - cards:
           - elements:
-              - entity: device_tracker.ble_car_michael
+              - entity: device_tracker.ble_car_laura
                 style:
-                  bottom: 24%
+                  '--paper-item-icon-color': pink
+                  bottom: 22%
                   font-weight: bold
-                  right: 17%
+                  right: 14%
                   transform: initial
                 type: state-icon
-              - entity: person.michael
+              - entity: device_tracker.ble_car_michael
                 style:
-                  bottom: 20%
+                  '--paper-item-icon-color': skyblue
+                  bottom: 22%
                   font-weight: bold
                   right: 5%
                   transform: initial
-                type: state-label
+                type: state-icon
               - entity: sensor.blank
                 hold-action: none
-                prefix: Michael
+                prefix: People
                 style:
                   bottom: 20%
                   font-size: 150%
@@ -848,6 +850,10 @@ views:
                 type: state-label
             image: /local/header-image-dark.png
             type: picture-elements
+          - type: glance
+            entities:
+              - entity: person.laura
+              - entity: person.michael
           - entities:
               - entity: var.mail_was_delivered_today
                 hide_when_off: true
@@ -874,50 +880,6 @@ views:
             show_state: false
             state_color: false
             type: 'custom:fold-entity-row'
-          - cards:
-              - entity: sensor.quarantine_meter_michael
-                max: 100
-                min: 0
-                name: Time In Quarantime (last 7 days)
-                type: gauge
-            type: vertical-stack
-        title: null
-        type: 'custom:vertical-stack-in-card'
-      - cards:
-          - elements:
-              - entity: device_tracker.ble_car_laura
-                style:
-                  bottom: 24%
-                  font-weight: bold
-                  right: 17%
-                  transform: initial
-                type: state-icon
-              - entity: person.laura
-                style:
-                  bottom: 20%
-                  font-weight: bold
-                  right: 5%
-                  transform: initial
-                type: state-label
-              - entity: sensor.blank
-                hold-action: none
-                prefix: Laura
-                style:
-                  bottom: 20%
-                  font-size: 150%
-                  left: 5%
-                  transform: initial
-                tap-action: none
-                type: state-label
-            image: /local/header-image-dark.png
-            type: picture-elements
-          - cards:
-              - entity: sensor.quarantine_meter_laura
-                max: 100
-                min: 0
-                name: Time In Quarantime (last 7 days)
-                type: gauge
-            type: vertical-stack
         title: null
         type: 'custom:vertical-stack-in-card'
       - cards:
