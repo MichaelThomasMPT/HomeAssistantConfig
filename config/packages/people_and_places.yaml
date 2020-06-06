@@ -81,21 +81,3 @@ device_tracker:
       phone_ping_laura: !secret device_laura_phone_ip_address
   - platform: bluetooth_le_tracker
     track_new_devices: false
-
-sensor:
-  - platform: history_stats
-    name: Quarantine Meter Michael
-    entity_id: person.michael
-    state: "home"
-    type: ratio
-    duration:
-      days: 7
-    end: "{{ now() }}"
-  - platform: history_stats
-    name: Quarantine Meter Laura
-    entity_id: person.laura
-    state: "home"
-    type: ratio
-    duration:
-      days: 7
-    end: "{{ now() }}"
