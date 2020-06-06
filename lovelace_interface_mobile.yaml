@@ -1,3 +1,5 @@
+preload_rows:
+  - section
 title: The Treehouse
 views:
   - badges: []
@@ -41,10 +43,10 @@ views:
               - entity: sensor.front_door_last_motion
                 icon: 'mdi:motion-sensor'
                 name: Doorbell Motion
-            state_color: true
             head:
-              type: section
               label: Details
+              type: section
+            state_color: true
             type: 'custom:fold-entity-row'
         title: null
         type: 'custom:vertical-stack-in-card'
@@ -73,10 +75,10 @@ views:
           - entities:
               - entity: light.entry_hall_lights
                 name: Entry Hall Lights
-            show_header_toggle: false
             head:
-              type: section
               label: Lights
+              type: section
+            show_header_toggle: false
             type: 'custom:fold-entity-row'
           - entities:
               - entity: sensor.front_door_last_ding
@@ -85,10 +87,10 @@ views:
               - entity: sensor.front_door_last_motion
                 icon: 'mdi:motion-sensor'
                 name: Doorbell - Last Motion
-            show_header_toggle: false
             head:
-              type: section
               label: Doorbell
+              type: section
+            show_header_toggle: false
             type: 'custom:fold-entity-row'
         title: null
         type: 'custom:vertical-stack-in-card'
@@ -150,13 +152,13 @@ views:
                 hide_when_off: true
                 name: Camera
                 toggle: true
+            head:
+              label: Details
+              type: section
             show_header_toggle: false
             show_name: true
             show_state: true
             state_color: true
-            head:
-              type: section
-              label: Details
             type: 'custom:fold-entity-row'
         title: null
         type: 'custom:vertical-stack-in-card'
@@ -207,13 +209,13 @@ views:
                 icon: 'mdi:air-filter'
                 name: Aircon Vent
                 toggle: true
+            head:
+              label: Room
+              type: section
             show_header_toggle: false
             show_name: true
             show_state: false
             state_color: true
-            head:
-              type: section
-              label: Room
             type: 'custom:fold-entity-row'
           - entities:
               - artwork: full-cover
@@ -238,13 +240,13 @@ views:
                   power_state: false
                 info: short
                 name: Google Home
+            head:
+              label: Media
+              type: section
             show_header_toggle: false
             show_name: true
             show_state: false
             state_color: true
-            head:
-              type: section
-              label: Media
             type: 'custom:fold-entity-row'
           - entities:
               - entity: script.set_movie_lighting
@@ -290,8 +292,8 @@ views:
                     entity_id: script.aircon_cool_theatre
                 type: button
             head:
-              type: section
               label: Presets
+              type: section
             type: 'custom:fold-entity-row'
         title: null
         type: 'custom:vertical-stack-in-card'
@@ -329,22 +331,22 @@ views:
                 name: Aircon Vent
                 toggle: true
               - entity: script.roomba_clean
-                name: Roomba
                 hold_action:
                   action: more-info
                 icon: 'mdi:robot-vacuum'
+                name: Roomba
                 show_icon: true
                 show_name: true
                 tap_action:
                   action: toggle
                 type: button
+            head:
+              label: Room
+              type: section
             show_header_toggle: false
             show_name: true
             show_state: false
             state_color: true
-            head:
-              type: section
-              label: Room
             type: 'custom:fold-entity-row'
           - entities:
               - entity: media_player.living_room_chromecast
@@ -355,13 +357,13 @@ views:
                 group: true
                 hide:
                   controls: true
+            head:
+              label: Media
+              type: section
             show_header_toggle: false
             show_name: true
             show_state: false
             state_color: true
-            head:
-              type: section
-              label: Media
             type: 'custom:fold-entity-row'
           - entities:
               - entity: script.aircon_cool_central_living
@@ -378,8 +380,8 @@ views:
                     entity_id: script.aircon_cool_central_living
                 type: button
             head:
-              type: section
               label: Presets
+              type: section
             type: 'custom:fold-entity-row'
         title: null
         type: 'custom:vertical-stack-in-card'
@@ -437,13 +439,13 @@ views:
                   controls: true
               - entity: sensor.canon_ts3300_series
                 name: Canon TS3300 Print Status
+            head:
+              label: Details
+              type: section
             show_header_toggle: false
             show_name: true
             show_state: false
             state_color: true
-            head:
-              type: section
-              label: Details
             type: 'custom:fold-entity-row'
         title: null
         type: 'custom:vertical-stack-in-card'
@@ -490,13 +492,13 @@ views:
                 hide:
                   controls: true
                 name: Ensuite Google Home
+            head:
+              label: Room & Media
+              type: section
             show_header_toggle: false
             show_name: true
             show_state: false
             state_color: true
-            head:
-              type: section
-              label: Room & Media
             type: 'custom:fold-entity-row'
           - entities:
               - entity: script.aircon_warm_master
@@ -528,8 +530,8 @@ views:
                     entity_id: script.aircon_fan_master
                 type: button
             head:
-              type: section
               label: Presets
+              type: section
             type: 'custom:fold-entity-row'
         title: null
         type: 'custom:vertical-stack-in-card'
@@ -556,8 +558,7 @@ views:
           - entity: weather.treeby_house
             name: Treeby
             type: weather-forecast
-          - type: 'custom:fold-entity-row'
-            entities:
+          - entities:
               - entity: sensor.sems_status
                 icon: 'mdi:power'
                 name: Status
@@ -568,8 +569,9 @@ views:
                 icon: 'mdi:solar-power'
                 name: Electricity Generated Today
             head:
-              type: section
               label: Solar Panels
+              type: section
+            type: 'custom:fold-entity-row'
         title: null
         type: 'custom:vertical-stack-in-card'
       - cards:
@@ -615,11 +617,11 @@ views:
               - entity: input_number.aircon_temperature
                 icon: 'mdi:temperature-celsius'
                 name: Temperature
+            head:
+              label: Controls
+              type: section
             show_header_toggle: false
             title: Controls
-            head:
-              type: section
-              label: Controls
             type: 'custom:fold-entity-row'
           - card:
               cards:
@@ -705,12 +707,12 @@ views:
               - entity: switch.aircon_zone_bed23
                 icon: 'mdi:air-filter'
                 name: Bedroom 2 & 3
+            head:
+              label: Zones
+              type: section
             show_header_toggle: false
             state_color: true
             title: Zones
-            head:
-              type: section
-              label: Zones
             type: 'custom:fold-entity-row'
           - entities:
               - entity: script.aircon_warm_master
@@ -811,10 +813,10 @@ views:
                   service_data:
                     entity_id: script.aircon_blast_cold_for_ten_minutes
                 type: button
-            title: Presets
             head:
-              type: section
               label: Presets
+              type: section
+            title: Presets
             type: 'custom:fold-entity-row'
         title: null
         type: 'custom:vertical-stack-in-card'
@@ -864,13 +866,13 @@ views:
                 name: Take Bins Out Alerts
               - entity: automation.location_notify_when_someone_comes_home
                 name: Notify When Someone Arrives Home (default off)
+            head:
+              label: Automation Control
+              type: section
             show_header_toggle: false
             show_name: true
             show_state: false
             state_color: false
-            head:
-              type: section
-              label: Automation Control
             type: 'custom:fold-entity-row'
           - cards:
               - entity: sensor.quarantine_meter_michael
