@@ -822,14 +822,30 @@ views:
         type: 'custom:vertical-stack-in-card'
       - cards:
           - elements:
+              - entity: person.laura
+                style:
+                  color: pink
+                  bottom: 20%
+                  font-weight: bold
+                  right: 36%
+                  transform: initial
+                type: state-label
               - entity: device_tracker.ble_car_laura
                 style:
                   '--paper-item-icon-color': pink
                   bottom: 22%
                   font-weight: bold
-                  right: 14%
+                  right: 27%
                   transform: initial
                 type: state-icon
+              - entity: person.michael
+                style:
+                  color: skyblue
+                  bottom: 20%
+                  font-weight: bold
+                  right: 14%
+                  transform: initial
+                type: state-label
               - entity: device_tracker.ble_car_michael
                 style:
                   '--paper-item-icon-color': skyblue
@@ -850,10 +866,6 @@ views:
                 type: state-label
             image: /local/header-image-dark.png
             type: picture-elements
-          - type: glance
-            entities:
-              - entity: person.laura
-              - entity: person.michael
           - entities:
               - entity: var.mail_was_delivered_today
                 hide_when_off: true
