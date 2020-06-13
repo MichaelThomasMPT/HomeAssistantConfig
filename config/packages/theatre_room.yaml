@@ -42,8 +42,7 @@ script:
       - service: media_player.turn_on #turn on the TV
         entity_id:
           - media_player.theatre_room_tv 
-      - delay: #wait for the tv to switch on
-          seconds: 10
+      - wait_template: "{{ is_state(' media_player.theatre_room_tv', 'on') }}"
       - service: media_player.select_source #switch TV to Plex
         data:
           entity_id: media_player.theatre_room_tv
@@ -68,8 +67,7 @@ script:
       - service: media_player.turn_on #turn on the TV
         entity_id:
           - media_player.theatre_room_tv 
-      - delay: #wait for the tv to switch on
-          seconds: 10
+      - wait_template: "{{ is_state(' media_player.theatre_room_tv', 'on') }}"
       - service: media_player.select_source #switch TV to Plex
         data:
           entity_id: media_player.theatre_room_tv
@@ -95,14 +93,12 @@ script:
       - service: media_player.turn_on #turn on the TV
         entity_id:
           - media_player.theatre_room_tv 
-      - delay: #wait for the tv to switch on
-          seconds: 10
+      - wait_template: "{{ is_state(' media_player.theatre_room_tv', 'on') }}"
       - service: media_player.select_source #switch TV to Plex
         data:
           entity_id: media_player.theatre_room_tv
           source: "Plex"
-      - delay: #wait for the tv to switch channel
-          seconds: 20
+      - wait_template: "{{ is_state('media_player.plex_for_lg', 'idle') }}"
       - service: media_player.play_media
         data:
           entity_id: media_player.plex_for_lg
