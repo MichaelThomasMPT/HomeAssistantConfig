@@ -35,7 +35,24 @@ zeroconf:
 elastic:
   url: http://192.168.1.111:9200
   exclude:
-    entities: ['sensor.es_cluster_health', 'sensor.es_publish_queue', 'sun.sun']
+    entities:
+        - sensor.es_cluster_health
+        - sensor.es_publish_queue
+        - sun.sun
+
+influxdb:
+  host: 192.168.1.111
+  port: 8086
+  database: home_assistant
+  max_retries: 3
+  default_measurement: state
+  exclude:
+    entities:
+        - sensor.es_cluster_health
+        - sensor.es_publish_queue
+        - sun.sun
+  tags_attributes:
+    - friendly_name
 
 hue:
   bridges:
