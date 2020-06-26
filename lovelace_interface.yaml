@@ -18,14 +18,6 @@ views:
         tap_action:
           action: toggle
         type: entity-button
-      - cards:
-          - entity: sensor.quarantine_meter_michael
-            max: 100
-            min: 0
-            name: Michael (last 7 days)
-            type: gauge
-        title: Time In Quarantine
-        type: vertical-stack
       - entities:
           - entity: sensor.away_from_home_state_validity
         show_name: false
@@ -72,6 +64,7 @@ views:
               - entity: light.entry_hall_lights
                 name: Entry Hall Lights
               - entity: light.office_lamp
+              - entity: light.garage_light
             show_header_toggle: true
             title: Lights
             type: entities
@@ -88,6 +81,8 @@ views:
               - entity: >-
                   cover.aeon_labs_zw062_garage_door_controller_barrier_state_label
                 name: Garage Door
+              - entity: light.garage_light
+                name: Ceiling Light
               - entity: binary_sensor.garage_door_external
                 name: External Door
               - entity: device_tracker.ble_car_michael
@@ -1193,43 +1188,18 @@ views:
             type: picture
         title: Server Health Checks
         type: horizontal-stack
-      - columns: 3
-        entities:
-          - entity: sensor.living_room_temperature_sensor_battery_level
-            name: Living Room Temp Sensor
-          - entity: sensor.master_bedroom_temp_sensor_battery_level
-            name: Theatre Temp Sensor
-          - entity: sensor.theatre_room_temperature_sensor_battery_level
-            name: Master Bedroom Temp Sensor
-          - entity: sensor.office_temperature_sensor_battery_level
-            name: Office Temp Sensor
-          - entity: sensor.garage_external_door_battery_level
-            name: Mailbox Vibration Sensor
-          - entity: sensor.back_door_glass_battery
-          - entity: sensor.back_door_flyscreen_battery
-          - entity: sensor.vibration_sensor_battery_level
-            name: Garage External Door Sensor
-        title: Battery Status
-        type: glance
-      - entities:
-          - entity: sensor.living_room_temperature_sensor_battery_level
-            name: Living Room Temp Sensor
-          - entity: sensor.master_bedroom_temp_sensor_battery_level
-            name: Theatre Temp Sensor
-          - entity: sensor.theatre_room_temperature_sensor_battery_level
-            name: Master Bedroom Temp Sensor
-          - entity: sensor.office_temperature_sensor_battery_level
-            name: Office Temp Sensor
-          - entity: sensor.vibration_sensor_battery_level
-            name: Garage External Door Sensor
-          - entity: sensor.garage_external_door_battery_level
-            name: Mailbox Vibration Sensor
-          - entity: sensor.back_door_glass_battery
-          - entity: sensor.back_door_flyscreen_battery
-        hours_to_show: 336
-        refresh_interval: 10
-        title: Battery Percentage Over Time
-        type: history-graph
+      - type: 'custom:auto-entities'
+        card:
+          type: 'custom:battery-state-card'
+          title: Low Batteries
+        filter:
+          include:
+            - attributes:
+                device_class: battery
+          exclude:
+            - state: '> 50'
+            - state: Not Charging
+            - state: charging
       - card:
           show_header_toggle: false
           title: Unavailable Devices
