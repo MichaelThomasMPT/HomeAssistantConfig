@@ -1,0 +1,201 @@
+# AIR CON COMMAND
+rest_command:
+  aircon_control:
+    url: 'http://192.168.1.106:2025/setAircon?json={{ command }}'
+    method: 'GET'
+
+# AIR CON TEMPERATURE DIAL
+input_number:
+  aircon_temperature:
+    name: Aircon Temperature
+    initial: 23
+    min: 16
+    max: 32
+    step: 1
+  aircon_countdown_timer:
+    name: Aircon Countdown Timer
+    initial: 0
+    min: 0
+    max: 300
+    step: 15
+    
+ # AIR CON RUN MODE
+input_select:
+    aircon_run_mode:
+        name: Aircon Run Mode
+        options:
+          - cool
+          - heat
+          - vent
+          - dry
+        initial: cool  
+        icon: mdi:air-conditioner
+
+script:
+  aircon_turn_off:
+    sequence:
+    - data:
+        command: '{"ac1":{"info":{"state":"off"}}}'
+      service: rest_command.aircon_on_off
+  aircon_turn_on:
+    sequence:
+    - data:
+        command: '{"ac1":{"info":{"state":"on"}}}'
+      service: rest_command.aircon_on_off
+      
+automation:
+  - alias: Aircon Control - Adjust Temperature From Slider
+    trigger: 
+      platform: state
+      entity_id: input_number.aircon_temperature
+    action:
+      - service: rest_command.aircon_control
+        data_template:
+          command: '{"ac1":{"info":{"setTemp":{{ states.input_number.aircon_temperature.state | int }}}}}'
+            
+  - alias: Aircon Control - Adjust Temperature From Sensor
+    trigger: 
+      platform: state
+      entity_id: sensor.aircon_temperature
+    action:
+      - service: input_number.set_value
+        data_template:
+          entity_id: input_number.aircon_temperature
+          value: "{{ states.sensor.aircon_temperature.state }}"
+          
+  - alias: Aircon Control - Adjust Countdown Timer From Slider
+    trigger: 
+      platform: state
+      entity_id: input_number.aircon_countdown_timer
+    action:
+      - service: rest_command.aircon_control
+        data_template:
+          command: '{"ac1":{"info":{"countDownToOff":{{ states.input_number.aircon_countdown_timer.state | int }}}}}'
+            
+  - alias: Aircon Control - Adjust Countdown Timer From Sensor
+    trigger: 
+      platform: state
+      entity_id: sensor.aircon_countdown_timer
+    action:
+      - service: input_number.set_value
+        data_template:
+          entity_id: input_number.aircon_countdown_timer
+          value: "{{ states.sensor.aircon_countdown_timer.state }}"
+
+  - alias: Aircon Control - Set Run Mode From Selector
+    trigger: 
+      platform: state
+      entity_id: input_select.aircon_run_mode
+    action:
+      - service: rest_command.aircon_control
+        data_template:
+          command: '{"ac1":{"info":{"mode":{{ states.input_select.aircon_run_mode.state }}}}}'
+
+  - alias: Aircon Control - Set Run Mode From Sensor
+    trigger: 
+      platform: state
+      entity_id: sensor.aircon_run_mode
+    action:
+      - service: input_select.select_option
+        data_template:
+          entity_id: input_select.aircon_run_mode
+          option: "{{ states.sensor.aircon_run_mode.state }}"
+
+sensor:
+  # Aircon State Sensor
+  - platform: rest
+    resource: http://192.168.1.106:2025/getSystemData
+    name: aircon_sensor
+    value_template: '{{ value_json.aircons.ac1.info.state }}'
+    scan_interval: 5
+    json_attributes:
+      - aircons
+
+  - platform: template
+    sensors:
+      aircon_zone_living: #aircon zone z01
+        value_template: '{{ states.sensor.aircon_sensor.attributes["aircons"]["ac1"]["zones"]["z01"]["state"] }}'
+      aircon_zone_theatre: #aircon zone z02
+        value_template: '{{ states.sensor.aircon_sensor.attributes["aircons"]["ac1"]["zones"]["z02"]["state"] }}'
+      aircon_zone_master: #aircon zone z03
+        value_template: '{{ states.sensor.aircon_sensor.attributes["aircons"]["ac1"]["zones"]["z03"]["state"] }}'
+      aircon_zone_bed23: #aircon zone z04
+        value_template: '{{ states.sensor.aircon_sensor.attributes["aircons"]["ac1"]["zones"]["z04"]["state"] }}'
+      aircon_temperature: #aircon current temperature
+        value_template: '{{ states.sensor.aircon_sensor.attributes["aircons"]["ac1"]["info"]["setTemp"] }}'
+        device_class: temperature
+        unit_of_measurement: '°C'
+      aircon_run_mode: #aircon fan mode sensor
+        value_template: '{{ states.sensor.aircon_sensor.attributes["aircons"]["ac1"]["info"]["mode"] }}'
+      aircon_countdown_timer: #minutes before turning off
+        value_template: '{{ states.sensor.aircon_sensor.attributes["aircons"]["ac1"]["info"]["countDownToOff"] }}'
+
+switch:
+  - platform: template
+    switches:
+    
+      aircon_on_off: #overall aircon control
+        value_template: "{{ is_state('sensor.aircon_sensor', 'on') }}"
+        turn_on:
+          service: rest_command.aircon_control
+          data:
+            #when turning on, set the countdown timer to 0
+            command: '{"ac1":{"info":{"state":"on","countDownToOff": 0}}}'
+        turn_off:
+          service: rest_command.aircon_control
+          data:
+            command: '{"ac1":{"info":{"state":"off"}}}'
+            
+      aircon_zone_living: #zone z01
+        value_template: "{{ is_state('sensor.aircon_zone_living', 'open') }}"
+        turn_on:
+          service: rest_command.aircon_control
+          data:
+            command: '{"ac1":{"zones":{"z01":{"state":"open"}}}}'
+        turn_off:
+          service: rest_command.aircon_control
+          data:
+            command: '{"ac1":{"zones":{"z01":{"state":"close"}}}}'
+            
+      aircon_zone_theatre: #zone z02
+        value_template: "{{ is_state('sensor.aircon_zone_theatre', 'open') }}"
+        turn_on:
+          service: rest_command.aircon_control
+          data:
+            command: '{"ac1":{"zones":{"z02":{"state":"open"}}}}'
+        turn_off:
+          service: rest_command.aircon_control
+          data:
+            command: '{"ac1":{"zones":{"z02":{"state":"close"}}}}'      
+            
+      aircon_zone_master: #zone z03
+        value_template: "{{ is_state('sensor.aircon_zone_master', 'open') }}"
+        turn_on:
+          service: rest_command.aircon_control
+          data:
+            command: '{"ac1":{"zones":{"z03":{"state":"open"}}}}'
+        turn_off:
+          service: rest_command.aircon_control
+          data:
+            command: '{"ac1":{"zones":{"z03":{"state":"close"}}}}'  
+      
+      aircon_zone_bed23: #zone z04
+        value_template: "{{ is_state('sensor.aircon_zone_bed23', 'open') }}"
+        turn_on:
+          service: rest_command.aircon_control
+          data:
+            command: '{"ac1":{"zones":{"z04":{"state":"open"}}}}'
+        turn_off:
+          service: rest_command.aircon_control
+          data:
+            command: '{"ac1":{"zones":{"z04":{"state":"close"}}}}'
+
+group:
+  aircon_vents:
+    name: Aircon Vents
+    entities:
+      - switch.aircon_zone_bed23
+      - switch.aircon_zone_living
+      - switch.aircon_zone_master
+      - switch.aircon_zone_theatre
+    
