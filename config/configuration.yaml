@@ -56,10 +56,6 @@ hue:
       allow_unreachable: true
       allow_hue_groups: true
 
-# Text to speech
-tts:
-  - platform: google_translate
-
 # Aeotec Z-Wave Stick
 zwave:
   usb_path: /zwaveusbstick

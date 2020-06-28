@@ -68,3 +68,7 @@ cloud:
         aliases:
           - Theatre Room Vent
           - Theatre Vent
+
+# Text to speech
+tts:
+  - platform: google_translate
