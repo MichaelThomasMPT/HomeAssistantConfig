@@ -40,17 +40,7 @@ automation:
       from: 'disarmed'
       to: 'armed_away'
     action:
-      - service: light.turn_off #lights
-        data_template: 
-          entity_id: "{{ states.light | map(attribute='entity_id') | list | join(', ') }}"
-      - service: switch.turn_off
-        entity_id: switch.aircon_on_off
-      - service: media_player.turn_off #tv & speakers
-        entity_id:
-          - media_player.theatre_room_tv 
-          - media_player.all_rooms
-      - service: cover.close_cover
-        entity_id: cover.theatre_blinds
+      - service: script.turn_off_whole_house 
         
   - alias: Alarm System - Alert If Doors Left Open
     trigger:

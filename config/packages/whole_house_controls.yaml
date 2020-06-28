@@ -1,0 +1,26 @@
+script:
+  turn_off_whole_house:
+    sequence:
+      - service: light.turn_off #lights
+        data_template: 
+          entity_id: "{{ states.light | map(attribute='entity_id') | list | join(', ') }}"
+      - service: switch.turn_off
+        entity_id: switch.aircon_on_off
+      - service: media_player.turn_off #tv & speakers
+        entity_id:
+          - media_player.theatre_room_tv 
+          - media_player.all_rooms
+      - service: cover.close_cover
+        entity_id: cover.theatre_blinds
+
+
+automation:
+  - alias: Whole House - Turn Off Everything When Going To Bed
+    trigger:
+      - platform: event
+        event_type: deconz_event
+        event_data: 
+          id: master_door_switch
+          event: 1002
+    action:
+      - service: script.turn_off_whole_house 
