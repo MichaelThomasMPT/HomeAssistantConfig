@@ -1,4 +1,73 @@
 automation:
+
+  #turn on garage lights when door opens
+  - alias: Garage - Turn On Lights When Door Opens
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.garage_door_external
+        to: "on"
+      - platform: state
+        entity_id: binary_sensor.garage_door_internal
+        to: "on"
+      - platform: state
+        entity_id: cover.aeon_labs_zw062_garage_door_controller_barrier_state_label
+        to: "opening"
+      - platform: state
+        entity_id: cover.aeon_labs_zw062_garage_door_controller_barrier_state_label
+        to: "open"
+    action:
+      - service: light.turn_on
+        entity_id:
+          - light.garage_light
+
+  #turn off garage lights when doors closed
+  - alias: Garage - Turn Off Lights When Doors Closed
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.garage_door_external
+        to: "off"
+      - platform: state
+        entity_id: binary_sensor.garage_door_internal
+        to: "off"
+      - platform: state
+        entity_id: cover.aeon_labs_zw062_garage_door_controller_barrier_state_label
+        to: "closed"
+    condition:
+      condition: and #make sure all doors are closed
+      conditions:
+        - condition: state
+          entity_id: binary_sensor.garage_door_external
+          state: 'off'
+        - condition: state
+          entity_id: binary_sensor.garage_door_internal
+          state: 'off'
+        - condition: state
+          entity_id: cover.aeon_labs_zw062_garage_door_controller_barrier_state_label
+          state: 'closed'
+    action:
+      - delay: #leave lights on for 3 minutes
+          seconds: 180
+      - condition: and #make sure all doors stayed closed
+        conditions:
+          - condition: state
+            entity_id: binary_sensor.garage_door_external
+            state: 'off'
+            for: 
+              seconds: 170
+          - condition: state
+            entity_id: binary_sensor.garage_door_internal
+            state: 'off'
+            for: 
+              seconds: 170
+          - condition: state
+            entity_id: cover.aeon_labs_zw062_garage_door_controller_barrier_state_label
+            state: 'closed'
+            for: 
+              seconds: 170
+      - service: light.turn_off
+        entity_id:
+          - light.garage_light
+
   #if garage door left open, send a push notification.
   - alias: Garage - Notify If Garage Door Left Open For 5 Minutes
     trigger:
