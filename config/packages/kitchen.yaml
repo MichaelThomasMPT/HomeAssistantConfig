@@ -1,0 +1,57 @@
+automation:
+    #if coffee machine left open, send a push notification.
+    - alias: Kitchen - Notify If Coffee Machine Closed for 5 Minutes
+      trigger:
+        platform: time_pattern
+        minutes: '/5' #run every 5 minutes
+      condition:
+        condition: or
+        conditions:
+          - condition: state
+            entity_id: binary_sensor.coffee_machine
+            state: 'off'
+            for:
+              minutes: 4
+      action:
+        - service: notify.pushbullet
+          data:
+            message: The coffee machine was left closed.
+        - service: notify.mobile_app_lauras_iphone
+          data:
+            message: The coffee machine was left closed.
+        - data:
+            entity_id: media_player.kitchen_google_home_hub
+            message: The coffee machine was left closed.
+          service: tts.google_translate_say
+
+    # turn on scullery lights when motion detected
+    - alias: Kitchen - Turn On Scullery Lights When Motion Detected
+      trigger: 
+        - platform: state
+          entity_id: binary_sensor.scullery_motion
+          to: 'on'
+      action:
+        - service: light.turn_on
+          entity_id: 
+            - light.scullery_light
+            - light.pantry_light
+
+
+            #if coffee machine left open, send a push notification.
+    - alias: Kitchen - Turn Off Scullery Lights When No Motion Detected
+      trigger:
+        platform: time_pattern
+        seconds: '/30' #run every 30 seconds
+      condition:
+        condition: or
+        conditions:
+          - condition: state
+            entity_id: binary_sensor.scullery_motion
+            state: 'off'
+            for:
+              seconds: 30
+      action:
+        - service: light.turn_off
+          entity_id: 
+            - light.scullery_light
+            - light.pantry_light
