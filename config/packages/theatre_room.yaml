@@ -273,6 +273,38 @@ automation:
             script.turn_on_theatre_room_lights
           {% endif %} 
             
+  - alias: Theatre Room Motion - Turn On Lights When Motion Detected
+    trigger: 
+      - platform: state
+        entity_id: binary_sensor.theatre_motion
+        to: 'on'
+    condition:
+      condition: and 
+      conditions:
+        - condition: state 
+          entity_id: media_player.theatre_room_tv
+          state: 'off' #not in the middle of watchin something
+        - condition: state 
+          entity_id: cover.theatre_blinds
+          state: 'closed' #room is darkened
+        - condition: state
+          entity_id: light.theatre_room_ceiling
+          state: 'off'
+          for:
+            minutes: 2 #the lights weren't just turned off
+        - condition: state
+          entity_id: light.theatre_room_left_lamp
+          state: 'off'
+          for:
+            minutes: 2 #the lights weren't just turned off
+        - condition: state
+          entity_id: light.theatre_room_right_lamp
+          state: 'off'
+          for:
+            minutes: 2 #the lights weren't just turned off
+    action:
+      - service: script.set_tv_dinner_lighting
+
 ############## LG TV ##############
 
 # Turn on wake-on-lan support
