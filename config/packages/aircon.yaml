@@ -325,7 +325,7 @@ automation:
           - fri
       - condition: numeric_state
         entity_id: sensor.master_bedroom_temperature
-        below: '14'
+        below: '15'
         value_template: '{{ state.attributes.temperature }}'
     action:
       - service: script.aircon_warm_master
@@ -354,23 +354,68 @@ automation:
           entity_id: input_number.aircon_countdown_timer
           value: 15
 
-#NOTE: This automation probably won't work correctly until I get a more reliable means of prescence detection in the master bedroom
-  - alias: Temperature - Auto Bedroom Fan 
+  - alias: Temperature - Master Bed Button Trigger - Fan
     trigger:
-      - platform: state
-        entity_id: sensor.motion_sensor_master_bedroom
-        to: 'Active' #motion was detected in the master bedroom
+      - platform: event
+        event_type: deconz_event
+        event_data: 
+          id: master_bed_switch_1
+          event: 1002
+      - platform: event
+        event_type: deconz_event
+        event_data: 
+          id: master_bed_switch_2
+          event: 1002
     condition:
-      - condition: time
-        after: '21:30:00' #it's after 9.30pm
       - condition: template
-        value_template: '{{ (states.sensor.theatre_temperature.state | float) > 25.0 }}' #the bedroom temperature is > 25 degrees  
+        value_template: '{{ (states.sensor.master_bedroom_temperature.state | float) > 20.0 }}' 
       - condition: state
         entity_id: 'switch.aircon_on_off'
-        state: 'off' #don't run the script if the fan is already on, as it will restart the countdown timer
+        state: 'off' #aircon is currently off
     action:
-      - service: script.aircon_fan_master #run the fan in the master bedroom
+      - service: script.aircon_fan_master 
 
+  - alias: Temperature - Master Bed Button Trigger - Warm
+    trigger:
+      - platform: event
+        event_type: deconz_event
+        event_data: 
+          id: master_bed_switch_1
+          event: 1002
+      - platform: event
+        event_type: deconz_event
+        event_data: 
+          id: master_bed_switch_2
+          event: 1002
+    condition:
+      - condition: template
+        value_template: '{{ (states.sensor.master_bedroom_temperature.state | float) <= 20.0 }}' 
+      - condition: state
+        entity_id: 'switch.aircon_on_off'
+        state: 'off' #aircon is currently off
+    action:
+      - service: script.aircon_warm_master 
+
+  - alias: Temperature - Master Bed Button Trigger - Off
+    trigger:
+      - platform: event
+        event_type: deconz_event
+        event_data: 
+          id: master_bed_switch_1
+          event: 1002
+      - platform: event
+        event_type: deconz_event
+        event_data: 
+          id: master_bed_switch_2
+          event: 1002
+    condition:
+      - condition: state
+        entity_id: 'switch.aircon_on_off'
+        state: 'on' #aircon is currently on
+    action:
+      - service: switch.turn_off
+        data:
+          entity_id: switch.aircon_on_off
 
 sensor:
   # Aircon State Sensor
