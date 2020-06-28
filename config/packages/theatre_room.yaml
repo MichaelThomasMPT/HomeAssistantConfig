@@ -28,7 +28,6 @@ script:
       data: 
         entity_id: light.theatre_room_ceiling
     alias: TV Dinner Lighting Scene
-    
 
   #Get the theatre room ready  
   time_for_a_movie:
@@ -80,7 +79,6 @@ script:
         entity_id:
           - script.aircon_cool_theatre
 
-          
   #Start Star Wras playing
   time_for_star_wars:
     alias: Time For Star Wars
@@ -112,6 +110,30 @@ script:
         entity_id:
           - script.aircon_cool_theatre
 
+  turn_off_theatre_room_lights:
+    alias: Turn Off Theatre Room Lights
+    sequence:
+      - service: light.turn_off
+        entity_id:
+          - light.theatre_room_left_lamp
+          - light.theatre_room_right_lamp
+          - light.theatre_room_ceiling
+
+  turn_on_theatre_room_lights:
+    alias: Turn On Theatre Room Lights
+    sequence:
+      - service: light.turn_on
+        entity_id:
+          - light.theatre_room_left_lamp
+          - light.theatre_room_right_lamp
+        data:
+          rgb_color: [255,255,255]
+          brightness_pct: 100
+      - service: light.turn_on
+        entity_id:
+          - light.theatre_room_ceiling
+        data:
+          brightness_pct: 1
 
   #Finished with the theatre room  
   done_with_the_theatre_room:
@@ -120,11 +142,7 @@ script:
       - service: media_player.turn_off #turn on the TV
         entity_id:
           - media_player.theatre_room_tv 
-      - service: light.turn_off
-        entity_id:
-          - light.theatre_room_left_lamp
-          - light.theatre_room_right_lamp
-          - light.theatre_room_ceiling
+      - service: script.turn_off_theatre_room_lights
       - service: switch.turn_off 
         entity_id:
           - switch.aircon_zone_theatre
@@ -174,11 +192,16 @@ automation:
       - platform: state
         entity_id: media_player.theatre_room_tv
         from: 'off' #from off = turning on
+      - platform: event
+        event_type: deconz_event
+        event_data: 
+          id: theatre_room_remote
+          event: 4002 #left button
     action:
       - service: cover.close_cover
         entity_id: cover.theatre_blinds
         
-  - alias: Theatre Room Blinds - Open
+  - alias: Theatre Room Blinds - Open Automatically
     trigger:
       - platform: sun
         event: sunrise
@@ -204,7 +227,52 @@ automation:
       - service: cover.open_cover
         entity_id: cover.theatre_blinds
 
+  - alias: Theatre Room Blinds - Open Manually
+    trigger:
+      - platform: event
+        event_type: deconz_event
+        event_data: 
+          id: theatre_room_remote
+          event: 5002 #right button
+    action:
+      - service: cover.open_cover
+        entity_id: cover.theatre_blinds
 
+  - alias: Theatre Room Lights Manual Control - Movie Lights
+    trigger:
+      - platform: event
+        event_type: deconz_event
+        event_data: 
+          id: theatre_room_remote
+          event: 3002 #bottom button
+    action:
+      - service: script.set_movie_lighting 
+
+  - alias: Theatre Room Lights Manual Control - Movie Has Finished
+    trigger:
+      - platform: event
+        event_type: deconz_event
+        event_data: 
+          id: theatre_room_remote
+          event: 2002 #top button
+    action:
+      - service: script.movie_has_finished
+
+  - alias: Theatre Room Lights Manual Control - Toggle Lights
+    trigger:
+      - platform: event
+        event_type: deconz_event
+        event_data: 
+          id: theatre_room_remote
+          event: 1002 #centre button
+    action:
+      - service_template: >
+          {% if is_state('light.theatre_room_ceiling', 'on') %}
+            script.turn_off_theatre_room_lights
+          {% else %} 
+            script.turn_on_theatre_room_lights
+          {% endif %} 
+            
 ############## LG TV ##############
 
 # Turn on wake-on-lan support
