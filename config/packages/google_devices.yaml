@@ -8,3 +8,31 @@ cast:
     - host: !secret google_home_office_ip_address
     - host: !secret google_home_theatre_ip_address
     - host: !secret google_home_ensuite_ip_address
+
+# "Assistant Relay" configuration for sending Google Assistant commands
+rest_command:
+  assistant_broadcast:
+    url: !secret assistant_relay_location
+    method: POST
+    content_type: 'application/json'
+    payload: '{"command":"{{ command }}", "user":"Michael", "broadcast":true}'
+  assistant_converse:
+    url: !secret assistant_relay_location
+    method: POST
+    content_type: 'application/json'
+    payload: '{"command":"{{ command }}", "user":"{{ user }}", "converse":true}'
+  assistant_relay:
+    url: !secret assistant_relay_location
+    method: POST
+    content_type: 'application/json'
+    payload: '{"command":"{{ command }}", "user":"Michael"}'
+
+
+script:
+  test_google_cast:
+    alias: Test Google Cast
+    sequence:
+      - data:
+          command: "play me some tunes"
+          user: !secret assistant_relay_user
+        service: rest_command.assistant_converse
