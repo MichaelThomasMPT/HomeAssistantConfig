@@ -1,0 +1,5 @@
+binary_sensor:
+  - platform: threshold
+    name: Ensuite Shower
+    entity_id: sensor.ensuite_shower_humidity
+    upper: 90
