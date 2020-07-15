@@ -65,6 +65,9 @@ views:
                 name: Entry Hall Lights
               - entity: light.office_lamp
               - entity: light.garage_light
+              - entity: light.scullery_light
+              - entity: light.pantry_light
+              - entity: light.master_bedroom_lamp
             show_header_toggle: true
             title: Lights
             type: entities
@@ -73,6 +76,8 @@ views:
                 name: Entry Hall
                 type: light
               - entity: light.office_lamp
+                type: light
+              - entity: light.master_bedroom_lamp
                 type: light
             type: horizontal-stack
         type: 'custom:vertical-stack-in-card'

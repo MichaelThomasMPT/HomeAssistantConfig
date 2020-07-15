@@ -477,6 +477,9 @@ views:
             image: /local/header-image-dark.png
             type: picture-elements
           - entities:
+              - entity: light.master_bedroom_lamp
+                name: Lamp
+                toggle: true
               - entity: switch.aircon_zone_master
                 hide_when_off: true
                 icon: 'mdi:air-filter'
@@ -824,8 +827,8 @@ views:
           - elements:
               - entity: person.laura
                 style:
-                  color: pink
                   bottom: 20%
+                  color: pink
                   font-weight: bold
                   right: 36%
                   transform: initial
@@ -840,8 +843,8 @@ views:
                 type: state-icon
               - entity: person.michael
                 style:
-                  color: skyblue
                   bottom: 20%
+                  color: skyblue
                   font-weight: bold
                   right: 14%
                   transform: initial

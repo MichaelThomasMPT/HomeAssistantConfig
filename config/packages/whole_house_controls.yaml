@@ -12,15 +12,3 @@ script:
           - media_player.all_rooms
       - service: cover.close_cover
         entity_id: cover.theatre_blinds
-
-
-automation:
-  - alias: Whole House - Turn Off Everything When Going To Bed
-    trigger:
-      - platform: event
-        event_type: deconz_event
-        event_data: 
-          id: master_door_switch
-          event: 1002
-    action:
-      - service: script.turn_off_whole_house 

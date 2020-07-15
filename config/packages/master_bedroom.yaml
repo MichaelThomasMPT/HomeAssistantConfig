@@ -3,3 +3,24 @@ binary_sensor:
     name: Ensuite Shower
     entity_id: sensor.ensuite_shower_humidity
     upper: 90
+
+automation:
+  - alias: Master Bedroom - Turn Off Everything When Going To Bed
+    trigger:
+      - platform: event
+        event_type: deconz_event
+        event_data: 
+          id: master_door_switch
+          event: 1002
+    action:
+      - service: script.turn_off_whole_house 
+      - service: light.turn_on
+        entity_id: light.master_bedroom
+        data:
+          brightness_pct: 1
+      - delay:
+          seconds: 20
+      - service: light.turn_off
+        entity_id: 
+          - light.master_bedroom
+          - light.master_bedroom_lamp
