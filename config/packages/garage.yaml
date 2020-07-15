@@ -23,6 +23,8 @@ automation:
   #turn off garage lights when doors closed
   - alias: Garage - Turn Off Lights When Doors Closed
     trigger:
+      - platform: time_pattern
+        minutes: '/30' #run every 30 minutes
       - platform: state
         entity_id: binary_sensor.garage_door_external
         to: "off"
@@ -47,23 +49,6 @@ automation:
     action:
       - delay: #leave lights on for 3 minutes
           seconds: 180
-      - condition: and #make sure all doors stayed closed
-        conditions:
-          - condition: state
-            entity_id: binary_sensor.garage_door_external
-            state: 'off'
-            for: 
-              seconds: 60
-          - condition: state
-            entity_id: binary_sensor.garage_door_internal
-            state: 'off'
-            for: 
-              seconds: 60
-          - condition: state
-            entity_id: cover.aeon_labs_zw062_garage_door_controller_barrier_state_label
-            state: 'closed'
-            for: 
-              seconds: 60
       - service: light.turn_off
         entity_id:
           - light.garage_light
