@@ -1291,5 +1291,14 @@ views:
             name: Colour Ink
         title: Printer
         type: glance
+      - entities:
+          - entity: sensor.ensuite_shower_humidity
+          - entity: binary_sensor.ensuite_shower
+          - entity: binary_sensor.ensuite_shower_humidity_falling
+          - entity: binary_sensor.ensuite_shower_above_humidity_threshold
+        hours_to_show: 24
+        refresh_interval: 0
+        type: history-graph
+        title: Shower Debugging
     icon: 'mdi:battery-unknown'
     path: batteries
