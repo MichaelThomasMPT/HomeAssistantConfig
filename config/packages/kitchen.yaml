@@ -39,17 +39,10 @@ automation:
 
             #if coffee machine left open, send a push notification.
     - alias: Kitchen - Turn Off Scullery Lights When No Motion Detected
-      trigger:
-        platform: time_pattern
-        seconds: '/30' #run every 30 seconds
-      condition:
-        condition: or
-        conditions:
-          - condition: state
-            entity_id: binary_sensor.scullery_motion
-            state: 'off'
-            for:
-              seconds: 30
+      trigger: 
+      - platform: state
+        entity_id: binary_sensor.scullery_motion
+        to: 'off'
       action:
         - service: light.turn_off
           entity_id: 
