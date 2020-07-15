@@ -24,7 +24,7 @@ automation:
         data:
           entity_id: light.office_lamp
           brightness_pct: 30
-          rgb_color: [0,255,0] 
+          rgb_color: [253, 44, 255] 
 
  #At midnight, reset the mail_was_delivered_today var
   - alias: Letterbox - Reset Letterbox var
