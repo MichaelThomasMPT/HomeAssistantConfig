@@ -267,7 +267,7 @@ automation:
           event: 1002
     condition:
       - condition: template
-        value_template: '{{ (states.sensor.master_bedroom_temperature.state | float) > 20.0 }}' 
+        value_template: '{{ (states.sensor.master_bedroom_temperature.state | float) > 22.0 }}' 
       - condition: state
         entity_id: 'switch.aircon_on_off'
         state: 'off' #aircon is currently off
@@ -288,7 +288,7 @@ automation:
           event: 1002
     condition:
       - condition: template
-        value_template: '{{ (states.sensor.master_bedroom_temperature.state | float) <= 20.0 }}' 
+        value_template: '{{ (states.sensor.master_bedroom_temperature.state | float) <= 22.0 }}' 
       - condition: state
         entity_id: 'switch.aircon_on_off'
         state: 'off' #aircon is currently off
