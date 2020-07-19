@@ -312,7 +312,7 @@ wake_on_lan:
 
 # LG TV
 webostv:
-    host: 192.168.1.150
+    host: !secret theatre_room_tv_ip_address
     name: Theatre Room TV
     turn_on_action:
       service: wake_on_lan.send_magic_packet

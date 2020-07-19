@@ -29,7 +29,7 @@ zeroconf:
     
 # Elastic search output
 elastic:
-  url: http://192.168.1.111:9200
+  url: !secret elastic_stack_url
   exclude:
     entities:
         - sensor.es_cluster_health
@@ -37,8 +37,8 @@ elastic:
         - sun.sun
 
 influxdb:
-  host: 192.168.1.111
-  port: 8086
+  host: !secret influx_db_ip_address
+  port: !secret influx_db_port
   database: home_assistant
   max_retries: 3
   default_measurement: state

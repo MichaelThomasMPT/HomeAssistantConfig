@@ -38,7 +38,7 @@ script:
 
 switch:
   - platform: broadlink
-    host: 192.168.1.14
+    host: !secret broadlink_rm_roomba_ip_address
     mac: '34:ea:34:99:eb:42'
     type: rm
     switches:
