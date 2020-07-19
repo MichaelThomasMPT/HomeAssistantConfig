@@ -29,16 +29,27 @@ automation:
         event_type: deconz_event
         event_data: 
           id: master_door_switch
-          event: 1002
+          event: 1004 #double press
     action:
       - service: script.turn_off_whole_house 
       - service: light.turn_on
-        entity_id: light.master_bedroom
+        entity_id: light.master_bedroom_lamp
         data:
           brightness_pct: 1
       - delay:
           seconds: 20
       - service: light.turn_off
         entity_id: 
-          - light.master_bedroom
           - light.master_bedroom_lamp
+  - alias: Master Bedroom - Toggle WIR Light
+    trigger:
+      - platform: event
+        event_type: deconz_event
+        event_data: 
+          id: master_door_switch
+          event: 1002 #single press
+    action:
+      - service: light.toggle
+        entity_id: light.master_wir
+        data_template:
+          brightness_pct: '{% if now().hour >= 22 and now().hour < 4 %}20{% else %}100{% endif %}' #Dim light between 10pm-4am
