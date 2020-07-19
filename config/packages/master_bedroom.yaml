@@ -4,21 +4,21 @@ binary_sensor:
   - platform: threshold
     name: Ensuite Shower Above Humidity Threshold
     entity_id: sensor.ensuite_shower_humidity
-    upper: 90
+    upper: 92
   - platform: trend
     sensors:
       ensuite_shower_humidity_falling:
         entity_id: sensor.ensuite_shower_humidity
         sample_duration: 3600 #last 1 hour
-        invert: true
         min_gradient: -0.002 #Humidity is dropping fast enough
+        max_samples: 5
   - platform: template
     sensors:
       ensuite_shower:
         friendly_name: "Ensuite Shower"
         value_template: >- 
           {{ is_state('binary_sensor.ensuite_shower_above_humidity_threshold', 'on')
-             and is_state('binary_sensor.ensuite_shower_humidity_falling', 'on') }}
+             and is_state('binary_sensor.ensuite_shower_humidity_falling', 'off') }}
         device_class: power #makes the icon yellow when on
         icon_template: mdi:shower-head
 
