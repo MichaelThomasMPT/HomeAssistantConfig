@@ -101,7 +101,7 @@ views:
                   '--paper-item-icon-color': pink
                   bottom: 22%
                   font-weight: bold
-                  right: 28%
+                  right: 34%
                   transform: initial
                 type: state-icon
               - entity: device_tracker.ble_car_michael
@@ -109,7 +109,7 @@ views:
                   '--paper-item-icon-color': skyblue
                   bottom: 22%
                   font-weight: bold
-                  right: 20%
+                  right: 26%
                   transform: initial
                 type: state-icon
               - entity: >-
@@ -117,15 +117,23 @@ views:
                 style:
                   bottom: 20%
                   font-weight: bold
-                  right: 12%
+                  right: 18%
                   transform: initial
                 type: state-icon
               - entity: binary_sensor.garage_door_external
                 style:
                   bottom: 20%
-                  right: 5%
+                  right: 11%
                   transform: initial
                 type: state-icon
+                icon: 'mdi:door-closed-lock'
+              - entity: binary_sensor.garage_door_internal
+                style:
+                  bottom: 20%
+                  right: 4%
+                  transform: initial
+                type: state-icon
+                icon: 'mdi:door-closed'
               - entity: sensor.blank
                 hold-action: none
                 prefix: Garage
@@ -159,6 +167,98 @@ views:
             show_name: true
             show_state: true
             state_color: true
+            type: 'custom:fold-entity-row'
+        title: null
+        type: 'custom:vertical-stack-in-card'
+      - cards:
+          - elements:
+              - entity: sensor.master_bedroom_temperature
+                style:
+                  bottom: 20%
+                  font-weight: bold
+                  right: 18%
+                  transform: initial
+                type: state-label
+              - entity: sensor.master_bedroom_humidity
+                style:
+                  bottom: 20%
+                  right: 5%
+                  transform: initial
+                type: state-label
+              - entity: sensor.blank
+                hold-action: none
+                prefix: Master Bedroom
+                style:
+                  bottom: 20%
+                  font-size: 150%
+                  left: 5%
+                  transform: initial
+                tap-action: none
+                type: state-label
+            image: /local/header-image-dark.png
+            type: picture-elements
+          - entities:
+              - entity: light.master_bedroom_lamp
+                name: Lamp
+                toggle: true
+              - entity: light.master_wir
+                name: Walk-In Robe
+                toggle: true
+              - entity: switch.aircon_zone_master
+                hide_when_off: true
+                icon: 'mdi:air-filter'
+                name: Aircon Vent
+                toggle: true
+              - entity: media_player.master_bedroom_speaker
+                group: true
+                hide:
+                  controls: true
+                name: Bedroom Google Home
+              - entity: media_player.ensuite_google_home
+                group: true
+                hide:
+                  controls: true
+                name: Ensuite Google Home
+            head:
+              label: Room & Media
+              type: section
+            show_header_toggle: false
+            show_name: true
+            show_state: false
+            state_color: true
+            type: 'custom:fold-entity-row'
+          - entities:
+              - entity: script.aircon_warm_master
+                hold_action:
+                  action: none
+                icon: 'mdi:fire'
+                icon_height: 60px
+                name: Warm Bedroom
+                show_icon: true
+                show_name: true
+                tap_action:
+                  action: call-service
+                  service: script.turn_on
+                  service_data:
+                    entity_id: script.aircon_warm_master
+                type: button
+              - entity: script.aircon_fan_master
+                hold_action:
+                  action: none
+                icon: 'mdi:fan'
+                icon_height: 60px
+                name: Sleeping Fan
+                show_icon: true
+                show_name: true
+                tap_action:
+                  action: call-service
+                  service: script.turn_on
+                  service_data:
+                    entity_id: script.aircon_fan_master
+                type: button
+            head:
+              label: Presets
+              type: section
             type: 'custom:fold-entity-row'
         title: null
         type: 'custom:vertical-stack-in-card'
@@ -303,15 +403,22 @@ views:
                 style:
                   bottom: 20%
                   font-weight: bold
-                  right: 18%
+                  right: 24%
                   transform: initial
                 type: state-label
               - entity: sensor.living_room_humidity
                 style:
                   bottom: 20%
-                  right: 5%
+                  right: 11%
                   transform: initial
                 type: state-label
+              - entity: binary_sensor.back_door_glass
+                style:
+                  bottom: 20%
+                  right: 3%
+                  transform: initial
+                type: state-icon
+                icon: 'mdi:door-closed'
               - entity: sensor.blank
                 hold-action: none
                 prefix: Living Room
@@ -446,95 +553,6 @@ views:
             show_name: true
             show_state: false
             state_color: true
-            type: 'custom:fold-entity-row'
-        title: null
-        type: 'custom:vertical-stack-in-card'
-      - cards:
-          - elements:
-              - entity: sensor.master_bedroom_temperature
-                style:
-                  bottom: 20%
-                  font-weight: bold
-                  right: 18%
-                  transform: initial
-                type: state-label
-              - entity: sensor.master_bedroom_humidity
-                style:
-                  bottom: 20%
-                  right: 5%
-                  transform: initial
-                type: state-label
-              - entity: sensor.blank
-                hold-action: none
-                prefix: Master Bedroom
-                style:
-                  bottom: 20%
-                  font-size: 150%
-                  left: 5%
-                  transform: initial
-                tap-action: none
-                type: state-label
-            image: /local/header-image-dark.png
-            type: picture-elements
-          - entities:
-              - entity: light.master_bedroom_lamp
-                name: Lamp
-                toggle: true
-              - entity: switch.aircon_zone_master
-                hide_when_off: true
-                icon: 'mdi:air-filter'
-                name: Aircon Vent
-                toggle: true
-              - entity: media_player.master_bedroom_speaker
-                group: true
-                hide:
-                  controls: true
-                name: Bedroom Google Home
-              - entity: media_player.ensuite_google_home
-                group: true
-                hide:
-                  controls: true
-                name: Ensuite Google Home
-            head:
-              label: Room & Media
-              type: section
-            show_header_toggle: false
-            show_name: true
-            show_state: false
-            state_color: true
-            type: 'custom:fold-entity-row'
-          - entities:
-              - entity: script.aircon_warm_master
-                hold_action:
-                  action: none
-                icon: 'mdi:fire'
-                icon_height: 60px
-                name: Warm Bedroom
-                show_icon: true
-                show_name: true
-                tap_action:
-                  action: call-service
-                  service: script.turn_on
-                  service_data:
-                    entity_id: script.aircon_warm_master
-                type: button
-              - entity: script.aircon_fan_master
-                hold_action:
-                  action: none
-                icon: 'mdi:fan'
-                icon_height: 60px
-                name: Sleeping Fan
-                show_icon: true
-                show_name: true
-                tap_action:
-                  action: call-service
-                  service: script.turn_on
-                  service_data:
-                    entity_id: script.aircon_fan_master
-                type: button
-            head:
-              label: Presets
-              type: section
             type: 'custom:fold-entity-row'
         title: null
         type: 'custom:vertical-stack-in-card'
