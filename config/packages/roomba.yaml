@@ -36,6 +36,31 @@ script:
           entity_id: switch.roomba
         service: switch.turn_off
 
+automation:
+    #If roomba never returned to dock, notify me when I get home
+  - alias: Roomba - Alert When Roomba Doesn't Return To Dock
+    trigger:
+      - platform: time_pattern
+        minutes: '/10'
+      - platform: state
+        entity_id: person.michael
+        to: 'home'
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: person.michael
+          state: 'home'
+        - condition: state
+          entity_id: binary_sensor.roomba_contact_sensor
+          state: 'on' #roomba is not docked
+          for:
+            hours: 3
+    action:
+      - service: notify.pushbullet
+        data:
+          message: Roomba buddy didn't make it home. :(
+
 switch:
   - platform: broadlink
     host: !secret broadlink_rm_roomba_ip_address
@@ -46,3 +71,12 @@ switch:
         friendly_name: "Roomba"
         command_on: 'JgD8AGEgIV8gXyBfXCIhXyBfIAACoGIfIGAfYB9gXSIfYR5hHgACol8iHmIdYh1iXCIfYR5hHgACo2EgHmEfYR1iXCIeYh1iHQACq2AhH2EeYR9gXCMfYB9gHwAComAhH2AfYR9gXCIgYB9gHwACoWAiH2AfYB9gXCMfYB9hHgAComAhH2EeYR5hXCIgYCBfIAACoGEgIGAfYB9gXSIfYR5hHgACql8jHWIdYh1iXCMeYR5hHgACo18iHmEeYh1iXCIeYh1iHQACo18jHWIdYh5hXSIeYh1iHQACo18jHWIdYh1iXCIfYR5hHgACq18iHmEeYh1iXCIeYh1iHgANBQAAAAAAAAAAAAAAAA=='
         command_off: 'JgCQAGAhHmIfYB9gH2BdIh5iXAACbGAhHmIeYR5hH2BdIh5iXAACZGAhHmIeYR5hH2BdIh5iXAACZGEhH2AfYB9gIF9eISBgXgACYl8iIGAfYB9gH2BfICBgXgACamEhH2AfYB9gH2BfICBgXgACYmEgIGAfYCBfIF9cIx9hXAACZGAhHmIeYR5hH2BdIh5iXAANBQAAAAAAAAAA'
+
+sensor:
+  #Have a template sensor for hte front end to read whether the roomba is docked or not
+  - platform: template
+    sensors:
+      roomba_docked:
+        friendly_name: "Roomba"
+        value_template: >-
+          {% if states.binary_sensor.roomba_contact_sensor.state == 'on' %}Running{% else %}Docked{% endif %}

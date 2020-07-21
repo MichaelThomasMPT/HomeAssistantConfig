@@ -121,19 +121,19 @@ views:
                   transform: initial
                 type: state-icon
               - entity: binary_sensor.garage_door_external
+                icon: 'mdi:door-closed-lock'
                 style:
                   bottom: 20%
                   right: 11%
                   transform: initial
                 type: state-icon
-                icon: 'mdi:door-closed-lock'
               - entity: binary_sensor.garage_door_internal
+                icon: 'mdi:door-closed'
                 style:
                   bottom: 20%
                   right: 4%
                   transform: initial
                 type: state-icon
-                icon: 'mdi:door-closed'
               - entity: sensor.blank
                 hold-action: none
                 prefix: Garage
@@ -413,12 +413,12 @@ views:
                   transform: initial
                 type: state-label
               - entity: binary_sensor.back_door_glass
+                icon: 'mdi:door-closed'
                 style:
                   bottom: 20%
                   right: 3%
                   transform: initial
                 type: state-icon
-                icon: 'mdi:door-closed'
               - entity: sensor.blank
                 hold-action: none
                 prefix: Living Room
@@ -437,6 +437,9 @@ views:
                 icon: 'mdi:air-filter'
                 name: Aircon Vent
                 toggle: true
+              - entity: sensor.roomba_docked
+                icon: 'mdi:robot-vacuum'
+                name: Roomba
               - entity: script.roomba_clean
                 hold_action:
                   action: more-info
