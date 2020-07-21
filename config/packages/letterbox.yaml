@@ -10,7 +10,9 @@ automation:
   - alias: Letterbox - Notify If Post Delivered
     trigger:
       platform: state
-      entity_id: binary_sensor.letterbox_motion
+      entity_id: 
+        - binary_sensor.letterbox_motion
+        - binary_sensor.letterbox_door
       to: 'on'
     action:
       - service: notify.pushbullet
