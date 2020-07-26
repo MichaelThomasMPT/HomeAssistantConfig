@@ -172,6 +172,13 @@ views:
         type: 'custom:vertical-stack-in-card'
       - cards:
           - elements:
+              - entity: binary_sensor.ensuite_shower
+                style:
+                  bottom: 20%
+                  font-weight: bold
+                  right: 32%
+                  transform: initial
+                type: state-icon
               - entity: sensor.master_bedroom_temperature
                 style:
                   bottom: 20%

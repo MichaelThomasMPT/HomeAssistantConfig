@@ -68,6 +68,7 @@ views:
               - entity: light.scullery_light
               - entity: light.pantry_light
               - entity: light.master_bedroom_lamp
+              - entity: light.master_wir
             show_header_toggle: true
             title: Lights
             type: entities
@@ -1193,18 +1194,18 @@ views:
             type: picture
         title: Server Health Checks
         type: horizontal-stack
-      - type: 'custom:auto-entities'
-        card:
-          type: 'custom:battery-state-card'
+      - card:
           title: Low Batteries
+          type: 'custom:battery-state-card'
         filter:
-          include:
-            - attributes:
-                device_class: battery
           exclude:
             - state: '> 50'
             - state: Not Charging
             - state: charging
+          include:
+            - attributes:
+                device_class: battery
+        type: 'custom:auto-entities'
       - card:
           show_header_toggle: false
           title: Unavailable Devices
@@ -1278,11 +1279,6 @@ views:
             type: entity
         type: vertical-stack
       - entities:
-          - entity: sensor.archer_d5_bytes_sent
-          - entity: sensor.archer_d5_packets_sent
-        title: Secondary Router Traffic Results
-        type: glance
-      - entities:
           - entity: sensor.canon_ts3300_series
             name: Canon TS3300
           - entity: sensor.canon_ts3300_series_black
@@ -1292,13 +1288,25 @@ views:
         title: Printer
         type: glance
       - entities:
-          - entity: sensor.ensuite_shower_humidity
           - entity: binary_sensor.ensuite_shower
-          - entity: binary_sensor.ensuite_shower_humidity_falling
           - entity: binary_sensor.ensuite_shower_above_humidity_threshold
-        hours_to_show: 24
+          - entity: binary_sensor.ensuite_shower_humidity_falling
+          - entity: sensor.ensuite_shower_humidity
+        hours_to_show: 72
+        refresh_interval: 0
+        title: Shower Debugging
+        type: history-graph
+      - entities:
+          - entity: person.laura
+        hours_to_show: 2
         refresh_interval: 0
         type: history-graph
-        title: Shower Debugging
+      - entities:
+          - entity: binary_sensor.washing_machine_vibration
+          - entity: binary_sensor.washing_machine_door
+        hours_to_show: 6
+        refresh_interval: 0
+        title: Washing Machine Debugging
+        type: history-graph
     icon: 'mdi:battery-unknown'
     path: batteries

@@ -83,6 +83,4 @@ device_tracker:
   - platform: ping
     hosts:
       phone_ping_laura: !secret device_laura_phone_ip_address
-    consider_home: 600
-  - platform: bluetooth_le_tracker
-    track_new_devices: false
+    consider_home: 0:15  # 15 minutes
