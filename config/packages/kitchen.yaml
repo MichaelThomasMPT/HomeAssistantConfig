@@ -1,3 +1,12 @@
+sensor:
+  - platform: history_stats
+    name: Coffees Made Today
+    entity_id: binary_sensor.coffee_machine
+    state: 'off'
+    type: count
+    start: '{{ now().replace(hour=0, minute=0, second=0) }}'
+    end: '{{ now() }}'
+
 automation:
     #if coffee machine left open, send a push notification.
     - alias: Kitchen - Notify If Coffee Machine Closed for 5 Minutes
