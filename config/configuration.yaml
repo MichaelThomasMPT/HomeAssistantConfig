@@ -50,12 +50,6 @@ influxdb:
   tags_attributes:
     - friendly_name
 
-hue:
-  bridges:
-    - host: !secret hue_bridge_ip_address
-      allow_unreachable: true
-      allow_hue_groups: true
-
 # Aeotec Z-Wave Stick
 zwave:
   usb_path: /zwaveusbstick
