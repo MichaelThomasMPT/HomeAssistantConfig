@@ -568,6 +568,58 @@ views:
         type: 'custom:vertical-stack-in-card'
       - cards:
           - elements:
+              - entity: binary_sensor.coffee_machine
+                icon: 'mdi:coffee'
+                state_color: false
+                style:
+                  bottom: 20%
+                  font-weight: bold
+                  hs_color: white
+                  right: 10%
+                  transform: initial
+                type: state-icon
+              - entity: sensor.coffees_made_today
+                icon: 'mdi:coffee'
+                style:
+                  bottom: 20%
+                  font-weight: bold
+                  right: 5%
+                  transform: initial
+                type: state-label
+              - entity: sensor.blank
+                hold-action: none
+                prefix: Kitchen
+                style:
+                  bottom: 20%
+                  font-size: 150%
+                  left: 5%
+                  transform: initial
+                tap-action: none
+                type: state-label
+            image: /local/header-image-dark.png
+            type: picture-elements
+          - entities:
+              - entity: switch.aircon_zone_living
+                hide_when_off: true
+                icon: 'mdi:air-filter'
+                name: Aircon Vent
+                toggle: true
+              - entity: light.scullery_light
+                name: Scullery
+              - entity: light.pantry_light
+                name: Pantry
+              - entity: sensor.coffees_made_today
+                icon: 'mdi:coffee'
+                name: Coffees Made Today
+            head:
+              label: Details
+              type: section
+            show_header_toggle: false
+            type: 'custom:fold-entity-row'
+        title: null
+        type: 'custom:vertical-stack-in-card'
+      - cards:
+          - elements:
               - entity: sensor.bom_forecast_perth_weather_0
                 style:
                   bottom: 20%
@@ -848,58 +900,6 @@ views:
               label: Presets
               type: section
             title: Presets
-            type: 'custom:fold-entity-row'
-        title: null
-        type: 'custom:vertical-stack-in-card'
-      - cards:
-          - elements:
-              - entity: binary_sensor.coffee_machine
-                style:
-                  bottom: 20%
-                  font-weight: bold
-                  right: 10%
-                  transform: initial
-                  hs_color: white
-                icon: 'mdi:coffee'
-                type: state-icon
-                state_color: false
-              - entity: sensor.coffees_made_today
-                style:
-                  bottom: 20%
-                  font-weight: bold
-                  right: 5%
-                  transform: initial
-                icon: 'mdi:coffee'
-                type: state-label
-              - entity: sensor.blank
-                hold-action: none
-                prefix: Kitchen
-                style:
-                  bottom: 20%
-                  font-size: 150%
-                  left: 5%
-                  transform: initial
-                tap-action: none
-                type: state-label
-            image: /local/header-image-dark.png
-            type: picture-elements
-          - entities:
-              - entity: switch.aircon_zone_living
-                hide_when_off: true
-                icon: 'mdi:air-filter'
-                name: Aircon Vent
-                toggle: true
-              - entity: light.scullery_light
-                name: Scullery
-              - entity: light.pantry_light
-                name: Pantry
-              - entity: sensor.coffees_made_today
-                name: Coffees Made Today
-                icon: 'mdi:coffee'
-            head:
-              label: Details
-              type: section
-            show_header_toggle: false
             type: 'custom:fold-entity-row'
         title: null
         type: 'custom:vertical-stack-in-card'
