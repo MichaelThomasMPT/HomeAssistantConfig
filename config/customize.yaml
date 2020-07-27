@@ -30,3 +30,9 @@ device_tracker.ble_car_laura:
   templates:
     icon: 'if (state === ''home'') return ''mdi:car-connected''; else return ''mdi:car-off'';
       '
+
+binary_sensor.coffee_machine:
+  icon: mdi:coffee-maker
+sensor.coffees_made_today:
+  icon: mdi:coffee
+    
