@@ -1,0 +1,45 @@
+input_boolean:
+  guest_mode:
+    name: Guest Mode
+    icon: mdi:account-multiple-plus
+
+automation:
+  #When guests are staying over night, disable certain automations
+  - alias: Guests - Activate Guest Mode
+    trigger: 
+      - platform: state
+        entity_id: input_boolean.guest_mode
+        to: "on"
+    action:
+      - service: automation.turn_off
+        data:
+          entity_id: 
+            - automation.theatre_room_blinds_open_automatically
+            - automation.theatre_room_motion_turn_on_lights_when_motion_detected
+
+  #When guests go home, reactivate automations
+  - alias: Guests - Deactivate Guest Mode
+    trigger: 
+      - platform: state
+        entity_id: input_boolean.guest_mode
+        to: "off"
+    action:
+      - service: automation.turn_on
+        data:
+          entity_id: 
+            - automation.theatre_room_blinds_open_automatically
+            - automation.theatre_room_motion_turn_on_lights_when_motion_detected
+
+  #Once per day, ask if guest mode should be deactivated
+  - alias: Guests - Notification To Deactivate Guest Mode
+    trigger:
+      - platform: time
+        at: '12:00:00'
+    condition:
+      - condition: state
+        entity_id: input_boolean.guest_mode
+        state: "on"
+    action:
+      - service: notify.pushbullet
+        data:
+          message: Guest mode is on. Should it be turned off?

@@ -1243,6 +1243,7 @@ views:
             name: Take Bins Out Alerts
           - entity: automation.location_notify_when_someone_comes_home
             name: Notify When Someone Arrives Home (default off)
+          - entity: input_boolean.guest_mode
         show_header_toggle: false
         title: Temporarily Toggle Automations
         type: entities
