@@ -199,12 +199,40 @@ views:
             tap_action:
               action: toggle
             type: state-icon
+          - entity: light.master_bedroom_lamp
+            style:
+              left: 13.5%
+              top: 80.5%
+            tap_action:
+              action: toggle
+            type: state-icon
+          - entity: light.master_wir
+            style:
+              left: 20%
+              top: 75%
+            tap_action:
+              action: toggle
+            type: state-icon
+          - entity: light.scullery_light
+            style:
+              left: 21%
+              top: 43%
+            tap_action:
+              action: toggle
+            type: state-icon
+          - entity: light.pantry_light
+            style:
+              left: 32%
+              top: 43%
+            tap_action:
+              action: toggle
+            type: state-icon
           - entity: media_player.theatre_room_tv
             icon: 'mdi:television-play'
             style:
               '--paper-item-icon-color': white
               left: 54%
-              top: 41%
+              top: 39.5%
             type: state-icon
           - entity: media_player.living_room_chromecast
             icon: 'mdi:television-play'
@@ -217,7 +245,7 @@ views:
             style:
               '--paper-item-icon-color': white
               left: 17%
-              top: 14%
+              top: 11.5%
               transform: 'scale(1.5,1.5)'
             tap_action:
               action: toggle
@@ -257,7 +285,7 @@ views:
           - entity: switch.aircon_zone_bed23
             icon: 'mdi:air-filter'
             style:
-              left: 73%
+              left: 74%
               top: 18%
             tap_action:
               action: toggle
@@ -305,6 +333,63 @@ views:
             tap_action:
               action: toggle
             type: state-icon
+          - entity: sensor.coffees_made_today
+            icon: 'mdi:coffee-maker'
+            style:
+              left: 16%
+              top: 60.5%
+            type: state-icon
+            state_color: false
+          - entity: binary_sensor.michael_pc
+            style:
+              left: 79.5%
+              top: 12.5%
+            type: state-icon
+          - entity: sensor.canon_ts3300_series
+            style:
+              left: 67.5%
+              top: 15%
+            type: state-icon
+          - entity: binary_sensor.washing_machine_running
+            style:
+              left: 15%
+              top: 35%
+            type: state-icon
+          - entity: media_player.kitchen_google_home_hub
+            style:
+              left: 21.5%
+              top: 60.5%
+            type: state-icon
+          - entity: media_player.office_google_home
+            style:
+              left: 67.5%
+              top: 17.5%
+            type: state-icon
+          - entity: media_player.office_pc_speakers
+            style:
+              left: 79.5%
+              top: 15.5%
+            type: state-icon
+          - entity: media_player.master_bedroom_speaker
+            style:
+              left: 22.5%
+              top: 80%
+            type: state-icon
+          - entity: media_player.ensuite_google_home
+            style:
+              left: 16%
+              top: 70.5%
+            type: state-icon
+          - entity: media_player.theatre_room_google_home
+            style:
+              left: 54%
+              top: 42%
+            type: state-icon
+          - entity: binary_sensor.ensuite_shower
+            style:
+              left: 18.5%
+              top: 64.5%
+            type: state-icon
           - entity: binary_sensor.back_door_glass
             style:
               left: 47.5%
@@ -315,17 +400,41 @@ views:
               left: 7.5%
               top: 33.5%
             type: state-icon
+          - entity: binary_sensor.garage_door_internal
+            style:
+              left: 38%
+              top: 27.5%
+            type: state-icon
           - entity: sensor.front_door
             icon: 'mdi:door'
             style:
               left: 42.5%
               top: 18.5%
             type: state-icon
-          - entity: camera.front_door
-            icon: 'mdi:cctv'
+          - entity: sensor.front_door_last_ding
+            icon: 'mdi:doorbell-video'
             style:
               left: 38.5%
               top: 15.5%
+            type: state-icon
+          - entity: camera.garage
+            icon: 'mdi:cctv'
+            style:
+              left: 35%
+              top: 32%
+            type: state-icon
+          - entity: light.garage
+            style:
+              left: 21.5%
+              top: 23.5%
+            type: state-icon
+            tap_action:
+              action: toggle
+          - entity: camera.garage
+            icon: 'mdi:cctv'
+            style:
+              left: 35%
+              top: 32%
             type: state-icon
           - entity: alarm_control_panel.alarm_com
             icon: 'mdi:shield-home'

@@ -19,6 +19,8 @@ binary_sensor.letterbox_vibration:
   device_class: vibration
 binary_sensor.garage_door_external:
   device_class: door
+binary_sensor.garage_door_internal:
+  device_class: door
 binary_sensor.roomba_docked:
   device_class: battery_charging
 
@@ -27,7 +29,7 @@ device_tracker.ble_car_michael:
     icon: 'if (state === ''home'') return ''mdi:car-connected''; else return ''mdi:car-off'';
       '
 device_tracker.ble_car_laura:
-  templates:
+  templates: 
     icon: 'if (state === ''home'') return ''mdi:car-connected''; else return ''mdi:car-off'';
       '
 
