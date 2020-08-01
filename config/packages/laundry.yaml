@@ -1,0 +1,90 @@
+sensor:
+  - platform: template
+    sensors:
+      washing_machine_power_consumption:
+        friendly_name: "Washing Machine Power Consumption"
+        unit_of_measurement: "w"
+        value_template: "{{ state_attr('switch.washing_machine', 'current_power_w') }}"
+
+binary_sensor:
+  - platform: template
+    sensors:
+      #if power consumption is high enough, washing machine is running
+      washing_machine_running:
+        friendly_name: "Washing Machine Is Running"
+        value_template: "{{ states('sensor.washing_machine_power_consumption')|float > 5 }}"
+        delay_off:
+          minutes: 10 #Power consumption must be low for 10 minutes before considering the washing machine off
+
+input_boolean:
+  washing_machine_notify_michael:
+    name: Washing Machine - Notify Michael
+    icon: mdi:bell-ring
+  washing_machine_notify_laura:
+    name: Washing Machine - Notify Laura
+    icon: mdi:bell-ring
+
+automation:
+  - alias: Laundry -Turn On Washing Notifications For Michael
+    trigger:
+      - platform: event
+        event_type: deconz_event
+        event_data: 
+          id: washing_notifications_switch
+          event: 1002 #michael
+    action:
+      - service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.washing_machine_notify_michael
+  - alias: Laundry -Turn On Washing Notifications For Laura
+    trigger:
+      - platform: event
+        event_type: deconz_event
+        event_data: 
+          id: washing_notifications_switch
+          event: 2002 #laura
+    action:
+      - service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.washing_machine_notify_laura
+
+  #When laundy is done, notify whoever wants to be notified each hour until the door is opened. 
+  - alias: Laundry - Notify When Washing Machine Finished
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.washing_machine_running
+        from: 'on'
+        to: 'off'
+    mode: restart
+    action:
+      - repeat:
+          sequence:
+            - choose:
+                - conditions:
+                    - condition: state
+                      entity_id: input_boolean.washing_machine_notify_michael
+                      state: 'on'
+                  sequence: 
+                    - service: notify.pushbullet
+                      data:
+                        message: The washing machine has finished. 
+                - conditions:
+                    - condition: state
+                      entity_id: input_boolean.washing_machine_notify_laura
+                      state: 'on'
+                  sequence: 
+                    - service: notify.mobile_app_lauras_iphone
+                      data:
+                        message: The washing machine has finished. 
+            - delay:
+                minutes: 60
+          until: 
+            # Washing machine door was opened after the machine finished running. 
+            - condition: template
+              value_template: '{{ as_timestamp(states.binary_sensor.washing_machine_door.last_changed) > as_timestamp(states.binary_sensor.washing_machine_running.last_changed) }}'
+      - service: input_boolean.turn_off
+        data:
+          entity_id: 
+            - input_boolean.washing_machine_notify_michael
+            - input_boolean.washing_machine_notify_laura
+

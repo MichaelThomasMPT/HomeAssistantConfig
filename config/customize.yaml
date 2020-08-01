@@ -36,3 +36,7 @@ binary_sensor.coffee_machine:
 sensor.coffees_made_today:
   icon: mdi:coffee
     
+binary_sensor.washing_machine_running:
+  templates:
+    icon: "if (state === 'on') return 'mdi:washing-machine'; else return 'mdi:washing-machine-off';
+      "
