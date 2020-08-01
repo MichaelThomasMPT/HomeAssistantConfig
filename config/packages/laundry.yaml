@@ -68,6 +68,10 @@ automation:
                     - service: notify.mobile_app_michael_s_galaxy_s10
                       data:
                         message: The washing machine has finished. 
+                        data:
+                          actions:
+                            - action: "mute_washing_machine_notifications_until_home"
+                              title: "Mute Until I'm Home"
                 - conditions:
                     - condition: state
                       entity_id: input_boolean.washing_machine_notify_laura
@@ -88,3 +92,22 @@ automation:
             - input_boolean.washing_machine_notify_michael
             - input_boolean.washing_machine_notify_laura
 
+  #When "Mute Washing Machine Notifications" button on notification is pressed, do what it says!                 
+  - alias: Laundy - Pause Washing Machine Notifications Until Home
+    trigger:
+      platform: event
+      event_type: mobile_app_notification_action
+      event_data:
+        action: mute_washing_machine_notifications_until_home
+    condition:
+      - condition: state
+        entity_id: person.michael
+        state: 'not_home'
+    action:
+      - service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.washing_machine_notify_michael
+      - wait_template: "{{ is_state('person.michael', 'home') }}"
+      - service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.washing_machine_notify_michael
