@@ -52,4 +52,4 @@ automation:
       - service: light.toggle
         entity_id: light.master_wir
         data_template:
-          brightness_pct: '{% if now().hour >= 22 and now().hour < 4 %}20{% else %}100{% endif %}' #Dim light between 10pm-4am
+          brightness_pct: '{% if now().hour >= 22 or now().hour < 4 %}20{% else %}100{% endif %}' #Dim light between 10pm-4am
