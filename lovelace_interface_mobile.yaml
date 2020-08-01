@@ -620,6 +620,39 @@ views:
         type: 'custom:vertical-stack-in-card'
       - cards:
           - elements:
+              - entity: binary_sensor.washing_machine_running
+                state_color: true
+                style:
+                  bottom: 20%
+                  font-weight: bold
+                  hs_color: white
+                  right: 5%
+                  transform: initial
+                type: state-icon
+              - entity: sensor.blank
+                hold-action: none
+                prefix: Laundry
+                style:
+                  bottom: 20%
+                  font-size: 150%
+                  left: 5%
+                  transform: initial
+                tap-action: none
+                type: state-label
+            image: /local/header-image-dark.png
+            type: picture-elements
+          - entities:
+              - entity: input_boolean.washing_machine_notify_michael
+              - entity: input_boolean.washing_machine_notify_laura
+            head:
+              label: Notifications
+              type: section
+            show_header_toggle: false
+            type: 'custom:fold-entity-row'
+        title: null
+        type: 'custom:vertical-stack-in-card'
+      - cards:
+          - elements:
               - entity: sensor.bom_forecast_perth_weather_0
                 style:
                   bottom: 20%

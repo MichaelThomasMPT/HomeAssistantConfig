@@ -1244,6 +1244,8 @@ views:
           - entity: automation.location_notify_when_someone_comes_home
             name: Notify When Someone Arrives Home (default off)
           - entity: input_boolean.guest_mode
+          - entity: input_boolean.washing_machine_notify_michael
+          - entity: input_boolean.washing_machine_notify_laura
         show_header_toggle: false
         title: Temporarily Toggle Automations
         type: entities
@@ -1301,13 +1303,6 @@ views:
           - entity: person.laura
         hours_to_show: 2
         refresh_interval: 0
-        type: history-graph
-      - entities:
-          - entity: binary_sensor.washing_machine_vibration
-          - entity: binary_sensor.washing_machine_door
-        hours_to_show: 6
-        refresh_interval: 0
-        title: Washing Machine Debugging
         type: history-graph
     icon: 'mdi:battery-unknown'
     path: batteries
