@@ -52,7 +52,7 @@ automation:
         entity_id: binary_sensor.back_door_glass
         state: 'on'
     action:
-      - service: notify.pushbullet #notify Michael
+      - service: notify.mobile_app_michael_s_galaxy_s10 #notify Michael
         data:
           message: A door was left open when the house alarm was set.
 

@@ -37,7 +37,7 @@ automation:
   #     zone: zone.laura_s_work
   #     event: leave
   #   action:
-  #     - service: notify.pushbullet
+  #     - service: notify.mobile_app_michael_s_galaxy_s10
   #       data:
   #         message: Laura is leaving work.
 
@@ -55,7 +55,7 @@ automation:
         entity_id: binary_sensor.garage_door_internal
         to: "on"
     action:
-      - service: notify.pushbullet
+      - service: notify.mobile_app_michael_s_galaxy_s10
         data:
           message: Someone has come home.
       - service: automation.turn_off

@@ -40,6 +40,22 @@ automation:
         entity_id: input_boolean.guest_mode
         state: "on"
     action:
-      - service: notify.pushbullet
+      - service: notify.mobile_app_michael_s_galaxy_s10
         data:
           message: Guest mode is on. Should it be turned off?
+          data:
+            actions:
+              - action: "deactivate_guest_mode" 
+                title: "Deactive Guest Mode"
+
+  #When "Deactive Guest Mode" button on notification is pressed, do what it says!                 
+  - alias: Guests - Deactivate Guest Mode On Notification Button Pressed
+    trigger:
+      platform: event
+      event_type: mobile_app_notification_action
+      event_data:
+        action: deactivate_guest_mode
+    action:
+      - service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.guest_mode

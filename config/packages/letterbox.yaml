@@ -15,9 +15,13 @@ automation:
         - binary_sensor.letterbox_door
       to: 'on'
     action:
-      - service: notify.pushbullet
+      - service: notify.mobile_app_michael_s_galaxy_s10
         data:
-          message: You have mail! 
+          message: You have mail!
+          data:
+            actions:
+              - action: "mail_wasnt_delivered" 
+                title: "No, this was me."
       - service: var.set
         data:
           entity_id: var.mail_was_delivered_today
@@ -27,6 +31,18 @@ automation:
           entity_id: light.office_lamp
           brightness_pct: 30
           rgb_color: [253, 44, 255] 
+
+  #When "Mail Wasn't Delivered" button on notification is pressed, turn off the office lamp again. 
+  - alias: Guests - Deactivate Guest Mode On Notification Button Pressed
+    trigger:
+      platform: event
+      event_type: mobile_app_notification_action
+      event_data:
+        action: mail_wasnt_delivered
+    action:
+      - service: light.turn_off
+        data:
+          entity_id: light.office_lamp
 
  #At midnight, reset the mail_was_delivered_today var
   - alias: Letterbox - Reset Letterbox var

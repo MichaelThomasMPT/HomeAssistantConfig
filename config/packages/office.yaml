@@ -34,7 +34,7 @@ automation:
         data:
           content: Black ink (PG-645 or PG-645XL)
           project: Groceries List
-      - service: notify.pushbullet
+      - service: notify.mobile_app_michael_s_galaxy_s10
         data:
           message: Black printer ink is running low and has been added to your shopping list.
   - alias: Office - When Colour Ink Low, Add To List
@@ -47,6 +47,6 @@ automation:
         data:
           content: Colour ink (PG-646 or PG-646XL)
           project: Groceries List
-      - service: notify.pushbullet
+      - service: notify.mobile_app_michael_s_galaxy_s10
         data:
           message: Colour printer ink is running low and has been added to your shopping list.

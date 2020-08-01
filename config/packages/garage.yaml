@@ -67,9 +67,38 @@ automation:
           for:
             minutes: 5
     action:
-      - service: notify.pushbullet
+      - service: notify.mobile_app_michael_s_galaxy_s10
         data:
           message: Garage door was left open.
+          data:
+            image: /api/camera_proxy/camera.garage
+            actions:
+              - action: "close_garage"
+                title: "Close Garage Door"
+              - action: "stop_garage_notifications"
+                title: "Stop Notifications"
+
+  #When "Close Garage Door" button on notification is pressed, do what it says!                 
+  - alias: Garage - Close the garage when notification action is tapped
+    trigger:
+      platform: event
+      event_type: mobile_app_notification_action
+      event_data:
+        action: close_garage
+    action:
+      service: cover.close_cover
+      entity_id: cover.aeon_labs_zw062_garage_door_controller_barrier_state_label
+
+  #When "Stop Garage Door Notifications" button on notification is pressed, do what it says!                 
+  - alias: Garage - Stop garage door notifications when notification action is tapped
+    trigger:
+      platform: event
+      event_type: mobile_app_notification_action
+      event_data:
+        action: stop_garage_notifications
+    action:
+      service: automation.turn_off
+      entity_id: automation.garage_notify_if_garage_door_left_open_for_5_minutes
 
   #In case I've manually disabled the garage door alerting notification, re-enable it when the garage door closes
   - alias: Garage - Activate Garage Door Alert Automation When Garage Door Closed
@@ -96,17 +125,18 @@ automation:
           for:
             minutes: 5
     action:
-      - service: notify.pushbullet
+      - service: notify.mobile_app_michael_s_galaxy_s10
         data:
           message: Garage door cannot be reached.
+          data:
+            image: /api/camera_proxy/camera.garage
           
   #if not closing garage when leaving home, send a notification. 
   - alias: Garage - Notify If Garage Door Left Open When Leaving Home
     trigger:
-      platform: zone
-      entity_id: device_tracker.michael_michaelgalaxys10_2
-      zone: zone.home
-      event: leave
+      - platform: state
+        entity_id: person.michael
+        to: 'not_home'
     condition:
       condition: or
       conditions:
@@ -114,9 +144,14 @@ automation:
           entity_id: cover.aeon_labs_zw062_garage_door_controller_barrier_state_label
           state: 'open'
     action:
-      - service: notify.pushbullet
+      - service: notify.mobile_app_michael_s_galaxy_s10
         data:
           message: Garage door was left open.
+          data:
+            image: /api/camera_proxy/camera.garage
+            actions:
+              - action: "close_garage"
+                title: "Close Garage Door"
 
   - alias: Front Hall - Turn On Hallway Light If Garage Opened After Sunset
     trigger:

@@ -72,6 +72,6 @@ automation:
         - condition: template
           value_template: '{{ (states.var.bins_were_moved_today.state) == "False" }}'
     action:
-      - service: notify.pushbullet
+      - service: notify.mobile_app_michael_s_galaxy_s10
         data:
           message: Don't forget to take the bins out!

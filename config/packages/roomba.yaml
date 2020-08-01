@@ -57,7 +57,7 @@ automation:
           for:
             hours: 3
     action:
-      - service: notify.pushbullet
+      - service: notify.mobile_app_michael_s_galaxy_s10
         data:
           message: Roomba buddy didn't make it home. :(
 
