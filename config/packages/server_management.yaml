@@ -1,0 +1,11 @@
+automation:
+  #if garage door left open, send a push notification.
+  - alias: Server Management - Notify If Server Cupboard Temperature Too Hot
+    trigger:
+      - platform: numeric_state
+        entity_id: sensor.server_cupboard_temperature
+        above: 40
+    action:
+      - service: notify.mobile_app_michael_s_galaxy_s10
+        data:
+          message: "WARNING: The server cupboard has reached 40°C." #TODO Include server internal temps here too.
