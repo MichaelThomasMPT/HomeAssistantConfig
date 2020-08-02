@@ -72,6 +72,8 @@ automation:
                           actions:
                             - action: "mute_washing_machine_notifications_until_home"
                               title: "Mute Until I'm Home"
+                            - action: "mute_washing_machine_notifications_until_morning"
+                              title: "Mute Until Morning"
                 - conditions:
                     - condition: state
                       entity_id: input_boolean.washing_machine_notify_laura
@@ -108,6 +110,20 @@ automation:
         data:
           entity_id: input_boolean.washing_machine_notify_michael
       - wait_template: "{{ is_state('person.michael', 'home') }}"
+      - service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.washing_machine_notify_michael               
+  - alias: Laundy - Pause Washing Machine Notifications Until Morning
+    trigger:
+      platform: event
+      event_type: mobile_app_notification_action
+      event_data:
+        action: mute_washing_machine_notifications_until_morning
+    action:
+      - service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.washing_machine_notify_michael
+      - wait_template: "{{ now().hour == 7 }}" #Restart notifications at 7am 
       - service: input_boolean.turn_on
         data:
           entity_id: input_boolean.washing_machine_notify_michael
