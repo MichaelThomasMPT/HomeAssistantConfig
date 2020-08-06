@@ -49,7 +49,7 @@ automation:
         entity_id: cover.aeon_labs_zw062_garage_door_controller_barrier_state_label
         to: "open"
       - platform: state
-        entity_id: sensor.front_door
+        entity_id: sensor.alarmdotcom_front_door
         to: "Open"
       - platform: state
         entity_id: binary_sensor.garage_door_internal

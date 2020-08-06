@@ -122,7 +122,7 @@ views:
             type: alarm-panel
           - cards:
               - entities:
-                  - entity: sensor.front_door
+                  - entity: binary_sensor.front_door
                     icon: 'mdi:door'
                   - entity: sensor.front_door_last_ding
                     icon: 'mdi:bell-ring'
@@ -335,11 +335,11 @@ views:
             type: state-icon
           - entity: sensor.coffees_made_today
             icon: 'mdi:coffee-maker'
+            state_color: false
             style:
               left: 16%
               top: 60.5%
             type: state-icon
-            state_color: false
           - entity: binary_sensor.michael_pc
             style:
               left: 79.5%
@@ -405,7 +405,7 @@ views:
               left: 38%
               top: 27.5%
             type: state-icon
-          - entity: sensor.front_door
+          - entity: binary_sensor.front_door
             icon: 'mdi:door'
             style:
               left: 42.5%
@@ -427,9 +427,9 @@ views:
             style:
               left: 21.5%
               top: 23.5%
-            type: state-icon
             tap_action:
               action: toggle
+            type: state-icon
           - entity: camera.garage
             icon: 'mdi:cctv'
             style:

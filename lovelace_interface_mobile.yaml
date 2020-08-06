@@ -33,7 +33,7 @@ views:
             type: picture-elements
           - columns: 3
             entities:
-              - entity: sensor.front_door
+              - entity: binary_sensor.front_door
                 icon: 'mdi:door'
               - entity: binary_sensor.back_door_glass
               - entity: binary_sensor.back_door_flyscreen
@@ -52,7 +52,7 @@ views:
         type: 'custom:vertical-stack-in-card'
       - cards:
           - elements:
-              - entity: sensor.front_door
+              - entity: binary_sensor.front_door
                 icon: 'mdi:door'
                 style:
                   bottom: 20%

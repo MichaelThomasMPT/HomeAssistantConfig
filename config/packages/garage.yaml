@@ -179,7 +179,7 @@ automation:
   - alias: Front Hall - Turn On Hallway Light If Front Door Opened After Sunset
     trigger:
       platform: state
-      entity_id: sensor.front_door
+      entity_id: sensor.alarmdotcom_front_door
     condition:
       condition: and
       conditions:
@@ -187,7 +187,7 @@ automation:
           entity_id: sun.sun
           state: 'below_horizon'
         - condition: state
-          entity_id: sensor.front_door
+          entity_id: sensor.alarmdotcom_front_door
           state: 'Open'
     action:
       - service: light.turn_on
