@@ -1412,6 +1412,18 @@ views:
           - entity: person.laura
         hours_to_show: 2
         refresh_interval: 0
+        title: Laura
         type: history-graph
+      - cards:
+          - entities:
+              - entity: sensor.server_cupboard_temperature
+            hours_to_show: 24
+            refresh_interval: 0
+            title: Server Temperature
+            type: history-graph
+          - entities:
+              - entity: sensor.server_cupboard_temperature
+            type: glance
+        type: 'custom:vertical-stack-in-card'
     icon: 'mdi:battery-unknown'
     path: batteries
