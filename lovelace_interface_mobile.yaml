@@ -37,6 +37,7 @@ views:
                 icon: 'mdi:door'
               - entity: binary_sensor.back_door_glass
               - entity: binary_sensor.back_door_flyscreen
+              - entity: binary_sensor.laundry_door
               - entity: sensor.front_door_last_ding
                 icon: 'mdi:bell-ring'
                 name: Doorbell Ring
@@ -53,7 +54,6 @@ views:
       - cards:
           - elements:
               - entity: binary_sensor.front_door
-                icon: 'mdi:door'
                 style:
                   bottom: 20%
                   font-weight: bold
@@ -626,6 +626,14 @@ views:
                   bottom: 20%
                   font-weight: bold
                   hs_color: white
+                  right: 13%
+                  transform: initial
+                type: state-icon
+              - entity: binary_sensor.laundry_door
+                state_color: true
+                style:
+                  bottom: 20%
+                  font-weight: bold
                   right: 5%
                   transform: initial
                 type: state-icon

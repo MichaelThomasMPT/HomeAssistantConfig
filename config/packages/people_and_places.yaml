@@ -52,7 +52,9 @@ automation:
         entity_id: sensor.alarmdotcom_front_door
         to: "Open"
       - platform: state
-        entity_id: binary_sensor.garage_door_internal
+        entity_id: 
+          - binary_sensor.garage_door_internal
+          - binary_sensor.front_door
         to: "on"
     action:
       - service: notify.mobile_app_michael_s_galaxy_s10

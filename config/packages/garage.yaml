@@ -4,10 +4,9 @@ automation:
   - alias: Garage - Turn On Lights When Door Opens
     trigger:
       - platform: state
-        entity_id: binary_sensor.garage_door_external
-        to: "on"
-      - platform: state
-        entity_id: binary_sensor.garage_door_internal
+        entity_id: 
+          - binary_sensor.garage_door_external
+          - binary_sensor.garage_door_internal
         to: "on"
       - platform: state
         entity_id: cover.aeon_labs_zw062_garage_door_controller_barrier_state_label
@@ -26,10 +25,9 @@ automation:
       - platform: time_pattern
         minutes: '/30' #run every 30 minutes
       - platform: state
-        entity_id: binary_sensor.garage_door_external
-        to: "off"
-      - platform: state
-        entity_id: binary_sensor.garage_door_internal
+        entity_id: 
+          - binary_sensor.garage_door_external
+          - binary_sensor.garage_door_internal
         to: "off"
       - platform: state
         entity_id: cover.aeon_labs_zw062_garage_door_controller_barrier_state_label
@@ -153,42 +151,26 @@ automation:
               - action: "close_garage"
                 title: "Close Garage Door"
 
-  - alias: Front Hall - Turn On Hallway Light If Garage Opened After Sunset
+  - alias: Front Hall - Turn On Hallway Light If Garage or Front Door Opened After Sunset
     trigger:
-      platform: state
-      entity_id: cover.aeon_labs_zw062_garage_door_controller_barrier_state_label
+      - platform: state
+        entity_id: cover.aeon_labs_zw062_garage_door_controller_barrier_state_label
+        to: 'open'
+      - platform: state
+        entity_id: cover.aeon_labs_zw062_garage_door_controller_barrier_state_label
+        to: 'opening'
+      - platform: state
+        entity_id: sensor.alarmdotcom_front_door
+        to: 'Open'
+      - platform: state
+        entity_id: binary_sensor.front_door
+        to: 'on'
     condition:
       condition: and
       conditions:
         - condition: state  # from sunset until sunrise
           entity_id: sun.sun
           state: 'below_horizon'
-        - condition: or
-          conditions:
-            - condition: state
-              entity_id: cover.aeon_labs_zw062_garage_door_controller_barrier_state_label
-              state: 'open'
-            - condition: state
-              entity_id: cover.aeon_labs_zw062_garage_door_controller_barrier_state_label
-              state: 'opening'
-    action:
-      - service: light.turn_on
-        entity_id:
-          - light.entry_hall_lights
-
-  - alias: Front Hall - Turn On Hallway Light If Front Door Opened After Sunset
-    trigger:
-      platform: state
-      entity_id: sensor.alarmdotcom_front_door
-    condition:
-      condition: and
-      conditions:
-        - condition: state  # from sunset until sunrise
-          entity_id: sun.sun
-          state: 'below_horizon'
-        - condition: state
-          entity_id: sensor.alarmdotcom_front_door
-          state: 'Open'
     action:
       - service: light.turn_on
         entity_id:

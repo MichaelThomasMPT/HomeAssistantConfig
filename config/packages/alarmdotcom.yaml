@@ -45,11 +45,19 @@ automation:
       entity_id: alarm_control_panel.alarm_com
       to: 'armed_away'
     condition:
-      - condition: state
-        entity_id: binary_sensor.back_door_glass
-        state: 'on'
+      condition: or
+      conditions:
+        - condition: state
+          entity_id: binary_sensor.back_door_glass
+          state: 'on'
+        - condition: state
+          entity_id: binary_sensor.laundry_door
+          state: 'on'
+        - condition: state
+          entity_id: bindary_sensor.front_door
+          state: 'on'
     action:
-      - service: notify.mobile_app_michael_s_galaxy_s10 #notify Michael
+      - service: notify.mobile_app_michael_s_galaxy_s10
         data:
           message: A door was left open when the house alarm was set.
 

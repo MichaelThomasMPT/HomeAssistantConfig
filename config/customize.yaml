@@ -15,6 +15,10 @@ binary_sensor.back_door_glass:
   device_class: door
 binary_sensor.back_door_flyscreen:
   device_class: door
+binary_sensor.laundry_door:
+  device_class: door
+binary_sensor.front_door:
+  device_class: door
 binary_sensor.letterbox_vibration:
   device_class: vibration
 binary_sensor.garage_door_external:
