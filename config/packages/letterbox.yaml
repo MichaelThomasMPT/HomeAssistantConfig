@@ -14,6 +14,7 @@ automation:
         - binary_sensor.letterbox_motion
         - binary_sensor.letterbox_door
       to: 'on'
+    mode: single #for cooldown
     action:
       - service: notify.mobile_app_michael_s_galaxy_s10
         data:
@@ -31,6 +32,8 @@ automation:
           entity_id: light.office_lamp
           brightness_pct: 30
           rgb_color: [253, 44, 255] 
+      - delay:
+          minutes: 5 #minimum 5 minute cooldown between notifications
 
   #When "Mail Wasn't Delivered" button on notification is pressed, turn off the office lamp again. 
   - alias: Guests - Deactivate Guest Mode On Notification Button Pressed
