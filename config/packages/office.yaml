@@ -24,11 +24,15 @@ automation:
       - service: light.turn_off
         entity_id:
           - light.entry_hall_lights
+
   - alias: Office - When Black Ink Low, Add To List
     trigger:
       platform: numeric_state
       entity_id: sensor.canon_ts3300_series_black
       below: 20
+    condition:
+      - condition: template #Only add it to the shopping list once
+        value_template: "{{ 'Black ink (PG-645 or PG-645XL)' not in state_attr('calendar.groceries_list', 'all_tasks') }}"
     action:
       - service: todoist.new_task
         data:
@@ -37,11 +41,15 @@ automation:
       - service: notify.mobile_app_michael_s_galaxy_s10
         data:
           message: Black printer ink is running low and has been added to your shopping list.
+
   - alias: Office - When Colour Ink Low, Add To List
     trigger:
       platform: numeric_state
       entity_id: sensor.canon_ts3300_series_color
       below: 20
+    condition:
+      - condition: template #Only add it to the shopping list once
+        value_template: "{{ 'Colour ink (PG-646 or PG-646XL)' not in state_attr('calendar.groceries_list', 'all_tasks') }}"
     action:
       - service: todoist.new_task
         data:
