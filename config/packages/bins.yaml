@@ -48,21 +48,15 @@ automation:
   - alias: Bins - Notify If Bins Not Taken Out
     trigger:
       - platform: time
-        at: '18:30:00'
-      - platform: time
-        at: '19:30:00'
-      - platform: time
-        at: '20:30:00'
-      - platform: time
-        at: '21:00:00'
-      - platform: time
-        at: '21:30:00'
-      - platform: time
-        at: '22:00:00'
-      - platform: time
-        at: '22:30:00'
-      - platform: time
-        at: '23:00:00'
+        at: 
+          - '18:30:00'
+          - '19:30:00'
+          - '20:30:00'
+          - '21:00:00'
+          - '21:30:00'
+          - '22:00:00'
+          - '22:30:00'
+          - '23:00:00'
     condition:
       condition: and
       conditions:
