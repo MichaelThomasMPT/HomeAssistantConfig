@@ -224,7 +224,7 @@ automation:
           - fri
       - condition: numeric_state
         entity_id: sensor.master_bedroom_temperature
-        below: '15'
+        below: '16.5'
         value_template: '{{ state.attributes.temperature }}'
     action:
       - service: script.aircon_warm_master
