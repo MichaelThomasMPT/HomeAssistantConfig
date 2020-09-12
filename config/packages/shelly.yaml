@@ -1,0 +1,18 @@
+shelly:
+    discovery: true  #add all devices (default)
+    sensors: 
+      - all
+    devices:
+      - id: "D8BFC019B9FE"
+        light_switch: true
+        entity_id: front_porch_light
+        name: Front Porch Light
+      - id: "D8BFC019BFAE"
+        light_switch: true 
+        entity_id: kitchen_ceiling_light
+        name: Kitchen Ceiling Light
+      - id: "D8BFC01A1071"
+        light_switch: true 
+        entity_id: ensuite_light
+        name: Ensuite Light
+      

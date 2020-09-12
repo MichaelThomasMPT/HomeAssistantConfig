@@ -66,3 +66,9 @@ panel_iframe:
     url: 'http://192.168.1.111:1234'
     icon: mdi:cards
     require_admin: false
+panel_custom:
+  - name: zwavegraph2 #graph of the zwave network
+    sidebar_title: Z-Wave Graph
+    sidebar_icon: mdi:access-point-network
+    url_path: zwave
+    require_admin: true

@@ -73,8 +73,12 @@ views:
             image: /local/header-image-dark.png
             type: picture-elements
           - entities:
+              - entity: light.shelly_front_porch_light
+                name: Front Porch
               - entity: light.entry_hall_lights
-                name: Entry Hall Lights
+                name: Entry Hall
+              - entity: light.side_hall
+                name: Side Hall
             head:
               label: Lights
               type: section
@@ -205,11 +209,20 @@ views:
             image: /local/header-image-dark.png
             type: picture-elements
           - entities:
+              - entity: light.master_bedroom_ceiling
+                name: Bedroom
+                toggle: true
               - entity: light.master_bedroom_lamp
                 name: Lamp
                 toggle: true
               - entity: light.master_wir
                 name: Walk-In Robe
+                toggle: true
+              - entity: light.shelly_ensuite_light
+                name: Ensuite
+                toggle: true
+              - entity: light.ensuite_fan
+                name: Ensuite Fan
                 toggle: true
               - entity: switch.aircon_zone_master
                 hide_when_off: true
@@ -439,6 +452,18 @@ views:
             image: /local/header-image-dark.png
             type: picture-elements
           - entities:
+              - entity: light.living_room
+                name: Living Room
+                toggle: true
+              - entity: light.dining_room
+                name: Dining Room
+                toggle: true
+              - entity: light.shelly_kitchen_ceiling_light
+                name: Kitchen Ceiling
+                toggle: true
+              - entity: light.kitchen_island
+                name: Kitchen Island
+                toggle: true
               - entity: switch.aircon_zone_living
                 hide_when_off: true
                 icon: 'mdi:air-filter'
@@ -504,8 +529,17 @@ views:
         type: 'custom:vertical-stack-in-card'
       - cards:
           - elements:
+              - entity: binary_sensor.laura_pc
+                style:
+                  '--paper-item-icon-color': pink
+                  bottom: 20%
+                  font-weight: bold
+                  right: 39%
+                  transform: initial
+                type: state-icon
               - entity: binary_sensor.michael_pc
                 style:
+                  '--paper-item-icon-color': skyblue
                   bottom: 20%
                   font-weight: bold
                   right: 32%
@@ -604,10 +638,22 @@ views:
                 icon: 'mdi:air-filter'
                 name: Aircon Vent
                 toggle: true
+              - entity: light.shelly_kitchen_ceiling_light
+                name: Kitchen Ceiling
+                toggle: true
+              - entity: light.kitchen_island
+                name: Kitchen Island
+                toggle: true
               - entity: light.scullery_light
                 name: Scullery
               - entity: light.pantry_light
                 name: Pantry
+              - entity: light.living_room
+                name: Living Room
+                toggle: true
+              - entity: light.dining_room
+                name: Dining Room
+                toggle: true
               - entity: sensor.coffees_made_today
                 icon: 'mdi:coffee'
                 name: Coffees Made Today
@@ -669,7 +715,7 @@ views:
                 type: state-label
               - entity: sensor.blank
                 hold-action: none
-                prefix: Weather
+                prefix: Outdoors
                 style:
                   bottom: 20%
                   font-size: 150%
@@ -694,6 +740,14 @@ views:
                 name: Electricity Generated Today
             head:
               label: Solar Panels
+              type: section
+            type: 'custom:fold-entity-row'
+          - entities:
+              - entity: light.alfresco_lights
+              - entity: light.garden_flood_lights
+              - entity: binary_sensor.back_door_glass
+            head:
+              label: Back Garden
               type: section
             type: 'custom:fold-entity-row'
         title: null

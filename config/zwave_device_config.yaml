@@ -1,0 +1,27 @@
+light.fibaro_system_fgd212_dimmer_2_level_3:
+  ignored: true
+  polling_intensity: 0
+light.fibaro_system_fgd212_dimmer_2_level_5:
+  ignored: true
+  polling_intensity: 0
+light.fibaro_system_fgd212_dimmer_2_level_8:
+  ignored: true
+  polling_intensity: 0
+light.fibaro_system_fgd212_dimmer_2_level:
+  ignored: true
+  polling_intensity: 0
+light.fibaro_system_fgd212_dimmer_2_level_7:
+  ignored: true
+  polling_intensity: 0
+light.fibaro_system_fgd212_dimmer_2_level_6:
+  ignored: true
+  polling_intensity: 0
+light.fibaro_system_fgd212_dimmer_2_level_11:
+  ignored: true
+  polling_intensity: 0
+light.fibaro_system_fgd212_dimmer_2_level_2:
+  ignored: true
+  polling_intensity: 0
+light.fibaro_system_fgd212_dimmer_2_level_10:
+  ignored: true
+  polling_intensity: 0
