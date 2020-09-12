@@ -7,6 +7,9 @@ homeassistant:
   customize: !include customize.yaml
   # Package config: https://www.home-assistant.io/docs/configuration/packages/#create-a-packages-folder
   packages: !include_dir_named packages 
+  # URLs to access Home Assistant
+  external_url: !secret home_assistant_external_url
+  internal_url: !secret home_assistant_internal_url
 
 # Configure a default setup of Home Assistant (frontend, api, etc)
 default_config:
