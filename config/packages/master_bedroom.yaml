@@ -22,6 +22,28 @@ binary_sensor:
         device_class: power #makes the icon yellow when on
         icon_template: mdi:shower-head
 
+switch: 
+  #The ensuite fan is shown as a light in Home Assistant - this converts it to a switch.
+  - platform: template
+    switches:
+      ensuite_fan:
+        value_template: "{{ is_state('light.ensuite_fan', 'on') }}"
+        icon_template: >-
+          {% if is_state('light.ensuite_fan', 'on') %}
+          mdi:fan
+          {% else %}
+          mdi:fan-off
+          {% endif %}
+        turn_on:
+          service: light.turn_on
+          data:
+            entity_id: light.ensuite_fan
+            brightness_pct: 100
+        turn_off:
+          service: light.turn_off
+          data:
+            entity_id: light.ensuite_fan
+
 automation:
   - alias: Master Bedroom - Turn Off Everything When Going To Bed
     trigger:
@@ -53,3 +75,21 @@ automation:
         entity_id: light.master_wir
         data_template:
           brightness_pct: '{% if now().hour >= 22 or now().hour < 4 %}20{% else %}100{% endif %}' #Dim light between 10pm-4am
+  - alias: Ensuite - Turn On Fan When Shower Running
+    trigger:
+      platform: state
+      entity_id: binary_sensor.ensuite_shower
+      to: 'on'
+    action:
+      - service: switch.turn_on
+        entity_id: switch.ensuite_fan
+  - alias: Ensuite - Turn Off Fan When Shower Stopped
+    trigger:
+      platform: state
+      entity_id: binary_sensor.ensuite_shower
+      to: 'off'
+      for:
+        minutes: 10
+    action:
+      - service: switch.turn_off
+        entity_id: switch.ensuite_fan
