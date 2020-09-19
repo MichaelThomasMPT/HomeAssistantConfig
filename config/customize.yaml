@@ -11,6 +11,8 @@ sensor.away_from_home_state_validity:
 
 binary_sensor.michael_pc:
   icon: mdi:desktop-tower-monitor
+binary_sensor.laura_pc:
+  icon: mdi:desktop-tower-monitor
 binary_sensor.back_door_glass:
   device_class: door
 binary_sensor.back_door_flyscreen:
@@ -33,7 +35,3 @@ binary_sensor.coffee_machine:
 sensor.coffees_made_today:
   icon: mdi:coffee
     
-binary_sensor.washing_machine_running:
-  templates:
-    icon: "if (state === 'on') return 'mdi:washing-machine'; else return 'mdi:washing-machine-off';
-      "

@@ -15,6 +15,12 @@ binary_sensor:
         value_template: "{{ states('sensor.washing_machine_power_consumption')|float > 5 }}"
         delay_off:
           minutes: 10 #Power consumption must be low for 10 minutes before considering the washing machine off
+        icon_template: >-
+          {% if is_state("binary_sensor.washing_machine_running", "on") %} 
+            mdi:washing-machine
+          {% else %}
+            mdi:washing-machine-off
+          {% endif %}
 
 input_boolean:
   washing_machine_notify_michael:
