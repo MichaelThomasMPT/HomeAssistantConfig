@@ -6,10 +6,6 @@ weather:
 sun:
 
 sensor:
-  # Weather prediction
-  - platform: yr
-    name: Weather
-
   # BOM Weather Sensor
   - platform: bom_forecast
     product_id: IDW12300

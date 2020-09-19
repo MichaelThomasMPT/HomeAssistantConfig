@@ -1,10 +1,13 @@
 title: The Treehouse
 views:
-  - badges:
-      - person.michael
-      - person.laura
-      - sensor.weather_symbol
-      - sun.sun
+  - icon: 'mdi:home'
+    path: default_view
+    title: Home
+    badges:
+      - entity: person.michael
+      - entity: person.laura
+      - entity: weather.treeby_house
+      - entity: sun.sun
     cards:
       - entity: weather.treeby_house
         name: Treeby
@@ -151,9 +154,6 @@ views:
             type: 'custom:flex-table-card'
         title: Shopping Lists
         type: 'custom:vertical-stack-in-card'
-    icon: 'mdi:home'
-    path: default_view
-    title: Home
   - badges: []
     cards:
       - elements:
