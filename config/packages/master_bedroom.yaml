@@ -55,14 +55,14 @@ automation:
     action:
       - service: script.turn_off_whole_house 
       - service: light.turn_on
-        entity_id: light.master_bedroom_lamp
+        entity_id: light.master_bedroom_ceiling
         data:
-          brightness_pct: 1
+          brightness_pct: 5
       - delay:
           seconds: 20
       - service: light.turn_off
         entity_id: 
-          - light.master_bedroom_lamp
+          - light.master_bedroom_ceiling
   - alias: Master Bedroom - Toggle WIR Light
     trigger:
       - platform: event
