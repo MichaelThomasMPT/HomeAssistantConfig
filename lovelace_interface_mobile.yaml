@@ -205,7 +205,7 @@ views:
               - entity: light.shelly_ensuite_light
                 name: Ensuite
                 toggle: true
-              - entity: light.ensuite_fan
+              - entity: switch.ensuite_fan
                 name: Ensuite Fan
                 toggle: true
               - entity: switch.aircon_zone_master
