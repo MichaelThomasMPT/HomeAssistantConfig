@@ -2,16 +2,11 @@ script:
   #Trigger the Hue lights scene for movie watching
   set_movie_lighting:
     sequence:
+    - service: script.turn_off_all_lights 
     - service: hue.hue_activate_scene
       data: 
         group_name: "Theatre Room"
         scene_name: "Movie Watching"
-    - service: light.turn_off
-      data:
-        entity_id: light.entry_hall_lights
-    - service: light.turn_off
-      data: 
-        entity_id: light.theatre_room_ceiling
     alias: Movie Lighting Scene
 
   #Trigger the Hue lights scene for movie watching
