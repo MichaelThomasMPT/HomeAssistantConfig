@@ -21,4 +21,4 @@ automation:
     action:
       - service: light.turn_on
         entity_id:
-          - light.shelly_front_porch_light
+          - light.front_porch_light

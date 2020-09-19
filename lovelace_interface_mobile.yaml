@@ -73,7 +73,7 @@ views:
             image: /local/header-image-dark.png
             type: picture-elements
           - entities:
-              - entity: light.shelly_front_porch_light
+              - entity: light.front_porch_light
                 name: Front Porch
               - entity: light.entry_hall_lights
                 name: Entry Hall
@@ -202,7 +202,7 @@ views:
               - entity: light.master_wir
                 name: Walk-In Robe
                 toggle: true
-              - entity: light.shelly_ensuite_light
+              - entity: light.ensuite_light
                 name: Ensuite
                 toggle: true
               - entity: switch.ensuite_fan
@@ -442,7 +442,7 @@ views:
               - entity: light.dining_room
                 name: Dining Room
                 toggle: true
-              - entity: light.shelly_kitchen_ceiling_light
+              - entity: light.kitchen_ceiling_light
                 name: Kitchen Ceiling
                 toggle: true
               - entity: light.kitchen_island
@@ -622,7 +622,7 @@ views:
                 icon: 'mdi:air-filter'
                 name: Aircon Vent
                 toggle: true
-              - entity: light.shelly_kitchen_ceiling_light
+              - entity: light.kitchen_ceiling_light
                 name: Kitchen Ceiling
                 toggle: true
               - entity: light.kitchen_island

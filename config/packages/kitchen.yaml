@@ -68,11 +68,11 @@ automation:
           # If ceiling lights are off, turn them on
             - conditions:
                 - condition: state
-                  entity_id: light.shelly_kitchen_ceiling_light
+                  entity_id: light.kitchen_ceiling_light
                   state: "off"
               sequence: 
                 - service: light.turn_on
-                  entity_id: light.shelly_kitchen_ceiling_light
+                  entity_id: light.kitchen_ceiling_light
           # Otherwise turn on the kitchen island light
           default:
             - service: light.turn_on
@@ -98,4 +98,4 @@ automation:
           # Otherwise turn of the ceiling light
           default:
             - service: light.turn_off
-              entity_id: light.shelly_kitchen_ceiling_light
+              entity_id: light.kitchen_ceiling_light
