@@ -100,35 +100,19 @@ views:
         type: 'custom:vertical-stack-in-card'
       - cards:
           - elements:
-              - entity: device_tracker.ble_car_laura
-                style:
-                  '--paper-item-icon-color': pink
-                  bottom: 22%
-                  font-weight: bold
-                  right: 34%
-                  transform: initial
-                type: state-icon
-              - entity: device_tracker.ble_car_michael
-                style:
-                  '--paper-item-icon-color': skyblue
-                  bottom: 22%
-                  font-weight: bold
-                  right: 26%
-                  transform: initial
-                type: state-icon
               - entity: >-
                   cover.aeon_labs_zw062_garage_door_controller_barrier_state_label
                 style:
                   bottom: 20%
                   font-weight: bold
-                  right: 18%
+                  right: 20%
                   transform: initial
                 type: state-icon
               - entity: binary_sensor.garage_door_external
                 icon: 'mdi:door-closed-lock'
                 style:
                   bottom: 20%
-                  right: 11%
+                  right: 12%
                   transform: initial
                 type: state-icon
               - entity: binary_sensor.garage_door_internal
