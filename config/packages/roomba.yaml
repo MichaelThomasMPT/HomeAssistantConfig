@@ -63,9 +63,7 @@ automation:
 
 switch:
   - platform: broadlink
-    host: !secret broadlink_rm_roomba_ip_address
     mac: '34:ea:34:99:eb:42'
-    type: rm
     switches:
       roomba:
         friendly_name: "Roomba"

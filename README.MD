@@ -6,4 +6,4 @@
 3. Run Home Assistant docker container, mapped to that config directory on the server
 4. Once running, set up users via Home Assistant UI
 5. Copy the contents of `lovelace_interface.yaml` into the Home Assistant interface
-6. Through the UI, configure the DeCONZ and Ring integrations.
+6. Through the UI, configure the DeCONZ, Broadlink and Ring integrations.
