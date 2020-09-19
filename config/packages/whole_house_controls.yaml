@@ -1,9 +1,12 @@
 script:
-  turn_off_whole_house:
+  turn_off_all_lights:
     sequence:
-      - service: light.turn_off #lights
+      - service: light.turn_off
         data_template: 
           entity_id: "{{ states.light | map(attribute='entity_id') | list | join(', ') }}"
+  turn_off_whole_house:
+    sequence:
+      - service: script.turn_off_all_lights
       - service: switch.turn_off
         entity_id: switch.aircon_on_off
       - service: media_player.turn_off #tv & speakers
