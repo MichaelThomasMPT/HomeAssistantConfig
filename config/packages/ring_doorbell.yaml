@@ -7,3 +7,18 @@ sensor:
         value_template: '{{ as_timestamp(states.sensor.ring_front_door_last_ding.attributes["created_at"]) | timestamp_custom("%I:%M:%S%p, %a %d %B %Y", True) }}'
       ring_last_motion:
         value_template: '{{ as_timestamp(states.sensor.ring_front_door_last_motion.attributes["created_at"]) | timestamp_custom("%I:%M:%S%p, %a %d %B %Y", True) }}'
+
+automation:
+  - alias: Front Door - When Doorbell Is Rung After Dark, Turn On Light
+    trigger:
+      platform: state
+      entity_id: binary_sensor.front_door
+      to: 'on'
+    condition:
+      - condition: state  # from sunset until sunrise
+        entity_id: sun.sun
+        state: 'below_horizon'
+    action:
+      - service: light.turn_on
+        entity_id:
+          - light.shelly_front_porch_light
