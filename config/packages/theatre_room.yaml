@@ -1,4 +1,5 @@
 script:
+
   #Trigger the Hue lights scene for movie watching
   set_movie_lighting:
     sequence:
@@ -36,7 +37,7 @@ script:
       - service: media_player.turn_on #turn on the TV
         entity_id:
           - media_player.theatre_room_tv 
-      - wait_template: "{{ is_state(' media_player.theatre_room_tv', 'on') }}"
+      - wait_template: "{{ is_state('media_player.theatre_room_tv', 'on') }}"
       - service: media_player.select_source #switch TV to Plex
         data:
           entity_id: media_player.theatre_room_tv
@@ -61,7 +62,7 @@ script:
       - service: media_player.turn_on #turn on the TV
         entity_id:
           - media_player.theatre_room_tv 
-      - wait_template: "{{ is_state(' media_player.theatre_room_tv', 'on') }}"
+      - wait_template: "{{ is_state('media_player.theatre_room_tv', 'on') }}"
       - service: media_player.select_source #switch TV to Plex
         data:
           entity_id: media_player.theatre_room_tv
@@ -74,29 +75,52 @@ script:
         entity_id:
           - script.aircon_cool_theatre
 
-  #Start Star Wras playing
-  time_for_star_wars:
-    alias: Time For Star Wars
+  #Start a media file from Plex playing on the theatre room TV
+  start_plex_media_playing:
+    alias: Start Plex Media Playing
+    mode: restart
+    fields: 
+      music_file: 
+        description: 'The file location of the song to play at the start of the script'
+        example: '/local/Star_Wars.mp3'
+      plex_content_type: 
+        description: 'The type of Plex content to be played'
+        example: 'PLAYLIST'
+      plex_content_id:
+        description: 'The Plex content ID to play on the TV'
+        example: '{ "playlist_name": "Star Wars - The Clone Wars", "shuffle": "0" }'
     sequence:
+      - service: media_player.play_media
+        data:
+          entity_id: media_player.theatre_room_google_home
+          media_content_id: '{{ music_file }}'
+          media_content_type: 'audio/mp3'
       - service: cover.close_cover #this would be triggered anyway, but this call makes it occur faster
         entity_id: cover.theatre_blinds 
       - service: script.turn_on #set the lighting
         entity_id:
           - script.set_tv_dinner_lighting 
       - service: media_player.turn_on #turn on the TV
-        entity_id:
-          - media_player.theatre_room_tv 
-      - wait_template: "{{ is_state(' media_player.theatre_room_tv', 'on') }}"
+        entity_id: media_player.theatre_room_tv 
+      - wait_template: "{{ is_state('media_player.theatre_room_tv', 'on') }}"
+        timeout: '00:00:20'
       - service: media_player.select_source #switch TV to Plex
         data:
           entity_id: media_player.theatre_room_tv
           source: "Plex"
-      - wait_template: "{{ is_state('media_player.plex_for_lg', 'idle') }}"
+      - repeat:
+          sequence:
+            - service: plex.scan_for_clients #Force a refresh of the Plex LG media player
+            - delay:
+                seconds: 2
+          until:
+            - condition: template
+              value_template: "{{ not is_state('media_player.plex_for_lg', 'unavailable') }}"
       - service: media_player.play_media
         data:
           entity_id: media_player.plex_for_lg
-          media_content_type: PLAYLIST
-          media_content_id: '{ "playlist_name": "Star Wars - The Clone Wars", "shuffle": "0" }'
+          media_content_type: '{{ plex_content_type }}'
+          media_content_id: '{{ plex_content_id }}'
       - condition: or #all further steps will only run if this condition is true
         conditions:
           - condition: template
@@ -279,9 +303,14 @@ automation:
         - condition: state 
           entity_id: media_player.theatre_room_tv
           state: 'off' #not in the middle of watchin something
-        - condition: state 
-          entity_id: cover.theatre_blinds
-          state: 'closed' #room is darkened
+        - condition: or
+          conditions:
+          - condition: state 
+            entity_id: cover.theatre_blinds
+            state: 'closed' #room is darkened
+          - condition: state
+            entity_id: cover.theatre_blinds
+            state: 'closing' #room is darkening
         - condition: state
           entity_id: light.theatre_room_ceiling
           state: 'off'
@@ -299,6 +328,35 @@ automation:
             minutes: 2 #the lights weren't just turned off
     action:
       - service: script.set_tv_dinner_lighting
+
+  - alias: Theatre Room - Play Plex Media On Button Press
+    variables: 
+      buttons:
+        #on button
+        1002:
+          music_file: '/local/Star_Wars.mp3'
+          plex_content_type: PLAYLIST
+          plex_content_id: '{ "playlist_name": "Star Wars - The Clone Wars", "shuffle": "0" }'
+
+        #off button
+        2002:
+          music_file: '/local/Succession.mp3'
+          plex_content_type: PLAYLIST
+          plex_content_id: '{ "playlist_name": "Succession", "shuffle": "0" }'
+    trigger: 
+      - platform: event
+        event_type: deconz_event
+        event_data: 
+          id: theatre_plex_button
+    condition: 
+      - "{{ trigger.event.data.event in buttons }}"
+    action:
+      - service: script.start_plex_media_playing
+        data: 
+          music_file: '{{ buttons[trigger.event.data.event].music_file }}'
+          plex_content_type: '{{ buttons[trigger.event.data.event].plex_content_type }}'
+          plex_content_id: '{{ buttons[trigger.event.data.event].plex_content_id }}'
+
 
 ############## LG TV ##############
 
