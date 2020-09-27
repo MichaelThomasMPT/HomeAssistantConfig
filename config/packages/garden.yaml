@@ -1,0 +1,27 @@
+automation:
+  - alias: Garden - Turn On Outdoor Lights When Both Back Doors Are Opened
+    trigger: 
+      - platform: state
+        entity_id: 
+          - binary_sensor.back_door_glass
+          - binary_sensor.back_door_flyscreen
+        to: 'on' #open
+    condition:
+      condition: and
+      conditions:
+        - condition: state  # from sunset until sunrise
+          entity_id: sun.sun
+          state: 'below_horizon'
+        - condition: state
+          entity_id: 'binary_sensor.back_door_glass'
+          state: 'on' #open
+        - condition: state
+          entity_id: 'binary_sensor.back_door_flyscreen'
+          state: 'on' #open
+    action:
+      - service: light.turn_on
+        entity_id: 
+          - light.alfresco_lights
+          - light.garden_flood_lights
+        data:
+          brightness_pct: 100
