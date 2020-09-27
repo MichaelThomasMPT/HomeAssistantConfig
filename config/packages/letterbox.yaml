@@ -15,6 +15,10 @@ automation:
         - binary_sensor.letterbox_door
       to: 'on'
     mode: single #for cooldown
+    condition:
+      - condition: state
+        entity_id: var.mail_was_delivered_today
+        state: 'False'
     action:
       - service: notify.mobile_app_michael_s_galaxy_s10
         data:
