@@ -1047,6 +1047,9 @@ views:
               - entity: automation.location_notify_when_someone_comes_home
                 name: Notify When Someone Arrives Home (default off)
               - entity: input_boolean.guest_mode
+              - entity: script.turn_off_all_lights
+                name: Turn Off All Lights
+                icon: 'mdi:lightbulb-group-off'
             head:
               label: Automation Control
               type: section
