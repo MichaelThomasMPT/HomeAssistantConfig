@@ -60,6 +60,9 @@ automation:
       - service: notify.mobile_app_michael_s_galaxy_s10
         data:
           message: A door was left open when the house alarm was set.
+      - service: notify.mobile_app_lauras_iphone
+        data:
+          message: A door was left open when the house alarm was set.
 
 sensor:
   - platform: template
