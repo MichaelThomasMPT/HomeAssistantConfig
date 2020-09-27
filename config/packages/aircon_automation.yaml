@@ -4,7 +4,7 @@ script:
     sequence:
     - data:
         entity_id: input_number.aircon_temperature
-        value: 22
+        value: 25
       service: input_number.set_value
     - delay:
         seconds: 1
@@ -33,7 +33,7 @@ script:
         seconds: 10
     - data:
         entity_id: input_number.aircon_countdown_timer
-        value: 60
+        value: 30
       service: input_number.set_value
     alias: Aircon Warm Master
     
