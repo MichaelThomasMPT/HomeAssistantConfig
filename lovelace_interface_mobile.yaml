@@ -617,6 +617,10 @@ views:
             image: /local/header-image-dark.png
             type: picture-elements
           - entities:
+              - entity: media_player.kitchen_google_home_hub
+                group: true
+                hide:
+                  controls: true
               - entity: switch.aircon_zone_living
                 hide_when_off: true
                 icon: 'mdi:air-filter'
