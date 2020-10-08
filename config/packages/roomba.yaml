@@ -61,6 +61,41 @@ automation:
         data:
           message: Roomba buddy didn't make it home. :(
 
+    #Once Roomba has returned to dock and had time to recharge, ask whether to re-run if we're not home yet
+  - alias: Roomba - Ask Whether To Re-run Roomba Once Finished If Not Yet Home
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.roomba_contact_sensor
+        to: 'off' #roomba has re-docked
+        for:
+          hours: 3
+    condition:
+      condition: or
+      conditions:
+        - condition: state
+          entity_id: person.michael
+          state: 'away'
+        - condition: state
+          entity_id: alarm_control_panel.alarm_com
+          state: 'armed_away'
+    action:
+      - service: notify.mobile_app_michael_s_galaxy_s10
+        data:
+          message: "Roomba has finished and charge. Should he be run again?"
+          data:
+            actions:
+              - action: "run_roomba_again"
+                title: "Run Roomba Again"
+  - alias: Roomba - Run the roomba when notification action is tapped
+    trigger:
+      platform: event
+      event_type: mobile_app_notification_action
+      event_data:
+        action: run_roomba_again
+    action:
+      service: script.roomba_clean
+
+
 switch:
   - platform: broadlink
     mac: '34:ea:34:99:eb:42'
