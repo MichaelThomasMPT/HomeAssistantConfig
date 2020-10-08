@@ -329,6 +329,37 @@ automation:
     action:
       - service: script.set_tv_dinner_lighting
 
+  - alias: Theatre Room Lights - Turn Off Lamps After No Activity
+    trigger:
+      platform: time_pattern
+      minutes: '/1' #run every minute
+    condition:
+      #If theatre room is inactive and at least one lamp is on, turn all the lights off
+      - condition: state
+        entity_id: 
+          - light.theatre_room_ceiling
+          - binary_sensor.theatre_motion
+          - media_player.theatre_room_tv
+        state: 'off'
+        for:
+          minutes: 20
+      - condition: or
+        conditions:
+          - condition: state
+            entity_id: 
+              - light.theatre_room_left_lamp
+            state: 'on'
+            for:
+              minutes: 20
+          - condition: state
+            entity_id: 
+              - light.theatre_room_right_lamp
+            state: 'on'
+            for:
+              minutes: 20
+    action:
+      - service: script.turn_off_theatre_room_lights
+
   - alias: Theatre Room - Play Plex Media On Button Press
     variables: 
       buttons:
