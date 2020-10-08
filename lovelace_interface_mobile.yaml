@@ -1051,11 +1051,56 @@ views:
               - entity: automation.location_notify_when_someone_comes_home
                 name: Notify When Someone Arrives Home (default off)
               - entity: input_boolean.guest_mode
+            head:
+              label: Automation Control
+              type: section
+            show_header_toggle: false
+            show_name: true
+            show_state: false
+            state_color: false
+            type: 'custom:fold-entity-row'
+        title: null
+        type: 'custom:vertical-stack-in-card'
+      - cards:
+          - elements:
+              - entity: sensor.blank
+                hold-action: none
+                prefix: Whole House Controls
+                style:
+                  bottom: 20%
+                  font-size: 150%
+                  left: 5%
+                  transform: initial
+                tap-action: none
+                type: state-label
+            image: /local/header-image-dark.png
+            type: picture-elements
+          - entities:
               - entity: script.turn_off_all_lights
                 name: Turn Off All Lights
                 icon: 'mdi:lightbulb-group-off'
+              - entity: light.alfresco_lights
+              - entity: light.dining_room
+              - entity: light.ensuite_light
+              - entity: light.entry_hall_lights
+              - entity: light.front_porch_light
+              - entity: light.garage_light
+              - entity: light.garden_flood_lights
+              - entity: light.kitchen_ceiling_light
+              - entity: light.kitchen_island
+              - entity: light.living_room
+              - entity: light.master_bedroom_ceiling
+              - entity: light.master_bedroom_lamp
+              - entity: light.master_wir
+              - entity: light.office_lamp
+              - entity: light.pantry_light
+              - entity: light.scullery_light
+              - entity: light.side_hall
+              - entity: light.theatre_room_ceiling
+              - entity: light.theatre_room_left_lamp
+              - entity: light.theatre_room_right_lamp
             head:
-              label: Automation Control
+              label: Lights
               type: section
             show_header_toggle: false
             show_name: true
