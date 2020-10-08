@@ -7,6 +7,7 @@ script:
   turn_off_whole_house:
     sequence:
       - service: script.turn_off_all_lights
+      - service: script.aircon_turn_off_all_zones
       - service: switch.turn_off
         entity_id: switch.aircon_on_off
       - service: media_player.turn_off #tv & speakers
