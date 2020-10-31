@@ -3,3 +3,4 @@
 *phue.conf
 .vscode/*
 /config/.vscode/*
+/config/www/*.mp3
