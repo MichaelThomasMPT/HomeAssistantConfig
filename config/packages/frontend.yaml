@@ -67,8 +67,16 @@ panel_iframe:
     icon: mdi:cards
     require_admin: false
 panel_custom:
-  - name: zwavegraph2 #graph of the zwave network
+  - name: zwavegraph3 #graph of the zwave network
     sidebar_title: Z-Wave Graph
-    sidebar_icon: mdi:access-point-network
-    url_path: zwave
+    sidebar_icon: mdi:z-wave
+    url_path: zwave-graph
+    module_url: /local/zwavegraph3.js
     require_admin: true
+    config:
+      # ranker - pick one: network-simplex, tight-tree, longest-path
+      ranker: network-simplex
+      # edge_visibility - pick one: relevant, all
+      edge_visibility: relevant
+      # grouping - pick one: z-wave, ungrouped
+      grouping: z-wave
