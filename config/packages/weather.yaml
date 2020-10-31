@@ -1,33 +1,18 @@
 
 weather:
-  - platform: bom
-    station: IDW60901.94608
+  # - platform: bom
+  #   station: IDW60901.94608
 
 sun:
 
 sensor:
-  # BOM Weather Sensor
-  - platform: bom_forecast
-    product_id: IDW12300
-    name: Perth Weather
-    forecast_days: 6
-    rest_of_today: TRUE
-    friendly: TRUE
-    friendly_state_format: '{max}, {summary}'
-    monitored_conditions:
-      - 'max'
-      - 'min'
-      - 'chance_of_rain'
-      - 'possible_rainfall'
-      - 'summary'
-      - 'detailed_summary'
 
   # Extract Outdoor Temperature from BOM Weather Sensor
   - platform: template
     sensors: 
       current_outdoor_temperature:
         friendly_name: "Current Outdoor Temperature"
-        value_template: '{{ states.weather.bom_perth.attributes["temperature"] }}'
+        value_template: '{{ states.weather.treeby_house.attributes["temperature"] }}'
         unit_of_measurement: "°C"
 
   # Solar Panels
