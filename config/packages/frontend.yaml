@@ -1,7 +1,3 @@
-# Home Assistant Customer UI: https://github.com/andrey-git/home-assistant-custom-ui
-customizer:
-  custom_ui: hosted
-
 # Blank sensor to make the room headers look good
 sensor:
   - platform: template
