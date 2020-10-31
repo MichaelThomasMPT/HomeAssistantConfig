@@ -695,7 +695,7 @@ views:
         type: 'custom:vertical-stack-in-card'
       - cards:
           - elements:
-              - entity: sensor.bom_forecast_perth_weather_0
+              - entity: sensor.current_outdoor_temperature
                 style:
                   bottom: 20%
                   right: 5%
