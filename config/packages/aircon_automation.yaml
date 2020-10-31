@@ -3,42 +3,31 @@ script:
   aircon_turn_off_all_zones:
     sequence:
     - data:
-        entity_id: switch.aircon_zone_bed23
-      service: switch.turn_off
-    - data:
-        entity_id: switch.aircon_zone_living
-      service: switch.turn_off
-    - data:
-        entity_id: switch.aircon_zone_master
-      service: switch.turn_off
-    - data:
-        entity_id: switch.aircon_zone_theatre
-      service: switch.turn_off
-    - delay:
-        seconds: 1
+        entity_id: 
+          - cover.bed_2_3
+          - cover.living
+          - cover.master_bed
+          - cover.theatre
+      service: cover.close_cover
 
   #Warm the master bedroom for 60 minutes
   aircon_warm_master:
     sequence:
     - data:
-        entity_id: input_number.aircon_temperature
-        value: 25
-      service: input_number.set_value
-    - delay:
-        seconds: 1
+        entity_id: climate.ac
+        temperature: 25
+      service: climate.set_temperature
     - data:
-        entity_id: input_select.aircon_run_mode
-        option: heat
-      service: input_select.select_option
+        entity_id: climate.ac
+        hvac_mode: heat
+      service: climate.set_hvac_mode
+    - data:
+        entity_id: climate.ac
+      service: climate.turn_on
     - service: script.aircon_turn_off_all_zones
     - data:
-        entity_id: switch.aircon_zone_master
-      service: switch.turn_on
-    - delay:
-        seconds: 1
-    - data:
-        entity_id: switch.aircon_on_off
-      service: switch.turn_on
+        entity_id: cover.master_bed
+      service: cover.open_cover
     - delay:
         seconds: 10
     - data:
@@ -51,18 +40,13 @@ script:
   aircon_fan_master:
     sequence:
     - data:
-        entity_id: input_select.aircon_run_mode
-        option: vent
-      service: input_select.select_option
+        entity_id: climate.ac
+        hvac_mode: fan_only
+      service: climate.set_hvac_mode
     - service: script.aircon_turn_off_all_zones
     - data:
-        entity_id: switch.aircon_zone_master
-      service: switch.turn_on
-    - delay:
-        seconds: 1
-    - data:
-        entity_id: switch.aircon_on_off
-      service: switch.turn_on
+        entity_id: cover.master_bed
+      service: cover.open_cover
     - delay:
         seconds: 10
     - data:
@@ -75,84 +59,63 @@ script:
   aircon_cool_central_living:
     sequence:
     - data:
-        entity_id: input_number.aircon_temperature
-        value: 21
-      service: input_number.set_value
-    - delay:
-        seconds: 1
+        entity_id: climate.ac
+        temperature: 21
+      service: climate.set_temperature
+    - data:
+        entity_id: climate.ac
+        hvac_mode: cool
+      service: climate.set_hvac_mode
     - service: script.aircon_turn_off_all_zones
     - data:
-        entity_id: switch.aircon_zone_living
-      service: switch.turn_on
-    - delay:
-        seconds: 1
-    - data:
-        entity_id: switch.aircon_on_off
-      service: switch.turn_on
+        entity_id: cover.living
+      service: cover.open_cover
     alias: Aircon Cool Central Living
 
   #Run the aircon in the theatre room
   aircon_cool_theatre:
     sequence:
     - data:
-        entity_id: input_number.aircon_temperature
-        value: 23
-      service: input_number.set_value
-    - delay:
-        seconds: 1
+        entity_id: climate.ac
+        temperature: 23
+      service: climate.set_temperature
     - data:
-        entity_id: input_select.aircon_run_mode
-        option: cool
-      service: input_select.select_option
+        entity_id: climate.ac
+        hvac_mode: cool
+      service: climate.set_hvac_mode
     - service: script.aircon_turn_off_all_zones
     - data:
-        entity_id: switch.aircon_zone_theatre
-      service: switch.turn_on
-    - delay:
-        seconds: 1
-    - data:
-        entity_id: switch.aircon_on_off
-      service: switch.turn_on
+        entity_id: cover.theatre
+      service: cover.open_cover
     alias: Aircon Cool Theatre
 
   #Run the aircon in cool mode
   aircon_cool:
     sequence:
     - data:
-        entity_id: input_number.aircon_temperature
-        value: 20
-      service: input_number.set_value
-    - delay:
-        seconds: 1
+        entity_id: climate.ac
+        temperature: 21
+      service: climate.set_temperature
     - data:
-        entity_id: input_select.aircon_run_mode
-        option: cool
-      service: input_select.select_option
-    - delay:
-        seconds: 1
-    - data:
-        entity_id: switch.aircon_on_off
-      service: switch.turn_on
+        entity_id: climate.ac
+        hvac_mode: cool
+      service: climate.set_hvac_mode
     alias: Aircon On
     
   #Run the aircon in heat mode
   aircon_heat:
     sequence:
     - data:
-        entity_id: input_number.aircon_temperature
-        value: 24
-      service: input_number.set_value
-    - delay:
-        seconds: 1
+        entity_id: climate.ac
+        temperature: 24
+      service: climate.set_temperature
     - data:
-        entity_id: input_select.aircon_run_mode
-        option: heat
-      service: input_select.select_option
-    - delay:
-        seconds: 1
+        entity_id: climate.ac
+        hvac_mode: heat
+      service: climate.set_hvac_mode
     - data:
-        entity_id: switch.aircon_on_off
-      service: switch.turn_on
+        entity_id: climate.ac
+      service: climate.turn_on
     alias: Heater On
 
   #Save the current aircon state, blast aircon for 10 min, then restore state.
@@ -162,32 +125,19 @@ script:
         data:
           scene_id: aircon_saved_state
           snapshot_entities:
-            - switch.aircon_on_off
-            - input_select.aircon_run_mode
-            - input_number.aircon_temperature
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.aircon_run_mode
-          option: "cool"
-      - delay:
-          seconds: 1
-      - service: input_number.set_value
-        data:
-          entity_id: input_number.aircon_temperature
-          value: 21
-      - delay:
-          seconds: 1
-      - service: switch.turn_on
-        data:
-          entity_id: switch.aircon_on_off
+            - climate.ac
+      - data:
+          entity_id: climate.ac
+          temperature: 21
+          hvac_mode: cool
+        service: climate.set_temperature
+      - data:
+          entity_id: climate.ac
+          hvac_mode: cool
+        service: climate.set_hvac_mode
       - delay:
           minutes: 10
       - service: scene.turn_on
-        data:
-          entity_id: scene.aircon_saved_state
-      - delay:
-          seconds: 1
-      - service: scene.turn_on #dodgy workaround to avoid sending too many requests to the AC controller at once.
         data:
           entity_id: scene.aircon_saved_state
           
@@ -289,11 +239,7 @@ automation:
         event_data: 
           id: master_bed_switch_2
           event: 1002
-    condition:
-      - condition: state
-        entity_id: 'switch.aircon_on_off'
-        state: 'on' #aircon is currently on
     action:
-      - service: switch.turn_off
+      - service: climate.turn_off
         data:
-          entity_id: switch.aircon_on_off
+          entity_id: climate.ac

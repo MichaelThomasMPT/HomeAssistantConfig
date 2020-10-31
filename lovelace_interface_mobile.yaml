@@ -742,26 +742,26 @@ views:
         type: 'custom:vertical-stack-in-card'
       - cards:
           - elements:
-              - entity: sensor.aircon_run_mode
+              - entity: binary_sensor.ac_filter
+                style:
+                  bottom: 20%
+                  right: 3%
+                  transform: initial
+                type: state-icon
+              - entity: climate.ac
                 style:
                   bottom: 20%
                   font-weight: bold
-                  right: 28%
+                  right: 21%
                   transform: initial
                 type: state-label
-              - entity: sensor.aircon_temperature
+              - entity: climate.ac
+                attribute: temperature
                 style:
                   bottom: 20%
                   right: 13%
                   transform: initial
                 type: state-label
-              - entity: switch.aircon_on_off
-                icon: 'mdi:power'
-                style:
-                  bottom: 20%
-                  right: 5%
-                  transform: initial
-                type: state-icon
               - entity: sensor.blank
                 hold-action: none
                 prefix: Air Conditioning
@@ -774,21 +774,8 @@ views:
                 type: state-label
             image: /local/header-image-dark.png
             type: picture-elements
-          - entities:
-              - entity: switch.aircon_on_off
-                icon: 'mdi:power'
-                name: Aircon On/Off
-                state_color: true
-              - entity: input_select.aircon_run_mode
-              - entity: input_number.aircon_temperature
-                icon: 'mdi:temperature-celsius'
-                name: Temperature
-            head:
-              label: Controls
-              type: section
-            show_header_toggle: false
-            title: Controls
-            type: 'custom:fold-entity-row'
+          - type: thermostat
+            entity: climate.ac
           - card:
               cards:
                 - entities:
@@ -798,11 +785,25 @@ views:
                   title: Countdown To Off
                   type: entities
                 - cards:
-                    - entity: sensor.aircon_countdown_timer
+                    - entity: climate.ac
                       hold_action:
                         action: none
                       icon: 'mdi:clock-outline'
-                      name: 30 Minutes
+                      name: 0 Hours
+                      show_icon: true
+                      show_name: true
+                      tap_action:
+                        action: call-service
+                        service: input_number.set_value
+                        service_data:
+                          entity_id: input_number.aircon_countdown_timer
+                          value: 0
+                      type: entity-button
+                    - entity: climate.ac
+                      hold_action:
+                        action: none
+                      icon: 'mdi:clock-outline'
+                      name: 0.5 Hours
                       show_icon: true
                       show_name: true
                       tap_action:
@@ -812,7 +813,7 @@ views:
                           entity_id: input_number.aircon_countdown_timer
                           value: 30
                       type: entity-button
-                    - entity: sensor.aircon_countdown_timer
+                    - entity: climate.ac
                       hold_action:
                         action: none
                       icon: 'mdi:clock-outline'
@@ -826,7 +827,7 @@ views:
                           entity_id: input_number.aircon_countdown_timer
                           value: 60
                       type: entity-button
-                    - entity: sensor.aircon_countdown_timer
+                    - entity: climate.ac
                       hold_action:
                         action: none
                       icon: 'mdi:clock-outline'
@@ -840,7 +841,7 @@ views:
                           entity_id: input_number.aircon_countdown_timer
                           value: 90
                       type: entity-button
-                    - entity: sensor.aircon_countdown_timer
+                    - entity: climate.ac
                       hold_action:
                         action: none
                       icon: 'mdi:clock-outline'
@@ -857,8 +858,8 @@ views:
                   type: horizontal-stack
               type: vertical-stack
             conditions:
-              - entity: switch.aircon_on_off
-                state: 'on'
+              - entity: climate.ac
+                state_not: 'off'
             type: conditional
           - entities:
               - entity: switch.aircon_zone_living
@@ -879,7 +880,7 @@ views:
             show_header_toggle: false
             state_color: true
             title: Zones
-            type: 'custom:fold-entity-row'
+            type: entities
           - entities:
               - entity: script.aircon_warm_master
                 hold_action:
@@ -936,34 +937,6 @@ views:
                   service: script.turn_on
                   service_data:
                     entity_id: script.aircon_cool_central_living
-                type: button
-              - entity: script.aircon_cool
-                hold_action:
-                  action: none
-                icon: 'mdi:snowflake'
-                icon_height: 60px
-                name: Run Cold
-                show_icon: true
-                show_name: true
-                tap_action:
-                  action: call-service
-                  service: script.turn_on
-                  service_data:
-                    entity_id: script.aircon_cool
-                type: button
-              - entity: script.aircon_heat
-                hold_action:
-                  action: none
-                icon: 'mdi:fire'
-                icon_height: 60px
-                name: Run Hot
-                show_icon: true
-                show_name: true
-                tap_action:
-                  action: call-service
-                  service: script.turn_on
-                  service_data:
-                    entity_id: script.aircon_heat
                 type: button
               - entity: script.aircon_blast_cold_for_ten_minutes
                 hold_action:

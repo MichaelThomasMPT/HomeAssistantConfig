@@ -1021,20 +1021,8 @@ views:
   - badges: []
     cards:
       - cards:
-          - entities:
-              - entity: switch.aircon_on_off
-                icon: 'mdi:power'
-                name: Aircon On/Off
-                state_color: true
-              - entity: input_select.aircon_run_mode
-              - entity: sensor.aircon_temperature
-                name: Aircon Temperature
-              - entity: input_number.aircon_temperature
-                icon: 'mdi:temperature-celsius'
-                name: Set Temperature
-            show_header_toggle: false
-            title: Aircon Control
-            type: entities
+          - type: thermostat
+            entity: climate.ac
           - card:
               cards:
                 - entities:
@@ -1044,11 +1032,25 @@ views:
                   title: Countdown To Off
                   type: entities
                 - cards:
-                    - entity: sensor.aircon_countdown_timer
+                    - entity: climate.ac
                       hold_action:
                         action: none
                       icon: 'mdi:clock-outline'
-                      name: 30 Minutes
+                      name: 0 Hours
+                      show_icon: true
+                      show_name: true
+                      tap_action:
+                        action: call-service
+                        service: input_number.set_value
+                        service_data:
+                          entity_id: input_number.aircon_countdown_timer
+                          value: 0
+                      type: entity-button
+                    - entity: climate.ac
+                      hold_action:
+                        action: none
+                      icon: 'mdi:clock-outline'
+                      name: 0.5 Hours
                       show_icon: true
                       show_name: true
                       tap_action:
@@ -1058,7 +1060,7 @@ views:
                           entity_id: input_number.aircon_countdown_timer
                           value: 30
                       type: entity-button
-                    - entity: sensor.aircon_countdown_timer
+                    - entity: climate.ac
                       hold_action:
                         action: none
                       icon: 'mdi:clock-outline'
@@ -1072,7 +1074,7 @@ views:
                           entity_id: input_number.aircon_countdown_timer
                           value: 60
                       type: entity-button
-                    - entity: sensor.aircon_countdown_timer
+                    - entity: climate.ac
                       hold_action:
                         action: none
                       icon: 'mdi:clock-outline'
@@ -1086,7 +1088,7 @@ views:
                           entity_id: input_number.aircon_countdown_timer
                           value: 90
                       type: entity-button
-                    - entity: sensor.aircon_countdown_timer
+                    - entity: climate.ac
                       hold_action:
                         action: none
                       icon: 'mdi:clock-outline'
@@ -1103,10 +1105,11 @@ views:
                   type: horizontal-stack
               type: vertical-stack
             conditions:
-              - entity: switch.aircon_on_off
-                state: 'on'
+              - entity: climate.ac
+                state_not: 'off'
             type: conditional
         type: 'custom:vertical-stack-in-card'
+        title: Aircon Control
       - entities:
           - entity: switch.aircon_zone_living
             icon: 'mdi:air-filter'
