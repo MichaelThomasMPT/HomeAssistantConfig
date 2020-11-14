@@ -191,12 +191,12 @@ automation:
         event_type: deconz_event
         event_data: 
           id: master_bed_switch_1
-          event: 1002
+          event: 1002 #single press
       - platform: event
         event_type: deconz_event
         event_data: 
           id: master_bed_switch_2
-          event: 1002
+          event: 1004 #double press
     condition:
       - condition: template
         value_template: '{{ (states.sensor.master_bedroom_temperature.state | float) > 22.0 }}' 
@@ -212,12 +212,12 @@ automation:
         event_type: deconz_event
         event_data: 
           id: master_bed_switch_1
-          event: 1002
+          event: 1002 #single press
       - platform: event
         event_type: deconz_event
         event_data: 
           id: master_bed_switch_2
-          event: 1002
+          event: 1004 #double press
     condition:
       - condition: template
         value_template: '{{ (states.sensor.master_bedroom_temperature.state | float) <= 22.0 }}' 
@@ -233,12 +233,12 @@ automation:
         event_type: deconz_event
         event_data: 
           id: master_bed_switch_1
-          event: 1002
+          event: 1002 #single press 
       - platform: event
         event_type: deconz_event
         event_data: 
           id: master_bed_switch_2
-          event: 1002
+          event: 1004 #double press
     condition:
         #only run if aircon is not off
       - condition: not

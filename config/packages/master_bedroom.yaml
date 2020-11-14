@@ -98,6 +98,21 @@ automation:
         entity_id: light.master_wir
         data_template:
           brightness_pct: '{% if now().hour >= 22 or now().hour < 4 %}20{% else %}100{% endif %}' #Dim light between 10pm-4am
+
+  - alias: Master Bedroom - Toggle Lamp Light
+    trigger:
+      - platform: event
+        event_type: deconz_event
+        event_data: 
+          id: master_bed_switch_2 #michael's button
+          event: 1002 #single press
+    action:
+      - service: light.toggle
+        entity_id: light.master_bedroom_lamp
+        data_template:
+          brightness_pct: '{% if now().hour >= 22 or now().hour < 4 %}5{% else %}100{% endif %}' #Dim light between 10pm-4am
+
+
   - alias: Ensuite - Turn On Fan When Shower Running
     trigger:
       platform: state
