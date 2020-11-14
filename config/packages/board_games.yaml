@@ -6,8 +6,60 @@ automation:
     max_exceeded: silent
     variables:
       tags:
+        fa9383b4-7665-44d3-8389-f4d710bbed7f:
+          playlist_name: "adventure"
+        35d1beca-0ca0-413f-8c37-ea32807d810e:
+          playlist_name: "ancient"
+        1e722b56-bd54-4f37-81fb-4b08bac42158:
+          playlist_name: "battle"
+        c5893482-5245-4db0-9048-89624d502af4:
+          playlist_name: "cafe"
+        12b970f1-e1b3-4231-91b8-f949e5a57bbc:
+          playlist_name: "casino"
+        3558fbf6-ffd0-4b96-afb3-467bb42261d2:
+          playlist_name: "china"
+        599fb41a-cba2-4757-b637-2a112d58911f:
+          playlist_name: "cities"
+        898a565e-a2df-4bba-aad9-2ebf5014b7f9:
+          playlist_name: "detective"
+        c485bda5-cf0f-47b4-9fa8-a04180811d69:
+          playlist_name: "dungeon"
+        76f7e283-2ccb-433b-8b4d-f82d20bdd955:
+          playlist_name: "egyptian"
+        ddc89527-8b98-4f31-a87e-1eb74de9ca4c:
+          playlist_name: "french"
+        98ddb5d0-4fc0-4543-a57d-cc9efebf6393:
+          playlist_name: "gangster"
         1036cd92-4aef-4e71-a7c1-73e7882fe4f4:
           playlist_name: "gloomhaven"
+        48695443-cc56-4b6f-a931-52dd62816307:
+          playlist_name: "gloomhaven"
+        6ad75fa6-cd9e-456f-a1f5-42469ce65f10:
+          playlist_name: "horror"
+        7006a1c6-296b-48e1-9688-f05c2ce94db4:
+          playlist_name: "india"
+        16951460-6e0a-43ba-b269-269e017a0842:
+          playlist_name: "japan"
+        ece9aecf-83a2-4d49-90d3-2baeaa740067:
+          playlist_name: "magic"
+        859be98a-d662-48bc-ba51-3001aa8f26b4:
+          playlist_name: "medieval_town"
+        49ca3e03-e2f7-4651-a410-84405b669d3e:
+          playlist_name: "meditation"
+        7f6f84f4-482f-40cb-abac-a579078472ac:
+          playlist_name: "mythical"
+        a587a967-b4d4-4b04-8752-54330efd99ab:
+          playlist_name: "pirates"
+        a5002884-c6c1-4e92-b346-77b08e8ce712:
+          playlist_name: "renaissance"
+        48cf9936-1291-4b18-a474-19af232796b3:
+          playlist_name: "space"
+        fc91721f-e5c5-4101-ad51-565b00dd73f4:
+          playlist_name: "spy"
+        dda894d9-b946-4efc-bf07-f43f0a11588a:
+          playlist_name: "water"
+        bbf95209-9cce-45f9-92bd-f3ec07b9d289:
+          playlist_name: "western"
     trigger:
       platform: event
       event_type: tag_scanned
@@ -15,6 +67,13 @@ automation:
       # Test that we support this device and tag
       - "{{ trigger.event.data.tag_id in tags }}"
     action:
+      - service: notify.mobile_app_michael_s_galaxy_s10
+        data:
+          message: The {{ tags[trigger.event.data.tag_id].playlist_name }} playlist will be played.
+          data:
+            timeout: 10
+            channel: BoardGameAlerts
+            importance: high
       - service: script.play_board_game_music_playlist_in_kitchen
         data: 
           playlist_name: '{{ tags[trigger.event.data.tag_id].playlist_name }}'
@@ -98,7 +157,7 @@ script:
           media_id: "VJ817kvh_DM"
           playlist_id: "PLavpVzwAAU9Ywsbz7_I1A5v3Qfpdx43bC"
         spy: 
-          media_id: "AbU4rIY3XEA"
+          media_id: "R0JuXvn68AA"
           playlist_id: "PLavpVzwAAU9Z4Isj-XdXkCG6AQ9GjXr1S"
         water: 
           media_id: "Y47bzEeMuXw"
@@ -117,3 +176,7 @@ script:
               "media_id": "{{ playlists[playlist_name].media_id }}",
               "playlist_id": "{{ playlists[playlist_name].playlist_id }}"
               }'
+      - service: media_player.volume_set
+        data:
+          entity_id: media_player.kitchen_google_home_hub
+          volume_level: 0.7
