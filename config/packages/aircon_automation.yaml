@@ -174,7 +174,7 @@ automation:
         entity_id: 'alarm_control_panel.alarm_com'
         state: 'armed_away' #nobody is home
       - condition: state
-        entity_id: 'switch.aircon_on_off'
+        entity_id: 'climate.ac'
         state: 'off' #don't run the script if the aircon is already on, as it will restart the countdown timer
     action:
       - service: script.aircon_cool_central_living #run the aircon in the central living area
@@ -201,7 +201,7 @@ automation:
       - condition: template
         value_template: '{{ (states.sensor.master_bedroom_temperature.state | float) > 22.0 }}' 
       - condition: state
-        entity_id: 'switch.aircon_on_off'
+        entity_id: 'climate.ac'
         state: 'off' #aircon is currently off
     action:
       - service: script.aircon_fan_master 
@@ -222,7 +222,7 @@ automation:
       - condition: template
         value_template: '{{ (states.sensor.master_bedroom_temperature.state | float) <= 22.0 }}' 
       - condition: state
-        entity_id: 'switch.aircon_on_off'
+        entity_id: 'climate.ac'
         state: 'off' #aircon is currently off
     action:
       - service: script.aircon_warm_master 
@@ -239,6 +239,13 @@ automation:
         event_data: 
           id: master_bed_switch_2
           event: 1002
+    condition:
+        #only run if aircon is not off
+      - condition: not
+        conditions:
+        - condition: state
+          entity_id: 'climate.ac'
+          state: 'off'
     action:
       - service: climate.turn_off
         data:
