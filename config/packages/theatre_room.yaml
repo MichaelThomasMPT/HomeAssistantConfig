@@ -48,7 +48,7 @@ script:
             value_template: '{{ (states.sensor.theatre_temperature.state | float) > 25.0 }}' #if theatre room temperature is > 25 degrees
       - service: script.turn_on #cool the theatre room
         entity_id:
-          - script.aircon_cool_theatre         
+          - script.aircon_cool_theatre
 
   #Get the theatre room ready  
   time_for_a_tv_dinner:
@@ -367,7 +367,7 @@ automation:
         1002:
           music_file: '/local/Star_Wars.mp3'
           plex_content_type: PLAYLIST
-          plex_content_id: '{ "playlist_name": "Star Wars - The Clone Wars", "shuffle": "0" }'
+          plex_content_id: '{ "playlist_name": "Star Wars - The Mandalorian", "shuffle": "0" }'
 
         #off button
         2002:
