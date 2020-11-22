@@ -20,8 +20,49 @@ automation:
           state: 'on' #open
     action:
       - service: light.turn_on
-        entity_id: 
-          - light.alfresco_lights
-          - light.garden_flood_lights
+        entity_id: light.alfresco_lights
         data:
           brightness_pct: 100
+
+ #if garden lights left on during the day, turn them off.
+  - alias: Garden - Turn Off Outdoor Lights If Left On During The Day
+    mode: single
+    trigger:
+      platform: time_pattern
+      minutes: '/5' #run every 5 minutes
+    condition: #during the day and either light is on
+      condition: and
+      conditions:
+        - condition: state 
+          entity_id: sun.sun
+          state: 'above_horizon'
+        - condition: or
+          conditions:
+            - condition: state
+              entity_id: light.garden_flood_lights
+              state: 'on'
+              for:
+                minutes: 5
+            - condition: state
+              entity_id:  light.alfresco_lights
+              state: 'on'
+              for:
+                minutes: 5
+    action:
+      - service: light.turn_off
+        entity_id: light.alfresco_lights
+      - delay: 
+          seconds: 10 #Since the two outdoor lights share the same switch, the light.turn_off requests need to be sent separately with a slight delay
+      - service: light.turn_off
+        entity_id: light.garden_flood_lights
+      - delay:
+          minutes: 30 #Don't run the automation again for another half hour, in case there is a legitimate reason for the lights to be on
+
+  #In case I've manually disabled the garden lights switch-off automation, re-enable it when the sun sets for the day
+  - alias: Garden - Reactivate Garden Lights Switch-Off Automation Each Day
+    trigger:
+      platform: sun
+      event: sunset
+    action:
+      service: automation.turn_on
+      entity_id: automation.garden_turn_off_outdoor_lights_if_left_on_during_the_day
