@@ -55,6 +55,19 @@ script:
       service: input_number.set_value
     alias: Aircon Fan Master
     
+  #Run the fan in the office
+  aircon_fan_office:
+    sequence:
+    - data:
+        entity_id: climate.ac
+        hvac_mode: fan_only
+      service: climate.set_hvac_mode
+    - service: script.aircon_turn_off_all_zones
+    - data:
+        entity_id: cover.bed_2_3
+      service: cover.open_cover
+    alias: Aircon Fan Office
+    
   #Run the aircon in the central living area
   aircon_cool_central_living:
     sequence:

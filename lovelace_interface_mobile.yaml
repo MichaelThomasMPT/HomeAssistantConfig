@@ -910,6 +910,20 @@ views:
                   service_data:
                     entity_id: script.aircon_fan_master
                 type: button
+              - entity: script.aircon_fan_master
+                hold_action:
+                  action: none
+                icon: 'mdi:home-automation'
+                icon_height: 60px
+                name: Office Fan
+                show_icon: true
+                show_name: true
+                tap_action:
+                  action: call-service
+                  service: script.turn_on
+                  service_data:
+                    entity_id: script.aircon_fan_office
+                type: button
               - entity: script.aircon_cool_theatre
                 hold_action:
                   action: none
