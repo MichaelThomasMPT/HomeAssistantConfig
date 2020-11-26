@@ -263,3 +263,38 @@ automation:
       - service: climate.turn_off
         data:
           entity_id: climate.ac
+
+  - alias: Temperature - Office Button Trigger - On
+    #TODO: Perhaps for the winter make this also trigger the office heater
+    trigger:
+      - platform: event
+        event_type: deconz_event
+        event_data: 
+          id: office_aircon_switch
+          event: 1002 
+    action:
+      - choose:
+        - conditions: #If aircon office zone off or aircon off in general
+            - condition: or
+              conditions:
+              - condition: state
+                entity_id: switch.aircon_zone_bed23
+                state: 'off'
+              - condition: state
+                entity_id: climate.ac
+                state: 'off'
+          sequence:
+            - service: script.aircon_fan_office
+        default: #If fan is already running in the office, instead blast cold for 10 min
+          - service: script.aircon_blast_cold_for_ten_minutes
+
+  - alias: Temperature - Office Button Trigger - Off
+    trigger:
+      - platform: event
+        event_type: deconz_event
+        event_data: 
+          id: office_aircon_switch
+          event: 2002 
+    action:
+      - service: climate.turn_off
+        entity_id: climate.ac
