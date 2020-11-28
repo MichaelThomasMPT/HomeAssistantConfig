@@ -1,46 +1,37 @@
-# #Christmas Tree Switch
-# tplink:
-#     discovery: false
-#     switch:
-#       - host: TBC
 
+automation: 
+  - alias: Christmas Tree - Turn On Automatically
+    trigger:
+      - platform: sun
+        event: sunset
+        offset: "+00:30:00"
+      - platform: state
+        entity_id: alarm_control_panel.alarm_com
+        to: 'disarmed'
+    condition:
+      - condition: state
+        entity_id: 'alarm_control_panel.alarm_com'
+        state: 'disarmed' #we're home
+      - condition: state 
+        entity_id: sun.sun
+        state: 'below_horizon' #night time
+    action:
+      - entity_id: switch.christmas_tree_power
+        service: switch.turn_on
 
-# automation:
-    
-#   - alias: Christmas Tree - On (Sunset)
-#     trigger:
-#       - platform: sun
-#         event: sunset
-#     condition:
-#       condition: state
-#       entity_id: 'alarm_control_panel.alarm_com'
-#       state: 'disarmed'
-#     action:
-#       - entity_id: switch.christmas_tree
-#         service: switch.turn_on
-
-
-#   - alias: Christmas Tree - On (Alarm Disarm)
-#     trigger:
-#       - platform: state
-#         entity_id: alarm_control_panel.alarm_com
-#         to: 'disarmed'
-#     condition:
-#       condition: state 
-#       entity_id: sun.sun
-#       state: 'below_horizon' #night time
-#     action:
-#       - entity_id: switch.christmas_tree
-#         service: switch.turn_on
-
-
-#   - alias: Christmas Tree - Off
-#     trigger:
-#       - platform: sun
-#         event: sunrise
-#       - platform: state
-#         entity_id: alarm_control_panel.alarm_com
-#         to: 'armed'
-#     action:
-#       - entity_id: switch.christmas_tree
-#         service: switch.turn_off
+  - alias: Christmas Tree - Turn Off Automatically
+    trigger:
+      - platform: sun
+        event: sunrise
+        offset: "-00:30:00"
+      - platform: state
+        entity_id: alarm_control_panel.alarm_com
+        to: 'armed'
+      - platform: event
+        event_type: deconz_event
+        event_data: 
+          id: master_door_dimmer #when pressing button in master bedroom to turn off all the house lights, turn off the christmas tree lights too
+          event: 1002 #single click
+    action:
+      - entity_id: switch.christmas_tree_power
+        service: switch.turn_off

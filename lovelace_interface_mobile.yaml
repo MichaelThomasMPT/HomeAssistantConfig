@@ -436,6 +436,11 @@ views:
             image: /local/header-image-dark.png
             type: picture-elements
           - entities:
+              - entity: switch.christmas_tree_power
+                name: Christmas Tree
+                icon: 'mdi:pine-tree'
+                toggle: true
+                state_color: true
               - entity: light.living_room
                 name: Living Room
                 toggle: true
