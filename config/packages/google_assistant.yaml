@@ -10,6 +10,7 @@ cloud:
         - cover
         - input_number
         - sensor
+        - binary_sensor
       include_entities:
         - script.set_movie_lighting
         - script.set_tv_dinner_lighting
@@ -38,6 +39,7 @@ cloud:
         - light.fibaro_system_fgd212_dimmer_2_level_4
         - light.office
         - light.office_2
+        - light.range_extender_2
     entity_config:
       switch.christmas_tree_power:
         name: Christmas Tree
