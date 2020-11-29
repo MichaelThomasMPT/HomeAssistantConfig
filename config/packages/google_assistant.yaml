@@ -11,6 +11,7 @@ cloud:
         - input_number
         - sensor
         - binary_sensor
+        - alarm_control_panel
       include_entities:
         - script.set_movie_lighting
         - script.set_tv_dinner_lighting
