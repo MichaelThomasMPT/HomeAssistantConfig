@@ -165,6 +165,9 @@ automation:
       - platform: state
         entity_id: binary_sensor.front_door
         to: 'on'
+      - platform: state
+        entity_id: binary_sensor.front_screen_door
+        to: 'on'
     condition:
       condition: and
       conditions:

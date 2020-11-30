@@ -1,0 +1,28 @@
+automation:
+  - alias: Front Door - Turn On Porch Light If Front Door Opened After Sunset
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.front_door
+        to: 'on'
+      - platform: state
+        entity_id: binary_sensor.front_screen_door
+        to: 'on'
+    condition:
+      condition: and
+      conditions:
+        - condition: state  # from sunset until sunrise
+          entity_id: sun.sun
+          state: 'below_horizon'
+    action:
+      - service: light.turn_on
+        entity_id:
+          - light.front_porch_light
+
+  - alias: Front Door - Turn Off Porch Light At Sunrise
+    trigger:
+      - platform: sun
+        event: sunrise
+    action:
+      - service: light.turn_off
+        entity_id:
+          - light.front_porch_light
