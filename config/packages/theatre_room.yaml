@@ -350,13 +350,13 @@ automation:
               - light.theatre_room_left_lamp
             state: 'on'
             for:
-              minutes: 20
+              minutes: 10
           - condition: state
             entity_id: 
               - light.theatre_room_right_lamp
             state: 'on'
             for:
-              minutes: 20
+              minutes: 10
     action:
       - service: script.turn_off_theatre_room_lights
 
