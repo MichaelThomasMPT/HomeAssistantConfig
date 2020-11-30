@@ -13,8 +13,8 @@ script:
     sequence:
       - service: script.turn_off_all_lights
       - service: script.aircon_turn_off_all_zones
-      - service: switch.turn_off
-        entity_id: switch.aircon_on_off
+      - service: climate.turn_off
+        entity_id: climate.ac
       - service: media_player.turn_off #tv & speakers
         entity_id:
           - media_player.theatre_room_tv 
