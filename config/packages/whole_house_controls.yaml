@@ -61,9 +61,11 @@ script:
           - light.scullery_light
           - light.pantry_light
           - light.side_hall
-      #Finally, once all the lights have been set, toggle the automation to reset them the next morning
+      #Finally, once all the lights have been set, toggle the automation to reset them the next morning, and activate guest mode in case people are staying over
       - service: automation.turn_on
         entity_id: automation.whole_house_reset_party_lights
+      - service: input_boolean.turn_on
+        entity_id: input_boolean.guest_mode
 
   reset_party_lights:
     alias: "Whole House - Reset Party Lights"
