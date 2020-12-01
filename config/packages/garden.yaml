@@ -112,3 +112,22 @@ automation:
     action:
       service: light.turn_off
       entity_id: light.alfresco_ceiling_lights
+
+  - alias: Garden - Toggle Alfresco Fairy Lights With Switch
+    variables: 
+      #map the on/off buttons to the appropriate service
+      buttons: 
+        1002:
+          service_to_call: light.turn_on
+        2002:
+          service_to_call: light.turn_off
+    trigger: 
+      - platform: event
+        event_type: deconz_event
+        event_data: 
+          id: alfresco_fairy_lights_switch
+    condition: 
+      - "{{ trigger.event.data.event in buttons }}"
+    action:
+      - service: "{{ buttons[trigger.event.data.event].service_to_call }}"
+        entity_id: light.alfresco_fairy_lights
