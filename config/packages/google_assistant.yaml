@@ -15,6 +15,7 @@ cloud:
       include_entities:
         - script.set_movie_lighting
         - script.set_tv_dinner_lighting
+        - script.set_party_lights
         - script.aircon_warm_master
         - script.aircon_fan_master
         - script.aircon_cool_central_living
@@ -78,6 +79,10 @@ cloud:
         aliases:
           - Theatre Room Vent
           - Theatre Vent
+      light.alfresco_fairy_lights:
+        name: Alfresco Fairy Lights
+        aliases:
+          - Fairy Lights
 
 # Text to speech
 tts:
