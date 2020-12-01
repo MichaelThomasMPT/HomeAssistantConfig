@@ -3,7 +3,7 @@ light:
     lights:
       alfresco_fairy_lights:
         icon_template: mdi:string-lights
-        friendly_name: "Alfresco Fairly Lights"
+        friendly_name: "Alfresco Fairy Lights"
         value_template: "{{ states('switch.alfresco_fairy_lights_socket_a') == 'on' or states('switch.alfresco_fairy_lights_socket_b') == 'on'}}"
         turn_on:
           service: switch.turn_on
