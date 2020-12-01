@@ -36,6 +36,9 @@ automation:
         - condition: state
           entity_id: 'binary_sensor.back_door_flyscreen'
           state: 'on' #open
+        - condition: state
+          entity_id: 'light.alfresco_ceiling_lights' #Don't turn on the fairy lights if the ceiling lights are already on; don't need both active! 
+          state: 'off'
     action:
       - service: light.turn_on
         entity_id: light.alfresco_fairy_lights
@@ -91,3 +94,21 @@ automation:
     action:
       service: automation.turn_on
       entity_id: automation.garden_turn_off_outdoor_lights_if_left_on_during_the_day
+
+  - alias: Garden - Turn Off Alfresco Fairy Lights If Ceiling Lights Turned On
+    trigger:
+      - platform: state
+        entity_id: light.alfresco_ceiling_lights
+        to: 'on'
+    action:
+      service: light.turn_off
+      entity_id: light.alfresco_fairy_lights
+
+  - alias: Garden - Turn Off Alfresco Ceiling Lights If Fairy Lights Turned On
+    trigger:
+      - platform: state
+        entity_id: light.alfresco_fairy_lights
+        to: 'on'
+    action:
+      service: light.turn_off
+      entity_id: light.alfresco_ceiling_lights
