@@ -1101,6 +1101,19 @@ views:
             show_state: false
             state_color: false
             type: 'custom:fold-entity-row'
+          - entities:
+              - entity: script.set_party_lights
+                name: Set Party Lights
+              - entity: script.reset_party_lights
+                name: Reset Party Lights
+            head:
+              label: Presets
+              type: section
+            show_header_toggle: false
+            show_name: true
+            show_state: false
+            state_color: false
+            type: 'custom:fold-entity-row'
         title: null
         type: 'custom:vertical-stack-in-card'
       - cards:

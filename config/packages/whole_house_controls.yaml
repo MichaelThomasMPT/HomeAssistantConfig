@@ -9,6 +9,7 @@ script:
       - service: light.turn_off
         data_template: 
           entity_id: "{{ states.light | map(attribute='entity_id') | list | join(', ') }}"
+
   turn_off_whole_house:
     sequence:
       - service: script.turn_off_all_lights
@@ -21,3 +22,87 @@ script:
           - media_player.all_rooms
       - service: cover.close_cover
         entity_id: cover.theatre_blinds
+
+  set_party_lights:
+    alias: "Whole House - Set Party Lights"
+    description: "Sets all of the lights in the house to low for hosting parties."
+    icon: mdi:party-popper
+    sequence:
+      - service: light.turn_on
+        entity_id: light.alfresco_fairy_lights
+      - service: light.turn_on
+        entity_id: 
+          - light.kitchen_island
+          - light.living_room
+          - light.dining_room
+        data:
+          brightness_pct: 2
+      - service: light.turn_on
+        entity_id:
+          - light.entry_hall_lights
+        data:
+          brightness_pct: 7
+      - service: light.turn_on
+        entity_id: 
+          - light.scullery_light
+          - light.pantry_light
+          - light.side_hall
+        data:
+          brightness_pct: 15
+      - service: light.turn_on
+        entity_id: light.theatre_room #This is the hue group for the lamps. This ensures the 2 lamps stay in sync.
+        data:
+          effect: "colorloop"
+          brightness_pct: 60
+      - delay: 3
+      - service: light.turn_off
+        entity_id:
+          - light.kitchen_ceiling_light
+          - light.scullery_light
+          - light.pantry_light
+          - light.side_hall
+      #Finally, once all the lights have been set, toggle the automation to reset them the next morning
+      - service: automation.turn_on
+        entity_id: automation.whole_house_reset_party_lights
+
+  reset_party_lights:
+    alias: "Whole House - Reset Party Lights"
+    description: "Resets all of the lights to maximum brightness after a party."
+    icon: mdi:restore
+    sequence:
+      - service: light.turn_on
+        entity_id:
+          - light.kitchen_island
+          - light.living_room
+          - light.dining_room
+          - light.entry_hall_lights
+          - light.scullery_light
+          - light.pantry_light
+          - light.side_hall
+          - light.theatre_room
+        data:
+          brightness_pct: 100
+      - delay: 3
+      - service: light.turn_off
+        entity_id:
+          - light.kitchen_island
+          - light.living_room
+          - light.dining_room
+          - light.entry_hall_lights
+          - light.scullery_light
+          - light.pantry_light
+          - light.side_hall
+          - light.theatre_room
+      #No need to run the automation again after this script has been run
+      - service: automation.turn_off
+        entity_id: automation.whole_house_reset_party_lights
+
+automation:
+  - alias: "Whole House - Reset Party Lights"
+    description: "Automatically triggers reset of party lights the day after the party."
+    trigger:
+      - platform: sun
+        event: sunrise
+        offset: "+03:00:00" #should be enough time for any stragglers to wake up! 
+    action:
+      - service: script.reset_party_lights
