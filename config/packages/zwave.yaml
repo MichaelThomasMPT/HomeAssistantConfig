@@ -1,7 +1,7 @@
 light:
     - platform: switch
-      name: Alfresco Lights
-      entity_id: switch.alfresco_lights
+      name: Alfresco Ceiling Lights
+      entity_id: switch.alfresco_ceiling_lights
     - platform: switch
       name: Garden Flood Lights
       entity_id: switch.garden_flood_lights

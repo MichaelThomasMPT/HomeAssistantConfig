@@ -736,7 +736,8 @@ views:
               type: section
             type: 'custom:fold-entity-row'
           - entities:
-              - entity: light.alfresco_lights
+              - entity: light.alfresco_fairy_lights
+              - entity: light.alfresco_ceiling_lights
               - entity: light.garden_flood_lights
               - entity: binary_sensor.back_door_glass
             head:
@@ -1071,7 +1072,8 @@ views:
               - entity: script.turn_off_all_lights
                 name: Turn Off All Lights
                 icon: 'mdi:lightbulb-group-off'
-              - entity: light.alfresco_lights
+              - entity: light.alfresco_ceiling_lights
+              - entity: light.alfresco_fairy_lights
               - entity: light.dining_room
               - entity: light.ensuite_light
               - entity: light.entry_hall_lights
