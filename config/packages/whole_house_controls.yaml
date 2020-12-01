@@ -1,5 +1,6 @@
 script:
   turn_off_all_lights:
+    icon: 'mdi:lightbulb-group-off'
     sequence:
       - service: light.turn_off
         data_template: 
