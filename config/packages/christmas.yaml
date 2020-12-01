@@ -1,32 +1,35 @@
 
 automation: 
-  - alias: Christmas Tree - Turn On Automatically
+  - alias: Christmas - Automatically Turn On Tree Lights When Coming Home
     trigger:
-      - platform: sun
-        event: sunset
-        offset: "+00:30:00"
       - platform: state
         entity_id: alarm_control_panel.alarm_com
         to: 'disarmed'
-    condition:
-      - condition: state
-        entity_id: 'alarm_control_panel.alarm_com'
-        state: 'disarmed' #we're home
-      - condition: state 
-        entity_id: sun.sun
-        state: 'below_horizon' #night time
     action:
       - entity_id: switch.christmas_tree_power
         service: switch.turn_on
 
-  - alias: Christmas Tree - Turn Off Automatically
+  - alias: Christmas - Automatically Turn On Tree Lights At Night
+    trigger:
+      - platform: sun
+        event: sunset
+        offset: "+00:30:00"
+    condition:
+      - condition: state
+        entity_id: 'alarm_control_panel.alarm_com'
+        state: 'disarmed' #we're home
+    action:
+      - entity_id: switch.christmas_tree_power
+        service: switch.turn_on
+
+  - alias: Christmas - Automatically Turn Off Tree Lights
     trigger:
       - platform: sun
         event: sunrise
         offset: "-00:30:00"
       - platform: state
         entity_id: alarm_control_panel.alarm_com
-        to: 'armed'
+        to: 'armed_away'
       - platform: event
         event_type: deconz_event
         event_data: 
@@ -35,3 +38,31 @@ automation:
     action:
       - entity_id: switch.christmas_tree_power
         service: switch.turn_off
+
+  - alias: Christmas - Automatically Play Music When Arriving Home During The Day
+    variables: 
+      christmas_media_id: "kDS8zsfLQMg" #Let It Snow
+      christmas_playlist_id: "PLavpVzwAAU9aMvBGybe2vuMvPFgRhym_J" #Christmas Background Music
+    trigger: 
+      - platform: state
+        entity_id: alarm_control_panel.alarm_com
+        to: 'disarmed'
+    condition: 
+      - condition: state 
+        entity_id: sun.sun
+        state: 'above_horizon' #day time
+    action:
+      - service: media_player.play_media
+        data:
+          entity_id: media_player.kitchen_google_home_hub
+          media_content_type: cast
+          media_content_id: '
+              {
+              "app_name": "youtube",
+              "media_id": "{{ christmas_media_id }}",
+              "playlist_id": "{{ christmas_playlist_id }}"
+              }'
+      - service: media_player.volume_set
+        data:
+          entity_id: media_player.kitchen_google_home_hub
+          volume_level: 0.5
