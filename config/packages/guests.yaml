@@ -17,6 +17,7 @@ automation:
             - automation.theatre_room_blinds_open_automatically
             - automation.theatre_room_motion_turn_on_lights_when_motion_detected
             - automation.theatre_room_lights_turn_off_lamps_after_no_activity
+            - automation.theatre_room_lights_manual_control_movie_lights
 
   #When guests go home, reactivate automations
   - alias: Guests - Deactivate Guest Mode
@@ -31,6 +32,7 @@ automation:
             - automation.theatre_room_blinds_open_automatically
             - automation.theatre_room_motion_turn_on_lights_when_motion_detected
             - automation.theatre_room_lights_turn_off_lamps_after_no_activity
+            - automation.theatre_room_lights_manual_control_movie_lights
 
   #Once per day, ask if guest mode should be deactivated
   - alias: Guests - Notification To Deactivate Guest Mode
