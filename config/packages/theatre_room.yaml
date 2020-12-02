@@ -28,6 +28,15 @@ script:
         entity_id: light.theatre_room_ceiling
     alias: TV Dinner Lighting Scene
 
+  #Trigger the Hue lights scene for party lights
+  set_theatre_party_lighting:
+    sequence:
+    - service: hue.hue_activate_scene
+      data: 
+        group_name: "Theatre Room"
+        scene_name: "Party Lights"
+    alias: Theatre Party Lights Scene
+
   #Get the theatre room ready  
   time_for_a_movie:
     alias: Time For A Movie

@@ -63,11 +63,10 @@ script:
           - light.side_hall
         data:
           brightness_pct: 15
-      - service: light.turn_on
-        entity_id: light.theatre_room #This is the hue group for the lamps. This ensures the 2 lamps stay in sync.
-        data:
-          effect: "colorloop"
-          brightness_pct: 60
+      - service: hue.hue_activate_scene
+        data: 
+          group_name: "Theatre Room"
+          scene_name: "Party Lights"
       - delay: 3
       - service: light.turn_off
         entity_id:
