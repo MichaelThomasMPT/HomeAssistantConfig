@@ -1,19 +1,32 @@
 script:
   turn_off_all_lights:
     icon: 'mdi:lightbulb-group-off'
+    description: 'Turn off all the lights in the house, optionally excluding a set of lights in the process (excluded lights will remain in their current state).'
+    fields:
+      excluded_lights:
+        description: 'A comma-separated list of lights to exclude from turning off (ie. leave in their current state), or blank to turn off all lights'
+        example: "['light.garage_light', 'light.front_porch_light'] or []"
     sequence:
       - service: light.turn_off
         data_template: 
-          entity_id: "{{ states.light | map(attribute='entity_id') | list | join(', ') }}"
+          entity_id: "{{ states.light | rejectattr('entity_id','in', excluded_lights) | map(attribute='entity_id') | list | join(', ') }}"
       - delay:
           seconds: 5 #in case any lights didn't turn off fully (eg. those on a double switch), try again
       - service: light.turn_off
         data_template: 
-          entity_id: "{{ states.light | map(attribute='entity_id') | list | join(', ') }}"
+          entity_id: "{{ states.light | rejectattr('entity_id','in', excluded_lights) | map(attribute='entity_id') | list | join(', ') }}"
 
   turn_off_whole_house:
+    icon: 'mdi:home-minus-outline'
+    description: 'Turn off everything in the house, optionally excluding a set of lights in the process (excluded lights will remain in their current state).'
+    fields:
+      excluded_lights:
+        description: 'A comma-separated list of lights to exclude from turning off (ie. leave in their current state), or blank to turn off all lights'
+        example: "['light.garage_light', 'light.front_porch_light'] or []"
     sequence:
       - service: script.turn_off_all_lights
+        data:
+          excluded_lights: "{{ excluded_lights }}"
       - service: script.aircon_turn_off_all_zones
       - service: climate.turn_off
         entity_id: climate.ac

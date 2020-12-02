@@ -4,6 +4,9 @@ script:
   set_movie_lighting:
     sequence:
     - service: script.turn_off_all_lights 
+      data: 
+          #exclude the theatre room lamps & associated Hue groups from turning off
+          excluded_lights: "['light.theatre_room', 'light.theatre_room_2', 'light.theatre_room_left_lamp', 'light.theatre_room_right_lamp']"
     - service: hue.hue_activate_scene
       data: 
         group_name: "Theatre Room"
