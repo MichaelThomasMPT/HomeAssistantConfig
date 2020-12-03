@@ -239,6 +239,7 @@ automation:
       - platform: state
         entity_id: alarm_control_panel.alarm_com
         to: 'disarmed'
+        from: 'armed_away'
       - platform: state
         entity_id: media_player.theatre_room_tv
         to: 'off'

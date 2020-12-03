@@ -5,6 +5,7 @@ automation:
       - platform: state
         entity_id: alarm_control_panel.alarm_com
         to: 'disarmed'
+        from: 'armed_away'
     action:
       - entity_id: switch.christmas_tree_power
         service: switch.turn_on
@@ -47,6 +48,7 @@ automation:
       - platform: state
         entity_id: alarm_control_panel.alarm_com
         to: 'disarmed'
+        from: 'armed_away'
     condition: 
       - condition: state 
         entity_id: sun.sun
