@@ -188,9 +188,8 @@ script:
           - condition: state
             entity_id: switch.aircon_zone_bed23
             state: 'off'
-      - service: switch.turn_off 
-        entity_id:
-          - switch.aircon_on_off
+      - service: climate.turn_off 
+        entity_id: climate.ac
 
   #Slowly fade in the lights after the movie has finished
   movie_has_finished:

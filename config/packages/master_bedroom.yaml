@@ -59,8 +59,13 @@ automation:
     action:
       - variables:
           #is the aircon already running in the master bedroom?
-          aircon_initial_state: "{{ is_state('switch.aircon_on_off', 'on') and is_state('switch.aircon_zone_master', 'on') }}"
-      
+          aircon_was_running: "{{ states('climate.ac') != 'off' and is_state('switch.aircon_zone_master', 'on') }}"
+      - service: scene.create
+        data:
+          scene_id: aircon_original_state
+          entities:
+            climate.ac:
+              state: "{{ states('climate.ac') }}"
       - service: light.turn_off #start by turning off the brightest nearby lights
         entity_id: 
           - light.master_wir
@@ -74,11 +79,12 @@ automation:
       - service: script.turn_off_whole_house #after allowing time to get in to bed, turn off everything in the house
         data: 
           excluded_lights: "['light.master_bedroom', 'light.master_bedroom_lamp']" #Leave the bed side lamp and the corresponding hue group on if it already is
+          
       #proceed to turn on the aircon in the master bedroom for 30 min if the aircon was already on in there
       - condition: template
-        value_template: "{{ aircon_initial_state }}"
-      - service: switch.turn_on
-        entity_id: switch.aircon_on_off
+        value_template: "{{ aircon_was_running }}"
+      - service: scene.turn_on
+        entity_id: scene.aircon_original_state
       - delay:
           seconds: 5
       - service: switch.turn_on
@@ -89,6 +95,20 @@ automation:
         data:
           entity_id: input_number.aircon_countdown_timer
           value: 30
+      - delay:
+          seconds: 3
+      - service: switch.turn_off
+        entity_id: switch.aircon_zone_living
+      - delay:
+          seconds: 3
+      - service: switch.turn_off
+        entity_id: switch.aircon_zone_theatre
+      - delay:
+          seconds: 3
+      - service: switch.turn_off
+        entity_id: switch.aircon_zone_bed23
+
+
 
   - alias: Master Bedroom - Toggle Lamp Light
     trigger:
