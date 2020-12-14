@@ -88,94 +88,62 @@ script:
     variables:
       playlists:
         adventure: 
-          media_id: "bANjQqUVgvM"
           playlist_id: "PLavpVzwAAU9bWWSA9tN7EtDqFGRhF6Dva"
         ancient: 
-          media_id: "fK8vPxsnBT8"
           playlist_id: "PLavpVzwAAU9a5DrqFLhWEcBkoIrPH0aGz"
         battle: 
-          media_id: "3PlJiZcAwa0"
           playlist_id: "PLavpVzwAAU9Y8EJESUQzeIB-XKAfLqfze"
         cafe: 
-          media_id: "cernGdRJJFM"
           playlist_id: "PLavpVzwAAU9bi-3jXB2Hs9RNkZZWUxBOG"
         casino: 
-          media_id: "zCR_2KJIa6Y"
           playlist_id: "PLavpVzwAAU9ZbA6XJR0oT86FLWGCyDCq5"
         china: 
-          media_id: "MCKvdrdk7sc"
           playlist_id: "PLavpVzwAAU9bHfLOMampDIe_XhYP08bdZ"
         cities: 
-          media_id: "awhWqL9Afg8"
           playlist_id: "PLavpVzwAAU9biE9BBwvrpnVFNlXSfiM9h"
         detective: 
-          media_id: "lb_e3xpkRnw"
           playlist_id: "PLavpVzwAAU9ZAcIzK_cZGywhaWNC70en6"
         dungeon: 
-          media_id: "YwutOqv4cGo"
           playlist_id: "PLavpVzwAAU9bi9hKI0po6DE3yibLcIHRk"
         egyptian: 
-          media_id: "AaAUNAOJUV4"
           playlist_id: "PLavpVzwAAU9YdQ_y4gkwtcgj7ReWa5wsy"
         french: 
-          media_id: "-xkKwA66Kn8"
           playlist_id: "PLavpVzwAAU9aUT4bO4IjhRXsIw0ICuM6B"
         gangster: 
-          media_id: "5BWO9PUm3Vk"
           playlist_id: "PLavpVzwAAU9bK13tDSN7pogWWsu25K6vA"
         gloomhaven: 
-          media_id: "mhXatKj-v_8"
           playlist_id: "PLavpVzwAAU9ZiQn69q55xm_Vzj9ZiA-M7"
         horror: 
-          media_id: "6s0xanPjtKk"
           playlist_id: "PLavpVzwAAU9aR5V1A2lErsNLtqEorawx-"
         india: 
-          media_id: "RHIDlEs240o"
           playlist_id: "PLavpVzwAAU9aY5DO92CiaA8qR1DG6UvWP"
         japan: 
-          media_id: "6a-FnIqM0rI"
           playlist_id: "PLavpVzwAAU9Zv5nUaUNKBTPmIwLJ965Q7"
         magic: 
-          media_id: "UuPb1J_RCJM"
           playlist_id: "PLavpVzwAAU9aLuX06cbMK_EvVjlN0Gjvc"
         medieval_town: 
-          media_id: "Ku3EYXlwujk"
           playlist_id: "PLavpVzwAAU9b4G2MeVBZ5o35vJHT-zD3W"
         meditation: 
-          media_id: "-5QCxwfZuXU"
           playlist_id: "PLavpVzwAAU9axEP9wn3OfRSwCtewAUCfT"
         mythical: 
-          media_id: "lNUSmcSwUGI"
           playlist_id: "PLavpVzwAAU9aTzc6mxdSgWFqkB3_39MZ6"
         pirates: 
-          media_id: "PPs416S7OFU"
           playlist_id: "PLavpVzwAAU9ZPwauocZ6_5xPJ5LLdXedV"
         renaissance: 
-          media_id: "OBdREockBLQ"
           playlist_id: "PLavpVzwAAU9YBF1M0T8txK8p1Suyj6nms"
         space: 
-          media_id: "VJ817kvh_DM"
           playlist_id: "PLavpVzwAAU9Ywsbz7_I1A5v3Qfpdx43bC"
         spy: 
-          media_id: "R0JuXvn68AA"
           playlist_id: "PLavpVzwAAU9Z4Isj-XdXkCG6AQ9GjXr1S"
         water: 
-          media_id: "Y47bzEeMuXw"
           playlist_id: "PLavpVzwAAU9aFuWrnrI8E458ILtfUHrif"
         western: 
-          media_id: "Bgfq5ekH84g"
           playlist_id: "PLavpVzwAAU9bsH4JeaXcLxZqGaPM2bjwh"
     sequence:
-      - service: media_player.play_media
+      - service: script.youtube_randomize_playlist
         data:
-          entity_id: media_player.kitchen_google_home_hub
-          media_content_type: cast
-          media_content_id: '
-              {
-              "app_name": "youtube",
-              "media_id": "{{ playlists[playlist_name].media_id }}",
-              "playlist_id": "{{ playlists[playlist_name].playlist_id }}"
-              }'
+          media_entity: media_player.kitchen_google_home_hub
+          playlist_id: "{{ playlists[playlist_name].playlist_id }}"
       - service: media_player.volume_set
         data:
           entity_id: media_player.kitchen_google_home_hub
