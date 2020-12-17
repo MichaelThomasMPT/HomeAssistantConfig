@@ -13,6 +13,8 @@ binary_sensor.michael_pc:
   icon: mdi:desktop-tower-monitor
 binary_sensor.laura_pc:
   icon: mdi:desktop-tower-monitor
+binary_sensor.michael_work_laptop:
+  icon: mdi:laptop
 binary_sensor.back_door_glass:
   device_class: door
 binary_sensor.back_door_flyscreen:

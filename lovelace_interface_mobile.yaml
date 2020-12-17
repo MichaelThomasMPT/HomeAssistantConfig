@@ -534,6 +534,14 @@ views:
                   right: 32%
                   transform: initial
                 type: state-icon
+              - entity: binary_sensor.michael_work_laptop
+                style:
+                  '--paper-item-icon-color': skyblue
+                  bottom: 20%
+                  font-weight: bold
+                  right: 46%
+                  transform: initial
+                type: state-icon
               - entity: sensor.office_temperature
                 style:
                   bottom: 20%

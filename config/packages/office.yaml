@@ -9,6 +9,11 @@ binary_sensor:
     name: Laura PC
     count: 2
     scan_interval: 5
+  - platform: ping
+    host: !secret device_michael_work_laptop_ip_address
+    name: Michael Work Laptop
+    count: 2
+    scan_interval: 5
 
 automation:
   - alias: Front Hall - Turn On Hallway Light If PC Turned Off At Night
