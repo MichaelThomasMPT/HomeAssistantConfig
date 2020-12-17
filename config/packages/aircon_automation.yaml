@@ -1,3 +1,8 @@
+input_number:
+  aircon_make_central_living_comfortable_temperature_max:
+    min: 16
+    max: 32
+
 script:
   #Turn off all zones
   aircon_turn_off_all_zones:
@@ -154,6 +159,56 @@ script:
         data:
           entity_id: scene.aircon_saved_state
           
+  #Reduce the central living area temperature to a comfortable level
+  aircon_make_central_living_comfortable:
+    alias: Aircon Make Central Living Comfortable
+    fields: 
+      target_temperature: 
+        description: 'What temperature should the aircon run at?'
+        example: 25
+      comfortable_temperature_max:
+        description: 'What maximum temperature should be considered comfortable enough?'
+        example: 26
+    sequence:
+      #Set the comfortable temperature in a number helper
+      - service: input_number.set_value
+        data:
+          entity_id: input_number.aircon_make_central_living_comfortable_temperature_max
+          value: "{{comfortable_temperature_max}}"
+      #Run the aircon in the central living area at the target temperature
+      - data:
+          entity_id: climate.ac
+          temperature: "{{target_temperature}}"
+        service: climate.set_temperature
+      - data:
+          entity_id: climate.ac
+          hvac_mode: cool
+        service: climate.set_hvac_mode
+      - service: script.aircon_turn_off_all_zones
+      - data:
+          entity_id: cover.living
+        service: cover.open_cover
+      - delay:
+          minutes: 5
+      #Keep running until comfortable temperature has been reached
+      - repeat:
+          while: 
+            - condition: numeric_state
+              entity_id: sensor.living_room_temperature
+              above: input_number.aircon_make_central_living_comfortable_temperature_max
+          sequence:
+            - delay:
+                minutes: 2
+      #Once the temperature has dropped, check the aircon is still in cool mode before swapping it to fan,
+      #in case it has actually been off for hours and the temperature has just decreased in that time.
+      - condition: state
+        entity_id: climate.ac
+        state: 'cool' 
+      - data:
+          entity_id: climate.ac
+          hvac_mode: fan_only
+        service: climate.set_hvac_mode
+      
 automation:
   - alias: Temperature - Morning Warmth
     trigger:
@@ -298,3 +353,22 @@ automation:
     action:
       - service: climate.turn_off
         entity_id: climate.ac
+
+  - alias: Temperature - Make Central Living Comfortable When Arriving home
+    trigger: 
+      - platform: state
+        entity_id: alarm_control_panel.alarm_com
+        to: 'disarmed'
+        from: 'armed_away'
+    variables: 
+      target_temp: 24 #how cold the aircon should run
+      comfortable_temp: 25 #considered a comfortable level
+    condition:
+      - condition: numeric_state
+        entity_id: sensor.living_room_temperature
+        above: 26 #uncomfortable enough to need to run this automation
+    action:
+      - service: script.aircon_make_central_living_comfortable
+        data:
+          target_temperature: "{{target_temp}}"
+          comfortable_temperature_max: "{{comfortable_temp}}"
