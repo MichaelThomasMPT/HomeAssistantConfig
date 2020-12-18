@@ -268,9 +268,14 @@ automation:
     condition:
       - condition: template
         value_template: '{{ (states.sensor.master_bedroom_temperature.state | float) > 22.0 }}' 
-      - condition: state
-        entity_id: 'climate.ac'
-        state: 'off' #aircon is currently off
+      - condition: or
+        conditions:
+        - condition: state
+          entity_id: 'climate.ac'
+          state: 'off' #aircon is currently off
+        - condition: state
+          entity_id: 'switch.aircon_zone_master'
+          state: 'off' #master bedroom zone is off
     action:
       - service: script.aircon_fan_master 
 
@@ -289,9 +294,14 @@ automation:
     condition:
       - condition: template
         value_template: '{{ (states.sensor.master_bedroom_temperature.state | float) <= 22.0 }}' 
-      - condition: state
-        entity_id: 'climate.ac'
-        state: 'off' #aircon is currently off
+      - condition: or
+        conditions:
+        - condition: state
+          entity_id: 'climate.ac'
+          state: 'off' #aircon is currently off
+        - condition: state
+          entity_id: 'switch.aircon_zone_master'
+          state: 'off' #master bedroom zone is off
     action:
       - service: script.aircon_warm_master 
 
@@ -313,7 +323,10 @@ automation:
         conditions:
         - condition: state
           entity_id: 'climate.ac'
-          state: 'off'
+          state: 'off' #aircon is currently on in any mode
+        - condition: state
+          entity_id: 'switch.aircon_zone_master'
+          state: 'off' #master bedroom zone is on
     action:
       - service: climate.turn_off
         data:
