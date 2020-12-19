@@ -72,18 +72,18 @@ views:
                 type: state-label
             image: /local/header-image-dark.png
             type: picture-elements
-          - entities:
-              - entity: light.front_porch_light
-                name: Front Porch
-              - entity: light.entry_hall_lights
-                name: Entry Hall
-              - entity: light.side_hall
-                name: Side Hall
-            head:
-              label: Lights
-              type: section
+          - entities: []
+            footer:
+              type: buttons
+              entities:
+                - entity: light.front_porch_light
+                  name: Front Porch
+                - entity: light.entry_hall_lights
+                  name: Entry Hall
+                - entity: light.side_hall
+                  name: Side Hall
             show_header_toggle: false
-            type: 'custom:fold-entity-row'
+            type: entities
           - entities:
               - entity: sensor.front_door_last_ding
                 icon: 'mdi:bell-ring'
@@ -192,27 +192,62 @@ views:
                 type: state-label
             image: /local/header-image-dark.png
             type: picture-elements
+          - type: entities
+            entities: []
+            footer:
+              type: buttons
+              entities:
+                - entity: light.master_bedroom_ceiling
+                  name: Ceiling
+                  toggle: true
+                - entity: light.master_bedroom_lamp
+                  name: Lamp
+                  icon: 'mdi:lamp'
+                  toggle: true
+                - entity: light.master_wir
+                  name: WIR
+                  toggle: true
+                - entity: light.ensuite_light
+                  name: Ensuite
+                  toggle: true
+                - entity: switch.ensuite_fan
+                  name: Exhaust
+                  toggle: true
+                  icon: 'mdi:shower-head'
+          - type: entities
+            entities: []
+            footer:
+              type: buttons
+              entities:
+                - entity: script.aircon_warm_master
+                  hold_action:
+                    action: none
+                  icon: 'mdi:fire'
+                  icon_height: 60px
+                  name: Warm Bedroom
+                  show_icon: true
+                  show_name: true
+                  tap_action:
+                    action: call-service
+                    service: script.turn_on
+                    service_data:
+                      entity_id: script.aircon_warm_master
+                  type: button
+                - entity: script.aircon_fan_master
+                  hold_action:
+                    action: none
+                  icon: 'mdi:fan'
+                  icon_height: 60px
+                  name: Sleeping Fan
+                  show_icon: true
+                  show_name: true
+                  tap_action:
+                    action: call-service
+                    service: script.turn_on
+                    service_data:
+                      entity_id: script.aircon_fan_master
+                  type: button
           - entities:
-              - entity: light.master_bedroom_ceiling
-                name: Bedroom
-                toggle: true
-              - entity: light.master_bedroom_lamp
-                name: Lamp
-                toggle: true
-              - entity: light.master_wir
-                name: Walk-In Robe
-                toggle: true
-              - entity: light.ensuite_light
-                name: Ensuite
-                toggle: true
-              - entity: switch.ensuite_fan
-                name: Ensuite Fan
-                toggle: true
-              - entity: switch.aircon_zone_master
-                hide_when_off: true
-                icon: 'mdi:air-filter'
-                name: Aircon Vent
-                toggle: true
               - entity: media_player.master_bedroom_speaker
                 group: true
                 hide:
@@ -224,45 +259,12 @@ views:
                   controls: true
                 name: Ensuite Google Home
             head:
-              label: Room & Media
+              label: Media
               type: section
             show_header_toggle: false
             show_name: true
             show_state: false
             state_color: true
-            type: 'custom:fold-entity-row'
-          - entities:
-              - entity: script.aircon_warm_master
-                hold_action:
-                  action: none
-                icon: 'mdi:fire'
-                icon_height: 60px
-                name: Warm Bedroom
-                show_icon: true
-                show_name: true
-                tap_action:
-                  action: call-service
-                  service: script.turn_on
-                  service_data:
-                    entity_id: script.aircon_warm_master
-                type: button
-              - entity: script.aircon_fan_master
-                hold_action:
-                  action: none
-                icon: 'mdi:fan'
-                icon_height: 60px
-                name: Sleeping Fan
-                show_icon: true
-                show_name: true
-                tap_action:
-                  action: call-service
-                  service: script.turn_on
-                  service_data:
-                    entity_id: script.aircon_fan_master
-                type: button
-            head:
-              label: Presets
-              type: section
             type: 'custom:fold-entity-row'
         title: null
         type: 'custom:vertical-stack-in-card'
@@ -293,34 +295,73 @@ views:
                 type: state-label
             image: /local/header-image-dark.png
             type: picture-elements
-          - entities:
-              - entity: light.theatre_room_ceiling
-                hide_when_off: true
-                name: Ceiling
-                toggle: true
-                type: 'custom:slider-entity-row'
-              - entity: light.theatre_room
-                hide_when_off: true
-                name: Lamps
-                toggle: true
-                type: 'custom:slider-entity-row'
-              - entity: cover.theatre_blinds
-                hide_when_off: true
-                name: Blinds
-                toggle: true
-              - entity: switch.aircon_zone_theatre
-                hide_when_off: true
-                icon: 'mdi:air-filter'
-                name: Aircon Vent
-                toggle: true
-            head:
-              label: Room
-              type: section
-            show_header_toggle: false
-            show_name: true
-            show_state: false
-            state_color: true
-            type: 'custom:fold-entity-row'
+          - type: entities
+            entities: []
+            footer:
+              type: buttons
+              entities:
+                - entity: light.theatre_room_ceiling
+                  hide_when_off: true
+                  name: Ceiling
+                  toggle: true
+                  type: 'custom:slider-entity-row'
+                - entity: light.theatre_room
+                  hide_when_off: true
+                  name: Lamps
+                  toggle: true
+                  type: 'custom:slider-entity-row'
+                  icon: 'mdi:floor-lamp'
+                - entity: cover.theatre_blinds
+                  hide_when_off: true
+                  name: Blinds
+                  toggle: true
+          - type: entities
+            entities: []
+            footer:
+              type: buttons
+              entities:
+                - entity: script.set_movie_lighting
+                  hold_action:
+                    action: none
+                  icon: 'mdi:theater'
+                  icon_height: 60px
+                  name: Movie Lights
+                  show_icon: true
+                  show_name: true
+                  tap_action:
+                    action: call-service
+                    service: script.turn_on
+                    service_data:
+                      entity_id: script.set_movie_lighting
+                  type: button
+                - entity: script.movie_has_finished
+                  hold_action:
+                    action: none
+                  icon: 'mdi:filmstrip-off'
+                  icon_height: 60px
+                  name: Movie Has Finished
+                  show_icon: true
+                  show_name: true
+                  tap_action:
+                    action: call-service
+                    service: script.turn_on
+                    service_data:
+                      entity_id: script.movie_has_finished
+                  type: button
+                - entity: script.aircon_cool_theatre
+                  hold_action:
+                    action: none
+                  icon: 'mdi:snowflake'
+                  icon_height: 60px
+                  name: Cool Theatre
+                  show_icon: true
+                  show_name: true
+                  tap_action:
+                    action: call-service
+                    service: script.turn_on
+                    service_data:
+                      entity_id: script.aircon_cool_theatre
+                  type: button
           - entities:
               - artwork: full-cover
                 entity: media_player.theatre_room_tv
@@ -351,53 +392,6 @@ views:
             show_name: true
             show_state: false
             state_color: true
-            type: 'custom:fold-entity-row'
-          - entities:
-              - entity: script.set_movie_lighting
-                hold_action:
-                  action: none
-                icon: 'mdi:theater'
-                icon_height: 60px
-                name: Movie Lights
-                show_icon: true
-                show_name: true
-                tap_action:
-                  action: call-service
-                  service: script.turn_on
-                  service_data:
-                    entity_id: script.set_movie_lighting
-                type: button
-              - entity: script.movie_has_finished
-                hold_action:
-                  action: none
-                icon: 'mdi:filmstrip-off'
-                icon_height: 60px
-                name: Movie Has Finished
-                show_icon: true
-                show_name: true
-                tap_action:
-                  action: call-service
-                  service: script.turn_on
-                  service_data:
-                    entity_id: script.movie_has_finished
-                type: button
-              - entity: script.aircon_cool_theatre
-                hold_action:
-                  action: none
-                icon: 'mdi:snowflake'
-                icon_height: 60px
-                name: Cool Theatre
-                show_icon: true
-                show_name: true
-                tap_action:
-                  action: call-service
-                  service: script.turn_on
-                  service_data:
-                    entity_id: script.aircon_cool_theatre
-                type: button
-            head:
-              label: Presets
-              type: section
             type: 'custom:fold-entity-row'
         title: null
         type: 'custom:vertical-stack-in-card'
@@ -435,24 +429,26 @@ views:
                 type: state-label
             image: /local/header-image-dark.png
             type: picture-elements
+          - type: entities
+            entities: []
+            footer:
+              type: buttons
+              entities:
+                - entity: switch.christmas_tree_power
+                  name: Tree
+                  icon: 'mdi:pine-tree'
+                  toggle: true
+                  state_color: true
+                - entity: light.living_room
+                  name: Living
+                  toggle: true
+                - entity: light.dining_room
+                  name: Dining
+                  toggle: true
+                - entity: light.kitchen_lights
+                  name: Kitchen
+                  toggle: true
           - entities:
-              - entity: switch.christmas_tree_power
-                name: Christmas Tree
-                icon: 'mdi:pine-tree'
-                toggle: true
-                state_color: true
-              - entity: light.living_room
-                name: Living Room
-                toggle: true
-              - entity: light.dining_room
-                name: Dining Room
-                toggle: true
-              - entity: light.kitchen_ceiling_light
-                name: Kitchen Ceiling
-                toggle: true
-              - entity: light.kitchen_island
-                name: Kitchen Island
-                toggle: true
               - entity: switch.aircon_zone_living
                 hide_when_off: true
                 icon: 'mdi:air-filter'
@@ -629,6 +625,32 @@ views:
                 type: state-label
             image: /local/header-image-dark.png
             type: picture-elements
+          - entities: []
+            type: entities
+            footer:
+              type: buttons
+              entities:
+                - entity: light.kitchen_ceiling_light
+                  name: Kitchen Ceiling
+                  toggle: true
+                - entity: light.kitchen_island
+                  name: Kitchen Island
+                  toggle: true
+                  icon: 'mdi:ceiling-light'
+          - entities: []
+            type: entities
+            footer:
+              type: buttons
+              entities:
+                - entity: light.kitchenette_lights
+                  name: Scullery
+                  icon: 'mdi:lightbulb'
+                - entity: light.living_room
+                  name: Living
+                  toggle: true
+                - entity: light.dining_room
+                  name: Dining
+                  toggle: true
           - entities:
               - entity: media_player.kitchen_google_home_hub
                 group: true
@@ -638,22 +660,6 @@ views:
                 hide_when_off: true
                 icon: 'mdi:air-filter'
                 name: Aircon Vent
-                toggle: true
-              - entity: light.kitchen_ceiling_light
-                name: Kitchen Ceiling
-                toggle: true
-              - entity: light.kitchen_island
-                name: Kitchen Island
-                toggle: true
-              - entity: light.scullery_light
-                name: Scullery
-              - entity: light.pantry_light
-                name: Pantry
-              - entity: light.living_room
-                name: Living Room
-                toggle: true
-              - entity: light.dining_room
-                name: Dining Room
                 toggle: true
               - entity: sensor.coffees_made_today
                 icon: 'mdi:coffee'
@@ -714,6 +720,12 @@ views:
                   right: 5%
                   transform: initial
                 type: state-label
+              - entity: binary_sensor.back_door_glass
+                style:
+                  bottom: 20%
+                  right: 20%
+                  transform: initial
+                type: state-icon
               - entity: sensor.blank
                 hold-action: none
                 prefix: Outdoors
@@ -729,6 +741,17 @@ views:
           - entity: weather.treeby_house
             name: Treeby
             type: weather-forecast
+          - type: entities
+            entities: []
+            footer:
+              type: buttons
+              entities:
+                - entity: light.alfresco_fairy_lights
+                  name: Fairy Lights
+                - entity: light.alfresco_ceiling_lights
+                  name: Ceiling Lights
+                - entity: light.garden_flood_lights
+                  name: Flood Lights
           - entities:
               - entity: sensor.sems_status
                 icon: 'mdi:power'
@@ -741,15 +764,6 @@ views:
                 name: Electricity Generated Today
             head:
               label: Solar Panels
-              type: section
-            type: 'custom:fold-entity-row'
-          - entities:
-              - entity: light.alfresco_fairy_lights
-              - entity: light.alfresco_ceiling_lights
-              - entity: light.garden_flood_lights
-              - entity: binary_sensor.back_door_glass
-            head:
-              label: Back Garden
               type: section
             type: 'custom:fold-entity-row'
         title: null
