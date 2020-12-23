@@ -999,6 +999,22 @@ views:
               type: section
             title: Presets
             type: 'custom:fold-entity-row'
+          - title: Temperatures
+            type: 'custom:fold-entity-row'
+            head:
+              label: Temperatures
+              type: section
+            entities:
+              - entity: sensor.living_room_temperature
+                name: Living Room
+              - entity: sensor.theatre_temperature
+                name: Theatre Room
+              - entity: sensor.master_bedroom_temperature
+                name: Master Bedroom
+              - entity: sensor.office_temperature
+                name: Bedroom 2 & 3
+              - entity: sensor.current_outdoor_temperature
+                name: Outside
         title: null
         type: 'custom:vertical-stack-in-card'
       - cards:
