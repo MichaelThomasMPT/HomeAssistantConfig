@@ -29,6 +29,18 @@ zone:
     radius: 220
     icon: mdi:home
 
+  - name: Capel House
+    latitude: !secret zone_capel_house_latitude
+    longitude: !secret zone_capel_house_longitude
+    radius: 100
+    icon: mdi:home
+
+  - name: Laura's Work
+    latitude: !secret zone_laura_work_latitude
+    longitude: !secret zone_laura_work_longitude
+    radius: 220
+    icon: mdi:store
+
 automation:
   # - alias: Location - Notify Michael If Laura Leaving Work
   #   trigger:
