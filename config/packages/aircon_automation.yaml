@@ -232,10 +232,10 @@ automation:
   - alias: Temperature - Solar Cooling
     trigger:
       platform: time_pattern
-      minutes: "/1" #This will match every 1 minutes
+      minutes: "/10" #This will match every 1 minutes
     condition:
       - condition: template
-        value_template: '{{ (states.sensor.living_room_temperature.state | float) > 25.0 }}' #if the inside temperature is > 25 degrees  
+        value_template: '{{ (states.sensor.living_room_temperature.state | float) > 28.0 }}' #if the inside temperature is > 25 degrees  
       - condition: template
         value_template: '{{ (states.sensor.sems_output_power.state | float) > 2000.0 }}' #if the solar panels are running well
       - condition: state
