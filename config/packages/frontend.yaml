@@ -49,17 +49,17 @@ automation:
 panel_iframe:
   home_server_dashboard:
     title: Home Server Dashboard
-    url: 'http://192.168.1.111:802'
+    url: !secret home_server_dashboard_url
     icon: mdi:monitor-dashboard
     require_admin: true
   recipe_manager:
     title: Recipe Manager
-    url: 'http://192.168.1.111:4000/beta/'
+    url: !secret recipe_manager_url
     icon: mdi:food-variant
     require_admin: false
   mybgg:
     title: My Board Games
-    url: 'http://192.168.1.111:1234'
+    url: !secret my_board_games_url
     icon: mdi:cards
     require_admin: false
 panel_custom:
