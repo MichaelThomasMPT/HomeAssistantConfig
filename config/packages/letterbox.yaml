@@ -38,6 +38,21 @@ automation:
           rgb_color: [253, 44, 255] 
       - delay:
           minutes: 5 #minimum 5 minute cooldown between notifications
+      #If I'm not home right now, remind me again when I do get home
+      - condition: state
+        entity_id: person.michael
+        state: 'not_home'
+      - wait_for_trigger:
+        - platform: state
+          entity_id: person.michael
+          to: 'home'
+      - service: notify.mobile_app_michael_s_galaxy_s10
+        data:
+          message: You have mail!
+          data:
+            actions:
+              - action: "mail_wasnt_delivered" 
+                title: "No, this was me."
 
   #When "Mail Wasn't Delivered" button on notification is pressed, turn off the office lamp again. 
   - alias: Guests - Deactivate Guest Mode On Notification Button Pressed
