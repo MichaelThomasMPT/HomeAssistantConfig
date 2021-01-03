@@ -701,6 +701,7 @@ views:
             image: /local/header-image-dark.png
             type: picture-elements
           - entities:
+              - entity: binary_sensor.washing_machine_needs_emptying
               - entity: input_boolean.washing_machine_notify_michael
               - entity: input_boolean.washing_machine_notify_laura
             head:
@@ -1083,7 +1084,9 @@ views:
             type: 'custom:fold-entity-row'
           - entities:
               - entity: input_boolean.medicine_reminder_toggle
-                name: Medicine Needs Taking
+                name: Michael - Medicine Needs Taking
+              - entity: input_boolean.washing_machine_notify_michael
+              - entity: input_boolean.washing_machine_notify_laura
               - entity: >-
                   automation.garage_notify_if_garage_door_left_open_for_5_minutes
                 name: Garage Left Open Alerts

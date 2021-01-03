@@ -1,0 +1,149 @@
+input_boolean:
+  washing_machine_notify_michael:
+    name: Washing Machine - Notify Michael
+    icon: mdi:bell-ring
+  washing_machine_notify_laura:
+    name: Washing Machine - Notify Laura
+    icon: mdi:bell-ring
+
+sensor:
+  - platform: template
+    sensors:
+      washing_machine_power_consumption:
+        friendly_name: "Washing Machine Power Consumption"
+        unit_of_measurement: "w"
+        value_template: "{{ state_attr('switch.washing_machine', 'current_power_w') }}"
+
+binary_sensor:
+  - platform: template
+    sensors:
+      #if power consumption is high enough, washing machine is running
+      washing_machine_running:
+        friendly_name: "Washing Machine Is Running"
+        value_template: "{{ states('sensor.washing_machine_power_consumption')|float > 5 }}"
+        delay_off:
+          minutes: 10 #Power consumption must be low for 10 minutes before considering the washing machine off
+        icon_template: >-
+          {% if is_state("binary_sensor.washing_machine_running", "on") %} 
+            mdi:washing-machine
+          {% else %}
+            mdi:washing-machine-off
+          {% endif %}
+      #If the door hasn't been opened since the machine last turned off
+      washing_machine_needs_emptying:
+        friendly_name: "Washing Machine Needs Emptying"
+        value_template: >-
+          {{
+            as_timestamp(states.binary_sensor.washing_machine_door.last_changed) 
+              < as_timestamp(states.binary_sensor.washing_machine_running.last_changed) 
+           and is_state('binary_sensor.washing_machine_running', 'off')
+           and is_state('binary_sensor.washing_machine_door', 'off')
+          }}
+        icon_template: mdi:washing-machine-alert
+        device_class: occupancy
+      #If the machine needs emptying and Michael toggle is on, start notifications
+      washing_machine_notifications_michael:
+        friendly_name: "Washing Machine Notifications Will Be Triggering For Michael"
+        value_template: >-
+          {{
+            is_state('binary_sensor.washing_machine_needs_emptying', 'on')
+            and is_state('input_boolean.washing_machine_notify_michael', 'on')
+          }}
+      #If the machine needs emptying and Laura toggle is on, start notifications
+      washing_machine_notifications_laura:
+        friendly_name: "Washing Machine Notifications Will Be Triggering For Laura"
+        value_template: >-
+          {{
+            is_state('binary_sensor.washing_machine_needs_emptying', 'on')
+            and is_state('input_boolean.washing_machine_notify_laura', 'on')
+          }}
+
+automation:
+  - alias: Washing Machine -Turn On Washing Machine Notifications For Michael
+    trigger:
+      - platform: event
+        event_type: deconz_event
+        event_data: 
+          id: washing_notifications_switch
+          event: 1002 #michael
+    action:
+      - service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.washing_machine_notify_michael
+      - service: notify.mobile_app_michael_s_galaxy_s10
+        data:
+          message: Washing machine notifications switched on for Michael.
+          data:
+            timeout: 60
+
+  - alias: Washing Machine -Turn On Washing Machine Notifications For Laura
+    trigger:
+      - platform: event
+        event_type: deconz_event
+        event_data: 
+          id: washing_notifications_switch
+          event: 2002 #laura
+    action:
+      - service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.washing_machine_notify_laura
+
+  - alias: Washing Machine - Pause Washing Machine Notifications Until Home
+    trigger:
+      platform: event
+      event_type: mobile_app_notification_action
+      event_data:
+        action: mute_washing_machine_notifications_until_home
+    condition:
+      - condition: state
+        entity_id: person.michael
+        state: 'not_home'
+    action:
+      - service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.washing_machine_notify_michael
+      - wait_template: "{{ is_state('person.michael', 'home') }}"
+      - service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.washing_machine_notify_michael
+
+  - alias: Washing Machine - Pause Washing Machine Notifications Until Morning
+    trigger:
+      platform: event
+      event_type: mobile_app_notification_action
+      event_data:
+        action: mute_washing_machine_notifications_until_morning
+    action:
+      - service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.washing_machine_notify_michael
+      - wait_template: "{{ now().hour == 7 }}" #Restart notifications at 7am 
+      - service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.washing_machine_notify_michael
+
+alert:
+  washing_machine_reminder_michael:
+    name: The washing machine has finished.
+    entity_id: binary_sensor.washing_machine_notifications_michael
+    state: 'on'
+    repeat: 60
+    can_acknowledge: true
+    skip_first: false
+    notifiers:
+      - mobile_app_michael_s_galaxy_s10
+    data:
+      actions:
+        - action: "mute_washing_machine_notifications_until_home"
+          title: "Mute Until I'm Home"
+        - action: "mute_washing_machine_notifications_until_morning"
+          title: "Mute Until Morning"
+  washing_machine_reminder_laura:
+    name: The washing machine has finished.
+    entity_id: binary_sensor.washing_machine_notifications_laura
+    state: 'on'
+    repeat: 60
+    can_acknowledge: true
+    skip_first: false
+    notifiers:
+      - mobile_app_lauras_iphone
