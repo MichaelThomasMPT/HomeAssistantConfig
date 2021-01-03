@@ -449,11 +449,6 @@ views:
                   name: Kitchen
                   toggle: true
           - entities:
-              - entity: switch.aircon_zone_living
-                hide_when_off: true
-                icon: 'mdi:air-filter'
-                name: Aircon Vent
-                toggle: true
               - entity: sensor.roomba_docked
                 icon: 'mdi:robot-vacuum'
                 name: Roomba
@@ -467,8 +462,11 @@ views:
                 tap_action:
                   action: toggle
                 type: button
+              - entity: switch.roomba_magic_wall
+                name: Magic Wall
+                icon: 'mdi:wall'
             head:
-              label: Room
+              label: Roomba
               type: section
             show_header_toggle: false
             show_name: true
