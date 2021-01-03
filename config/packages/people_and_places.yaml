@@ -89,7 +89,6 @@ person:
     device_trackers:
       - device_tracker.phone_ping_laura
     
-
 device_tracker:
   - platform: ping
     hosts:

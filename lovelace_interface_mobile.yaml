@@ -1074,16 +1074,30 @@ views:
                 icon: 'mdi:delete'
                 name: Bins were moved today?
                 toggle: true
+              - entity: input_boolean.guest_mode
+            head:
+              label: Automations
+              type: section
+            show_header_toggle: false
+            show_name: true
+            show_state: false
+            state_color: false
+            type: 'custom:fold-entity-row'
+          - entities:
+              - entity: input_boolean.medicine_reminder_toggle
+                name: Medicine Needs Taking
               - entity: >-
                   automation.garage_notify_if_garage_door_left_open_for_5_minutes
                 name: Garage Left Open Alerts
+                icon: 'mdi:garage-alert'
               - entity: automation.bins_notify_if_bins_not_taken_out
                 name: Take Bins Out Alerts
+                icon: 'mdi:trash-can'
               - entity: automation.location_notify_when_someone_comes_home
                 name: Notify When Someone Arrives Home (default off)
-              - entity: input_boolean.guest_mode
+                icon: 'mdi:home-map-marker'
             head:
-              label: Automation Control
+              label: Reminders
               type: section
             show_header_toggle: false
             show_name: true

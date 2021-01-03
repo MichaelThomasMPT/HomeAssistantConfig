@@ -1,0 +1,63 @@
+input_boolean:
+  medicine_reminder_toggle:
+    name: Remind Me To Take Medicine
+    icon: mdi:pill
+
+automation:
+  - alias: Medicine - Activate Reminder When Medicine Needs Taking
+    trigger:
+      - platform: time
+        at: 
+          - '7:00:00'
+          - '19:00:00'
+    action:
+      - service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.medicine_reminder_toggle
+
+  - alias: Medicine - Deactivate Reminder Once Medicine Is Taken
+    trigger:
+      platform: event
+      event_type: mobile_app_notification_action
+      event_data:
+        action: medicine_reminder_finished
+    action:
+      - service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.medicine_reminder_toggle
+
+  - alias: Medicine - Pause Medicine Notifications Until Home
+    trigger:
+      platform: event
+      event_type: mobile_app_notification_action
+      event_data:
+        action: medicine_reminder_mute_until_home
+    condition:
+      - condition: state
+        entity_id: person.michael
+        state: 'not_home'
+    action:
+      - service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.medicine_reminder_toggle
+      - wait_template: "{{ is_state('person.michael', 'home') }}"
+      - service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.medicine_reminder_toggle    
+
+alert:
+  medicine_reminder:
+    name: Remember to take your medicine.
+    entity_id: input_boolean.medicine_reminder_toggle
+    state: 'on'
+    repeat: 15
+    can_acknowledge: true
+    skip_first: false
+    notifiers:
+      - mobile_app_michael_s_galaxy_s10
+    data:
+      actions:
+        - action: "medicine_reminder_finished" 
+          title: "I've Taken It"
+        - action: "medicine_reminder_mute_until_home" 
+          title: "Mute Until I'm Home"
