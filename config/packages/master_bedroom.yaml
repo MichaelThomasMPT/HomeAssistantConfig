@@ -109,7 +109,6 @@ automation:
         entity_id: switch.aircon_zone_bed23
 
 
-
   - alias: Master Bedroom - Toggle Lamp Light
     trigger:
       - platform: event

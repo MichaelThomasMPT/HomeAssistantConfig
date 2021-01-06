@@ -254,16 +254,18 @@ automation:
           value: 15
 
   - alias: Temperature - Master Bed Button Trigger - Fan
+    mode: single
+    max_exceeded: silent
     trigger:
       - platform: event
         event_type: deconz_event
         event_data: 
-          id: master_bed_switch_1
+          id: master_bed_switch_1 #laura's button
           event: 1002 #single press
       - platform: event
         event_type: deconz_event
         event_data: 
-          id: master_bed_switch_2
+          id: master_bed_switch_2 #michael's button
           event: 1004 #double press
     condition:
       - condition: template
@@ -280,16 +282,18 @@ automation:
       - service: script.aircon_fan_master 
 
   - alias: Temperature - Master Bed Button Trigger - Warm
+    mode: single
+    max_exceeded: silent
     trigger:
       - platform: event
         event_type: deconz_event
         event_data: 
-          id: master_bed_switch_1
+          id: master_bed_switch_1 #laura's button
           event: 1002 #single press
       - platform: event
         event_type: deconz_event
         event_data: 
-          id: master_bed_switch_2
+          id: master_bed_switch_2 #michael's button
           event: 1004 #double press
     condition:
       - condition: template
@@ -310,12 +314,12 @@ automation:
       - platform: event
         event_type: deconz_event
         event_data: 
-          id: master_bed_switch_1
-          event: 1002 #single press 
+          id: master_bed_switch_1 #laura's button
+          event: 1004 #single press 
       - platform: event
         event_type: deconz_event
         event_data: 
-          id: master_bed_switch_2
+          id: master_bed_switch_2 #michael's button
           event: 1004 #double press
     condition:
         #only run if aircon is not off
