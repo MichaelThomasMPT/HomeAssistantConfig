@@ -37,6 +37,35 @@ script:
         service: switch.turn_off
 
 automation:
+  - alias: Roomba - Run the roomba when leaving the house
+    trigger:
+      platform: state
+      entity_id: alarm_control_panel.alarm_com
+      to: 'armed_away'
+    action:
+      - service: script.roomba_clean
+       #If roomba not restricted in area, ask if that was intentional 
+      - condition: state
+        entity_id: 'switch.roomba_magic_wall'
+        state: 'off'
+      - service: notify.mobile_app_michael_s_galaxy_s10
+        data:
+          title: Unrestrained Roomba! 
+          message: Roomba-buddy has started but the magic wall is currently turned off. Was this intentional?
+          data:
+            actions:
+              - action: "turn_on_roomba_magic_wall"
+                title: "Turn On Magic Wall"
+  - alias: Roomba - Turn on magic wall when notification action is tapped
+    trigger:
+      platform: event
+      event_type: mobile_app_notification_action
+      event_data:
+        action: turn_on_roomba_magic_wall
+    action:
+      - service: switch.turn_on
+        entity_id: switch.roomba_magic_wall
+
     #If roomba never returned to dock, notify me when I get home
   - alias: Roomba - Alert When Roomba Doesn't Return To Dock
     trigger:
