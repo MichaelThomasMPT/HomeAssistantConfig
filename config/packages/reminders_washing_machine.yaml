@@ -133,6 +133,7 @@ alert:
     notifiers:
       - mobile_app_michael_s_galaxy_s10
     data:
+      group: Washing Machine
       actions:
         - action: "mute_washing_machine_notifications_until_home"
           title: "Mute Until I'm Home"

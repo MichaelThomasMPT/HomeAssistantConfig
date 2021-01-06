@@ -56,6 +56,7 @@ alert:
     notifiers:
       - mobile_app_michael_s_galaxy_s10
     data:
+      group: Medicine
       actions:
         - action: "medicine_reminder_finished" 
           title: "I've Taken It"
