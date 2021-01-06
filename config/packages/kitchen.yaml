@@ -114,3 +114,22 @@ automation:
           default:
             - service: light.turn_off
               entity_id: light.kitchen_ceiling_light
+
+alert:
+  freezer_door_alerts:
+    title: Freezer Door Left Open
+    name: The scullery freezer door was left open! 
+    entity_id: binary_sensor.freezer_door
+    state: 'on'
+    repeat: 
+      - 3 #minutes to wait before the first alert
+      - 1 #minues between alerts once started
+    can_acknowledge: false
+    skip_first: true
+    notifiers:
+      - mobile_app_michael_s_galaxy_s10
+    data:
+      group: Freezer Door
+      color: 'red'
+      ttl: 0
+      priority: high
