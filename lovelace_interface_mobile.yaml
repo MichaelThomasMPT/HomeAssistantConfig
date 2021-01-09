@@ -100,8 +100,7 @@ views:
         type: 'custom:vertical-stack-in-card'
       - cards:
           - elements:
-              - entity: >-
-                  cover.aeon_labs_zw062_garage_door_controller_barrier_state_label
+              - entity: cover.garage_door
                 style:
                   bottom: 20%
                   font-weight: bold
@@ -135,8 +134,7 @@ views:
             image: /local/header-image-dark.png
             type: picture-elements
           - entities:
-              - entity: >-
-                  cover.aeon_labs_zw062_garage_door_controller_barrier_state_label
+              - entity: cover.garage_door
                 hide_when_off: true
                 name: Garage Door
                 toggle: true

@@ -12,7 +12,7 @@ automation:
         entity_id: binary_sensor.garage_door_external
         to: "on"
       - platform: state
-        entity_id: cover.aeon_labs_zw062_garage_door_controller_barrier_state_label
+        entity_id: cover.garage_door
         to: "open"
     condition:
       condition: and
@@ -21,7 +21,7 @@ automation:
           entity_id: 'binary_sensor.garage_door_external'
           state: 'on'
         - condition: state
-          entity_id: 'cover.aeon_labs_zw062_garage_door_controller_barrier_state_label'
+          entity_id: 'cover.garage_door'
           state: 'open'
     action:
       - service: var.set

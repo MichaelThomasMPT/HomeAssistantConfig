@@ -27,6 +27,42 @@ views:
         title: House State Validity
         type: glance
       - cards:
+          - entities:
+              - entity: script.turn_off_all_lights
+                name: Turn Off All Lights
+                icon: 'mdi:lightbulb-group-off'
+              - entity: switch.christmas_tree_power
+                name: Christmas Tree
+                icon: 'mdi:pine-tree'
+                toggle: true
+                state_color: true
+              - entity: light.alfresco_ceiling_lights
+              - entity: light.alfresco_fairy_lights
+              - entity: light.dining_room
+              - entity: light.ensuite_light
+              - entity: light.entry_hall_lights
+              - entity: light.front_porch_light
+              - entity: light.garage_light
+              - entity: light.garden_flood_lights
+              - entity: light.kitchen_ceiling_light
+              - entity: light.kitchen_island
+              - entity: light.living_room
+              - entity: light.master_bedroom_ceiling
+              - entity: light.master_bedroom_lamp
+              - entity: light.master_wir
+              - entity: light.office_lamp
+              - entity: light.pantry_light
+              - entity: light.scullery_light
+              - entity: light.side_hall
+              - entity: light.theatre_room_ceiling
+              - entity: light.theatre_room_left_lamp
+              - entity: light.theatre_room_right_lamp
+            head: null
+            show_header_toggle: false
+            title: Lights
+            type: entities
+        type: 'custom:vertical-stack-in-card'
+      - cards:
           - card:
               entities:
                 - entity: sensor.sems_status
@@ -60,35 +96,7 @@ views:
         type: vertical-stack
       - cards:
           - entities:
-              - entity: light.theatre_room_left_lamp
-              - entity: light.theatre_room_right_lamp
-              - entity: light.theatre_room_ceiling
-                name: Theatre Room Ceiling
-              - entity: light.entry_hall_lights
-                name: Entry Hall Lights
-              - entity: light.office_lamp
-              - entity: light.garage_light
-              - entity: light.scullery_light
-              - entity: light.pantry_light
-              - entity: light.master_bedroom_lamp
-              - entity: light.master_wir
-            show_header_toggle: true
-            title: Lights
-            type: entities
-          - cards:
-              - entity: light.entry_hall_lights
-                name: Entry Hall
-                type: light
-              - entity: light.office_lamp
-                type: light
-              - entity: light.master_bedroom_lamp
-                type: light
-            type: horizontal-stack
-        type: 'custom:vertical-stack-in-card'
-      - cards:
-          - entities:
-              - entity: >-
-                  cover.aeon_labs_zw062_garage_door_controller_barrier_state_label
+              - entity: cover.garage_door
                 name: Garage Door
               - entity: light.garage_light
                 name: Ceiling Light
@@ -241,7 +249,7 @@ views:
               left: 55%
               top: 66%
             type: state-icon
-          - entity: cover.aeon_labs_zw062_garage_door_controller_barrier_state_label
+          - entity: cover.garage_door
             style:
               '--paper-item-icon-color': white
               left: 17%
@@ -496,7 +504,7 @@ views:
             tap_action:
               action: toggle
             type: state-icon
-          - entity: light.alfresco_lights
+          - entity: light.alfresco_ceiling_lights
             style:
               left: 48%
               top: 78%
@@ -1396,6 +1404,8 @@ views:
             - state: '> 50'
             - state: Not Charging
             - state: charging
+            - state: full
+            - entity_id: sensor.front_door_battery
           include:
             - attributes:
                 device_class: battery
@@ -1484,21 +1494,6 @@ views:
             name: Colour Ink
         title: Printer
         type: glance
-      - entities:
-          - entity: binary_sensor.ensuite_shower
-          - entity: binary_sensor.ensuite_shower_above_humidity_threshold
-          - entity: binary_sensor.ensuite_shower_humidity_falling
-          - entity: sensor.ensuite_shower_humidity
-        hours_to_show: 72
-        refresh_interval: 0
-        title: Shower Debugging
-        type: history-graph
-      - entities:
-          - entity: person.laura
-        hours_to_show: 2
-        refresh_interval: 0
-        title: Laura
-        type: history-graph
       - cards:
           - entities:
               - entity: sensor.server_cupboard_temperature

@@ -9,10 +9,10 @@ automation:
           - binary_sensor.garage_door_internal
         to: "on"
       - platform: state
-        entity_id: cover.aeon_labs_zw062_garage_door_controller_barrier_state_label
+        entity_id: cover.garage_door
         to: "opening"
       - platform: state
-        entity_id: cover.aeon_labs_zw062_garage_door_controller_barrier_state_label
+        entity_id: cover.garage_door
         to: "open"
     action:
       - service: light.turn_on
@@ -30,7 +30,7 @@ automation:
           - binary_sensor.garage_door_internal
         to: "off"
       - platform: state
-        entity_id: cover.aeon_labs_zw062_garage_door_controller_barrier_state_label
+        entity_id: cover.garage_door
         to: "closed"
     condition:
       condition: and #make sure all doors are closed
@@ -42,7 +42,7 @@ automation:
           entity_id: binary_sensor.garage_door_internal
           state: 'off'
         - condition: state
-          entity_id: cover.aeon_labs_zw062_garage_door_controller_barrier_state_label
+          entity_id: cover.garage_door
           state: 'closed'
     action:
       - delay: #leave lights on for 3 minutes
@@ -60,7 +60,7 @@ automation:
       condition: or
       conditions:
         - condition: state
-          entity_id: cover.aeon_labs_zw062_garage_door_controller_barrier_state_label
+          entity_id: cover.garage_door
           state: 'open'
           for:
             minutes: 5
@@ -85,7 +85,7 @@ automation:
         action: close_garage
     action:
       service: cover.close_cover
-      entity_id: cover.aeon_labs_zw062_garage_door_controller_barrier_state_label
+      entity_id: cover.garage_door
 
   #When "Stop Garage Door Notifications" button on notification is pressed, do what it says!                 
   - alias: Garage - Stop garage door notifications when notification action is tapped
@@ -102,7 +102,7 @@ automation:
   - alias: Garage - Activate Garage Door Alert Automation When Garage Door Closed
     trigger:
       platform: state
-      entity_id: cover.aeon_labs_zw062_garage_door_controller_barrier_state_label
+      entity_id: cover.garage_door
       to: "closed"
     action:
       - service: automation.turn_on
@@ -118,7 +118,7 @@ automation:
       condition: or
       conditions:
         - condition: state
-          entity_id: cover.aeon_labs_zw062_garage_door_controller_barrier_state_label
+          entity_id: cover.garage_door
           state: 'unknown'
           for:
             minutes: 5
@@ -139,7 +139,7 @@ automation:
       condition: or
       conditions:
         - condition: state
-          entity_id: cover.aeon_labs_zw062_garage_door_controller_barrier_state_label
+          entity_id: cover.garage_door
           state: 'open'
     action:
       - service: notify.mobile_app_michael_s_galaxy_s10
@@ -154,10 +154,10 @@ automation:
   - alias: Front Hall - Turn On Hallway Light If Garage or Front Door Opened After Sunset
     trigger:
       - platform: state
-        entity_id: cover.aeon_labs_zw062_garage_door_controller_barrier_state_label
+        entity_id: cover.garage_door
         to: 'open'
       - platform: state
-        entity_id: cover.aeon_labs_zw062_garage_door_controller_barrier_state_label
+        entity_id: cover.garage_door
         to: 'opening'
       - platform: state
         entity_id: sensor.alarmdotcom_front_door
