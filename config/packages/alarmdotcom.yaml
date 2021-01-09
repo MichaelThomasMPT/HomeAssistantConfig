@@ -66,6 +66,23 @@ automation:
         data:
           message: A door was left open when the house alarm was set.
 
+  - alias: Alarm System - Fade Lights On When Disarming After Dark
+    trigger: 
+      platform: state
+      entity_id: alarm_control_panel.alarm_com
+      to: 'armed_away'
+    condition:
+      - condition: state  # from sunset until sunrise
+        entity_id: sun.sun
+        state: 'below_horizon'
+    action:
+      - service: light.turn_on
+        entity_id:
+        - light.kitchen_island
+        data:
+          transition: 60
+ 
+
 sensor:
   - platform: template
     scan_interval: 10
