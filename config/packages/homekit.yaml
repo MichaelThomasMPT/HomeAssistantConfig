@@ -1,0 +1,86 @@
+homekit:
+  - auto_start: false #required as I use zwave which has a delayed-start
+    filter:
+      include_domains:
+        - light
+        - media_player
+      include_entities:
+        - binary_sensor.back_door_flyscreen
+        - binary_sensor.back_door_glass
+        - binary_sensor.front_door
+        - binary_sensor.front_screen_door
+        - binary_sensor.garage_door_external
+        - binary_sensor.garage_door_internal
+        - binary_sensor.laundry_door
+        - binary_sensor.washing_machine_needs_emptying
+        - binary_sensor.washing_machine_running
+        - camera.garage
+        - climate.ac
+        - cover.bed_2_3
+        - cover.garage_door
+        - cover.living
+        - cover.master_bed
+        - cover.theatre
+        - script.roomba_clean
+        - sensor.coffees_made_today
+        - sensor.roomba_docked
+        - sensor.sems_output_power
+        - sensor.sems_status
+        - sensor.sems_today_generated
+        - switch.ensuite_fan
+        - switch.roomba_magic_wall
+      exclude_entity_globs:
+        - media_player.plex_*
+      exclude_entities:
+        #exclude all light groups so only individual lights are connected
+        - light.ensuite_fan
+        - light.garage
+        - light.kitchen
+        - light.kitchen_lights
+        - light.kitchenette_lights
+        - light.master_bedroom
+        - light.office
+        - light.range_extender_2
+        - light.theatre_room
+        - light.theatre_room_2
+    entity_config:
+      cover.bed_2_3:
+        name: Aircon Vent - Bedroom 2 & 3
+      cover.living:
+        name: Aircon Vent - Living Room
+      cover.master_bed:
+        name: Aircon Vent - Master Bedroom
+      cover.theatre:
+        name: Aircon Vent - Theatre Room
+      media_player.kitchen_google_home_hub:
+        feature_list:
+          - feature: on_off
+          - feature: play_pause
+          - feature: play_stop
+          - feature: toggle_mute
+      media_player.living_room_chromecast:
+        feature_list:
+          - feature: on_off
+          - feature: play_pause
+          - feature: play_stop
+          - feature: toggle_mute
+      media_player.theatre_room_tv:
+        feature_list:
+          - feature: on_off
+          - feature: play_pause
+          - feature: play_stop
+          - feature: toggle_mute
+
+# Delay the start of the Homekit integration until after the z-wave network has 
+# finished starting up, to make sure all entities are available.
+automation:
+  - alias: 'Homekit - Start Once Z-Wave Network Is Ready'
+    trigger:
+      - platform: event
+        event_type: zwave.network_ready
+      - platform: event
+        event_type: zwave.network_complete
+      - platform: event
+        event_type: zwave.network_complete_some_dead
+    action:
+      - service: homekit.start
