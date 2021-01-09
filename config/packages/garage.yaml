@@ -188,3 +188,23 @@ camera:
     password: !secret motioneye_password
     authentication: basic
     verify_ssl: false
+
+alert:
+  garage_camera_unavailable_alerts:
+    title: Garage Camera Is Unavailable
+    name: The camera in the garage has lost connection. 
+    entity_id: camera.garage
+    state: 'unavailable'
+    repeat: 
+      - 15 #minutes to wait before the first alert
+      - 1440 #minues between alerts once started
+    can_acknowledge: true
+    skip_first: true
+    notifiers:
+      - mobile_app_michael_s_galaxy_s10
+    data:
+      group: Garage Camera
+      color: 'red'
+      ttl: 0
+      priority: high
+    
