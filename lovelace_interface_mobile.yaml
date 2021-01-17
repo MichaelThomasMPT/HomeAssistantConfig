@@ -432,11 +432,6 @@ views:
             footer:
               type: buttons
               entities:
-                - entity: switch.christmas_tree_power
-                  name: Tree
-                  icon: 'mdi:pine-tree'
-                  toggle: true
-                  state_color: true
                 - entity: light.living_room
                   name: Living
                   toggle: true
@@ -1123,11 +1118,6 @@ views:
               - entity: script.turn_off_all_lights
                 name: Turn Off All Lights
                 icon: 'mdi:lightbulb-group-off'
-              - entity: switch.christmas_tree_power
-                name: Christmas Tree
-                icon: 'mdi:pine-tree'
-                toggle: true
-                state_color: true
               - entity: light.alfresco_ceiling_lights
               - entity: light.alfresco_fairy_lights
               - entity: light.dining_room
