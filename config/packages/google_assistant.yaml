@@ -30,7 +30,7 @@ cloud:
         - switch.aircon_zone_living
         - switch.aircon_zone_master
         - switch.aircon_zone_theatre
-        - switch.christmas_tree_power
+        # - switch.christmas_tree_power
         - group.aircon_vents
         - cover.theatre_blinds
         - media_player.theatre_room_tv
@@ -43,13 +43,13 @@ cloud:
         - light.office_2
         - light.range_extender_2
     entity_config:
-      switch.christmas_tree_power:
-        name: Christmas Tree
-        aliases:
-          - Christmas Tree
-          - Christmas Tree Switch
-          - Christmas Tree Lights
-          - Christmas Lights
+      # switch.christmas_tree_power:
+      #   name: Christmas Tree
+      #   aliases:
+      #     - Christmas Tree
+      #     - Christmas Tree Switch
+      #     - Christmas Tree Lights
+      #     - Christmas Lights
       switch.aircon_on_off:
         name: Aircon
         aliases:
