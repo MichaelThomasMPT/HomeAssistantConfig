@@ -54,7 +54,7 @@ automation:
       - platform: event
         event_type: deconz_event
         event_data: 
-          id: master_door_dimmer
+          id: master_door_switch
           event: 1002 #single click
     action:
       - variables:
