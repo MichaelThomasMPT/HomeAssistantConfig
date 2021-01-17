@@ -209,7 +209,7 @@ views:
                   name: Ensuite
                   toggle: true
                 - entity: switch.ensuite_fan
-                  name: Exhaust
+                  name: Fan
                   toggle: true
                   icon: 'mdi:shower-head'
           - type: entities
