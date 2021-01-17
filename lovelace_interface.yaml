@@ -573,16 +573,6 @@ views:
         title: Music Players
         type: entities
       - cards:
-          - entities:
-              - entity: input_select.gmusic_player_speakers
-              - entity: input_select.gmusic_player_playlist
-            show_header_toggle: false
-            title: Google Play Music
-            type: entities
-          - entity: media_player.gmusic_player
-            type: media-control
-        type: vertical-stack
-      - cards:
           - cards:
               - entity: script.play_playlist_on_all_rooms
                 hold_action:
@@ -997,6 +987,21 @@ views:
         show_header_toggle: false
         title: Living Room TV
         type: entities
+      - type: 'custom:mini-media-player'
+        entity: media_player.ytube_music_player
+        artwork: cover
+        hide:
+          shuffle: false
+          icon_state: false
+        shortcuts:
+          columns: 3
+          buttons:
+            - name: Adventure
+              type: playlist
+              id: PLavpVzwAAU9bWWSA9tN7EtDqFGRhF6Dva
+            - name: Gloomhaven
+              type: playlist
+              id: PLavpVzwAAU9ZiQn69q55xm_Vzj9ZiA-M7
     icon: 'mdi:music'
     path: media
     title: Media
