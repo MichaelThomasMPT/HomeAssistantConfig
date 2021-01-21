@@ -100,7 +100,7 @@ script:
         example: 'PLAYLIST'
       plex_content_id:
         description: 'The Plex content ID to play on the TV'
-        example: '{ "playlist_name": "Star Wars - The Clone Wars", "shuffle": "0" }'
+        example: '{ "playlist_name": "Star Wars - The Mandalorian", "shuffle": "0" }'
     sequence:
       - service: media_player.play_media
         data:
@@ -379,7 +379,7 @@ automation:
         1002:
           music_file: '/local/Star_Wars.mp3'
           plex_content_type: PLAYLIST
-          plex_content_id: '{ "playlist_name": "Star Wars - The Mandalorian", "shuffle": "0" }'
+          plex_content_id: '{ "playlist_name": "Star Wars Rebels", "shuffle": "0" }'
 
         #off button
         2002:
