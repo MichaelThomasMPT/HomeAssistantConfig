@@ -1,0 +1,11 @@
+{
+  "domain": "alarmdotcom",
+  "name": "Alarm.com",
+  "documentation": "https://www.github.com/uvjustin/alarmdotcom",
+  "requirements": [
+    "beautifulsoup4",
+    "pyalarmdotcomajax==0.1.10"
+  ],
+  "dependencies": [],
+  "codeowners": ["@uvjustin"]
+}
