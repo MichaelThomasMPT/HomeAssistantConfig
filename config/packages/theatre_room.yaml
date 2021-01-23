@@ -383,9 +383,9 @@ automation:
 
         #off button
         2002:
-          music_file: '/local/Succession.mp3'
+          music_file: '/local/WandaVision.mp3'
           plex_content_type: PLAYLIST
-          plex_content_id: '{ "playlist_name": "Succession", "shuffle": "0" }'
+          plex_content_id: '{ "playlist_name": "WandaVision", "shuffle": "0" }'
     trigger: 
       - platform: event
         event_type: deconz_event
