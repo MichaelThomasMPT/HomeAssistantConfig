@@ -98,12 +98,13 @@ automation:
       - service: notify.pushbullet
         data_template:
           message: >-
-            New Version Auto-Applied: {{ states.sensor.ha_docker_version_stable.state }} Changes: https://git.io/JvkT4 Tested: https://git.io/Jvt3w 
-      - service: shell_command.upgrade_hass
-        data:
-          key_location: !secret haversionupdate_ssh_key_location
-          connection_string: !secret haversionupdate_ssh_connection_string
-          docker_compose_location: !secret haversionupdate_docker_compose_location
+            New Version Ready To Be Applied: {{ states.sensor.ha_docker_version_stable.state }} Changes: https://git.io/JvkT4 Tested: https://git.io/Jvt3w 
+      # Disabling the auto-updates for now, but still notifying when an update is ready
+      # - service: shell_command.upgrade_hass
+      #   data:
+      #     key_location: !secret haversionupdate_ssh_key_location
+      #     connection_string: !secret haversionupdate_ssh_connection_string
+      #     docker_compose_location: !secret haversionupdate_docker_compose_location
 
 shell_command:
   github_action_trigger: "curl -v -X POST -u 'MichaelThomasMPT:{{ github_token }}' -H 'Accept: application/vnd.github.everest-preview+json' -H 'Content-Type: application/json' --data '{\"event_type\":\"build\", \"client_payload\":{\"branch\":\"{{ branch }}\",\"release_type\":\"{{ release_type }}\",\"version\":\"{{ version }}\"}}' https://api.github.com/repos/MichaelThomasMPT/HomeAssistantConfig/dispatches"
