@@ -69,3 +69,4 @@ automation:
       - service: notify.mobile_app_michael_s_galaxy_s10
         data:
           message: Don't forget to take the bins out!
+          group: Bins

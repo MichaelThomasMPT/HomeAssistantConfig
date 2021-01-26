@@ -159,6 +159,7 @@ automation:
         data:
           message: Garage door was left open.
           data:
+            group: Garage Door
             image: /api/camera_proxy/camera.garage
             actions:
               - action: "close_garage"
