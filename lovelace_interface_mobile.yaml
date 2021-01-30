@@ -471,7 +471,15 @@ views:
                 hide_when_off: true
                 name: TV - Chromecast
                 toggle: true
+              - entity: media_player.central_living_speakers
+                group: true
+                hide:
+                  controls: true
               - entity: media_player.kitchen_google_home_hub
+                group: true
+                hide:
+                  controls: true
+              - entity: media_player.dining_room_google_home
                 group: true
                 hide:
                   controls: true
@@ -643,7 +651,15 @@ views:
                   name: Dining
                   toggle: true
           - entities:
+              - entity: media_player.central_living_speakers
+                group: true
+                hide:
+                  controls: true
               - entity: media_player.kitchen_google_home_hub
+                group: true
+                hide:
+                  controls: true
+              - entity: media_player.dining_room_google_home
                 group: true
                 hide:
                   controls: true
@@ -1146,6 +1162,27 @@ views:
             show_name: true
             show_state: false
             state_color: false
+            type: 'custom:fold-entity-row'
+          - entities:
+              - entity: media_player.all_rooms
+              - entity: media_player.central_living_speakers
+              - entity: media_player.dining_room_google_home
+              - entity: media_player.ensuite_google_home
+              - entity: media_player.kitchen_google_home_hub
+              - entity: media_player.master_bedroom_speaker
+              - entity: media_player.office_google_home
+              - entity: media_player.office_pc_speakers
+              - entity: media_player.theatre_room_google_home
+              - entity: media_player.theatre_room_tv
+              - entity: media_player.theatre_room_chromecast
+              - entity: media_player.living_room_chromecast
+            head:
+              label: Media
+              type: section
+            show_header_toggle: false
+            show_name: true
+            show_state: false
+            state_color: true
             type: 'custom:fold-entity-row'
           - entities:
               - entity: script.set_party_lights
