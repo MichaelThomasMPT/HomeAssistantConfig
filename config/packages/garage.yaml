@@ -48,8 +48,7 @@ automation:
     action:
       - delay: #leave lights on for 3 minutes
           seconds: 180
-      - condition:
-        condition: and #make sure all doors are still closed
+      - condition: and #make sure all doors are still closed
         conditions:
           - condition: state
             entity_id: binary_sensor.garage_door_external
