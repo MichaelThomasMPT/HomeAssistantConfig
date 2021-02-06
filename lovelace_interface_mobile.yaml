@@ -309,10 +309,12 @@ views:
                   toggle: true
                   type: 'custom:slider-entity-row'
                   icon: 'mdi:floor-lamp'
-                - entity: cover.theatre_blinds
+                - entity: light.theatre_room_tv_cabinet_led_strip
                   hide_when_off: true
-                  name: Blinds
+                  name: TV Cabinet
                   toggle: true
+                  type: 'custom:slider-entity-row'
+                  icon: 'mdi:led-strip-variant'
           - type: entities
             entities: []
             footer:
@@ -567,6 +569,17 @@ views:
                 hide_when_off: true
                 name: Lamp
                 toggle: true
+              - type: 'custom:rgb-light-card'
+                entity: light.office_lamp
+                colors:
+                  - brightness_pct: 100
+                    color_temp: 350
+                  - color_name: blue
+                  - color_name: purple
+                  - color_name: red
+                  - color_name: orange
+                  - color_name: yellow
+                  - color_name: lime
               - entity: switch.aircon_zone_bed23
                 hide_when_off: true
                 icon: 'mdi:air-filter'
@@ -1155,6 +1168,7 @@ views:
               - entity: light.theatre_room_ceiling
               - entity: light.theatre_room_left_lamp
               - entity: light.theatre_room_right_lamp
+              - entity: light.theatre_room_tv_cabinet_led_strip
             head:
               label: Lights
               type: section
