@@ -37,3 +37,14 @@ binary_sensor.coffee_machine:
 sensor.coffees_made_today:
   icon: mdi:coffee
     
+light.alfresco_fairy_lights_ceiling:
+  icon: mdi:string-lights
+
+light.alfresco_fairy_lights_wall:
+  icon: mdi:string-lights
+
+light.alfresco_fairy_lights:
+  icon: mdi:string-lights
+
+light.garden_flood_lights:
+  icon: mdi:outdoor-lamp
