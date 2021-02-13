@@ -722,6 +722,13 @@ views:
                 type: state-label
             image: /local/header-image-dark.png
             type: picture-elements
+          - type: entities
+            entities: []
+            footer:
+              type: buttons
+              entities:
+                - entity: light.laundry_led_strip
+                  name: Shelf Light
           - entities:
               - entity: binary_sensor.washing_machine_needs_emptying
               - entity: input_boolean.washing_machine_notify_michael
@@ -1159,6 +1166,7 @@ views:
               - entity: light.garden_flood_lights
               - entity: light.kitchen_ceiling_light
               - entity: light.kitchen_island
+              - entity: light.laundry_led_strip
               - entity: light.living_room
               - entity: light.master_bedroom_ceiling
               - entity: light.master_bedroom_lamp

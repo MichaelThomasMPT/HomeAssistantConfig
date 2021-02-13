@@ -41,6 +41,7 @@ views:
               - entity: light.garden_flood_lights
               - entity: light.kitchen_ceiling_light
               - entity: light.kitchen_island
+              - entity: light.laundry_led_strip
               - entity: light.living_room
               - entity: light.master_bedroom_ceiling
               - entity: light.master_bedroom_lamp

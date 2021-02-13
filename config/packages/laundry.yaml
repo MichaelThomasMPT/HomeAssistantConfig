@@ -1,0 +1,4 @@
+light:
+  - platform: switch
+    name: Laundry LED Strip
+    entity_id: switch.laundry_led_smart_plug

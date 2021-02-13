@@ -48,3 +48,9 @@ light.alfresco_fairy_lights:
 
 light.garden_flood_lights:
   icon: mdi:outdoor-lamp
+
+light.laundry_led_strip:
+    icon: mdi:led-strip-variant
+
+light.theatre_room_tv_cabinet_led_strip:
+    icon: mdi:led-strip-variant
