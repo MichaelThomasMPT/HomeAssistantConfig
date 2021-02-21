@@ -56,7 +56,7 @@ script:
         seconds: 10
     - data:
         entity_id: input_number.aircon_countdown_timer
-        value: 60
+        value: 120
       service: input_number.set_value
     alias: Aircon Fan Master
     
