@@ -31,6 +31,9 @@ binary_sensor.garage_door_internal:
   device_class: door
 binary_sensor.roomba_docked:
   device_class: battery_charging
+binary_sensor.washing_line:
+  device_class: opening
+  icon: mdi:hanger
 
 binary_sensor.coffee_machine:
   icon: mdi:coffee-maker

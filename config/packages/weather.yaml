@@ -5,15 +5,62 @@ weather:
 
 sun:
 
-sensor:
+var:
+  # weather_rainy_conditions is used in defining the rain detection binary_sensors below
+  weather_rainy_conditions:
+    friendly_name: Rainy Weather Conditions
+    initial_value: "['hail', 'lightning', 'lightning-rainy', 'pouring', 'rainy', 'snowy', 'snowy-rainy', 'exceptional']"
 
+binary_sensor:
+  - platform: template
+    sensors:
+      weather_it_will_rain_tomorrow:   
+        friendly_name: "Rain Is Coming Tomorrow"
+        device_class: "moisture"
+        value_template: >-
+          {%
+              set forecast_tomorrow = 
+                state_attr('weather.treeby_house', 'forecast') 
+                | selectattr("datetime", "ge", as_timestamp(
+                    now() + timedelta(hours=24)) | timestamp_custom('%Y-%m-%d') 
+                  ) 
+                | sort(attribute="datetime")
+                | first 
+          %}
+          {{
+              forecast_tomorrow.condition in states('var.weather_rainy_conditions')
+              or forecast_tomorrow.precipitation | float > 0 
+          }}
+        availability_template: "{{ states('weather.treeby_house') != 'Unavailable' }}"
+
+      weather_it_is_raining_today:   
+        friendly_name: "It Is Raining Today"
+        device_class: "moisture"
+        value_template: >-
+          {{ 
+              states('weather.treeby_house') in states('var.weather_rainy_conditions')
+          }}
+        availability_template: "{{ states('weather.treeby_house') != 'Unavailable' }}"
+
+sensor:
   # Extract Outdoor Temperature from BOM Weather Sensor
   - platform: template
     sensors: 
       current_outdoor_temperature:
         friendly_name: "Current Outdoor Temperature"
-        value_template: '{{ states.weather.treeby_house.attributes["temperature"] }}'
+        value_template: "{{ state_attr('weather.treeby_house', 'temperature') }}"
+        availability_template: "{{ states('weather.treeby_house') != 'Unavailable' }}"
         unit_of_measurement: "°C"
+
+      weather_conditions_today:
+        friendly_name: "Today's Weather Conditions"
+        value_template: "{{ states('weather.treeby_house') }}"
+        availability_template: "{{ states('weather.treeby_house') != 'Unavailable' }}"
+
+      weather_conditions_tomorrow:
+        friendly_name: "Tomorrow's Weather Conditions"
+        value_template: "{{ state_attr('weather.treeby_house', 'forecast')[1].condition }}"
+        availability_template: "{{ states('weather.treeby_house') != 'Unavailable' }}"
 
   # Solar Panels
   - platform: sems

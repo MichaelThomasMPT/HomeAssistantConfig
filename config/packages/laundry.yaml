@@ -63,3 +63,103 @@ automation:
       - service: light.turn_off
         entity_id: 
           - light.laundry_led_strip
+
+  - alias: Laundry - Notify If Putting Washing Up And It Will Rain Soon 
+    trigger: 
+      - platform: state
+        entity_id: binary_sensor.washing_line
+        from: 'off'
+        to: 'on'
+    condition:
+      - condition: or
+        conditions:
+          - condition: state
+            entity_id: binary_sensor.weather_it_is_raining_today
+            state:  'on'
+          - condition: state
+            entity_id: binary_sensor.weather_it_is_raining_tomorrow
+            state:  'on'
+    variables:
+      notification_message: >-
+        {% if states('binary_sensor.weather_it_is_raining_today') == "on" -%}
+          Today's forecast is {{ states('sensor.weather_conditions_today') }} - are you sure you want to hang out the washing?
+        {%- else -%}
+          Tomorrow's forecast is {{ states('sensor.weather_conditions_tomorrow') }} - are you sure you want to hang out the washing?
+        {%- endif %}
+    action:
+      - service: notify.mobile_app_lauras_iphone
+        data:
+          message: "{{ notification_message }}"
+      - service: notify.mobile_app_michael_s_galaxy_s10
+        data:
+          message: "{{ notification_message }}"
+          data:
+            group: "Washing Line"
+
+  - alias: Laundry - Notify If There Is Washing Already On The Line And It Will Rain Tomorrow
+    trigger: # trigger when sun sets or tomorrow's forecast changes after 8pm
+      - platform: time
+        at: '20:00:00' 
+      - platform: state
+        entity_id: binary_sensor.weather_it_will_rain_tomorrow
+        from: 'off'
+        to:  'on'
+    condition:
+      - condition: time
+        after: '20:00:00'
+      - condition: state # and it will rain tomorrow
+        entity_id: binary_sensor.weather_it_will_rain_tomorrow
+        state:  'on'
+      - condition: state # and there is washing already on the line
+        entity_id: binary_sensor.washing_line
+        state: 'on'
+    variables:
+      notification_message: There's a chance of rain tomorrow - make sure to bring in the washing.
+    action:
+      - service: notify.mobile_app_lauras_iphone
+        data:
+          message: "{{ notification_message }}"
+      - wait_template: "{{ is_state('person.michael', 'home') }}" # wait until I'm home to notify me, as I can't do anything about it if I'm not! 
+      - service: notify.mobile_app_michael_s_galaxy_s10
+        data:
+          message: "{{ notification_message }}"
+          data:
+            group: "Washing Line"
+
+  - alias: Laundry - Notify If There Is Washing Already On The Line And It Is Starting To Rain
+    trigger: 
+      - platform: state
+        entity_id: binary_sensor.weather_it_is_raining_today
+        from: 'off'
+        to:  'on'
+    condition: 
+      - condition: state # there is washing already on the line
+        entity_id: binary_sensor.washing_line
+        state: 'on'
+    variables:
+      notification_title: Rain imminent!
+      notification_message: It is about to rain, you should bring in the washing!
+    action:
+      - service: notify.mobile_app_lauras_iphone
+        data:
+          title: "{{ notification_title }}"
+          message: "{{ notification_message }}"
+      - wait_template: "{{ is_state('person.michael', 'home') }}" # wait until I'm home to notify me, as I can't do anything about it if I'm not! 
+      - service: notify.mobile_app_michael_s_galaxy_s10
+        data:
+          title: "{{ notification_title }}"
+          message: "{{ notification_message }}"
+          data:
+            group: "Washing Line"
+            color: 'red'
+            ttl: 0
+            priority: high
+      - condition: time
+        before: "22:00:00" # Don't send any house-wide announcements after 10pm as people might be trying to sleep
+      - condition: state
+        entity_id: media_player.kitchen_google_home_hub
+        state: 'off' # Only use text-to-speech on Google Home Hub if it's not already in use, so it doesn't stop any music from playing
+      - service: tts.google_translate_say
+        data:
+          entity_id: media_player.all_rooms
+          message: "{{ notification_message }}"
