@@ -38,3 +38,28 @@ binary_sensor:
           }}
         icon_template: mdi:washing-machine-alert
         device_class: occupancy
+
+automation:
+  - alias: Laundry - Turn On Lights When Motion Detected
+    trigger: 
+      - platform: state
+        entity_id: binary_sensor.laundry_motion
+        to: 'on'
+    condition:
+      - condition: state  # from sunset until sunrise
+        entity_id: sun.sun
+        state: 'below_horizon'
+    action:
+      - service: light.turn_on
+        entity_id: 
+          - light.laundry_led_strip
+
+  - alias: Laundry - Turn Off Lights When No Motion Detected
+    trigger: 
+      - platform: state
+        entity_id: binary_sensor.laundry_motion
+        to: 'off'
+    action:
+      - service: light.turn_off
+        entity_id: 
+          - light.laundry_led_strip

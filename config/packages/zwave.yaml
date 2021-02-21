@@ -5,3 +5,15 @@ light:
     - platform: switch
       name: Garden Flood Lights
       entity_id: switch.garden_flood_lights
+
+# Map the Multisensor 6 burglar sensors to motion binary_sensor entities for easier processing elsewhere
+binary_sensor:
+  - platform: template
+    sensors:
+      laundry_motion:
+        friendly_name: "Laundry Motion Sensor"
+        device_class: "motion"
+        value_template: >-
+          {{ states('sensor.laundry_multisensor_6_burglar') | int > 0 }}
+        availability_template: >-
+          {{ states('sensor.laundry_multisensor_6_burglar') != "Unavailable" }} 
