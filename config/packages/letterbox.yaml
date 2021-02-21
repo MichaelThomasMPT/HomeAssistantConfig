@@ -55,7 +55,7 @@ automation:
                 title: "No, this was me."
 
   #When "Mail Wasn't Delivered" button on notification is pressed, turn off the office lamp again. 
-  - alias: Guests - Deactivate Guest Mode On Notification Button Pressed
+  - alias: Letterbox - Mail Wasn't Delivered Button Press
     trigger:
       platform: event
       event_type: mobile_app_notification_action
