@@ -87,6 +87,7 @@ person:
     id: laura
     user_id: c93d4309ba8141eabe4a306b2fb5ecc7
     device_trackers:
+      - device_tracker.lauras_iphone
       - device_tracker.phone_ping_laura
     
 device_tracker:
