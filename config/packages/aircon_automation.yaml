@@ -112,7 +112,7 @@ script:
     sequence:
     - data:
         entity_id: climate.ac
-        temperature: 21
+        temperature: 23
       service: climate.set_temperature
     - data:
         entity_id: climate.ac
@@ -146,7 +146,7 @@ script:
             - climate.ac
       - data:
           entity_id: climate.ac
-          temperature: 21
+          temperature: 23
           hvac_mode: cool
         service: climate.set_temperature
       - data:
