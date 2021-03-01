@@ -57,3 +57,6 @@ light.laundry_led_strip:
 
 light.theatre_room_tv_cabinet_led_strip:
     icon: mdi:led-strip-variant
+
+light.washing_line_lights:
+    icon: mdi:outdoor-lamp

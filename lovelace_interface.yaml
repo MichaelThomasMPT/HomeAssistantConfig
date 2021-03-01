@@ -41,6 +41,7 @@ views:
               - entity: light.garden_flood_lights
               - entity: light.kitchen_ceiling_light
               - entity: light.kitchen_island
+              - entity: light.laundry_ceiling
               - entity: light.laundry_led_strip
               - entity: light.living_room
               - entity: light.master_bedroom_ceiling
@@ -54,6 +55,7 @@ views:
               - entity: light.theatre_room_left_lamp
               - entity: light.theatre_room_right_lamp
               - entity: light.theatre_room_tv_cabinet_led_strip
+              - entity: light.washing_line_lights
             head: null
             show_header_toggle: false
             title: Lights

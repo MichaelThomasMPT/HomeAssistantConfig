@@ -693,6 +693,15 @@ views:
         type: 'custom:vertical-stack-in-card'
       - cards:
           - elements:
+              - entity: binary_sensor.washing_line
+                state_color: true
+                style:
+                  bottom: 20%
+                  font-weight: bold
+                  hs_color: white
+                  right: 21.5%
+                  transform: initial
+                type: state-icon
               - entity: binary_sensor.washing_machine_running
                 state_color: true
                 style:
@@ -727,8 +736,12 @@ views:
             footer:
               type: buttons
               entities:
+                - entity: light.laundry_ceiling
+                  name: Ceiling
                 - entity: light.laundry_led_strip
                   name: Shelf Light
+                - entity: light.washing_line_lights
+                  name: Washing Line
           - entities:
               - entity: binary_sensor.washing_machine_needs_emptying
               - entity: input_boolean.washing_machine_notify_michael
@@ -1166,6 +1179,7 @@ views:
               - entity: light.garden_flood_lights
               - entity: light.kitchen_ceiling_light
               - entity: light.kitchen_island
+              - entity: light.laundry_ceiling
               - entity: light.laundry_led_strip
               - entity: light.living_room
               - entity: light.master_bedroom_ceiling
@@ -1179,6 +1193,7 @@ views:
               - entity: light.theatre_room_left_lamp
               - entity: light.theatre_room_right_lamp
               - entity: light.theatre_room_tv_cabinet_led_strip
+              - entity: light.washing_line_lights
             head:
               label: Lights
               type: section
