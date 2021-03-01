@@ -1,0 +1,33 @@
+sensor:
+  - platform: mqtt
+    state_topic: "igrill/igrill_v2/probe1"
+    name: "iGrill Probe 1"
+    qos: 0
+    unit_of_measurement: "°C"
+    expire_after: 120 #2 minutes
+  - platform: mqtt
+    state_topic: "igrill/igrill_v2/probe2"
+    name: "iGrill Probe 2"
+    qos: 0
+    unit_of_measurement: "°C"
+    expire_after: 120 #2 minutes
+  - platform: mqtt
+    state_topic: "igrill/igrill_v2/probe3"
+    name: "iGrill Probe 3"
+    qos: 0
+    unit_of_measurement: "°C"
+    expire_after: 120 #2 minutes
+  - platform: mqtt
+    state_topic: "igrill/igrill_v2/probe4"
+    name: "iGrill Probe 4"
+    qos: 0
+    unit_of_measurement: "°C"
+    expire_after: 120 #2 minutes
+  - platform: mqtt
+    state_topic: "igrill/igrill_v2/battery"
+    name: "iGrill Battery"
+    qos: 0
+    unit_of_measurement: "%"
+    icon: mdi:battery
+    expire_after: 120 #2 minutes
+

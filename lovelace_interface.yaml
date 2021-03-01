@@ -1508,5 +1508,36 @@ views:
               - entity: sensor.server_cupboard_temperature
             type: glance
         type: 'custom:vertical-stack-in-card'
+      - type: history-graph
+        entities:
+          - entity: sensor.aeon_labs_zw100_multisensor_6_burglar_2
+        hours_to_show: 1
+        refresh_interval: 0
     icon: 'mdi:battery-unknown'
     path: batteries
+  - title: iGrill temp
+    badges: []
+    cards:
+      - type: history-graph
+        entities:
+          - entity: sensor.igrill_probe_1
+          - entity: sensor.igrill_probe_2
+          - entity: sensor.igrill_probe_3
+          - entity: sensor.igrill_probe_4
+        hours_to_show: 3
+        refresh_interval: 0
+        title: iGrill Probe Temperatures
+      - type: entities
+        show_header_toggle: true
+        title: Weber iGrill
+        entities:
+          - entity: sensor.igrill_probe_1
+            secondary_info: last-changed
+          - entity: sensor.igrill_probe_2
+            secondary_info: last-changed
+          - entity: sensor.igrill_probe_3
+            secondary_info: last-changed
+          - entity: sensor.igrill_probe_4
+            secondary_info: last-changed
+          - entity: sensor.igrill_battery
+            secondary_info: last-changed
