@@ -101,19 +101,19 @@ automation:
               - service: light.turn_off
                 entity_id: light.washing_line_lights
 
-  - alias: Laundry - Turn On Washing Line Lights When Door Opened
+  - alias: Laundry - Toggle Washing Line Lights When Door Opened
     trigger:
       - platform: state
         entity_id:
           - binary_sensor.laundry_door
           - binary_sensor.garage_door_external
         from: "off"
-        to:  "on"
+        to: "on"
       - platform: state
         entity_id:
           - binary_sensor.laundry_door
           - binary_sensor.garage_door_external
-        to:  "off"
+        to: "off"
         for: "00:02:00" #if both doors closed for 2 minutes
     condition:
       - condition: state # from sunset until sunrise
@@ -122,15 +122,21 @@ automation:
     action:
       - choose:
           - conditions:
-              # Either door has been opened
-              - condition: or
+              - condition: and
                 conditions:
-                  - condition: state
-                    entity_id: binary_sensor.laundry_door
-                    state: "on"
-                  - condition: state
-                    entity_id: binary_sensor.garage_door_external
-                    state: "on"
+                  # from just before sunset until sunrise
+                  - condition: sun
+                    after: sunset
+                    after_offset: "-00:30:00"
+                  # Either door has been opened
+                  - condition: or
+                    conditions:
+                      - condition: state
+                        entity_id: binary_sensor.laundry_door
+                        state: "on"
+                      - condition: state
+                        entity_id: binary_sensor.garage_door_external
+                        state: "on"
             sequence:
               - service: light.turn_on
                 entity_id: light.washing_line_lights
@@ -139,7 +145,7 @@ automation:
           - conditions:
               # Both doors have been closed for 2 minutes
               - condition: state
-                entity_id: 
+                entity_id:
                   - binary_sensor.laundry_door
                   - binary_sensor.garage_door_external
                 state: "off"
