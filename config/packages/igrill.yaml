@@ -31,3 +31,270 @@ sensor:
     icon: mdi:battery
     expire_after: 120 #2 minutes
 
+  - platform: template
+    sensors:
+      igrill_ambient_alert_temp:
+        value_template:
+          '
+          {%
+            if (states.sensor.igrill_probe_4.state | int) < (states.input_number.igrill_ambient_alert_low_temp.state | int) 
+            or (states.sensor.igrill_probe_4.state | int) > (states.input_number.igrill_ambient_alert_high_temp.state | int) 
+          %}
+            Alert
+          {% else %}
+            Normal
+          {% endif %}
+          '
+        friendly_name: Grill Temp Alert
+  - platform: template
+    sensors:
+      igrill_target_alert_temp_probe_1:
+        value_template:
+          '{% if (states.sensor.igrill_probe_1.state | int) >= (states.input_number.igrill_probe_1_target_temp.state | int) %}
+            Alert
+          {% else %}
+            Normal
+          {% endif %}'
+        friendly_name: Probe 1 Target Alert
+  - platform: template
+    sensors:
+      igrill_target_alert_temp_probe_2:
+        value_template:
+          '{% if (states.sensor.igrill_probe_2.state | int) >= (states.input_number.igrill_probe_2_target_temp.state | int) %}
+            Alert
+          {% else %}
+            Normal
+          {% endif %}'
+        friendly_name: Probe 2 Target Alert
+  - platform: template
+    sensors:
+      igrill_target_alert_temp_probe_3:
+        value_template:
+          '{% if (states.sensor.igrill_probe_3.state | int) >= (states.input_number.igrill_probe_3_target_temp.state | int) %}
+            Alert
+          {% else %}
+            Normal
+          {% endif %}'
+        friendly_name: Probe 3 Target Alert
+
+input_number:
+  igrill_ambient_alert_low_temp:
+    name: Ambient Low Temp
+    initial: 180
+    min: 70
+    max: 250
+    step: 5
+  igrill_ambient_alert_high_temp:
+    name: Ambient High Temp
+    initial: 200
+    min: 70
+    max: 250
+    step: 5
+  igrill_probe_1_target_temp:
+    name: Probe 1 Target Temp
+    initial: 62
+    min: 30
+    max: 100
+    step: 1
+  igrill_probe_2_target_temp:
+    name: Probe 2 Target Temp
+    initial: 62
+    min: 30
+    max: 100
+    step: 1
+  igrill_probe_3_target_temp:
+    name: Probe 3 Target Temp
+    initial: 62
+    min: 30
+    max: 100
+    step: 1
+
+input_select:
+  igrill_presets_probe:
+    name: iGrill Presets Probe
+    options:
+      - Probe 1
+      - Probe 2
+      - Probe 3
+    initial: Probe 1
+    icon: mdi:thermometer-lines
+
+script:
+  igrill_set_alert_temperature_from_preset:
+    fields:
+      meat:
+        description: "The type of meat being cooked"
+        example: "beef"
+      doneness:
+        description: "How the meat should be cooked"
+        example: "medium rare"
+    variables: 
+      temperature_to_set: >-
+        {% if meat | lower == "beef" -%}
+          {% if doneness | lower == "rare" -%}
+            49
+          {%- elif doneness | lower == "medium rare" -%}
+            54
+          {%- elif doneness | lower == "medium" -%}
+            60
+          {%- endif %}
+        {% elif meat | lower == "lamb" -%}
+          {% if doneness | lower == "rare" -%}
+            49
+          {%- elif doneness | lower == "medium rare" -%}
+            54
+          {%- elif doneness | lower == "medium" -%}
+            60
+          {%- endif %}
+        {% elif meat | lower == "pork" -%}
+          63
+        {% elif meat | lower == "chicken" -%}
+          74
+        {% elif meat | lower == "duck" -%}
+          74
+        {% elif meat | lower == "fish" -%}
+          57
+        {%- else -%}
+          100
+        {%- endif %}
+      probe_to_set: >- 
+        {% if states('input_select.igrill_presets_probe') == "Probe 3" -%}
+          input_number.igrill_probe_3_target_temp
+        {%- elif states('input_select.igrill_presets_probe') == "Probe 2" -%}
+          input_number.igrill_probe_2_target_temp
+        {%- else -%}
+          input_number.igrill_probe_1_target_temp
+        {%- endif %}
+    sequence:
+      - service: input_number.set_value
+        target:
+          entity_id: "{{ probe_to_set }}"
+        data:
+          value: "{{ temperature_to_set }}"
+
+automation:
+  - alias: "iGrill - Monitor Grill Ambient Temperature - Alert"
+    trigger:
+      - platform: state
+        entity_id: sensor.igrill_ambient_alert_temp
+        to: 'Alert'
+    action:
+      - service: notify.mobile_app_michael_s_galaxy_s10
+        data:
+          message: "iGrill ambient temp outside limits. Currently {{ states.sensor.igrill_probe_4.state }} C"
+          data:
+            group: iGrill Ambient
+            tag: igrill_ambient
+            color: 'red'
+            ttl: 0
+            priority: high
+
+  - alias: "iGrill - Monitor Grill Ambient Temperature - Normal"
+    trigger:
+      - platform: state
+        entity_id: sensor.grill_alert_temp
+        to: 'Normal'
+    action:
+      - service: notify.mobile_app_michael_s_galaxy_s10
+        data:
+          message: "iGrill ambient within limits. Currently {{ states.sensor.igrill_probe_4.state }} C"
+          data:
+            group: iGrill Ambient
+            tag: igrill_ambient
+            color: 'green'
+            ttl: 0
+            priority: normal
+
+  - alias: "iGrill - Alert When Probe Availability Changes"
+    trigger:
+      - platform: state
+        entity_id: 
+          - sensor.igrill_probe_1
+          - sensor.igrill_probe_2
+          - sensor.igrill_probe_3
+          - sensor.igrill_probe_4
+        to: 'unavailable'
+      - platform: state
+        entity_id: 
+          - sensor.igrill_probe_1
+          - sensor.igrill_probe_2
+          - sensor.igrill_probe_3
+          - sensor.igrill_probe_4
+        from: 'unavailable'
+    variables:
+      availability_text: >- 
+        {% if trigger.from_state.state == "unavailable" -%}
+          has reconnected
+        {%- elif trigger.to_state.state == "unavailable" -%}
+          has disconnected
+        {%- else -%}
+          requires attention
+        {%- endif %}
+      unavailable_probe_name: >- 
+        {% if trigger.entity_id == "sensor.igrill_probe_1" -%}
+          probe 1
+        {%- elif trigger.entity_id == "sensor.igrill_probe_2" -%}
+          probe 2
+        {%- elif trigger.entity_id == "sensor.igrill_probe_3" -%}
+          probe 3
+        {%- elif trigger.entity_id == "sensor.igrill_probe_4" -%}
+          probe 4
+        {%- else -%}
+          An unknown probe
+        {%- endif %}
+    action:
+      - service: notify.mobile_app_michael_s_galaxy_s10
+        data:
+          message: "iGrill {{ unavailable_probe_name }} {{ availability_text }}."
+          data:
+            group: iGrill Probe Availability
+            color: 'purple'
+            ttl: 0
+            priority: high
+
+alert:
+  igrill_temperature_alert_probe_1:
+    title: Probe 1 Temperature Alert
+    name: Probe 1 has reached {{ states.input_number.igrill_probe_1_target_temp.state }} C, currently {{ states.sensor.igrill_probe_1.state }} C.
+    entity_id: sensor.igrill_target_alert_temp_probe_1
+    state: 'Alert'
+    repeat: 
+      - 1 #minutes between alerts once started
+    can_acknowledge: false
+    notifiers:
+      - mobile_app_michael_s_galaxy_s10
+    data:
+      group: iGrill Probe 1
+      color: '#fc8403'
+      ttl: 0
+      priority: high
+  igrill_temperature_alert_probe_2:
+    title: Probe 2 Temperature Alert
+    name: Probe 2 has reached {{ states.input_number.igrill_probe_2_target_temp.state }} C, currently {{ states.sensor.igrill_probe_2.state }} C.
+    entity_id: sensor.igrill_target_alert_temp_probe_2
+    state: 'Alert'
+    repeat: 
+      - 1 #minutes between alerts once started
+    can_acknowledge: false
+    notifiers:
+      - mobile_app_michael_s_galaxy_s10
+    data:
+      group: iGrill Probe 2
+      color: '#fc8403'
+      ttl: 0
+      priority: high
+  igrill_temperature_alert_probe_3:
+    title: Probe 3 Temperature Alert
+    name: Probe 3 has reached {{ states.input_number.igrill_probe_3_target_temp.state }} C, currently {{ states.sensor.igrill_probe_3.state }} C.
+    entity_id: sensor.igrill_target_alert_temp_probe_3
+    state: 'Alert'
+    repeat: 
+      - 1 #minutes between alerts once started
+    can_acknowledge: false
+    notifiers:
+      - mobile_app_michael_s_galaxy_s10
+    data:
+      group: iGrill Probe 3
+      color: '#fc8403'
+      ttl: 0
+      priority: high

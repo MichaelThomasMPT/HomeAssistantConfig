@@ -1,0 +1,148 @@
+title: Cooking
+views:
+  - title: iGrill temp
+    badges: []
+    cards:
+      - type: history-graph
+        entities:
+          - entity: sensor.igrill_probe_1
+          - entity: sensor.igrill_probe_2
+          - entity: sensor.igrill_probe_3
+          - entity: sensor.igrill_probe_4
+            name: iGrill Ambient
+        hours_to_show: 3
+        refresh_interval: 0
+        title: iGrill Probe Temperatures
+      - type: grid
+        title: iGrill Probe Temperatures
+        cards:
+          - type: gauge
+            entity: sensor.igrill_probe_1
+            min: 0
+            max: 100
+            name: Probe 1
+          - type: gauge
+            entity: sensor.igrill_probe_2
+            min: 0
+            max: 100
+            name: Probe 2
+          - type: gauge
+            entity: sensor.igrill_probe_3
+            min: 0
+            max: 100
+            name: Probe 3
+          - type: gauge
+            entity: sensor.igrill_probe_4
+            min: 0
+            max: 250
+            name: Ambient Temp
+        columns: 2
+        square: false
+      - type: entities
+        show_header_toggle: true
+        title: iGrill Temperature Alerts
+        entities:
+          - entity: input_number.igrill_ambient_alert_low_temp
+          - entity: input_number.igrill_ambient_alert_high_temp
+          - entity: sensor.igrill_ambient_alert_temp
+          - entity: input_number.igrill_probe_1_target_temp
+          - entity: sensor.igrill_target_alert_temp_probe_1
+          - entity: input_number.igrill_probe_2_target_temp
+          - entity: sensor.igrill_target_alert_temp_probe_2
+          - entity: input_number.igrill_probe_3_target_temp
+          - entity: sensor.igrill_target_alert_temp_probe_3
+      - type: vertical-stack
+        title: iGrill Target Temperature Presets
+        cards:
+          - type: entities
+            entities:
+              - entity: input_select.igrill_presets_probe
+                name: 'Probe to set:'
+          - type: grid
+            cards:
+              - type: button
+                tap_action:
+                  action: call-service
+                  service: script.igrill_set_alert_temperature_from_preset
+                  service_data:
+                    meat: beef
+                    doneness: rare
+                name: Rare
+                icon: 'mdi:cow'
+              - type: button
+                tap_action:
+                  action: call-service
+                  service: script.igrill_set_alert_temperature_from_preset
+                  service_data:
+                    meat: beef
+                    doneness: medium rare
+                name: Medium Rare
+                icon: 'mdi:cow'
+              - type: button
+                tap_action:
+                  action: call-service
+                  service: script.igrill_set_alert_temperature_from_preset
+                  service_data:
+                    meat: beef
+                    doneness: medium
+                name: Medium
+                icon: 'mdi:cow'
+              - type: button
+                tap_action:
+                  action: call-service
+                  service: script.igrill_set_alert_temperature_from_preset
+                  service_data:
+                    meat: lamb
+                    doneness: rare
+                name: Rare
+                icon: 'mdi:sheep'
+              - type: button
+                tap_action:
+                  action: call-service
+                  service: script.igrill_set_alert_temperature_from_preset
+                  service_data:
+                    meat: lamb
+                    doneness: medium rare
+                name: Medium Rare
+                icon: 'mdi:sheep'
+              - type: button
+                tap_action:
+                  action: call-service
+                  service: script.igrill_set_alert_temperature_from_preset
+                  service_data:
+                    meat: pork
+                name: Medium
+                icon: 'mdi:pig'
+              - type: button
+                tap_action:
+                  action: call-service
+                  service: script.igrill_set_alert_temperature_from_preset
+                  service_data:
+                    meat: chicken
+                name: Well Done
+                icon: 'mdi:turkey'
+              - type: button
+                tap_action:
+                  action: call-service
+                  service: script.igrill_set_alert_temperature_from_preset
+                  service_data:
+                    meat: duck
+                name: Well Done
+                icon: 'mdi:duck'
+              - type: button
+                tap_action:
+                  action: call-service
+                  service: script.igrill_set_alert_temperature_from_preset
+                  service_data:
+                    meat: fish
+                name: Medium Well
+                icon: 'mdi:fish'
+            square: true
+      - type: gauge
+        entity: sensor.igrill_battery
+        min: 0
+        max: 100
+        severity:
+          green: 50
+          yellow: 20
+          red: 0
