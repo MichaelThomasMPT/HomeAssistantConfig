@@ -48,25 +48,12 @@ automation:
             entity_id: media_player.kitchen_google_home_hub
             message: The coffee machine was left closed.
 
-    # turn on scullery lights when motion detected
-    - alias: Kitchen - Turn On Scullery Lights When Motion Detected
+    - alias: Kitchen - Toggle Scullery Lights When Motion Detected
       trigger: 
         - platform: state
           entity_id: binary_sensor.scullery_motion
-          to: 'on'
       action:
-        - service: light.turn_on
-          entity_id: 
-            - light.scullery_light
-            - light.pantry_light
-
-    - alias: Kitchen - Turn Off Scullery Lights When No Motion Detected
-      trigger: 
-      - platform: state
-        entity_id: binary_sensor.scullery_motion
-        to: 'off'
-      action:
-        - service: light.turn_off
+        - service: "{% if states.binary_sensor.scullery_motion.state == 'on' -%} light.turn_on {%- else -%} light.turn_off {%- endif %}"
           entity_id: 
             - light.scullery_light
             - light.pantry_light
