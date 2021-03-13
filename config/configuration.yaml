@@ -30,15 +30,6 @@ discovery:
 ssdp:
 zeroconf:
     
-# Elastic search output
-elastic:
-  url: !secret elastic_stack_url
-  exclude:
-    entities:
-        - sensor.es_cluster_health
-        - sensor.es_publish_queue
-        - sun.sun
-
 influxdb:
   host: !secret influx_db_ip_address
   port: !secret influx_db_port
