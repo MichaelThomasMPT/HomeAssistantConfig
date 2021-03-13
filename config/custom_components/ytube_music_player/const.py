@@ -113,6 +113,7 @@ SUPPORT_YTUBEMUSIC_PLAYER = (
 	| SUPPORT_REPEAT_SET
 	| SUPPORT_BROWSE_MEDIA
 	| SUPPORT_SELECT_SOURCE
+	| SUPPORT_SEEK
 )
 
 SERVICE_CALL_METHOD = "call_method"
@@ -127,6 +128,7 @@ SERVICE_CALL_INTERRUPT_RESUME = "interrupt_resume"
 SERVICE_CALL_RELOAD_DROPDOWNS = "reload_dropdowns"
 SERVICE_CALL_OFF_IS_IDLE = "off_is_idle"
 SERVICE_CALL_PAUSED_IS_IDLE = "paused_is_idle"
+SERIVCE_CALL_DEBUG_AS_ERROR = "debug_as_error"
 
 
 CONF_RECEIVERS = 'speakers'	 # list of speakers (media_players)
@@ -302,12 +304,20 @@ def try_login(path, brand_id):
 				msg = "Format of cookie is OK, found '__Secure-3PAPISID' and '__Secure-3PSID' but can't retrieve any data with this settings, maybe you didn't copy all data? Or did you log-out?"
 				_LOGGER.error(msg)
 				ret["base"] = ERROR_CONTENTS
-		except:
-			msg = "Running get_library_songs resulted in an exception, no idea why.. honestly"
-			_LOGGER.error(msg)
-			_LOGGER.error("Please see below")
-			_LOGGER.error(traceback.format_exc())
-			ret["base"] = ERROR_GENERIC
+		except Exception as e:
+			if hasattr(e, 'args'):
+				if(len(e.args)>0):
+					if(isinstance(e.args[0],str)):
+						if(e.args[0].startswith("Server returned HTTP 403: Forbidden")):
+							msg = "The entered information has the correct format, but returned an error 403 (access forbidden). You don't have access with this data (anymore?). Please update the cookie"
+							_LOGGER.error(msg)
+							ret["base"] = ERROR_COOKIE
+			else:
+				msg = "Running get_library_songs resulted in an exception, no idea why.. honestly"
+				_LOGGER.error(msg)
+				_LOGGER.error("Please see below")
+				_LOGGER.error(traceback.format_exc())
+				ret["base"] = ERROR_GENERIC
 	return [ret, msg, api]
 
 def ensure_config(user_input):
