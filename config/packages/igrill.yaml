@@ -1,3 +1,10 @@
+binary_sensor:
+  - platform: ping
+    name: Raspberry Pi Bluetooth Hub
+    host: !secret raspberry_pi_bluetooth_hub_ip_address
+    count: 2
+    scan_interval: 30
+
 sensor:
   - platform: mqtt
     state_topic: "igrill/igrill_v2/probe1"

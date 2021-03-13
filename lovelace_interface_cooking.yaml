@@ -38,19 +38,6 @@ views:
             name: Ambient Temp
         columns: 2
         square: false
-      - type: entities
-        show_header_toggle: true
-        title: iGrill Temperature Alerts
-        entities:
-          - entity: input_number.igrill_ambient_alert_low_temp
-          - entity: input_number.igrill_ambient_alert_high_temp
-          - entity: sensor.igrill_ambient_alert_temp
-          - entity: input_number.igrill_probe_1_target_temp
-          - entity: sensor.igrill_target_alert_temp_probe_1
-          - entity: input_number.igrill_probe_2_target_temp
-          - entity: sensor.igrill_target_alert_temp_probe_2
-          - entity: input_number.igrill_probe_3_target_temp
-          - entity: sensor.igrill_target_alert_temp_probe_3
       - type: vertical-stack
         title: iGrill Target Temperature Presets
         cards:
@@ -138,11 +125,30 @@ views:
                 name: Medium Well
                 icon: 'mdi:fish'
             square: true
-      - type: gauge
-        entity: sensor.igrill_battery
-        min: 0
-        max: 100
-        severity:
-          green: 50
-          yellow: 20
-          red: 0
+      - type: entities
+        show_header_toggle: true
+        title: iGrill Temperature Alerts
+        entities:
+          - entity: input_number.igrill_ambient_alert_low_temp
+          - entity: input_number.igrill_ambient_alert_high_temp
+          - entity: sensor.igrill_ambient_alert_temp
+          - entity: input_number.igrill_probe_1_target_temp
+          - entity: sensor.igrill_target_alert_temp_probe_1
+          - entity: input_number.igrill_probe_2_target_temp
+          - entity: sensor.igrill_target_alert_temp_probe_2
+          - entity: input_number.igrill_probe_3_target_temp
+          - entity: sensor.igrill_target_alert_temp_probe_3
+      - type: horizontal-stack
+        title: Technical Info
+        cards:
+          - type: entity
+            entity: binary_sensor.raspberry_pi_bluetooth_hub
+            name: Bluetooth Hub
+          - type: gauge
+            entity: sensor.igrill_battery
+            min: 0
+            max: 100
+            severity:
+              green: 50
+              yellow: 20
+              red: 0
