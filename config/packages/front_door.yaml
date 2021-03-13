@@ -31,7 +31,7 @@ automation:
     trigger: 
       - platform: state
         entity_id: binary_sensor.side_hall_motion
-    conditions:
+    condition:
       - condition: state  # from sunset until sunrise
         entity_id: sun.sun
         state: 'below_horizon'
