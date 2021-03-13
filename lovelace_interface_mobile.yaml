@@ -60,6 +60,13 @@ views:
                   right: 5%
                   transform: initial
                 type: state-icon
+              - entity: binary_sensor.side_hall_motion
+                style:
+                  bottom: 20%
+                  font-weight: bold
+                  right: 13%
+                  transform: initial
+                type: state-icon
               - entity: sensor.blank
                 hold-action: none
                 prefix: Front Door
