@@ -15,13 +15,9 @@ views:
               label: Current
               unit: °C
               colors:
-                - color: var(--label-badge-red)
-                  value: '{{input_number.igrill_probe_1_target_temp}}'
-                - color: var(--label-badge-orange)
-                  value: '{{input_number.igrill_probe_1_target_temp | int - 10}}'
-                - color: var(--label-badge-yellow)
-                  value: '{{input_number.igrill_probe_1_target_temp | int - 20}}'
-                - color: var(--label-badge-green)
+                - color: var(--label-badge-white)
+                  value: unavailable
+                - color: var(--label-badge-blue)
                   value: 0
             inner:
               entity: input_number.igrill_probe_1_target_temp
@@ -38,13 +34,9 @@ views:
               label: Current
               unit: °C
               colors:
-                - color: var(--label-badge-red)
-                  value: '{{input_number.igrill_probe_2_target_temp}}'
-                - color: var(--label-badge-orange)
-                  value: '{{input_number.igrill_probe_2_target_temp | int - 10}}'
+                - color: var(--label-badge-white)
+                  value: unavailable
                 - color: var(--label-badge-yellow)
-                  value: '{{input_number.igrill_probe_2_target_temp | int - 20}}'
-                - color: var(--label-badge-green)
                   value: 0
             inner:
               entity: input_number.igrill_probe_2_target_temp
@@ -61,12 +53,8 @@ views:
               label: Current
               unit: °C
               colors:
-                - color: var(--label-badge-red)
-                  value: '{{input_number.igrill_probe_3_target_temp}}'
-                - color: var(--label-badge-orange)
-                  value: '{{input_number.igrill_probe_3_target_temp | int - 10}}'
-                - color: var(--label-badge-yellow)
-                  value: '{{input_number.igrill_probe_3_target_temp | int - 20}}'
+                - color: var(--label-badge-white)
+                  value: unavailable
                 - color: var(--label-badge-green)
                   value: 0
             inner:
@@ -85,10 +73,10 @@ views:
                 color: white
               - entity: input_number.igrill_ambient_alert_low_temp
                 name: Minimum Target
-                color: lightgreen
+                color: var(--label-badge-green)
               - entity: input_number.igrill_ambient_alert_high_temp
                 name: Maximum Target
-                color: crimson
+                color: var(--label-badge-red)
             align_state: center
             show:
               fill: false
