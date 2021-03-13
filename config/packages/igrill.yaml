@@ -44,15 +44,18 @@ sensor:
         value_template:
           '
           {%
-            if (states.sensor.igrill_probe_4.state | int) < (states.input_number.igrill_ambient_alert_low_temp.state | int) 
-            or (states.sensor.igrill_probe_4.state | int) > (states.input_number.igrill_ambient_alert_high_temp.state | int) 
-          %}
+            if states.sensor.igrill_probe_4.state != "unavailable"
+            and (
+              (states.sensor.igrill_probe_4.state | int) < (states.input_number.igrill_ambient_alert_low_temp.state | int) 
+              or (states.sensor.igrill_probe_4.state | int) > (states.input_number.igrill_ambient_alert_high_temp.state | int) 
+            ) 
+          -%}
             Alert
           {% else %}
             Normal
           {% endif %}
           '
-        friendly_name: Grill Temp Alert
+        friendly_name: Grill Ambient Temp Alert
   - platform: template
     sensors:
       igrill_target_alert_temp_probe_1:

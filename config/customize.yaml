@@ -53,10 +53,39 @@ light.garden_flood_lights:
   icon: mdi:outdoor-lamp
 
 light.laundry_led_strip:
-    icon: mdi:led-strip-variant
+  icon: mdi:led-strip-variant
 
 light.theatre_room_tv_cabinet_led_strip:
-    icon: mdi:led-strip-variant
+  icon: mdi:led-strip-variant
 
 light.washing_line_lights:
-    icon: mdi:outdoor-lamp
+  icon: mdi:outdoor-lamp
+
+sensor.igrill_ambient_alert_temp:
+  icon: mdi:thermometer-alert
+sensor.igrill_target_alert_temp_probe_1:
+  icon: mdi:thermometer-alert
+sensor.igrill_target_alert_temp_probe_2:
+  icon: mdi:thermometer-alert
+sensor.igrill_target_alert_temp_probe_3:
+  icon: mdi:thermometer-alert
+sensor.igrill_probe_1:
+  icon: mdi:temperature-celsius
+sensor.igrill_probe_2:
+  icon: mdi:temperature-celsius
+sensor.igrill_probe_3:
+  icon: mdi:temperature-celsius
+sensor.igrill_probe_4:
+  icon: mdi:temperature-celsius
+sensor.igrill_battery:
+  icon: mdi:battery-bluetooth
+input_number.igrill_ambient_alert_low_temp:
+  icon: mdi:temperature-celsius
+input_number.igrill_ambient_alert_high_temp:
+  icon: mdi:temperature-celsius
+input_number.igrill_probe_1_target_temp:
+  icon: mdi:temperature-celsius
+input_number.igrill_probe_2_target_temp:
+  icon: mdi:temperature-celsius
+input_number.igrill_probe_3_target_temp:
+  icon: mdi:temperature-celsius

@@ -3,6 +3,95 @@ views:
   - title: iGrill temp
     badges: []
     cards:
+      - type: 'custom:vertical-stack-in-card'
+        title: iGrill Probe Temperatures
+        cards:
+          - type: 'custom:dual-gauge-card'
+            title: Probe 1
+            min: 0
+            max: 100
+            outer:
+              entity: sensor.igrill_probe_1
+              label: Current
+              unit: °C
+              colors:
+                - color: var(--label-badge-red)
+                  value: '{{input_number.igrill_probe_1_target_temp}}'
+                - color: var(--label-badge-orange)
+                  value: '{{input_number.igrill_probe_1_target_temp | int - 10}}'
+                - color: var(--label-badge-yellow)
+                  value: '{{input_number.igrill_probe_1_target_temp | int - 20}}'
+                - color: var(--label-badge-green)
+                  value: 0
+            inner:
+              entity: input_number.igrill_probe_1_target_temp
+              label: Target
+              unit: °C
+              colors:
+                - color: var(--label-badge-red)
+          - type: 'custom:dual-gauge-card'
+            title: Probe 2
+            min: 0
+            max: 100
+            outer:
+              entity: sensor.igrill_probe_2
+              label: Current
+              unit: °C
+              colors:
+                - color: var(--label-badge-red)
+                  value: '{{input_number.igrill_probe_2_target_temp}}'
+                - color: var(--label-badge-orange)
+                  value: '{{input_number.igrill_probe_2_target_temp | int - 10}}'
+                - color: var(--label-badge-yellow)
+                  value: '{{input_number.igrill_probe_2_target_temp | int - 20}}'
+                - color: var(--label-badge-green)
+                  value: 0
+            inner:
+              entity: input_number.igrill_probe_2_target_temp
+              label: Target
+              unit: °C
+              colors:
+                - color: var(--label-badge-red)
+          - type: 'custom:dual-gauge-card'
+            title: Probe 3
+            min: 0
+            max: 100
+            outer:
+              entity: sensor.igrill_probe_3
+              label: Current
+              unit: °C
+              colors:
+                - color: var(--label-badge-red)
+                  value: '{{input_number.igrill_probe_3_target_temp}}'
+                - color: var(--label-badge-orange)
+                  value: '{{input_number.igrill_probe_3_target_temp | int - 10}}'
+                - color: var(--label-badge-yellow)
+                  value: '{{input_number.igrill_probe_3_target_temp | int - 20}}'
+                - color: var(--label-badge-green)
+                  value: 0
+            inner:
+              entity: input_number.igrill_probe_3_target_temp
+              label: Target
+              unit: °C
+              colors:
+                - color: var(--label-badge-red)
+          - type: 'custom:mini-graph-card'
+            name: Ambient Probe
+            hours_to_show: 0.5
+            points_per_hour: 60
+            entities:
+              - entity: sensor.igrill_probe_4
+                name: Ambient Probe
+                color: white
+              - entity: input_number.igrill_ambient_alert_low_temp
+                name: Minimum Target
+                color: lightgreen
+              - entity: input_number.igrill_ambient_alert_high_temp
+                name: Maximum Target
+                color: crimson
+            align_state: center
+            show:
+              fill: false
       - type: history-graph
         entities:
           - entity: sensor.igrill_probe_1
@@ -12,33 +101,8 @@ views:
             name: iGrill Ambient
         hours_to_show: 3
         refresh_interval: 0
-        title: iGrill Probe Temperatures
-      - type: grid
-        title: iGrill Probe Temperatures
-        cards:
-          - type: gauge
-            entity: sensor.igrill_probe_1
-            min: 0
-            max: 100
-            name: Probe 1
-          - type: gauge
-            entity: sensor.igrill_probe_2
-            min: 0
-            max: 100
-            name: Probe 2
-          - type: gauge
-            entity: sensor.igrill_probe_3
-            min: 0
-            max: 100
-            name: Probe 3
-          - type: gauge
-            entity: sensor.igrill_probe_4
-            min: 0
-            max: 250
-            name: Ambient Temp
-        columns: 2
-        square: false
-      - type: vertical-stack
+        title: iGrill Probe Temperature History
+      - type: 'custom:vertical-stack-in-card'
         title: iGrill Target Temperature Presets
         cards:
           - type: entities
@@ -138,17 +202,10 @@ views:
           - entity: sensor.igrill_target_alert_temp_probe_2
           - entity: input_number.igrill_probe_3_target_temp
           - entity: sensor.igrill_target_alert_temp_probe_3
-      - type: horizontal-stack
-        title: Technical Info
-        cards:
-          - type: entity
-            entity: binary_sensor.raspberry_pi_bluetooth_hub
+      - type: glance
+        entities:
+          - entity: binary_sensor.raspberry_pi_bluetooth_hub
             name: Bluetooth Hub
-          - type: gauge
-            entity: sensor.igrill_battery
-            min: 0
-            max: 100
-            severity:
-              green: 50
-              yellow: 20
-              red: 0
+          - entity: sensor.igrill_battery
+        title: Technical Info
+        state_color: true
