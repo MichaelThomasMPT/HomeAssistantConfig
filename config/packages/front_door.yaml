@@ -26,3 +26,15 @@ automation:
       - service: light.turn_off
         entity_id:
           - light.front_porch_light
+
+  - alias: Front Door - Toggle Side Hall Lights When Motion Detected
+    trigger: 
+      - platform: state
+        entity_id: binary_sensor.side_hall_motion
+    conditions:
+      - condition: state  # from sunset until sunrise
+        entity_id: sun.sun
+        state: 'below_horizon'
+    action:
+      - service: "{% if states.binary_sensor.side_hall_motion.state == 'on' -%} light.turn_on {%- else -%} light.turn_off {%- endif %}"
+        entity_id: light.side_hall
