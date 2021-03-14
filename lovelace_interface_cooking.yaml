@@ -17,14 +17,14 @@ views:
               colors:
                 - color: var(--label-badge-white)
                   value: unavailable
-                - color: var(--label-badge-blue)
+                - color: var(--label-badge-red)
                   value: 0
             inner:
               entity: input_number.igrill_probe_1_target_temp
               label: Target
               unit: °C
               colors:
-                - color: var(--label-badge-red)
+                - color: var(--label-badge-blue)
           - type: 'custom:dual-gauge-card'
             title: Probe 2
             min: 0
@@ -43,7 +43,7 @@ views:
               label: Target
               unit: °C
               colors:
-                - color: var(--label-badge-red)
+                - color: var(--label-badge-blue)
           - type: 'custom:dual-gauge-card'
             title: Probe 3
             min: 0
@@ -62,7 +62,7 @@ views:
               label: Target
               unit: °C
               colors:
-                - color: var(--label-badge-red)
+                - color: var(--label-badge-blue)
           - type: 'custom:mini-graph-card'
             name: Ambient Probe
             hours_to_show: 0.5
@@ -70,7 +70,7 @@ views:
             entities:
               - entity: sensor.igrill_probe_4
                 name: Ambient Probe
-                color: white
+                color: var(--label-badge-blue)
               - entity: input_number.igrill_ambient_alert_low_temp
                 name: Minimum Target
                 color: var(--label-badge-green)
