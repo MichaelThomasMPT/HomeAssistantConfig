@@ -2,6 +2,7 @@ input_boolean:
   medicine_reminder_toggle:
     name: Remind Me To Take Medicine
     icon: mdi:pill
+    initial: 'off'
 
 automation:
   - alias: Medicine - Activate Reminder When Medicine Needs Taking
