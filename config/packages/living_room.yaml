@@ -1,0 +1,39 @@
+
+script:
+  toggle_living_room_tv_power:
+    sequence:
+      - service: remote.send_command
+        target:
+          entity_id: remote.broadlink_rm_pro_roomba_remote
+        data:
+          command: b64:JgBQAAABKJMSEhISEjcSEhISEhISEhISEjcSNxISEjcSNxI3EjcSNxISEhISEhI3EhISEhISEhISNxI3EjcSEhI3EjcSNxI3EgAFGgABKEoSAAxWDQUAAAAAAAA=
+
+binary_sensor:
+  - platform: template
+    sensors:
+      living_room_tv:
+        friendly_name: "Living Room TV"
+        value_template: "{{ states('sensor.living_room_tv_power')|float > 10 }}"
+        icon_template: >-
+          {% if is_state("binary_sensor.living_room_tv", "on") %} 
+            mdi:television
+          {% else %}
+            mdi:television-off
+          {% endif %}
+
+switch:
+  - platform: template
+    switches:
+      living_room_tv:
+        friendly_name: Living Room TV
+        value_template: "{{ is_state('binary_sensor.living_room_tv', 'on') }}"
+        turn_on:
+          service: script.toggle_living_room_tv_power
+        turn_off:
+          service: script.toggle_living_room_tv_power
+        icon_template: >-
+          {% if is_state("binary_sensor.living_room_tv", "on") %} 
+            mdi:television
+          {% else %}
+            mdi:television-off
+          {% endif %}

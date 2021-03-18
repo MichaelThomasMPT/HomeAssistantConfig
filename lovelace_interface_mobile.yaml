@@ -476,6 +476,8 @@ views:
             state_color: true
             type: 'custom:fold-entity-row'
           - entities:
+              - entity: switch.living_room_tv
+                state_color: true
               - entity: media_player.living_room_chromecast
                 hide_when_off: true
                 name: TV - Chromecast

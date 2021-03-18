@@ -32,6 +32,8 @@ script:
         entity_id: climate.ac
       - service: media_player.turn_off #tv & speakers
         entity_id: all
+      - service: switch.turn_off
+        entity_id: switch.living_room_tv
       - service: cover.close_cover
         entity_id: cover.theatre_blinds
 

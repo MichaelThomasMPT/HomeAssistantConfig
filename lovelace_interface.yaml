@@ -241,13 +241,16 @@ views:
               left: 54%
               top: 39.5%
             type: state-icon
-          - entity: media_player.living_room_chromecast
+          - entity: switch.living_room_tv
             icon: 'mdi:television-play'
             style:
               '--paper-item-icon-color': white
               left: 55%
               top: 66%
             type: state-icon
+            tap_action:
+              action: toggle
+            state_color: true
           - entity: cover.garage_door
             style:
               '--paper-item-icon-color': white
