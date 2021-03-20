@@ -194,6 +194,23 @@ views:
             name: Google Home Alerts
             icon: 'mdi:google-home'
         state_color: false
+      - type: entities
+        entities:
+          - entity: sensor.igrill_probe_1
+            secondary_info: last-updated
+            name: Probe 1
+          - entity: sensor.igrill_probe_2
+            secondary_info: last-updated
+            name: Probe 2
+          - entity: sensor.igrill_probe_3
+            name: Probe 3
+            secondary_info: last-updated
+          - entity: sensor.igrill_probe_4
+            name: Ambient Probe
+            secondary_info: last-updated
+          - entity: sensor.igrill_battery
+            secondary_info: last-updated
+        title: Latest iGrill Updates
       - type: glance
         entities:
           - entity: binary_sensor.raspberry_pi_bluetooth_hub
