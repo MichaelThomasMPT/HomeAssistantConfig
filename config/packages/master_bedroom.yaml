@@ -80,7 +80,7 @@ automation:
         data: 
           excluded_lights: "['light.master_bedroom', 'light.master_bedroom_lamp']" #Leave the bed side lamp and the corresponding hue group on if it already is
           
-      #proceed to turn on the aircon in the master bedroom for 30 min if the aircon was already on in there
+      #proceed to turn on the aircon in the master bedroom for 60 min if the aircon was already on in there
       - condition: template
         value_template: "{{ aircon_was_running }}"
       - service: scene.turn_on
@@ -94,7 +94,7 @@ automation:
       - service: input_number.set_value 
         data:
           entity_id: input_number.aircon_countdown_timer
-          value: 30
+          value: 60
       - delay:
           seconds: 3
       - service: switch.turn_off
