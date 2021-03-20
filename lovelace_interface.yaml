@@ -1447,6 +1447,10 @@ views:
           - unavailable
         type: entity-filter
       - entities:
+          - entity: input_boolean.uni_parking_reminder_toggle
+            name: Laura - Parking Reminders
+          - entity: input_boolean.medicine_reminder_toggle
+            name: Michael - Medicine Reminders
           - entity: automation.garage_notify_if_garage_door_left_open_for_5_minutes
             name: Garage Left Open Alerts
           - entity: automation.bins_notify_if_bins_not_taken_out

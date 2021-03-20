@@ -1,0 +1,57 @@
+input_boolean:
+  uni_parking_reminder_toggle:
+    name: Remind Laura To Pay For Parking
+    icon: mdi:parking
+    initial: 'off'
+
+automation:
+  - alias: Uni Parking - Activate Reminder When Arriving At Uni
+    trigger:
+      - platform: zone
+        entity_id: person.laura
+        zone: zone.university
+        event: enter
+    action:
+      - service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.uni_parking_reminder_toggle
+
+  - alias: Uni Parking - Deactivate Reminder Once Parking Is Paid
+    trigger:
+      platform: event
+      event_type: ios.notification_action_fired
+      event_data:
+        actionName: UNI_PARKING_PAID
+    action:
+      - service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.uni_parking_reminder_toggle
+
+alert:
+  uni_parking_reminder:
+    name: Don't forget to pay for parking.
+    entity_id: input_boolean.uni_parking_reminder_toggle
+    state: 'on'
+    repeat: 
+      - 10
+      - 5
+    can_acknowledge: true
+    skip_first: true
+    notifiers:
+      - mobile_app_lauras_iphone
+    data:
+      group: Uni Parking
+      push:
+        category: 'uni_parking'
+
+ios:
+  push:
+    categories:
+      - name: Uni Parking Reminder
+        identifier: 'uni_parking'
+        actions:
+          - identifier: 'UNI_PARKING_PAID'
+            title: "I've Paid It"
+            activationMode: 'background'
+            authenticationRequired: false
+            behavior: 'default'

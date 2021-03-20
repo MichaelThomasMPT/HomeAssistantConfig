@@ -1138,6 +1138,8 @@ views:
           - entities:
               - entity: input_boolean.medicine_reminder_toggle
                 name: Michael - Medicine Needs Taking
+              - entity: input_boolean.uni_parking_reminder_toggle
+                name: Laura - Parking Reminders
               - entity: input_boolean.washing_machine_notify_michael
               - entity: input_boolean.washing_machine_notify_laura
               - entity: >-

@@ -41,6 +41,12 @@ zone:
     radius: 220
     icon: mdi:store
 
+  - name: University
+    latitude: !secret zone_university_latitude
+    longitude: !secret zone_university_longitude
+    radius: 900
+    icon: mdi:school
+
 automation:
   # - alias: Location - Notify Michael If Laura Leaving Work
   #   trigger:
@@ -76,8 +82,7 @@ automation:
         entity_id:
           - automation.location_notify_when_someone_comes_home
 
-  - alias: Location - Notify When Leaving Home Without Laptop
-    initial_state: false
+  - alias: Location - Notify Michael When Leaving Home Without Laptop
     trigger:
       - platform: zone
         entity_id: person.michael
