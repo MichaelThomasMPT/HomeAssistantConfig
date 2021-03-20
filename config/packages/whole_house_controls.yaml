@@ -23,19 +23,25 @@ script:
       excluded_lights:
         description: 'A comma-separated list of lights to exclude from turning off (ie. leave in their current state), or blank to turn off all lights'
         example: "['light.garage_light', 'light.front_porch_light'] or []"
+      turn_off_aircon:
+        description: 'Leave the aircon on or turn it off (boolean)'
+        example: true
     sequence:
       - service: script.turn_off_all_lights
         data:
           excluded_lights: "{{ excluded_lights }}"
-      - service: script.aircon_turn_off_all_zones
-      - service: climate.turn_off
-        entity_id: climate.ac
       - service: media_player.turn_off #tv & speakers
         entity_id: all
       - service: switch.turn_off
         entity_id: switch.living_room_tv
       - service: cover.close_cover
         entity_id: cover.theatre_blinds
+      # only proceed if requesting to turn off the aircon
+      - condition: template
+        value_template: "{{ turn_off_aircon }}" 
+      - service: script.aircon_turn_off_all_zones
+      - service: climate.turn_off
+        entity_id: climate.ac
 
   set_party_lights:
     alias: "Whole House - Set Party Lights"

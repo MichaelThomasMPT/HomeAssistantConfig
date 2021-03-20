@@ -40,6 +40,7 @@ automation:
       - service: script.turn_off_whole_house
         data: 
           excluded_lights: "['light.garage', 'light.garage_light', 'light.front_porch_light']" #Leave these lights on if they're already on
+          turn_off_aircon: true
         
   - alias: Alarm System - Alert If Doors Left Open
     trigger:
