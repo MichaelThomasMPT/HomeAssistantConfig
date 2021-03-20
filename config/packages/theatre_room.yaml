@@ -434,6 +434,47 @@ automation:
           plex_content_type: '{{ buttons[trigger.event.data.event].plex_content_type }}'
           plex_content_id: '{{ buttons[trigger.event.data.event].plex_content_id }}'
 
+  - alias: Theatre Room - Play Plex Media On Cube Tap
+    variables: 
+      buttons:
+        1001: #Marvel
+          music_file: '/local/Marvel.mp3'
+          plex_content_type: PLAYLIST
+          plex_content_id: '{ "playlist_name": "The Falcon and the Winter Soldier", "shuffle": "0" }'
+        2002: #Resident Alien
+          music_file: '/local/Resident_Alien.mp3'
+          plex_content_type: PLAYLIST
+          plex_content_id: '{ "playlist_name": "Resident Alien", "shuffle": "0" }'
+        3003: #Star Wars
+          music_file: '/local/Star_Wars.mp3'
+          plex_content_type: PLAYLIST
+          plex_content_id: '{ "playlist_name": "Star Wars Rebels", "shuffle": "0" }'
+        4004: #Battlestar Galactica
+          music_file: '/local/Battlestar_Galactica.mp3'
+          plex_content_type: PLAYLIST
+          plex_content_id: '{ "playlist_name": "Battlestar Galactica", "shuffle": "0" }'
+        5005: #Last Week Tonight
+          music_file: '/local/Last_Week_Tonight.mp3'
+          plex_content_type: PLAYLIST
+          plex_content_id: '{ "playlist_name": "Last Week Tonight", "shuffle": "0" }'
+        6006: #Taskmaster
+          music_file: '/local/Taskmaster.mp3'
+          plex_content_type: PLAYLIST
+          plex_content_id: '{ "playlist_name": "Taskmaster", "shuffle": "0" }'
+    trigger: 
+      - platform: event
+        event_type: deconz_event
+        event_data: 
+          id: magic_cube
+          gesture: 6 #double tap
+    condition: 
+      - "{{ trigger.event.data.event in buttons }}"
+    action:
+      - service: script.start_plex_media_playing
+        data: 
+          music_file: '{{ buttons[trigger.event.data.event].music_file }}'
+          plex_content_type: '{{ buttons[trigger.event.data.event].plex_content_type }}'
+          plex_content_id: '{{ buttons[trigger.event.data.event].plex_content_id }}'
 
 ############## LG TV ##############
 
