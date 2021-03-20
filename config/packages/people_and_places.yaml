@@ -76,6 +76,32 @@ automation:
         entity_id:
           - automation.location_notify_when_someone_comes_home
 
+  - alias: Location - Notify When Leaving Home Without Laptop
+    initial_state: false
+    trigger:
+      - platform: zone
+        entity_id: person.michael
+        zone: zone.home
+        event: leave
+    condition:
+      #TODO: Work out if today is a work day based on my calendar? Or Workday Binary Sensor.
+      - condition: time
+        after: "06:00:00"
+        before: "09:00:00"
+        weekday:
+          - mon
+          - tue
+          - wed
+          - thu
+          - fri
+      - condition: state
+        entity_id: binary_sensor.michael_work_laptop
+        state:  "on" #Laptop is still plugged in to desk
+    action:
+      - service: notify.mobile_app_michael_s_galaxy_s10
+        data:
+          message: Did you forget to bring your work laptop with you?
+
 person:
   - name: Michael
     id: michael
