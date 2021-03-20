@@ -198,6 +198,7 @@ automation:
             color: 'red'
             ttl: 0
             priority: high
+            clickAction: "/lovelace-cooking/0"
 
   - alias: "iGrill - Monitor Grill Ambient Temperature - Normal"
     trigger:
@@ -214,6 +215,7 @@ automation:
             color: 'green'
             ttl: 0
             priority: normal
+            clickAction: "/lovelace-cooking/0"
 
   - alias: "iGrill - Alert When Probe Availability Changes"
     trigger:
@@ -261,6 +263,7 @@ automation:
             color: 'purple'
             ttl: 0
             priority: high
+            clickAction: "/lovelace-cooking/0"
 
   - alias: "iGrill - Google Assistant Notify When Food Is Ready"
     trigger:
@@ -302,6 +305,7 @@ alert:
       color: '#fc8403'
       ttl: 0
       priority: high
+      clickAction: "/lovelace-cooking/0"
   igrill_temperature_alert_probe_2:
     title: Probe 2 Temperature Alert
     name: Probe 2 has reached {{ states.input_number.igrill_probe_2_target_temp.state }} C, currently {{ states.sensor.igrill_probe_2.state }} C.
@@ -317,6 +321,7 @@ alert:
       color: '#fc8403'
       ttl: 0
       priority: high
+      clickAction: "/lovelace-cooking/0"
   igrill_temperature_alert_probe_3:
     title: Probe 3 Temperature Alert
     name: Probe 3 has reached {{ states.input_number.igrill_probe_3_target_temp.state }} C, currently {{ states.sensor.igrill_probe_3.state }} C.
@@ -332,3 +337,4 @@ alert:
       color: '#fc8403'
       ttl: 0
       priority: high
+      clickAction: "/lovelace-cooking/0"
