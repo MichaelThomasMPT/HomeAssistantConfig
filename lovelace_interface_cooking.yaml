@@ -178,7 +178,7 @@ views:
                 icon: 'mdi:fish'
             square: true
       - type: entities
-        show_header_toggle: true
+        show_header_toggle: false
         title: iGrill Temperature Alerts
         entities:
           - entity: input_number.igrill_ambient_alert_low_temp
@@ -190,6 +190,10 @@ views:
           - entity: sensor.igrill_target_alert_temp_probe_2
           - entity: input_number.igrill_probe_3_target_temp
           - entity: sensor.igrill_target_alert_temp_probe_3
+          - entity: automation.igrill_google_assistant_notify_when_food_is_ready
+            name: Google Home Alerts
+            icon: 'mdi:google-home'
+        state_color: false
       - type: glance
         entities:
           - entity: binary_sensor.raspberry_pi_bluetooth_hub

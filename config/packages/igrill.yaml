@@ -266,6 +266,7 @@ automation:
             clickAction: "/lovelace-cooking/0"
 
   - alias: "iGrill - Google Assistant Notify When Food Is Ready"
+    initial_state: 'on'
     trigger:
       - platform: state
         entity_id: 
