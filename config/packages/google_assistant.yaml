@@ -89,3 +89,9 @@ cloud:
 # Text to speech
 tts:
   - platform: google_translate
+
+notify:
+  - platform: tts
+    name: kitchen_google_home_hub
+    tts_service: tts.google_translate_say
+    media_player: media_player.kitchen_google_home_hub

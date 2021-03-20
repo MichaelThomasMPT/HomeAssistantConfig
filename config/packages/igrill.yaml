@@ -262,6 +262,30 @@ automation:
             ttl: 0
             priority: high
 
+  - alias: "iGrill - Google Assistant Notify When Food Is Ready"
+    trigger:
+      - platform: state
+        entity_id: 
+          - sensor.igrill_target_alert_temp_probe_1
+          - sensor.igrill_target_alert_temp_probe_2
+          - sensor.igrill_target_alert_temp_probe_3
+        to: 'Alert'
+    variables:
+      probe_name: >- 
+        {% if trigger.entity_id == "sensor.igrill_target_alert_temp_probe_1" -%}
+          Probe 1
+        {%- elif trigger.entity_id == "sensor.igrill_target_alert_temp_probe_2" -%}
+          Probe 2
+        {%- elif trigger.entity_id == "sensor.igrill_target_alert_temp_probe_3" -%}
+          Probe 3
+        {%- else -%}
+          An unknown probe
+        {%- endif %}
+    action:
+      - service: notify.kitchen_google_home_hub 
+        data:
+          message: "Your food is ready! {{probe_name}} has reached its target temperature."
+
 alert:
   igrill_temperature_alert_probe_1:
     title: Probe 1 Temperature Alert
