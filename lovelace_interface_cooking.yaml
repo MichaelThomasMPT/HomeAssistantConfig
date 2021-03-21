@@ -215,6 +215,8 @@ views:
         entities:
           - entity: binary_sensor.raspberry_pi_bluetooth_hub
             name: Bluetooth Hub
+          - entity: switch.rpi_bluetooth_hub_smart_plug_power
+            name: Hub Power Switch
           - entity: sensor.igrill_battery
         title: Technical Info
         state_color: true
