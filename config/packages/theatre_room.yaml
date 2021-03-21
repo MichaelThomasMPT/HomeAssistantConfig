@@ -406,34 +406,6 @@ automation:
     action:
       - service: script.turn_off_theatre_room_lights
 
-  - alias: Theatre Room - Play Plex Media On Button Press
-    variables: 
-      buttons:
-        #on button
-        1002:
-          music_file: '/local/Star_Wars.mp3'
-          plex_content_type: PLAYLIST
-          plex_content_id: '{ "playlist_name": "Star Wars Rebels", "shuffle": "0" }'
-
-        #off button
-        2002:
-          music_file: '/local/Marvel.mp3'
-          plex_content_type: PLAYLIST
-          plex_content_id: '{ "playlist_name": "The Falcon and the Winter Soldier", "shuffle": "0" }'
-    trigger: 
-      - platform: event
-        event_type: deconz_event
-        event_data: 
-          id: theatre_plex_button
-    condition: 
-      - "{{ trigger.event.data.event in buttons }}"
-    action:
-      - service: script.start_plex_media_playing
-        data: 
-          music_file: '{{ buttons[trigger.event.data.event].music_file }}'
-          plex_content_type: '{{ buttons[trigger.event.data.event].plex_content_type }}'
-          plex_content_id: '{{ buttons[trigger.event.data.event].plex_content_id }}'
-
   - alias: Theatre Room - Play Plex Media On Cube Tap
     variables: 
       buttons:

@@ -72,6 +72,19 @@ script:
         entity_id: cover.bed_2_3
       service: cover.open_cover
     alias: Aircon Fan Office
+
+  #Run the fan in the theatre
+  aircon_fan_theatre:
+    sequence:
+    - data:
+        entity_id: climate.ac
+        hvac_mode: fan_only
+      service: climate.set_hvac_mode
+    - service: script.aircon_turn_off_all_zones
+    - data:
+        entity_id: cover.theatre
+      service: cover.open_cover
+    alias: Aircon Fan Theatre
     
   #Run the aircon in the central living area
   aircon_cool_central_living:
@@ -370,6 +383,78 @@ automation:
     action:
       - service: climate.turn_off
         entity_id: climate.ac
+
+
+  - alias: Temperature - Theatre Button Trigger - On
+    #TODO: Perhaps for the winter make this also trigger the theatre heater
+    mode: queued #Make it so you can press the button twice as quickly as you want
+    trigger:
+      - platform: event
+        event_type: deconz_event
+        event_data: 
+          id: theatre_aircon_button
+          event: 1002 
+    action:
+      - service: scene.create
+        data:
+          scene_id: theatre_lights_original_state
+          snapshot_entities:
+            - light.theatre_room_left_lamp
+            - light.theatre_room_right_lamp
+      - choose:
+        - conditions: #If aircon theatre zone off or aircon off in general
+            - condition: or
+              conditions:
+              - condition: state
+                entity_id: switch.aircon_zone_theatre
+                state: 'off'
+              - condition: state
+                entity_id: climate.ac
+                state: 'off'
+          sequence:
+            - service: light.turn_on
+              target:
+                entity_id: light.theatre_room 
+              data:
+                brightness_pct: 50
+                color_name: green
+                flash: short
+            - service: script.aircon_fan_theatre
+        default: #If fan is already running in the theatre, turn on the aircon instead
+          - service: light.turn_on
+            target:
+              entity_id: light.theatre_room
+            data:
+              brightness_pct: 50
+              color_name: blue
+              flash: short
+          - service: script.aircon_cool_theatre
+      - delay:
+          seconds: 3
+      - service: scene.turn_on
+        entity_id: scene.theatre_lights_original_state
+
+  - alias: Temperature - Theatre Button Trigger - Off
+    trigger:
+      - platform: event
+        event_type: deconz_event
+        event_data: 
+          id: theatre_aircon_button
+          event: 2002 
+    action:
+      - service: light.turn_on
+        target:
+          entity_id: light.theatre_room
+        data:
+          brightness_pct: 50
+          color_name: white
+          flash: short
+      - service: climate.turn_off
+        entity_id: climate.ac
+      - delay:
+          seconds: 3
+      - service: scene.turn_on
+        entity_id: scene.theatre_lights_original_state
 
   - alias: Temperature - Make Central Living Comfortable When Arriving home
     trigger: 
