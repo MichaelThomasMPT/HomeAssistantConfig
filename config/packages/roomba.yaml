@@ -70,7 +70,7 @@ automation:
   - alias: Roomba - Alert When Roomba Doesn't Return To Dock
     trigger:
       - platform: time_pattern
-        minutes: '/10'
+        hours: '/1'
       - platform: state
         entity_id: person.michael
         to: 'home'
