@@ -5,30 +5,30 @@ alarm_control_panel:
   password: !secret alarmdotcom_password
 
 automation:
-  # - alias: Alarm System - Notify If Alarm Not Set When Nobody Is Home
-  #   trigger:
-  #     - platform: zone
-  #       entity_id: device_tracker.lauras_iphone
-  #       zone: zone.home
-  #       event: leave
-  #     - platform: zone
-  #       entity_id: device_tracker.michael_michaelgalaxys10_2
-  #       zone: zone.home
-  #       event: leave
-  #   condition:
-  #     condition: and
-  #     conditions:
-  #       - condition: template
-  #         value_template: "{{ not is_state('device_tracker.lauras_iphone','home') }}"
-  #       - condition: template
-  #         value_template: "{{ not is_state('device_tracker.michael_michaelgalaxys10_2','home') }}"
-  #       - condition: state
-  #         entity_id: alarm_control_panel.alarm_com
-  #         state: 'disarmed'
-  #   action:
-  #     - service: notify.mobile_app_michael_s_galaxy_s10 #notify Michael
-  #       data:
-  #         message: The house alarm was not set.
+  - alias: Alarm System - Notify If Alarm Not Set When Nobody Is Home
+    trigger:
+      - platform: zone
+        entity_id: person.laura
+        zone: zone.home
+        event: leave
+      - platform: zone
+        entity_id: person.michael
+        zone: zone.home
+        event: leave
+    condition:
+      condition: and
+      conditions:
+        - condition: template
+          value_template: "{{ not is_state('person.michael','home') }}"
+        - condition: template
+          value_template: "{{ not is_state('person.laura','home') }}"
+        - condition: state
+          entity_id: alarm_control_panel.alarm_com
+          state: 'disarmed'
+    action:
+      - service: notify.mobile_app_michael_s_galaxy_s10
+        data:
+          message: The house alarm was not set and nobody is home.
           
   - alias: Alarm System - Turn Off House When Alarm Is Set
     trigger:
