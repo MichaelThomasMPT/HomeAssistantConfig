@@ -384,7 +384,6 @@ automation:
       - service: climate.turn_off
         entity_id: climate.ac
 
-
   - alias: Temperature - Theatre Button Trigger - On
     #TODO: Perhaps for the winter make this also trigger the theatre heater
     mode: queued #Make it so you can press the button twice as quickly as you want
