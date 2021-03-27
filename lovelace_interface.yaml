@@ -109,6 +109,7 @@ views:
             type: entities
           - aspect_ratio: 70%
             camera_image: camera.garage
+            camera_view: live
             entity: camera.garage
             name: Garage Camera
             type: picture-entity
