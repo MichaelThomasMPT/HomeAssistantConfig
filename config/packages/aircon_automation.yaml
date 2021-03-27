@@ -274,7 +274,7 @@ automation:
         event_type: deconz_event
         event_data: 
           id: master_bed_switch_1 #laura's button
-          event: 1002 #single press
+          event: 1004 #double press
       - platform: event
         event_type: deconz_event
         event_data: 
@@ -302,7 +302,7 @@ automation:
         event_type: deconz_event
         event_data: 
           id: master_bed_switch_1 #laura's button
-          event: 1002 #single press
+          event: 1004 #double press
       - platform: event
         event_type: deconz_event
         event_data: 
@@ -328,7 +328,7 @@ automation:
         event_type: deconz_event
         event_data: 
           id: master_bed_switch_1 #laura's button
-          event: 1004 #single press 
+          event: 1004 #double press 
       - platform: event
         event_type: deconz_event
         event_data: 

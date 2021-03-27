@@ -45,7 +45,8 @@ views:
               - entity: light.laundry_led_strip
               - entity: light.living_room
               - entity: light.master_bedroom_ceiling
-              - entity: light.master_bedroom_lamp
+              - entity: light.master_bedroom_michael_lamp
+              - entity: light.master_bedroom_laura_lamp
               - entity: light.master_wir
               - entity: light.office_lamp
               - entity: light.pantry_light
@@ -206,10 +207,17 @@ views:
             tap_action:
               action: toggle
             type: state-icon
-          - entity: light.master_bedroom_lamp
+          - entity: light.master_bedroom_michael_lamp
             style:
               left: 13.5%
               top: 80.5%
+            tap_action:
+              action: toggle
+            type: state-icon
+          - entity: light.master_bedroom_laura_lamp
+            style:
+              left: 13.5%
+              top: 88.5%
             tap_action:
               action: toggle
             type: state-icon

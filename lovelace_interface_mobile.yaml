@@ -205,10 +205,19 @@ views:
                 - entity: light.master_bedroom_ceiling
                   name: Ceiling
                   toggle: true
-                - entity: light.master_bedroom_lamp
-                  name: Lamp
+                - entity: light.master_bedroom_michael_lamp
+                  name: Michael's Lamp
                   icon: 'mdi:lamp'
                   toggle: true
+                - entity: light.master_bedroom_laura_lamp
+                  name: Laura's Lamp
+                  icon: 'mdi:lamp'
+                  toggle: true
+          - type: entities
+            entities: []
+            footer:
+              type: buttons
+              entities:
                 - entity: light.master_wir
                   name: WIR
                   toggle: true
@@ -1194,7 +1203,8 @@ views:
               - entity: light.laundry_led_strip
               - entity: light.living_room
               - entity: light.master_bedroom_ceiling
-              - entity: light.master_bedroom_lamp
+              - entity: light.master_bedroom_michael_lamp
+              - entity: light.master_bedroom_laura_lamp
               - entity: light.master_wir
               - entity: light.office_lamp
               - entity: light.pantry_light

@@ -44,6 +44,11 @@ switch:
           data:
             entity_id: light.ensuite_fan
 
+light:
+  - platform: switch
+    name: Master Bedroom - Laura Lamp
+    entity_id: switch.laura_lamp_smart_plug
+
 var:
   master_bedroom_lights_brightness_control:
     initial_value: stop #allowed values: stop, dim, bright
@@ -96,7 +101,7 @@ automation:
         entity_id: switch.aircon_zone_bed23
 
 
-  - alias: Master Bedroom - Toggle Lamp Light
+  - alias: Master Bedroom - Toggle Michael Lamp Light
     trigger:
       - platform: event
         event_type: deconz_event
@@ -105,10 +110,20 @@ automation:
           event: 1002 #single press
     action:
       - service: light.toggle
-        entity_id: light.master_bedroom_lamp
+        entity_id: light.master_bedroom_michael_lamp
         data_template:
           brightness_pct: '{% if now().hour >= 22 or now().hour < 4 %}5{% else %}100{% endif %}' #Dim light between 10pm-4am
 
+  - alias: Master Bedroom - Toggle Laura Lamp Light
+    trigger:
+      - platform: event
+        event_type: deconz_event
+        event_data: 
+          id: master_bed_switch_1 #laura's button
+          event: 1002 #single press
+    action:
+      - service: light.toggle
+        entity_id: light.master_bedroom_laura_lamp
 
   - alias: Ensuite - Turn On Fan When Shower Running
     trigger:
