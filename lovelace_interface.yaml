@@ -193,6 +193,41 @@ views:
             tap_action:
               action: toggle
             type: state-icon
+          - entity: light.laundry_ceiling
+            style:
+              left: 26.5%
+              top: 37.5%
+            tap_action:
+              action: toggle
+            type: state-icon
+          - entity: light.laundry_led_strip
+            style:
+              left: 24%
+              top: 34.5%
+            tap_action:
+              action: toggle
+            type: state-icon
+          - entity: light.theatre_room_tv_cabinet_led_strip
+            style:
+              left: 49.5%
+              top: 40.5%
+            tap_action:
+              action: toggle
+            type: state-icon
+          - entity: light.washing_line_lights
+            style:
+              left: 9.5%
+              top: 47.5%
+            tap_action:
+              action: toggle
+            type: state-icon
+          - entity: light.washing_line_lights
+            style:
+              left: 9.5%
+              top: 62.5%
+            tap_action:
+              action: toggle
+            type: state-icon
           - entity: light.entry_hall_lights
             style:
               left: 42.5%
