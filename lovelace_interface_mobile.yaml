@@ -473,9 +473,6 @@ views:
                 tap_action:
                   action: toggle
                 type: button
-              - entity: switch.roomba_magic_wall
-                name: Magic Wall
-                icon: 'mdi:wall'
             head:
               label: Roomba
               type: section
@@ -643,6 +640,13 @@ views:
                   right: 5%
                   transform: initial
                 type: state-label
+              - entity: binary_sensor.any_kitchen_chair_upright
+                style:
+                  bottom: 20%
+                  font-weight: bold
+                  right: 18%
+                  transform: initial
+                type: state-icon
               - entity: sensor.blank
                 hold-action: none
                 prefix: Kitchen
@@ -704,6 +708,32 @@ views:
                 name: Coffees Made Today
             head:
               label: Details
+              type: section
+            show_header_toggle: false
+            type: 'custom:fold-entity-row'
+          - entities:
+              - entity: binary_sensor.kitchen_chair_1_upright
+                group: true
+                state_color: true
+                hide:
+                  controls: true
+              - entity: binary_sensor.kitchen_chair_2_upright
+                group: true
+                state_color: true
+                hide:
+                  controls: true
+              - entity: binary_sensor.kitchen_chair_3_upright
+                group: true
+                state_color: true
+                hide:
+                  controls: true
+              - entity: binary_sensor.kitchen_chair_4_upright
+                group: true
+                state_color: true
+                hide:
+                  controls: true
+            head:
+              label: Chairs
               type: section
             show_header_toggle: false
             type: 'custom:fold-entity-row'
