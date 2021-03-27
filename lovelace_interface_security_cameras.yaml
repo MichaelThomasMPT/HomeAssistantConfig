@@ -1,0 +1,43 @@
+views:
+  - panel: true
+    badges: []
+    cards:
+      - type: grid
+        cards:
+          - type: picture-entity
+            entity: camera.garage
+            name: Garage
+            camera_image: camera.garage
+            camera_view: live
+            show_name: false
+            show_state: false
+          - type: picture-entity
+            entity: camera.swann_camera_1
+            name: Swann 1
+            camera_image: camera.swann_camera_1
+            camera_view: live
+            show_name: false
+            show_state: false
+          - type: picture-entity
+            entity: camera.swann_camera_2
+            name: Swann 2
+            camera_image: camera.swann_camera_2
+            camera_view: live
+            show_name: false
+            show_state: false
+          - type: picture-entity
+            entity: camera.swann_camera_3
+            name: Swann 3
+            camera_image: camera.swann_camera_3
+            camera_view: live
+            show_name: false
+            show_state: false
+          - type: picture-entity
+            entity: camera.swann_camera_4
+            name: Swann 4
+            camera_image: camera.swann_camera_4
+            camera_view: live
+            show_name: false
+            show_state: false
+        columns: 3
+        square: false
