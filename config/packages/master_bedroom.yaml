@@ -77,7 +77,7 @@ automation:
           seconds: 20
       - service: script.turn_off_whole_house #after allowing time to get in to bed, turn off everything in the house
         data: 
-          excluded_lights: "['light.master_bedroom', 'light.master_bedroom_lamp']" #Leave the bed side lamp and the corresponding hue group on if it already is
+          excluded_lights: "['light.master_bedroom', 'light.master_bedroom_michael_lamp', 'light.master_bedroom_laura_lamp']" #Leave the bed side lamp and the corresponding hue group on if it already is
           turn_off_aircon: "{{ not aircon_was_running }}" 
           
       #proceed to turn on the aircon in the master bedroom for 60 min if the aircon was already on in there
