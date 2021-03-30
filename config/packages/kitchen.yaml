@@ -26,26 +26,22 @@ binary_sensor:
         friendly_name: "Kitchen Chair 1 Upright"
         icon_template: mdi:table-chair
         value_template: >-
-          {{ state_attr('binary_sensor.kitchen_chair_vibration_1', 'tiltangle') > 150 and 
-             state_attr('binary_sensor.kitchen_chair_vibration_1', 'tiltangle') < 210 }}
+          {{ state_attr('binary_sensor.kitchen_chair_vibration_1', 'orientation')[2] <= 0 }}
       kitchen_chair_2_upright:
         friendly_name: "Kitchen Chair 2 Upright"
         icon_template: mdi:table-chair
         value_template: >-
-          {{ state_attr('binary_sensor.kitchen_chair_vibration_2', 'tiltangle') > 150 and 
-             state_attr('binary_sensor.kitchen_chair_vibration_2', 'tiltangle') < 210 }}
+          {{ state_attr('binary_sensor.kitchen_chair_vibration_2', 'orientation')[2] <= 0 }}
       kitchen_chair_3_upright:
         friendly_name: "Kitchen Chair 3 Upright"
         icon_template: mdi:table-chair
         value_template: >-
-          {{ state_attr('binary_sensor.kitchen_chair_vibration_3', 'tiltangle') > 150 and 
-             state_attr('binary_sensor.kitchen_chair_vibration_3', 'tiltangle') < 210 }}
+          {{ state_attr('binary_sensor.kitchen_chair_vibration_3', 'orientation')[2] <= 0 }}
       kitchen_chair_4_upright:
         friendly_name: "Kitchen Chair 4 Upright"
         icon_template: mdi:table-chair
         value_template: >-
-          {{ state_attr('binary_sensor.kitchen_chair_vibration_4', 'tiltangle') > 150 and 
-             state_attr('binary_sensor.kitchen_chair_vibration_4', 'tiltangle') < 210 }}
+          {{ state_attr('binary_sensor.kitchen_chair_vibration_4', 'orientation')[2] <= 0 }}
       any_kitchen_chair_upright:
         friendly_name: "Any Kitchen Chair Upright"
         icon_template: mdi:table-chair
