@@ -1,9 +1,9 @@
 title: Cooking
 views:
-  - title: iGrill temp
+  - title: iGrill Control
     badges: []
     cards:
-      - type: 'custom:vertical-stack-in-card'
+      - type: 'custom:stack-in-card'
         title: iGrill Probe Temperatures
         cards:
           - type: 'custom:dual-gauge-card'
@@ -87,10 +87,10 @@ views:
           - entity: sensor.igrill_probe_3
           - entity: sensor.igrill_probe_4
             name: iGrill Ambient
-        hours_to_show: 3
         refresh_interval: 0
         title: iGrill Probe Temperature History
-      - type: 'custom:vertical-stack-in-card'
+        hours_to_show: 8
+      - type: 'custom:stack-in-card'
         title: iGrill Target Temperature Presets
         cards:
           - type: entities
@@ -194,6 +194,15 @@ views:
             name: Google Home Alerts
             icon: 'mdi:google-home'
         state_color: false
+      - type: glance
+        entities:
+          - entity: binary_sensor.raspberry_pi_bluetooth_hub
+            name: Bluetooth Hub
+          - entity: switch.rpi_bluetooth_hub_smart_plug_power
+            name: Hub Power Switch
+          - entity: sensor.igrill_battery
+        title: Technical Info
+        state_color: true
       - type: entities
         entities:
           - entity: sensor.igrill_probe_1
@@ -211,12 +220,110 @@ views:
           - entity: sensor.igrill_battery
             secondary_info: last-updated
         title: Latest iGrill Updates
-      - type: glance
-        entities:
-          - entity: binary_sensor.raspberry_pi_bluetooth_hub
-            name: Bluetooth Hub
-          - entity: switch.rpi_bluetooth_hub_smart_plug_power
-            name: Hub Power Switch
-          - entity: sensor.igrill_battery
-        title: Technical Info
-        state_color: true
+      - type: weather-forecast
+        entity: weather.banjup
+        show_forecast: false
+        name: Treeby
+        secondary_info_attribute: wind_speed
+  - title: iGrill Dashboard
+    path: igrill-dashboard
+    panel: true
+    badges: []
+    cards:
+      - type: grid
+        cards:
+          - type: weather-forecast
+            entity: weather.banjup
+            show_forecast: false
+            name: Treeby
+            secondary_info_attribute: wind_speed
+          - type: 'custom:dual-gauge-card'
+            title: Probe 1
+            min: 0
+            max: 100
+            outer:
+              entity: sensor.igrill_probe_1
+              label: Current
+              unit: °C
+              colors:
+                - color: var(--label-badge-white)
+                  value: unavailable
+                - color: var(--label-badge-red)
+                  value: 0
+            inner:
+              entity: input_number.igrill_probe_1_target_temp
+              label: Target
+              unit: °C
+              colors:
+                - color: var(--label-badge-blue)
+          - type: 'custom:dual-gauge-card'
+            title: Probe 2
+            min: 0
+            max: 100
+            outer:
+              entity: sensor.igrill_probe_2
+              label: Current
+              unit: °C
+              colors:
+                - color: var(--label-badge-white)
+                  value: unavailable
+                - color: var(--label-badge-yellow)
+                  value: 0
+            inner:
+              entity: input_number.igrill_probe_2_target_temp
+              label: Target
+              unit: °C
+              colors:
+                - color: var(--label-badge-blue)
+          - type: 'custom:dual-gauge-card'
+            title: Probe 3
+            min: 0
+            max: 100
+            outer:
+              entity: sensor.igrill_probe_3
+              label: Current
+              unit: °C
+              colors:
+                - color: var(--label-badge-white)
+                  value: unavailable
+                - color: var(--label-badge-green)
+                  value: 0
+            inner:
+              entity: input_number.igrill_probe_3_target_temp
+              label: Target
+              unit: °C
+              colors:
+                - color: var(--label-badge-blue)
+          - type: 'custom:mini-graph-card'
+            name: Ambient Probe
+            hours_to_show: 0.5
+            points_per_hour: 60
+            line_width: 2
+            height: 50
+            entities:
+              - entity: sensor.igrill_probe_4
+                name: Ambient Probe
+                color: var(--label-badge-blue)
+              - entity: input_number.igrill_ambient_alert_low_temp
+                name: Minimum Target
+                color: var(--label-badge-green)
+              - entity: input_number.igrill_ambient_alert_high_temp
+                name: Maximum Target
+                color: var(--label-badge-red)
+            align_state: center
+            show:
+              fill: false
+              points: false
+              legend: true
+          - type: history-graph
+            entities:
+              - entity: sensor.igrill_probe_1
+              - entity: sensor.igrill_probe_2
+              - entity: sensor.igrill_probe_3
+              - entity: sensor.igrill_probe_4
+                name: iGrill Ambient
+            refresh_interval: 0
+            hours_to_show: 8
+            title: Last 8 Hours
+        columns: 2
+        square: false
