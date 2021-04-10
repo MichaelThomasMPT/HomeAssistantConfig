@@ -1,118 +1,118 @@
-input_text:
-  youtube_selected_playlist:
-    name: Selected Youtube Playlist
-    initial: "PLavpVzwAAU9aigpY4vGOZctR0TrICYK3z"
+# input_text:
+#   youtube_selected_playlist:
+#     name: Selected Youtube Playlist
+#     initial: "PLavpVzwAAU9aigpY4vGOZctR0TrICYK3z"
 
-sensor: 
-  #Calls the YouTube API to retrieve the first 50 videos of a YouTube playlist
-  - name: youtube_playlist_restful_response
-    scan_interval: 1 #refresh every second - default limit is 3 per day
-    platform: rest
-    method: GET
-    resource_template: https://youtube.googleapis.com/youtube/v3/playlistItems?playlistId={{ states['input_text.youtube_selected_playlist'].state }}
-    value_template: "{{ value_json.pageInfo.resultsPerPage }} of {{ value_json.pageInfo.totalResults }} results retrieved."
-    json_attributes: 
-      - "items"
-    params:
-      part: "contentDetails"
-      maxResults: "100" #NOTE: This caps at 50 returned from Youtube currnetly
-      key: !secret youtube_api_key
+# sensor: 
+#   #Calls the YouTube API to retrieve the first 50 videos of a YouTube playlist
+#   - name: youtube_playlist_restful_response
+#     scan_interval: 1 #refresh every second - default limit is 3 per day
+#     platform: rest
+#     method: GET
+#     resource_template: https://youtube.googleapis.com/youtube/v3/playlistItems?playlistId={{ states['input_text.youtube_selected_playlist'].state }}
+#     value_template: "{{ value_json.pageInfo.resultsPerPage }} of {{ value_json.pageInfo.totalResults }} results retrieved."
+#     json_attributes: 
+#       - "items"
+#     params:
+#       part: "contentDetails"
+#       maxResults: "100" #NOTE: This caps at 50 returned from Youtube currnetly
+#       key: !secret youtube_api_key
   
-  #Takes the results of the Youtube API call and parse the video IDs into a list
-  - platform: template
-    sensors: 
-      youtube_playlist_video_ids:
-        value_template: "OK"
-        attribute_templates:
-          id_list: "{{ states.sensor.youtube_playlist_restful_response.attributes['items'] | map(attribute='contentDetails.videoId') | list() }}"
+#   #Takes the results of the Youtube API call and parse the video IDs into a list
+#   - platform: template
+#     sensors: 
+#       youtube_playlist_video_ids:
+#         value_template: "OK"
+#         attribute_templates:
+#           id_list: "{{ states.sensor.youtube_playlist_restful_response.attributes['items'] | map(attribute='contentDetails.videoId') | list() }}"
 
-script:
-  #This is the starting point for this mess! 
-  youtube_randomize_playlist:
-    alias: Youtube - Retrieve Videos In Playlist
-    mode: restart
-    description: For a given Youtube playlist ID, find all the videos associated with that playlist
-    fields: 
-      media_entity: 
-        description: 'Which device should the playlist be played on'
-        example: media_player.kitchen_google_home_hub
-      playlist_id: 
-        description: 'The playlist which should be played (note: this must have public visibility)'
-        example: 'PLavpVzwAAU9aigpY4vGOZctR0TrICYK3z'
-    sequence: 
+# script:
+#   #This is the starting point for this mess! 
+#   youtube_randomize_playlist:
+#     alias: Youtube - Retrieve Videos In Playlist
+#     mode: restart
+#     description: For a given Youtube playlist ID, find all the videos associated with that playlist
+#     fields: 
+#       media_entity: 
+#         description: 'Which device should the playlist be played on'
+#         example: media_player.kitchen_google_home_hub
+#       playlist_id: 
+#         description: 'The playlist which should be played (note: this must have public visibility)'
+#         example: 'PLavpVzwAAU9aigpY4vGOZctR0TrICYK3z'
+#     sequence: 
 
-      #Set the playlist to be retrieved from Youtube
-      - service: input_text.set_value
-        data:
-          entity_id: input_text.youtube_selected_playlist
-          value: "{{ playlist_id }}"
+#       #Set the playlist to be retrieved from Youtube
+#       - service: input_text.set_value
+#         data:
+#           entity_id: input_text.youtube_selected_playlist
+#           value: "{{ playlist_id }}"
 
-      #Refresh the rest sensor to trigger a call to the Youtube API
-      - service: rest.reload
+#       #Refresh the rest sensor to trigger a call to the Youtube API
+#       - service: rest.reload
 
-      #Wait a bit for the call to complete
-      #TODO: Rather than a delay, make this look for if the template sensor has updated its value since this script started
-      - delay:
-          seconds: 5
+#       #Wait a bit for the call to complete
+#       #TODO: Rather than a delay, make this look for if the template sensor has updated its value since this script started
+#       - delay:
+#           seconds: 5
           
-      #Call script to shuffle the results and play them on the kitchen Google Home Hub
-      - service: script.youtube_internal_only_shuffle_videos_in_playlist
-        data:
-          media_entity: "{{media_entity}}"
+#       #Call script to shuffle the results and play them on the kitchen Google Home Hub
+#       - service: script.youtube_internal_only_shuffle_videos_in_playlist
+#         data:
+#           media_entity: "{{media_entity}}"
 
-  youtube_internal_only_shuffle_videos_in_playlist:
-    alias: Youtube - INTERNAL ONLY - Shuffle Videos In Playlist
-    mode: restart
-    fields: 
-      media_entity: 
-        description: 'Which device should the playlist be played on'
-        example: media_player.kitchen_google_home_hub
-    variables:
-      song_list: >- #Create a randomised song list from the template sensor youtube_playlist_video_ids
-        {% set ns = namespace(selected_items=[]) %}
-        {% for iteration in states.sensor.youtube_playlist_video_ids.attributes['id_list'] %}
-          {% set current_options = states.sensor.youtube_playlist_video_ids.attributes['id_list'] | list | reject("in", ns.selected_items) | list %}   
-          {% set random_item = current_options | random %}
-          {% set ns.selected_items = ns.selected_items + [random_item] | list %}
-        {% endfor %}
-        {{ ns.selected_items }}
+#   youtube_internal_only_shuffle_videos_in_playlist:
+#     alias: Youtube - INTERNAL ONLY - Shuffle Videos In Playlist
+#     mode: restart
+#     fields: 
+#       media_entity: 
+#         description: 'Which device should the playlist be played on'
+#         example: media_player.kitchen_google_home_hub
+#     variables:
+#       song_list: >- #Create a randomised song list from the template sensor youtube_playlist_video_ids
+#         {% set ns = namespace(selected_items=[]) %}
+#         {% for iteration in states.sensor.youtube_playlist_video_ids.attributes['id_list'] %}
+#           {% set current_options = states.sensor.youtube_playlist_video_ids.attributes['id_list'] | list | reject("in", ns.selected_items) | list %}   
+#           {% set random_item = current_options | random %}
+#           {% set ns.selected_items = ns.selected_items + [random_item] | list %}
+#         {% endfor %}
+#         {{ ns.selected_items }}
 
-    sequence:
-      #Check that there is at least one song in the list to be played
-      - condition: template
-        value_template: "{{ song_list | count > 0 }}"
+#     sequence:
+#       #Check that there is at least one song in the list to be played
+#       - condition: template
+#         value_template: "{{ song_list | count > 0 }}"
 
-      #Clear any existing playlist by turning off the device
-      - service: media_player.turn_off
-        data:
-          entity_id: "{{ media_entity }}"
-      - wait_template: "{{ is_state(media_entity, 'off') }}"
-        timeout: 10
-        continue_on_timeout: true
+#       #Clear any existing playlist by turning off the device
+#       - service: media_player.turn_off
+#         data:
+#           entity_id: "{{ media_entity }}"
+#       - wait_template: "{{ is_state(media_entity, 'off') }}"
+#         timeout: 10
+#         continue_on_timeout: true
 
-      #Start the first song playing
-      - service: media_player.play_media
-        data:
-          entity_id: "{{ media_entity }}"
-          media_content_type: cast
-          media_content_id: '
-              {
-              "app_name": "youtube",
-              "media_id": "{{ song_list[0] }}"
-              }'
+#       #Start the first song playing
+#       - service: media_player.play_media
+#         data:
+#           entity_id: "{{ media_entity }}"
+#           media_content_type: cast
+#           media_content_id: '
+#               {
+#               "app_name": "youtube",
+#               "media_id": "{{ song_list[0] }}"
+#               }'
 
-      #Loop through all remaining songs and enqueue them
-      - repeat:
-          count: "{{song_list | count - 1}}" #-1 is because a single song has already started playing has already been done
-          sequence:
-            - service: media_player.play_media
-              data:
-                entity_id: "{{ media_entity }}"
-                media_content_type: cast
-                media_content_id: '
-                    {
-                    "app_name": "youtube",
-                    "enqueue": true,
-                    "media_id": "{{ song_list[repeat.index] }}"
-                    }'
+#       #Loop through all remaining songs and enqueue them
+#       - repeat:
+#           count: "{{song_list | count - 1}}" #-1 is because a single song has already started playing has already been done
+#           sequence:
+#             - service: media_player.play_media
+#               data:
+#                 entity_id: "{{ media_entity }}"
+#                 media_content_type: cast
+#                 media_content_id: '
+#                     {
+#                     "app_name": "youtube",
+#                     "enqueue": true,
+#                     "media_id": "{{ song_list[repeat.index] }}"
+#                     }'
 
