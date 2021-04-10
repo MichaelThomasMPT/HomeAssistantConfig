@@ -1,3 +1,9 @@
+sensor:
+  - platform: rest
+    name: healthcheckio
+    resource: !secret healthcheckio_ping_location
+    scan_interval: 300
+
 automation:
   #if garage door left open, send a push notification.
   - alias: Server Management - Notify If Server Cupboard Temperature Too Hot
