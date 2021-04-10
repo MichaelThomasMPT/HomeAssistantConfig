@@ -1,6 +1,7 @@
 
 # automation: 
 #   - alias: Christmas - Automatically Turn On Tree Lights When Coming Home
+#     id: christmas_automatically_turn_on_tree_lights_when_coming_home
 #     trigger:
 #       - platform: state
 #         entity_id: alarm_control_panel.alarm_com
@@ -11,6 +12,7 @@
 #         service: switch.turn_on
 
 #   - alias: Christmas - Automatically Turn On Tree Lights At Night
+#     id: christmas_automatically_turn_on_tree_lights_at_night
 #     trigger:
 #       - platform: sun
 #         event: sunset
@@ -24,6 +26,7 @@
 #         service: switch.turn_on
 
 #   - alias: Christmas - Automatically Turn Off Tree Lights
+#     id: christmas_automatically_turn_off_tree_lights
 #     trigger:
 #       - platform: sun
 #         event: sunrise
@@ -41,6 +44,7 @@
 #         service: switch.turn_off
 
 #   - alias: Christmas - Automatically Play Music When Arriving Home During The Day
+#     id: christmas_automatically_play_music_when_arriving_home
 #     variables: 
 #       christmas_playlist_id: "PLavpVzwAAU9aMvBGybe2vuMvPFgRhym_J" #Christmas Background Music
 #     trigger: 

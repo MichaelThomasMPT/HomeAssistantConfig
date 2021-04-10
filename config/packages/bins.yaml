@@ -7,6 +7,7 @@ var:
 automation:
   #If both doors were open at the same time, then the bins were moved today
   - alias: Bins - Were Bins Moved Today?
+    id: bins_were_bins_moved_today
     trigger: 
       - platform: state
         entity_id: binary_sensor.garage_door_external
@@ -31,6 +32,7 @@ automation:
  
   #At midnight, reset the bins_were_moved_today var
   - alias: Bins - Reset Bins var
+    id: bins_reset_bins_var
     trigger:
       - platform: time
         at: '00:00:00'
@@ -46,6 +48,7 @@ automation:
 
   #Alert me if the bins need taking out
   - alias: Bins - Notify If Bins Not Taken Out
+    id: bins_notify_if_bins_not_taken_out
     trigger:
       - platform: time
         at: 

@@ -6,6 +6,7 @@ input_boolean:
 
 automation:
   - alias: Uni Parking - Activate Reminder When Arriving At Uni
+    id: uni_parking_activate_reminder_when_arriving_at_uni
     trigger:
       - platform: zone
         entity_id: person.laura
@@ -17,6 +18,7 @@ automation:
           entity_id: input_boolean.uni_parking_reminder_toggle
 
   - alias: Uni Parking - Deactivate Reminder Once Parking Is Paid
+    id: uni_parking_deactivate_reminder_once_parking_is_paid
     trigger:
       platform: event
       event_type: ios.notification_action_fired

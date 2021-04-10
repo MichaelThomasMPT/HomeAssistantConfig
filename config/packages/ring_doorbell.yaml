@@ -10,6 +10,7 @@ sensor:
 
 automation:
   - alias: Front Door - When Doorbell Is Rung After Dark, Turn On Light
+    id: front_door_when_doorbell_is_rung_after_dark_turn_on_light
     trigger:
       platform: state
       entity_id: binary_sensor.front_door

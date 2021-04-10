@@ -15,6 +15,7 @@ input_number:
 
 automation:
   - alias: Aircon Control - Adjust Countdown Timer From Slider
+    id: aircon_control_adjust_countdown_timer_from_slider
     trigger:
       platform: state
       entity_id: input_number.aircon_countdown_timer
@@ -23,6 +24,7 @@ automation:
         data_template:
           command: '{"ac1":{"info":{"countDownToOff":{{ states.input_number.aircon_countdown_timer.state | int }}}}}'
   - alias: Aircon Control - Adjust Countdown Timer From Sensor
+    id: aircon_control_adjust_countdown_timer_from_sensor
     trigger:
       platform: state
       entity_id: sensor.ac_time_to_off

@@ -6,6 +6,7 @@ input_boolean:
 automation:
   #When guests are staying over night, disable certain automations
   - alias: Guests - Activate Guest Mode
+    id: guests_activate_guest_mode
     trigger: 
       - platform: state
         entity_id: input_boolean.guest_mode
@@ -21,6 +22,7 @@ automation:
 
   #When guests go home, reactivate automations
   - alias: Guests - Deactivate Guest Mode
+    id: guests_deactivate_guest_mode
     trigger: 
       - platform: state
         entity_id: input_boolean.guest_mode
@@ -36,6 +38,7 @@ automation:
 
   #Once per day, ask if guest mode should be deactivated
   - alias: Guests - Notification To Deactivate Guest Mode
+    id: guests_notification_to_deactivate_guest_mode
     trigger:
       - platform: time
         at: '12:00:00'
@@ -54,6 +57,7 @@ automation:
 
   #When "Deactive Guest Mode" button on notification is pressed, do what it says!                 
   - alias: Guests - Deactivate Guest Mode On Notification Button Pressed
+    id: guests_deactivate_guest_mode_on_notification_button_pressed
     trigger:
       platform: event
       event_type: mobile_app_notification_action

@@ -2,6 +2,7 @@ automation:
 
   #turn on garage lights when door opens
   - alias: Garage - Turn On Lights When Door Opens
+    id: garage_turn_on_lights_when_door_opens
     trigger:
       - platform: state
         entity_id: 
@@ -21,6 +22,7 @@ automation:
 
   #turn off garage lights when doors closed
   - alias: Garage - Turn Off Lights When Doors Closed
+    id: garage_turn_off_lights_when_doors_closed
     mode: parallel
     trigger:
       - platform: time_pattern
@@ -65,6 +67,7 @@ automation:
 
   #if garage door left open, send a push notification.
   - alias: Garage - Notify If Garage Door Left Open For 5 Minutes
+    id: garage_notify_if_garage_door_left_open_for_5_minutes
     trigger:
       platform: time_pattern
       minutes: '/1' #run every minute
@@ -90,6 +93,7 @@ automation:
 
   #When "Close Garage Door" button on notification is pressed, do what it says!                 
   - alias: Garage - Close the garage when notification action is tapped
+    id: garage_close_the_garage_when_notification_action_is_tapped
     trigger:
       platform: event
       event_type: mobile_app_notification_action
@@ -101,6 +105,7 @@ automation:
 
   #When "Stop Garage Door Notifications" button on notification is pressed, do what it says!                 
   - alias: Garage - Stop garage door notifications when notification action is tapped
+    id: garage_stop_garage_door_notifications_when_notification_action_is_tapped
     trigger:
       platform: event
       event_type: mobile_app_notification_action
@@ -112,6 +117,7 @@ automation:
 
   #In case I've manually disabled the garage door alerting notification, re-enable it when the garage door closes
   - alias: Garage - Activate Garage Door Alert Automation When Garage Door Closed
+    id: garage_activate_garage_door_alert_automation_when_garage_door_closed
     trigger:
       platform: state
       entity_id: cover.garage_door
@@ -123,6 +129,7 @@ automation:
     
   #if garage door unreachable, send a push notification.
   - alias: Garage - Notify If Garage Door Is Unreachable
+    id: garage_notify_if_garage_door_is_unreachable
     trigger:
       platform: time_pattern
       minutes: '/1' #run every minute
@@ -143,6 +150,7 @@ automation:
           
   #if not closing garage when leaving home, send a notification. 
   - alias: Garage - Notify If Garage Door Left Open When Leaving Home
+    id: garage_notify_if_garage_door_left_open_when_leaving_home
     trigger:
       - platform: state
         entity_id: person.michael
@@ -164,6 +172,7 @@ automation:
                 title: "Close Garage Door"
 
   - alias: Front Hall - Turn On Hallway Light If Garage or Front Door Opened After Sunset
+    id: front_hall_turn_on_hallway_light_if_garage_or_front_door_opened_after_sunset
     trigger:
       - platform: state
         entity_id: cover.garage_door

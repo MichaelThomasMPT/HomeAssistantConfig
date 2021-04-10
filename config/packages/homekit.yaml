@@ -75,6 +75,7 @@ homekit:
 # finished starting up, to make sure all entities are available.
 automation:
   - alias: 'Homekit - Start Once Z-Wave Network Is Ready'
+    id: homekit_start_once_z_wave_network_is_ready
     trigger:
       - platform: event
         event_type: zwave.network_ready

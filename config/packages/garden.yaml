@@ -24,6 +24,7 @@ light:
 
 automation:
   - alias: Garden - Turn On Outdoor Lights When Both Back Doors Are Opened
+    id: garden_turn_on_outdoor_lights_when_both_back_doors_are_opened
     trigger: 
       - platform: state
         entity_id: 
@@ -53,6 +54,7 @@ automation:
 
  #if garden lights left on during the day, turn them off.
   - alias: Garden - Turn Off Outdoor Lights If Left On During The Day
+    id: garden_turn_off_outdoor_lights_if_left_on_during_the_day
     mode: single
     trigger:
       platform: time_pattern
@@ -94,6 +96,7 @@ automation:
 
   #In case I've manually disabled the garden lights switch-off automation, re-enable it when the sun sets for the day
   - alias: Garden - Reactivate Garden Lights Switch-Off Automation Each Day
+    id: garden_reactivate_garden_lights_switch_off_automation_each_day
     trigger:
       platform: sun
       event: sunset
@@ -102,6 +105,7 @@ automation:
       entity_id: automation.garden_turn_off_outdoor_lights_if_left_on_during_the_day
 
   - alias: Garden - Turn Off Alfresco Fairy Lights If Ceiling Lights Turned On
+    id: garden_turn_off_alfresco_fairy_lights_if_ceiling_lights_turned_on
     trigger:
       - platform: state
         entity_id: light.alfresco_ceiling_lights
@@ -111,6 +115,7 @@ automation:
       entity_id: light.alfresco_fairy_lights
 
   - alias: Garden - Turn Off Alfresco Ceiling Lights If Fairy Lights Turned On
+    id: garden_turn_off_alfresco_ceiling_lights_if_fairy_lights_turned_on
     trigger:
       - platform: state
         entity_id: light.alfresco_fairy_lights
@@ -120,6 +125,7 @@ automation:
       entity_id: light.alfresco_ceiling_lights
 
   - alias: Garden - Toggle Alfresco Fairy Lights With Switch
+    id: garden_toggle_alfresco_fairy_lights_with_switch
     variables: 
       #map the on/off buttons to the appropriate service
       buttons: 

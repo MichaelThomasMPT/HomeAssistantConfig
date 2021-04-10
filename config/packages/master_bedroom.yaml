@@ -55,6 +55,7 @@ var:
 
 automation:
   - alias: Master Bedroom - Turn Off Everything When Going To Bed
+    id: master_bedroom_turn_off_everything_when_going_to_bed
     trigger:
       - platform: event
         event_type: deconz_event
@@ -100,8 +101,8 @@ automation:
       - service: switch.turn_off
         entity_id: switch.aircon_zone_bed23
 
-
   - alias: Master Bedroom - Toggle Michael Lamp Light
+    id: master_bedroom_toggle_michael_lamp_light
     trigger:
       - platform: event
         event_type: deconz_event
@@ -115,6 +116,7 @@ automation:
           brightness_pct: '{% if now().hour >= 22 or now().hour < 4 %}5{% else %}100{% endif %}' #Dim light between 10pm-4am
 
   - alias: Master Bedroom - Toggle Laura Lamp Light
+    id: master_bedroom_toggle_laura_lamp_light
     trigger:
       - platform: event
         event_type: deconz_event
@@ -126,6 +128,7 @@ automation:
         entity_id: light.master_bedroom_laura_lamp
 
   - alias: Ensuite - Turn On Fan When Shower Running
+    id: ensuite_turn_on_fan_when_shower_running
     trigger:
       platform: state
       entity_id: binary_sensor.ensuite_shower
@@ -133,7 +136,9 @@ automation:
     action:
       - service: switch.turn_on
         entity_id: switch.ensuite_fan
+
   - alias: Ensuite - Turn Off Fan When Shower Stopped
+    id: ensuite_turn_off_fan_when_shower_stopped
     trigger:
       platform: state
       entity_id: binary_sensor.ensuite_shower

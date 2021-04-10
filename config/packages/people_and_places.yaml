@@ -55,6 +55,7 @@ zone:
 
 automation:
   # - alias: Location - Notify Michael If Laura Leaving Work
+  #   id: location_notify_michael_if_laura_leaving_work
   #   trigger:
   #     platform: zone
   #     entity_id: device_tracker.lauras_iphone
@@ -67,6 +68,7 @@ automation:
 
   #Notify when someone comes homes
   - alias: Location - Notify When Someone Comes Home
+    id: location_notify_when_someone_comes_home
     initial_state: false
     trigger:
       - platform: state
@@ -89,6 +91,7 @@ automation:
           - automation.location_notify_when_someone_comes_home
 
   - alias: Location - Notify Michael When Leaving Home Without Laptop
+    id: location_notify_michael_when_leaving_home_without_laptop
     trigger:
       - platform: zone
         entity_id: person.michael

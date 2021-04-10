@@ -29,6 +29,7 @@ binary_sensor:
 automation:
 
   - alias: Washing Machine - Disable Notifications When Washing Machine Emptied
+    id: washing_machine_disable_notifications_when_washing_machine_emptied
     trigger:
       - platform: state
         entity_id: binary_sensor.washing_machine_needs_emptying
@@ -42,6 +43,7 @@ automation:
             - input_boolean.washing_machine_notify_michael
 
   - alias: Washing Machine - Turn On Washing Machine Notifications For Michael
+    id: washing_machine_turn_on_washing_machine_notifications_for_michael
     trigger:
       - platform: event
         event_type: deconz_event
@@ -59,6 +61,7 @@ automation:
             timeout: 60
 
   - alias: Washing Machine - Turn On Washing Machine Notifications For Laura
+    id: washing_machine_turn_on_washing_machine_notifications_for_laura
     trigger:
       - platform: event
         event_type: deconz_event
@@ -71,6 +74,7 @@ automation:
           entity_id: input_boolean.washing_machine_notify_laura
 
   - alias: Washing Machine - Pause Washing Machine Notifications Until Home
+    id: washing_machine_pause_washing_machine_notifications_until_home
     trigger:
       platform: event
       event_type: mobile_app_notification_action
@@ -90,6 +94,7 @@ automation:
           entity_id: input_boolean.washing_machine_notify_michael
 
   - alias: Washing Machine - Pause Washing Machine Notifications Until Morning
+    id: washing_machine_pause_washing_machine_notifications_until_morning
     trigger:
       platform: event
       event_type: mobile_app_notification_action

@@ -1,6 +1,6 @@
 automation:
-  - id: handle_tag_scan
-    alias: Board Game Music - Handle Tag Scan
+  - alias: Board Game Music - Handle Tag Scan
+    id: handle_tag_scan
     mode: single
     # Hide warnings when triggered while in delay.
     max_exceeded: silent

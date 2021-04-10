@@ -279,6 +279,7 @@ automation:
         entity_id: cover.theatre_blinds
 
   - alias: Theatre Room Lights Manual Control - Change LED Strip Colour
+    id: theatre_room_lights_manual_control_change_led_strip_colour
     trigger:
       - platform: event
         event_type: deconz_event
@@ -304,8 +305,8 @@ automation:
         rgb_color: "{{ [[119,73,255],[0,255,255],[255,0,255]]|random }}" #purple, pink or teal
         brightness: 1
 
-
   - alias: Theatre Room Lights Manual Control - Movie Lights
+    id: theatre_room_lights_manual_control_movie_lights
     trigger:
       - platform: event
         event_type: deconz_event
@@ -316,6 +317,7 @@ automation:
       - service: script.set_movie_lighting 
 
   - alias: Theatre Room Lights Manual Control - Movie Has Finished
+    id: theatre_room_lights_manual_control_movie_has_finished
     trigger:
       - platform: event
         event_type: deconz_event
@@ -326,6 +328,7 @@ automation:
       - service: script.movie_has_finished
 
   - alias: Theatre Room Lights Manual Control - Toggle Lights
+    id: theatre_room_lights_manual_control_toggle_lights
     trigger:
       - platform: event
         event_type: deconz_event
@@ -340,7 +343,8 @@ automation:
             script.turn_on_theatre_room_lights
           {% endif %} 
             
-  - alias: Theatre Room Motion - Turn On Lights When Motion Detected
+  - alias: Theatre Room Lights - Turn On Lights When Motion Detected
+    id: theatre_room_lights_turn_on_lights_when_motion_detected
     trigger: 
       - platform: state
         entity_id: binary_sensor.theatre_motion
@@ -370,6 +374,7 @@ automation:
       - service: script.set_tv_dinner_lighting
 
   - alias: Theatre Room Lights - Turn Off Lamps After No Activity
+    id: theatre_room_lights_turn_off_lamps_after_no_activity
     trigger:
       platform: time_pattern
       minutes: '/1' #run every minute
@@ -407,6 +412,7 @@ automation:
       - service: script.turn_off_theatre_room_lights
 
   - alias: Theatre Room - Play Plex Media On Cube Tap
+    id: theatre_room_play_plex_media_on_cube_tap
     variables: 
       buttons:
         1001: #Marvel

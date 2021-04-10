@@ -184,6 +184,7 @@ script:
 
 automation:
   - alias: "iGrill - Monitor Grill Ambient Temperature - Alert"
+    id: igrill_monitor_grill_ambient_temperature_alert
     trigger:
       - platform: state
         entity_id: sensor.igrill_ambient_alert_temp
@@ -201,6 +202,7 @@ automation:
             clickAction: "/lovelace-cooking/0"
 
   - alias: "iGrill - Monitor Grill Ambient Temperature - Normal"
+    id: igrill_monitor_grill_ambient_temperature_normal
     trigger:
       - platform: state
         entity_id: sensor.grill_alert_temp
@@ -218,6 +220,7 @@ automation:
             clickAction: "/lovelace-cooking/0"
 
   - alias: "iGrill - Alert When Probe Availability Changes"
+    id: igrill_alert_when_probe_availability_changes
     trigger:
       - platform: state
         entity_id: 
@@ -266,6 +269,7 @@ automation:
             clickAction: "/lovelace-cooking/0"
 
   - alias: "iGrill - Google Assistant Notify When Food Is Ready"
+    id: igrill_google_assistant_notify_when_food_is_ready
     initial_state: 'on'
     trigger:
       - platform: state

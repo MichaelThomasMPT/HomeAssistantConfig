@@ -1,6 +1,7 @@
 automation:
   #if garage door left open, send a push notification.
   - alias: Server Management - Notify If Server Cupboard Temperature Too Hot
+    id: server_management_notify_if_server_cupboard_temperature_too_hot
     trigger:
       - platform: numeric_state
         entity_id: sensor.server_cupboard_temperature

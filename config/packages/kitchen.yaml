@@ -54,6 +54,7 @@ binary_sensor:
 automation:
     #if coffee machine left open, send a push notification.
     - alias: Kitchen - Notify If Coffee Machine Closed for 5 Minutes
+      id: kitchen_notify_if_coffee_machine_closed_for_5_minutes
       trigger:
         platform: time_pattern
         minutes: '/5' #run every 5 minutes
@@ -81,6 +82,7 @@ automation:
             message: The coffee machine was left closed.
 
     - alias: Kitchen - Toggle Scullery Lights When Motion Detected
+      id: kitchen_toggle_scullery_lights_when_motion_detected
       trigger: 
         - platform: state
           entity_id: binary_sensor.scullery_motion
@@ -91,6 +93,7 @@ automation:
             - light.pantry_light
 
     - alias: Kitchen - Turn On Lights Using Island Switch
+      id: kitchen_turn_on_lights_using_island_switch
       trigger: 
         - platform: event
           event_type: deconz_event
@@ -113,6 +116,7 @@ automation:
               entity_id: light.kitchen_island
 
     - alias: Kitchen - Turn Off Lights Using Island Switch
+      id: kitchen_turn_off_lights_using_island_switch
       trigger: 
         - platform: event
           event_type: deconz_event

@@ -17,6 +17,7 @@ binary_sensor:
 
 automation:
   - alias: Front Hall - Turn On Hallway Light If PC Turned Off At Night
+    id: front_hall_turn_on_hallway_light_if_pc_turned_off_at_night
     trigger:
       platform: state
       entity_id: binary_sensor.michael_pc
@@ -36,6 +37,7 @@ automation:
           - light.entry_hall_lights
 
   - alias: Office - When Black Ink Low, Add To List
+    id: office_when_black_ink_low_add_to_list
     trigger:
       platform: numeric_state
       entity_id: sensor.canon_ts3300_series_black
@@ -53,6 +55,7 @@ automation:
           message: Black printer ink is running low and has been added to your shopping list.
 
   - alias: Office - When Colour Ink Low, Add To List
+    id: office_when_colour_ink_low_add_to_list
     trigger:
       platform: numeric_state
       entity_id: sensor.canon_ts3300_series_color

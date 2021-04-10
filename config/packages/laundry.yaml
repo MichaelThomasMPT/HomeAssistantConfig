@@ -46,6 +46,7 @@ binary_sensor:
 
 automation:
   - alias: Laundry - Turn On Laundry Lights When Button Pressed
+    id: laundry_turn_on_laundry_lights_when_button_pressed
     trigger:
       - platform: event
         event_type: deconz_event
@@ -76,6 +77,7 @@ automation:
                   - light.laundry_ceiling
 
   - alias: Laundry - Turn On Washing Line Lights When Button Pressed
+    id: laundry_turn_on_washing_line_lights_when_button_pressed
     trigger:
       - platform: event
         event_type: deconz_event
@@ -102,6 +104,7 @@ automation:
                 entity_id: light.washing_line_lights
 
   - alias: Laundry - Toggle Washing Line Lights When Door Opened
+    id: laundry_toggle_washing_line_lights_when_door_opened
     trigger:
       - platform: state
         entity_id:
@@ -156,6 +159,7 @@ automation:
                 entity_id: light.washing_line_lights
 
   - alias: Laundry - Turn On Laundry LED Lights When Motion Detected
+    id: laundry_turn_on_laundry_led_lights_when_motion_detected
     trigger:
       - platform: state
         entity_id: binary_sensor.laundry_motion
@@ -170,6 +174,7 @@ automation:
           - light.laundry_led_strip
 
   - alias: Laundry - Turn Off Lights When No Motion Detected
+    id: laundry_turn_off_lights_when_no_motion_detected
     trigger:
       - platform: state
         entity_id: binary_sensor.laundry_motion
@@ -180,6 +185,7 @@ automation:
           - light.laundry_led_strip
 
   - alias: Laundry - Notify If Putting Washing Up And It Will Rain Soon
+    id: laundry_notify_if_putting_washing_up_and_it_will_rain_soon
     trigger:
       - platform: state
         entity_id: binary_sensor.washing_line
@@ -212,6 +218,7 @@ automation:
             group: "Washing Line"
 
   - alias: Laundry - Notify If There Is Washing Already On The Line And It Will Rain Tomorrow
+    id: laundry_notify_if_there_is_washing_already_on_the_line_and_it_will_rain_tomorrow
     trigger: # trigger when sun sets or tomorrow's forecast changes after 8pm
       - platform: time
         at: "20:00:00"
@@ -242,6 +249,7 @@ automation:
             group: "Washing Line"
 
   - alias: Laundry - Notify If There Is Washing Already On The Line And It Is Starting To Rain
+    id: laundry_notify_if_there_is_washing_already_on_the_line_and_it_is_starting_to_rain
     trigger:
       - platform: state
         entity_id: binary_sensor.weather_it_is_raining_today

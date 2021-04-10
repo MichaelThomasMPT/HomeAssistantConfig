@@ -224,6 +224,7 @@ script:
       
 automation:
   - alias: Temperature - Morning Warmth
+    id: temperature_morning_warmth
     trigger:
       - platform: time
         at: '06:00:00'
@@ -243,6 +244,7 @@ automation:
       - service: script.aircon_warm_master
 
   - alias: Temperature - Solar Cooling
+    id: temperature_solar_cooling
     trigger:
       platform: time_pattern
       minutes: "/10" #This will match every 1 minutes
@@ -267,6 +269,7 @@ automation:
           value: 15
 
   - alias: Temperature - Master Bed Button Trigger - Fan
+    id: temperature_master_bed_button_trigger_fan
     mode: single
     max_exceeded: silent
     trigger:
@@ -295,6 +298,7 @@ automation:
       - service: script.aircon_fan_master 
 
   - alias: Temperature - Master Bed Button Trigger - Warm
+    id: temperature_master_bed_button_trigger_warm
     mode: single
     max_exceeded: silent
     trigger:
@@ -323,6 +327,7 @@ automation:
       - service: script.aircon_warm_master 
 
   - alias: Temperature - Master Bed Button Trigger - Off
+    id: temperature_master_bed_button_trigger_off
     trigger:
       - platform: event
         event_type: deconz_event
@@ -350,6 +355,7 @@ automation:
           entity_id: climate.ac
 
   - alias: Temperature - Office Button Trigger - On
+    id: temperature_office_button_trigger_on
     #TODO: Perhaps for the winter make this also trigger the office heater
     trigger:
       - platform: event
@@ -374,6 +380,7 @@ automation:
           - service: script.aircon_blast_cold_for_ten_minutes
 
   - alias: Temperature - Office Button Trigger - Off
+    id: temperature_office_button_trigger_off
     trigger:
       - platform: event
         event_type: deconz_event
@@ -385,6 +392,7 @@ automation:
         entity_id: climate.ac
 
   - alias: Temperature - Theatre Button Trigger - On
+    id: temperature_theatre_button_trigger_on
     #TODO: Perhaps for the winter make this also trigger the theatre heater
     mode: queued #Make it so you can press the button twice as quickly as you want
     trigger:
@@ -434,6 +442,7 @@ automation:
         entity_id: scene.theatre_lights_original_state
 
   - alias: Temperature - Theatre Button Trigger - Off
+    id: temperature_theatre_button_trigger_off
     trigger:
       - platform: event
         event_type: deconz_event
@@ -456,6 +465,7 @@ automation:
         entity_id: scene.theatre_lights_original_state
 
   - alias: Temperature - Make Central Living Comfortable When Arriving home
+    id: temperature_make_central_living_comfortable_when_arriving_home
     trigger: 
       - platform: state
         entity_id: alarm_control_panel.alarm_com

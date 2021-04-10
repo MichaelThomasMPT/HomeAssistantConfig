@@ -6,6 +6,7 @@ alarm_control_panel:
 
 automation:
   - alias: Alarm System - Notify If Alarm Not Set When Nobody Is Home
+    id: alarm_system_notify_if_alarm_not_set_when_nobody_is_home
     trigger:
       - platform: zone
         entity_id: person.laura
@@ -31,6 +32,7 @@ automation:
           message: The house alarm was not set and nobody is home.
           
   - alias: Alarm System - Turn Off House When Alarm Is Set
+    id: alarm_system_turn_off_house_when_alarm_is_set
     trigger:
       platform: state
       entity_id: alarm_control_panel.alarm_com
@@ -43,6 +45,7 @@ automation:
           turn_off_aircon: true
         
   - alias: Alarm System - Alert If Doors Left Open
+    id: alarm_system_alert_if_doors_left_open
     trigger:
       platform: state
       entity_id: alarm_control_panel.alarm_com
@@ -68,6 +71,7 @@ automation:
           message: A door was left open when the house alarm was set.
 
   - alias: Alarm System - Fade Lights On When Disarming After Dark
+    id: alarm_system_fade_lights_on_when_disarming_after_dark
     trigger: 
       platform: state
       entity_id: alarm_control_panel.alarm_com

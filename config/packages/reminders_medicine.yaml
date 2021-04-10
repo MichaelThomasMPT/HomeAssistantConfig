@@ -6,6 +6,7 @@ input_boolean:
 
 automation:
   - alias: Medicine - Activate Reminder When Medicine Needs Taking
+    id: medicine_activate_reminder_when_medicine_needs_taking
     trigger:
       - platform: time
         at: 
@@ -17,6 +18,7 @@ automation:
           entity_id: input_boolean.medicine_reminder_toggle
 
   - alias: Medicine - Deactivate Reminder Once Medicine Is Taken
+    id: medicine_deactivate_reminder_once_medicine_is_taken
     trigger:
       platform: event
       event_type: mobile_app_notification_action
@@ -28,6 +30,7 @@ automation:
           entity_id: input_boolean.medicine_reminder_toggle
 
   - alias: Medicine - Pause Medicine Notifications Until Home
+    id: medicine_pause_medicine_notifications_until_home
     trigger:
       platform: event
       event_type: mobile_app_notification_action

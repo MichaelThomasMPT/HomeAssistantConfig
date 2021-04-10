@@ -9,6 +9,7 @@ sensor:
 # Lovelace Theme For Time Of Day
 automation:
   - alias: Home Assistant Frontend - Set Theme at Startup
+    id: home_assistant_frontend_set_theme_at_startup
     initial_state: 'on'
     trigger:
     - platform: homeassistant
@@ -24,6 +25,7 @@ automation:
           {% endif %}
           
   - alias: Home Assistant Frontend - Set dark theme at night
+    id: home_assistant_frontend_set_dark_theme_at_night
     initial_state: true
     trigger:
       - platform: state
@@ -35,6 +37,7 @@ automation:
           name: midnight
             
   - alias: Home Assistant Frontend - Set light theme at day
+    id: home_assistant_frontend_set_light_theme_at_day
     initial_state: true
     trigger:
       - platform: state

@@ -120,6 +120,7 @@ script:
 
 automation:
   - alias: "Whole House - Reset Party Lights"
+    id: whole_house_reset_party_lights
     description: "Automatically triggers reset of party lights the day after the party."
     trigger:
       - platform: sun

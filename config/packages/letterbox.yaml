@@ -8,6 +8,7 @@ var:
 automation:
   #if mail is delivered, send a push notification
   - alias: Letterbox - Notify If Post Delivered
+    id: letterbox_notify_if_post_delivered
     trigger:
       platform: state
       entity_id: 
@@ -56,6 +57,7 @@ automation:
 
   #When "Mail Wasn't Delivered" button on notification is pressed, turn off the office lamp again. 
   - alias: Letterbox - Mail Wasn't Delivered Button Press
+    id: letterbox_mail_was_not_delivered_button_press
     trigger:
       platform: event
       event_type: mobile_app_notification_action
@@ -68,6 +70,7 @@ automation:
 
  #At midnight, reset the mail_was_delivered_today var
   - alias: Letterbox - Reset Letterbox var
+    id: letterbox_reset_letterbox_var
     trigger:
       - platform: time
         at: '00:00:00'
