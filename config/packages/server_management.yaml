@@ -38,7 +38,7 @@ automation:
         above: 40
       - platform: numeric_state
         entity_id: sensor.processor_temperature
-        above: 80
+        above: 90
     action:
       - service: notify.mobile_app_michael_s_galaxy_s10
         data:
