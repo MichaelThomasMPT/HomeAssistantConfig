@@ -61,7 +61,7 @@ views:
             show_header_toggle: false
             title: Lights
             type: entities
-        type: 'custom:vertical-stack-in-card'
+        type: 'custom:stack-in-card'
       - cards:
           - card:
               entities:
@@ -115,7 +115,7 @@ views:
             type: picture-entity
         show_header_toggle: false
         title: Garage
-        type: 'custom:vertical-stack-in-card'
+        type: 'custom:stack-in-card'
       - entities:
           - entity: binary_sensor.back_door_glass
           - entity: binary_sensor.back_door_flyscreen
@@ -144,7 +144,7 @@ views:
                     name: Last Motion
                 title: Front Door
                 type: glance
-            type: 'custom:vertical-stack-in-card'
+            type: 'custom:stack-in-card'
         type: vertical-stack
       - cards:
           - columns:
@@ -162,7 +162,7 @@ views:
               include: calendar.house_shopping_list
             type: 'custom:flex-table-card'
         title: Shopping Lists
-        type: 'custom:vertical-stack-in-card'
+        type: 'custom:stack-in-card'
   - badges: []
     cards:
       - elements:
@@ -813,7 +813,7 @@ views:
                 type: picture-entity
             type: horizontal-stack
         title: Board Game Music Catalog A-G
-        type: 'custom:vertical-stack-in-card'
+        type: 'custom:stack-in-card'
       - cards:
           - cards:
               - entity: script.play_playlist_on_all_rooms
@@ -1004,7 +1004,7 @@ views:
                 type: picture-entity
             type: horizontal-stack
         title: Board Game Music Catalog H-Z
-        type: 'custom:vertical-stack-in-card'
+        type: 'custom:stack-in-card'
       - entities:
           - artwork: full-cover
             entity: media_player.theatre_room_tv
@@ -1243,7 +1243,7 @@ views:
               - entity: climate.ac
                 state_not: 'off'
             type: conditional
-        type: 'custom:vertical-stack-in-card'
+        type: 'custom:stack-in-card'
         title: Aircon Control
       - entities:
           - entity: switch.aircon_zone_living
@@ -1370,7 +1370,7 @@ views:
                 type: entity-button
             type: horizontal-stack
         title: Presets
-        type: 'custom:vertical-stack-in-card'
+        type: 'custom:stack-in-card'
       - cards:
           - detail: 2
             entity: sensor.current_outdoor_temperature
@@ -1398,7 +1398,7 @@ views:
             name: Office
             type: sensor
         title: Temperature
-        type: 'custom:vertical-stack-in-card'
+        type: 'custom:stack-in-card'
       - cards:
           - entities:
               - entity: switch.aircon_on_off
@@ -1411,7 +1411,7 @@ views:
                 name: Solar Output
             title: Solar Output
             type: history-graph
-        type: 'custom:vertical-stack-in-card'
+        type: 'custom:stack-in-card'
       - detail: 2
         entity: sensor.living_room_humidity
         graph: line
@@ -1541,7 +1541,7 @@ views:
                   - entity: sensor.potential_breaking_changes
                     state_not: '0'
                 type: conditional
-            type: 'custom:vertical-stack-in-card'
+            type: 'custom:stack-in-card'
           - entity: sensor.hacs
             name: HACS Pending Updates
             type: entity
@@ -1565,7 +1565,7 @@ views:
           - entities:
               - entity: sensor.server_cupboard_temperature
             type: glance
-        type: 'custom:vertical-stack-in-card'
+        type: 'custom:stack-in-card'
       - type: history-graph
         entities:
           - entity: sensor.aeon_labs_zw100_multisensor_6_burglar_2

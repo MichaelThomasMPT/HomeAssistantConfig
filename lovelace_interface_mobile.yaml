@@ -49,8 +49,7 @@ views:
               type: section
             state_color: true
             type: 'custom:fold-entity-row'
-        title: null
-        type: 'custom:vertical-stack-in-card'
+        type: 'custom:stack-in-card'
       - cards:
           - elements:
               - entity: binary_sensor.front_door
@@ -103,8 +102,7 @@ views:
               type: section
             show_header_toggle: false
             type: 'custom:fold-entity-row'
-        title: null
-        type: 'custom:vertical-stack-in-card'
+        type: 'custom:stack-in-card'
       - cards:
           - elements:
               - entity: cover.garage_door
@@ -161,8 +159,7 @@ views:
             show_state: true
             state_color: true
             type: 'custom:fold-entity-row'
-        title: null
-        type: 'custom:vertical-stack-in-card'
+        type: 'custom:stack-in-card'
       - cards:
           - elements:
               - entity: binary_sensor.ensuite_shower
@@ -280,8 +277,7 @@ views:
             show_state: false
             state_color: true
             type: 'custom:fold-entity-row'
-        title: null
-        type: 'custom:vertical-stack-in-card'
+        type: 'custom:stack-in-card'
       - cards:
           - elements:
               - entity: sensor.theatre_temperature
@@ -409,8 +405,7 @@ views:
             show_state: false
             state_color: true
             type: 'custom:fold-entity-row'
-        title: null
-        type: 'custom:vertical-stack-in-card'
+        type: 'custom:stack-in-card'
       - cards:
           - elements:
               - entity: sensor.living_room_temperature
@@ -526,8 +521,7 @@ views:
               label: Presets
               type: section
             type: 'custom:fold-entity-row'
-        title: null
-        type: 'custom:vertical-stack-in-card'
+        type: 'custom:stack-in-card'
       - cards:
           - elements:
               - entity: binary_sensor.laura_pc
@@ -618,8 +612,7 @@ views:
             show_state: false
             state_color: true
             type: 'custom:fold-entity-row'
-        title: null
-        type: 'custom:vertical-stack-in-card'
+        type: 'custom:stack-in-card'
       - cards:
           - elements:
               - entity: binary_sensor.coffee_machine
@@ -737,8 +730,7 @@ views:
               type: section
             show_header_toggle: false
             type: 'custom:fold-entity-row'
-        title: null
-        type: 'custom:vertical-stack-in-card'
+        type: 'custom:stack-in-card'
       - cards:
           - elements:
               - entity: binary_sensor.washing_line
@@ -799,8 +791,7 @@ views:
               type: section
             show_header_toggle: false
             type: 'custom:fold-entity-row'
-        title: null
-        type: 'custom:vertical-stack-in-card'
+        type: 'custom:stack-in-card'
       - cards:
           - elements:
               - entity: sensor.current_outdoor_temperature
@@ -860,8 +851,7 @@ views:
               label: Solar Panels
               type: section
             type: 'custom:fold-entity-row'
-        title: null
-        type: 'custom:vertical-stack-in-card'
+        type: 'custom:stack-in-card'
       - cards:
           - elements:
               - entity: binary_sensor.ac_filter
@@ -1109,8 +1099,7 @@ views:
                 name: Bedroom 2 & 3
               - entity: sensor.current_outdoor_temperature
                 name: Outside
-        title: null
-        type: 'custom:vertical-stack-in-card'
+        type: 'custom:stack-in-card'
       - cards:
           - elements:
               - entity: person.laura
@@ -1202,8 +1191,7 @@ views:
             show_state: false
             state_color: false
             type: 'custom:fold-entity-row'
-        title: null
-        type: 'custom:vertical-stack-in-card'
+        type: 'custom:stack-in-card'
       - cards:
           - elements:
               - entity: sensor.blank
@@ -1291,8 +1279,7 @@ views:
             show_state: false
             state_color: false
             type: 'custom:fold-entity-row'
-        title: null
-        type: 'custom:vertical-stack-in-card'
+        type: 'custom:stack-in-card'
       - cards:
           - elements:
               - entity: var.show_shopping_list_house_stuff
@@ -1339,8 +1326,7 @@ views:
                     state: 'True'
                 type: conditional
             type: vertical-stack
-        title: null
-        type: 'custom:vertical-stack-in-card'
+        type: 'custom:stack-in-card'
     panel: false
     path: ''
     title: Overview
