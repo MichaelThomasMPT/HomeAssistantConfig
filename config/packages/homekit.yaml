@@ -1,6 +1,5 @@
 homekit:
-  - auto_start: false #required as I use zwave which has a delayed-start
-    filter:
+  - filter:
       include_domains:
         - light
         - media_player
