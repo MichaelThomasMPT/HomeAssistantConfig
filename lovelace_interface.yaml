@@ -1420,6 +1420,13 @@ views:
     icon: 'mdi:air-conditioner'
     path: aircon
     title: Aircon
+  - icon: 'mdi:flower'
+    path: plants
+    badges: []
+    cards:
+      - type: plant-status
+        entity: plant.alfresco_monstera
+        name: Monstera (Alfresco)
   - badges: []
     cards:
       - cards:

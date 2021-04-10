@@ -830,6 +830,9 @@ views:
           - entity: weather.treeby_house
             name: Treeby
             type: weather-forecast
+          - type: plant-status
+            entity: plant.alfresco_monstera
+            name: Monstera (Alfresco)
           - type: entities
             entities: []
             footer:

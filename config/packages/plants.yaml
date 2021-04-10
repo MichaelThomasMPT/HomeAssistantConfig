@@ -1,0 +1,33 @@
+plant:
+  alfresco_monstera:
+    sensors:
+      moisture: sensor.monstera_moisture
+      battery: sensor.monstera_battery
+      temperature: sensor.monstera_temperature
+      conductivity: sensor.monstera_conductivity
+      brightness: sensor.monstera_light
+    #Monstera-specific values from the MiFlora app
+    min_moisture: 15
+    max_moisture: 60
+    min_conductivity: 350
+    max_conductivity: 2000
+    min_temperature: 12
+    max_temperature: 32
+    min_brightness: 800
+    max_brightness: 15000
+
+
+alert:
+  plant_watering_reminder:
+    name: "The alfresco monstera needs attention"
+    title: "The alfresco monstera needs attention"
+    message: "Problem: {{ state_attr('plant.alfresco_monstera', 'problem') }}"
+    entity_id: plant.alfresco_monstera
+    state: 'problem'
+    repeat: 1440 #24 hours
+    can_acknowledge: true
+    skip_first: false
+    notifiers:
+      - mobile_app_lauras_iphone
+    data:
+      group: MiFlora
