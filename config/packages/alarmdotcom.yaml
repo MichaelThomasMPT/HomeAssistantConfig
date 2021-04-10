@@ -75,7 +75,8 @@ automation:
     trigger: 
       platform: state
       entity_id: alarm_control_panel.alarm_com
-      to: 'armed_away'
+      from: 'armed_away'
+      to: 'disarmed'
     condition:
       - condition: state  # from sunset until sunrise
         entity_id: sun.sun
