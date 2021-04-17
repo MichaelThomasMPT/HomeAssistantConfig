@@ -44,11 +44,6 @@ switch:
           data:
             entity_id: light.ensuite_fan
 
-light:
-  - platform: switch
-    name: Master Bedroom - Laura Lamp
-    entity_id: switch.laura_lamp_smart_plug
-
 var:
   master_bedroom_lights_brightness_control:
     initial_value: stop #allowed values: stop, dim, bright
