@@ -421,18 +421,18 @@ automation:
           music_file: '/local/Marvel.mp3'
           plex_content_type: PLAYLIST
           plex_content_id: '{ "playlist_name": "The Falcon and the Winter Soldier", "shuffle": "0" }'
-        2002: #Resident Alien
-          music_file: '/local/Resident_Alien.mp3'
+        2002: #Scrubs
+          music_file: '/local/Scrubs.mp3'
           plex_content_type: PLAYLIST
-          plex_content_id: '{ "playlist_name": "Resident Alien", "shuffle": "0" }'
+          plex_content_id: '{ "playlist_name": "Scrubs", "shuffle": "0" }'
         3003: #Star Wars
           music_file: '/local/Star_Wars.mp3'
           plex_content_type: PLAYLIST
           plex_content_id: '{ "playlist_name": "Star Wars Rebels", "shuffle": "0" }'
-        4004: #Battlestar Galactica
-          music_file: '/local/Battlestar_Galactica.mp3'
+        4004: #Attack on Titan
+          music_file: '/local/Attack_On_Titan.mp3'
           plex_content_type: PLAYLIST
-          plex_content_id: '{ "playlist_name": "Battlestar Galactica", "shuffle": "0" }'
+          plex_content_id: '{ "playlist_name": "Attack on Titan", "shuffle": "0" }'
         5005: #Last Week Tonight
           music_file: '/local/Last_Week_Tonight.mp3'
           plex_content_type: PLAYLIST
