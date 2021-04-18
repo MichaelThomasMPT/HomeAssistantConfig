@@ -104,11 +104,48 @@ automation:
         event_data: 
           id: master_bed_switch_2 #michael's button
           event: 1002 #single press
+      - platform: event
+        event_type: deconz_event
+        event_data: 
+          id: master_door_switch #door button
+          event: 5002 #right arrow
     action:
       - service: light.toggle
         entity_id: light.master_bedroom_michael_lamp
         data_template:
           brightness_pct: '{% if now().hour >= 22 or now().hour < 4 %}5{% else %}100{% endif %}' #Dim light between 10pm-4am
+  
+  - alias: Master Bedroom - Adjust Master Bedroom Light Brightness From Button Press
+    id: master_bedroom_adjust_master_bedroom_light_brightness_from_button_press
+    trigger:
+      - platform: event
+        event_type: deconz_event
+        event_data: 
+          id: master_door_switch #door button
+          event: 2002 #bright
+      - platform: event
+        event_type: deconz_event
+        event_data: 
+          id: master_door_switch #door button
+          event: 3002 #dim
+    action:
+      - choose:
+        - conditions:
+            - condition: template
+              value_template: "{{ trigger.event.data.event == 2002 }}" #bright button pressed
+          sequence:
+            - service: light.turn_on
+              entity_id: light.master_bedroom_ceiling
+              data:
+                brightness_pct: 100
+        - conditions:
+            - condition: template
+              value_template: "{{ trigger.event.data.event == 3002 }}" #dim button pressed
+          sequence:
+            - service: light.turn_on
+              entity_id: light.master_bedroom_ceiling
+              data:
+                brightness_pct: 25
 
   - alias: Master Bedroom - Toggle Laura Lamp Light
     id: master_bedroom_toggle_laura_lamp_light
@@ -118,6 +155,11 @@ automation:
         event_data: 
           id: master_bed_switch_1 #laura's button
           event: 1002 #single press
+      - platform: event
+        event_type: deconz_event
+        event_data: 
+          id: master_door_switch #door button
+          event: 4002 #left arrow
     action:
       - service: light.toggle
         entity_id: light.master_bedroom_laura_lamp
