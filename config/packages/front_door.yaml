@@ -4,20 +4,54 @@ automation:
     trigger:
       - platform: state
         entity_id: binary_sensor.front_door
-        to: 'on'
+        from: "off"
+        to: "on"
       - platform: state
         entity_id: binary_sensor.front_screen_door
-        to: 'on'
+        from: "off"
+        to: "on"
     condition:
       condition: and
       conditions:
-        - condition: state  # from sunset until sunrise
+        - condition: state # from sunset until sunrise
           entity_id: sun.sun
-          state: 'below_horizon'
+          state: "below_horizon"
     action:
       - service: light.turn_on
         entity_id:
           - light.front_porch_light
+
+  - alias: Front Door - Turn On Porch Light If Motion Detected
+    id: front_door_turn_on_porch_light_if_motion_detected
+    mode: single
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.front_porch_motion
+        from: "off"
+        to: "on"
+    condition:
+      - condition: state #from sunset until sunrise
+        entity_id: sun.sun
+        state: "below_horizon"
+    action:
+      - service: scene.create #save the original state of the front porch light
+        data:
+          scene_id: front_porch_light_saved_state
+          snapshot_entities:
+            - light.front_porch_light
+      - service: light.turn_on
+        entity_id:
+          - light.front_porch_light
+      - wait_for_trigger: #wait for no motion, or 10 minutes, whichever is first
+          - platform: state
+            entity_id: binary_sensor.front_porch_motion
+            to: "off"
+        timeout:
+          minutes: 10
+        continue_on_timeout: true
+      - service: scene.turn_on #return front porch light to its previous state
+        data:
+          entity_id: scene.front_porch_light_saved_state
 
   - alias: Front Door - Turn Off Porch Light At Sunrise
     id: front_door_turn_off_porch_light_at_sunrise
@@ -31,13 +65,13 @@ automation:
 
   - alias: Front Door - Toggle Side Hall Lights When Motion Detected
     id: front_door_toggle_side_hall_lights_when_motion_detected
-    trigger: 
+    trigger:
       - platform: state
         entity_id: binary_sensor.side_hall_motion
     condition:
-      - condition: state  # from sunset until sunrise
+      - condition: state # from sunset until sunrise
         entity_id: sun.sun
-        state: 'below_horizon'
+        state: "below_horizon"
     action:
       - service: "{% if states.binary_sensor.side_hall_motion.state == 'on' -%} light.turn_on {%- else -%} light.turn_off {%- endif %}"
         entity_id: light.side_hall

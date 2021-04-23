@@ -17,3 +17,10 @@ binary_sensor:
           {{ states('sensor.laundry_multisensor_6_burglar') | int > 0 }}
         availability_template: >-
           {{ states('sensor.laundry_multisensor_6_burglar') != "Unavailable" }} 
+      front_porch_motion:
+        friendly_name: "Front Porch Motion Sensor"
+        device_class: "motion"
+        value_template: >-
+          {{ states('sensor.front_porch_multisensor_6_burglar') | int > 0 }}
+        availability_template: >-
+          {{ states('sensor.front_porch_multisensor_6_burglar') != "Unavailable" }} 
