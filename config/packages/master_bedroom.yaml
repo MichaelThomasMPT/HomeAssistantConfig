@@ -1,5 +1,4 @@
 binary_sensor:
-
   #If the humidity is high and not dropping quickly, the shower is on
   - platform: threshold
     name: Ensuite Shower Above Humidity Threshold
@@ -16,13 +15,13 @@ binary_sensor:
     sensors:
       ensuite_shower:
         friendly_name: "Ensuite Shower"
-        value_template: >- 
+        value_template: >-
           {{ is_state('binary_sensor.ensuite_shower_above_humidity_threshold', 'on')
              and is_state('binary_sensor.ensuite_shower_humidity_falling', 'off') }}
         device_class: power #makes the icon yellow when on
         icon_template: mdi:shower-head
 
-switch: 
+switch:
   #The ensuite fan is shown as a light in Home Assistant - this converts it to a switch.
   - platform: template
     switches:
@@ -54,7 +53,7 @@ automation:
     trigger:
       - platform: event
         event_type: deconz_event
-        event_data: 
+        event_data:
           id: master_door_switch
           event: 1002 #single click
     action:
@@ -62,24 +61,24 @@ automation:
           #is the aircon already running in the master bedroom?
           aircon_was_running: "{{ states('climate.ac') != 'off' and is_state('switch.aircon_zone_master', 'on') }}"
       - service: light.turn_off #start by turning off the brightest nearby lights
-        entity_id: 
+        entity_id:
           - light.master_wir
           - light.ensuite_light
       - service: light.turn_on #next turn the ceiling lights on dim to help navigate to bed
-        entity_id: light.master_bedroom_ceiling 
+        entity_id: light.master_bedroom_ceiling
         data:
           brightness_pct: 5
-      - delay: 
+      - delay:
           seconds: 20
       - service: script.turn_off_whole_house #after allowing time to get in to bed, turn off everything in the house
-        data: 
+        data:
           excluded_lights: "['light.master_bedroom', 'light.master_bedroom_michael_lamp', 'light.master_bedroom_laura_lamp']" #Leave the bed side lamp and the corresponding hue group on if it already is
-          turn_off_aircon: "{{ not aircon_was_running }}" 
-          
+          turn_off_aircon: "{{ not aircon_was_running }}"
+
       #proceed to turn on the aircon in the master bedroom for 60 min if the aircon was already on in there
       - condition: template
         value_template: "{{ aircon_was_running }}"
-      - service: input_number.set_value 
+      - service: input_number.set_value
         data:
           entity_id: input_number.aircon_countdown_timer
           value: 60
@@ -101,75 +100,97 @@ automation:
     trigger:
       - platform: event
         event_type: deconz_event
-        event_data: 
+        event_data:
           id: master_bed_switch_2 #michael's button
           event: 1002 #single press
       - platform: event
         event_type: deconz_event
-        event_data: 
+        event_data:
           id: master_door_switch #door button
           event: 5002 #right arrow
     action:
       - service: light.toggle
         entity_id: light.master_bedroom_michael_lamp
         data_template:
-          brightness_pct: '{% if now().hour >= 22 or now().hour < 4 %}5{% else %}100{% endif %}' #Dim light between 10pm-4am
-  
+          brightness_pct: "{% if now().hour >= 22 or now().hour < 4 %}5{% else %}100{% endif %}" #Dim light between 10pm-4am
+
   - alias: Master Bedroom - Adjust Master Bedroom Light Brightness From Button Press
     id: master_bedroom_adjust_master_bedroom_light_brightness_from_button_press
     trigger:
       - platform: event
         event_type: deconz_event
-        event_data: 
+        event_data:
           id: master_door_switch #door button
           event: 2002 #bright
       - platform: event
         event_type: deconz_event
-        event_data: 
+        event_data:
           id: master_door_switch #door button
           event: 3002 #dim
     action:
       - choose:
-        - conditions:
-            - condition: template
-              value_template: "{{ trigger.event.data.event == 2002 }}" #bright button pressed
-          sequence:
-            - service: light.turn_on
-              entity_id: light.master_bedroom_ceiling
-              data:
-                brightness_pct: 100
-        - conditions:
-            - condition: template
-              value_template: "{{ trigger.event.data.event == 3002 }}" #dim button pressed
-          sequence:
-            - service: light.turn_on
-              entity_id: light.master_bedroom_ceiling
-              data:
-                brightness_pct: 33
+          - conditions:
+              - condition: template
+                value_template: "{{ trigger.event.data.event == 2002 }}" #bright button pressed
+            sequence:
+              - service: light.turn_on
+                entity_id: light.master_bedroom_ceiling
+                data:
+                  brightness_pct: 100
+          - conditions:
+              - condition: template
+                value_template: "{{ trigger.event.data.event == 3002 }}" #dim button pressed
+            sequence:
+              - service: light.turn_on
+                entity_id: light.master_bedroom_ceiling
+                data:
+                  brightness_pct: 33
 
   - alias: Master Bedroom - Toggle Laura Lamp Light
     id: master_bedroom_toggle_laura_lamp_light
     trigger:
       - platform: event
         event_type: deconz_event
-        event_data: 
+        event_data:
           id: master_bed_switch_1 #laura's button
           event: 1002 #single press
       - platform: event
         event_type: deconz_event
-        event_data: 
+        event_data:
           id: master_door_switch #door button
           event: 4002 #left arrow
     action:
       - service: light.toggle
         entity_id: light.master_bedroom_laura_lamp
 
+  - alias: Master Bedroom - Toggle Walk-In-Robe Lights When Motion Detected
+    id: master_bedroom_toggle_wir_lights_when_motion_detected
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.wir_motion
+    action:
+      - choose:
+        - conditions:
+            - condition: state
+              entity_id: binary_sensor.wir_motion
+              state: "on"
+          sequence:
+            - service: light.turn_on
+              target:
+                entity_id: light.master_wir
+              data:
+                brightness_pct: "{% if now().hour >= 22 or now().hour <= 6 -%}10{%- else -%}100{%- endif %}" #10% during the night, 100% during the day
+        default:
+          - service: light.turn_off
+            target:
+              entity_id: light.master_wir
+
   - alias: Ensuite - Turn On Fan When Shower Running
     id: ensuite_turn_on_fan_when_shower_running
     trigger:
       platform: state
       entity_id: binary_sensor.ensuite_shower
-      to: 'on'
+      to: "on"
     action:
       - service: switch.turn_on
         entity_id: switch.ensuite_fan
@@ -179,7 +200,7 @@ automation:
     trigger:
       platform: state
       entity_id: binary_sensor.ensuite_shower
-      to: 'off'
+      to: "off"
       for:
         minutes: 10
     action:
