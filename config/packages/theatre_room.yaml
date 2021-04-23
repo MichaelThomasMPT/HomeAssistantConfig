@@ -421,7 +421,7 @@ automation:
           music_file: '/local/Marvel.mp3'
           plex_content_type: PLAYLIST
           plex_content_id: '{ "playlist_name": "The Falcon and the Winter Soldier", "shuffle": "0" }'
-        2002: #Scrubs
+        2002: #Scrubs //The Crown next?
           music_file: '/local/Scrubs.mp3'
           plex_content_type: PLAYLIST
           plex_content_id: '{ "playlist_name": "Scrubs", "shuffle": "0" }'
@@ -430,7 +430,7 @@ automation:
           plex_content_type: PLAYLIST
           plex_content_id: '{ "playlist_name": "Star Wars Rebels", "shuffle": "0" }'
         4004: #Attack on Titan
-          music_file: '/local/Attack_On_Titan.mp3'
+          music_file: '/local/Attack_on_Titan.mp3'
           plex_content_type: PLAYLIST
           plex_content_id: '{ "playlist_name": "Attack on Titan", "shuffle": "0" }'
         5005: #Last Week Tonight
