@@ -116,6 +116,32 @@ automation:
         data:
           message: Did you forget to bring your work laptop with you?
 
+  - alias: Location - Fade Lights On When Arriving Home After Dark
+    id: location_fade_lights_on_when_disarming_after_dark
+    mode: single
+    trigger:
+      - platform: state
+        entity_id: 
+          - binary_sensor.front_door
+          - binary_sensor.garage_door_internal
+        from: "off"
+        to: "on"
+    condition:
+      - condition: state  # from sunset until sunrise
+        entity_id: sun.sun
+        state: 'below_horizon'
+      - condition: state
+        entity_id: alarm_control_panel.alarm_com
+        state: 'armed_away'
+        for:
+          minutes: 5
+    action:
+      - service: light.turn_on
+        entity_id:
+        - light.kitchen_island
+        data:
+          transition: 60
+
 person:
   - name: Michael
     id: michael
