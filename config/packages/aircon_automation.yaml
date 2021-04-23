@@ -361,7 +361,12 @@ automation:
       - platform: event
         event_type: deconz_event
         event_data: 
-          id: office_aircon_switch
+          id: office_aircon_switch_michael
+          event: 1002 
+      - platform: event
+        event_type: deconz_event
+        event_data: 
+          id: office_aircon_switch_laura
           event: 1002 
     action:
       - choose:
@@ -391,7 +396,12 @@ automation:
       - platform: event
         event_type: deconz_event
         event_data: 
-          id: office_aircon_switch
+          id: office_aircon_switch_michael
+          event: 2002 
+      - platform: event
+        event_type: deconz_event
+        event_data: 
+          id: office_aircon_switch_laura
           event: 2002 
     action:
       - service: script.flash_office_lamp
