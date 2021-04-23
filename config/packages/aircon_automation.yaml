@@ -375,8 +375,14 @@ automation:
                 entity_id: climate.ac
                 state: 'off'
           sequence:
+            - service: script.flash_office_lamp
+              data: 
+                colour: "green"
             - service: script.aircon_fan_office
         default: #If fan is already running in the office, instead blast cold for 10 min
+          - service: script.flash_office_lamp
+            data: 
+              colour: "blue"
           - service: script.aircon_blast_cold_for_ten_minutes
 
   - alias: Temperature - Office Button Trigger - Off
@@ -388,6 +394,9 @@ automation:
           id: office_aircon_switch
           event: 2002 
     action:
+      - service: script.flash_office_lamp
+        data: 
+          colour: "white"
       - service: climate.turn_off
         entity_id: climate.ac
 

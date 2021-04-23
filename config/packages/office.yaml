@@ -71,3 +71,22 @@ automation:
       - service: notify.mobile_app_michael_s_galaxy_s10
         data:
           message: Colour printer ink is running low and has been added to your shopping list.
+
+script:
+  flash_office_lamp:
+    fields:
+      colour:
+        description: "What colour to flash the lamp"
+        example: "green"
+    sequence:
+      - service: light.turn_on
+        target:
+          entity_id: light.office_lamp
+        data:
+          brightness_pct: 50
+          color_name: "{{colour}}"
+      - delay:
+          seconds: 1
+      - service: light.turn_off
+        target:
+          entity_id: light.office_lamp
