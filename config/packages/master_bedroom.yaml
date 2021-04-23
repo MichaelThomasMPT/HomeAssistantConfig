@@ -145,7 +145,7 @@ automation:
             - service: light.turn_on
               entity_id: light.master_bedroom_ceiling
               data:
-                brightness_pct: 25
+                brightness_pct: 33
 
   - alias: Master Bedroom - Toggle Laura Lamp Light
     id: master_bedroom_toggle_laura_lamp_light
