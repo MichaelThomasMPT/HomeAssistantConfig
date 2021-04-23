@@ -33,19 +33,57 @@ views:
             type: picture-elements
           - columns: 3
             entities:
+              - entity: camera.garage
+                name: Garage
+              - entity: camera.swann_camera_1
+              - entity: camera.swann_camera_2
+              - entity: camera.swann_camera_3
+              - entity: camera.swann_camera_4
+            head:
+              label: Cameras
+              type: section
+            state_color: true
+            type: 'custom:fold-entity-row'
+          - columns: 3
+            entities:
               - entity: binary_sensor.front_door
-                icon: 'mdi:door'
+                secondary_info: last-changed
               - entity: binary_sensor.back_door_glass
+                secondary_info: last-changed
               - entity: binary_sensor.back_door_flyscreen
+                secondary_info: last-changed
               - entity: binary_sensor.laundry_door
-              - entity: sensor.front_door_last_ding
-                icon: 'mdi:bell-ring'
-                name: Doorbell Ring
+                secondary_info: last-changed
+              - entity: binary_sensor.garage_door_external
+                secondary_info: last-changed
+              - entity: binary_sensor.garage_door_internal
+                secondary_info: last-changed
+              - entity: cover.garage_door
+                secondary_info: last-changed
+            head:
+              label: External Doors
+              type: section
+            state_color: true
+            type: 'custom:fold-entity-row'
+          - columns: 3
+            entities:
               - entity: sensor.front_door_last_motion
                 icon: 'mdi:motion-sensor'
-                name: Doorbell Motion
+                name: Doorbell Last Motion
+              - entity: binary_sensor.front_porch_motion
+                secondary_info: last-changed
+              - entity: binary_sensor.side_hall_motion
+                secondary_info: last-changed
+              - entity: binary_sensor.laundry_motion
+                secondary_info: last-changed
+              - entity: binary_sensor.theatre_motion
+                secondary_info: last-changed
+              - entity: binary_sensor.scullery_motion
+                secondary_info: last-changed
+              - entity: binary_sensor.wir_motion
+                secondary_info: last-changed
             head:
-              label: Details
+              label: Motion Sensors
               type: section
             state_color: true
             type: 'custom:fold-entity-row'
@@ -59,7 +97,7 @@ views:
                   right: 5%
                   transform: initial
                 type: state-icon
-              - entity: binary_sensor.side_hall_motion
+              - entity: binary_sensor.front_porch_motion
                 style:
                   bottom: 20%
                   font-weight: bold
