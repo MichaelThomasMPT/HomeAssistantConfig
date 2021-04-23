@@ -31,10 +31,11 @@ automation:
   - alias: Washing Machine - Disable Notifications When Washing Machine Emptied
     id: washing_machine_disable_notifications_when_washing_machine_emptied
     trigger:
+      #disabled when washing machine door is opened
       - platform: state
-        entity_id: binary_sensor.washing_machine_needs_emptying
-        from: 'on'
-        to: 'off' 
+        entity_id: binary_sensor.washing_machine_door
+        from: 'off'
+        to: 'on' 
     action:
       - service: input_boolean.turn_off
         data:
