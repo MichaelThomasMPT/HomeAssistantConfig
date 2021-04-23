@@ -75,3 +75,57 @@ automation:
     action:
       - service: "{% if states.binary_sensor.side_hall_motion.state == 'on' -%} light.turn_on {%- else -%} light.turn_off {%- endif %}"
         entity_id: light.side_hall
+
+  - alias: Front Door - Turn On Front Porch Light When Ordering Food Delivery
+    id: front_door_turn_on_front_porch_light_when_ordering_food_delivery
+    variables:
+      notifying_app: 
+        package: "{{ state_attr('sensor.michael_s_galaxy_s10_last_notification', 'package') }}"
+        title: "{{ state_attr('sensor.michael_s_galaxy_s10_last_notification', 'android.title') }}"
+        text: "{{ state_attr('sensor.michael_s_galaxy_s10_last_notification', 'android.text') }}"
+      known_delivery_apps:
+        com.dd.doordash: #DoorDash
+          notification_text: "your order has been picked up" #Android.text
+        com.menulog.m: #Menulog
+          notification_text: "Driver on the way" #Android.title
+        com.ubercab.eats: #Uber Eats
+          notification_text: "Your order is on the move!" #Android.text
+    trigger:
+      - platform: state
+        entity_id: sensor.michael_s_galaxy_s10_last_notification #Look for new phone notiifations
+    condition:
+      - condition: state #from sunset until sunrise
+        entity_id: sun.sun
+        state: "below_horizon"
+      - condition: state #Only turn on the light if I'm home currently.
+        entity_id: person.michael
+        state: "home"
+      - condition: template #App notification is one of the recognised apps
+        value_template: "{{ notifying_app.package in known_delivery_apps }}"
+      - condition: template #App notification text or title is correct for delivery
+        value_template: >-
+          {{ known_delivery_apps[notifying_app.package].notification_text in (notifying_app.title|string)
+          or known_delivery_apps[notifying_app.package].notification_text in (notifying_app.text|string) }}
+    action:
+      - service: light.turn_on
+        entity_id: light.front_porch_light
+      - service: notify.mobile_app_michael_s_galaxy_s10
+        data:
+          message: The front porch light was turned on for your delivery driver.
+          data:
+            group: food_delivery
+            actions:
+              - action: "food_delivery_switch_off_light" 
+                title: "Switch It Off"
+
+  - alias: Front Door - Switch Off Front Porch Light From Mobile Notiifcation Action
+    id: front_door_switch_off_front_porch_light_from_mobile_notification_action
+    trigger:
+      platform: event
+      event_type: mobile_app_notification_action
+      event_data:
+        action: food_delivery_switch_off_light
+    action:
+      - service: light.turn_off
+        target:
+          entity_id: light.front_porch_light
