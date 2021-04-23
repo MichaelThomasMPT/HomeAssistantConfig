@@ -65,7 +65,7 @@ script:
             value_template: '{{ (states.sensor.theatre_temperature.state | float) > 26.0 }}' #if theatre room temperature is > 26 degrees
       - service: script.turn_on #cool the theatre room
         entity_id:
-          - script.aircon_cool_theatre
+          - script.aircon_fan_theatre
 
   #Get the theatre room ready  
   time_for_a_tv_dinner:

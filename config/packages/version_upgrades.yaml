@@ -2,7 +2,7 @@
 breaking_changes:
   scan_interval: 600 #10 minutes
 
-#Check for new versions of Home Assistant in DockerHub & GitHub
+# Check for new versions of Home Assistant in DockerHub & GitHub
 sensor:
   - platform: version
     source: docker
@@ -42,7 +42,6 @@ homeassistant:
     sensor.ha_version:
       icon: mdi:home-assistant
       friendly_name: Running Version
-
 
 
 automation:
