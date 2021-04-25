@@ -777,7 +777,7 @@ views:
                   bottom: 20%
                   font-weight: bold
                   hs_color: white
-                  right: 21.5%
+                  right: 47%
                   transform: initial
                 type: state-icon
               - entity: binary_sensor.washing_machine_running
@@ -786,7 +786,7 @@ views:
                   bottom: 20%
                   font-weight: bold
                   hs_color: white
-                  right: 13%
+                  right: 38%
                   transform: initial
                 type: state-icon
               - entity: binary_sensor.laundry_door
@@ -794,9 +794,22 @@ views:
                 style:
                   bottom: 20%
                   font-weight: bold
-                  right: 5%
+                  right: 30%
                   transform: initial
                 type: state-icon
+              - entity: sensor.laundry_temperature
+                style:
+                  bottom: 20%
+                  font-weight: bold
+                  right: 15%
+                  transform: initial
+                type: state-label
+              - entity: sensor.laundry_humidity
+                style:
+                  bottom: 20%
+                  right: 3%
+                  transform: initial
+                type: state-label
               - entity: sensor.blank
                 hold-action: none
                 prefix: Laundry
@@ -821,9 +834,14 @@ views:
                 - entity: light.washing_line_lights
                   name: Washing Line
           - entities:
+              - entity: binary_sensor.laundry_dryer_running_with_door_closed
+                state_color: true
               - entity: binary_sensor.washing_machine_needs_emptying
+                state_color: true
               - entity: input_boolean.washing_machine_notify_michael
+                state_color: true
               - entity: input_boolean.washing_machine_notify_laura
+                state_color: true
             head:
               label: Notifications
               type: section
