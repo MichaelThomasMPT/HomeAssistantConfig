@@ -179,7 +179,7 @@ automation:
               target:
                 entity_id: light.master_wir
               data:
-                brightness_pct: "{% if now().hour >= 22 or now().hour <= 6 -%}10{%- else -%}100{%- endif %}" #10% during the night, 100% during the day
+                brightness_pct: "{% if now().hour >= 22 or now().hour <= 6 -%}1{%- else -%}100{%- endif %}" #1% during the night, 100% during the day
         default:
           - service: light.turn_off
             target:
