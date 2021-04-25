@@ -34,7 +34,7 @@ binary_sensor:
       #If the door hasn't been opened since the machine last turned off
       washing_machine_needs_emptying:
         friendly_name: "Washing Machine Needs Emptying"
-        value_template: >-
+        value_template: >- #FIXME: There is a logic error here caused when HA restarts, the last_changed values might not be in the correct order
           {{
             as_timestamp(states.binary_sensor.washing_machine_door.last_changed) 
               < as_timestamp(states.binary_sensor.washing_machine_running.last_changed) 
@@ -42,7 +42,17 @@ binary_sensor:
            and is_state('binary_sensor.washing_machine_door', 'off')
           }}
         icon_template: mdi:washing-machine-alert
-        device_class: occupancy
+        device_class: problem
+      #If the laundry humidity is too high and the outside door is closed
+      laundry_dryer_running_with_door_closed:
+        friendly_name: "Dryer Running With Door Closed"
+        value_template: >-
+          {{
+            states.sensor.laundry_humidity.state|float >= 70.0
+            and states.binary_sensor.laundry_door.state == 'off'
+          }}
+        icon_template: mdi:water-percent-alert
+        device_class: problem
 
 automation:
   - alias: Laundry - Turn On Laundry Lights When Button Pressed
@@ -286,3 +296,16 @@ automation:
         data:
           entity_id: media_player.all_rooms
           message: "{{ notification_message }}"
+
+alert:
+  laundry_humidity_alert:
+    name: The laundry humidity is too high - please open the door.
+    entity_id: binary_sensor.laundry_dryer_running_with_door_closed
+    state: 'on'
+    repeat: 10
+    can_acknowledge: true
+    skip_first: false
+    notifiers:
+      - mobile_app_michael_s_galaxy_s10
+    data:
+      group: Laundry Humidity
