@@ -89,3 +89,8 @@ input_number.igrill_probe_2_target_temp:
   icon: mdi:temperature-celsius
 input_number.igrill_probe_3_target_temp:
   icon: mdi:temperature-celsius
+
+person.michael:
+  entity_picture: "/local/michael.jpg"
+person.laura:
+  entity_picture: "/local/laura.jpg"
