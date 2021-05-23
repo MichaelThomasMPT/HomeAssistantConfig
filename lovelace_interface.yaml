@@ -35,6 +35,7 @@ views:
               - entity: light.alfresco_fairy_lights
               - entity: light.dining_room
               - entity: light.ensuite_light
+              - entity: light.ensuite_led_strip
               - entity: light.entry_hall_lights
               - entity: light.front_porch_light
               - entity: light.garage_light
@@ -576,6 +577,13 @@ views:
             style:
               left: 20%
               top: 68%
+            tap_action:
+              action: toggle
+            type: state-icon
+          - entity: light.ensuite_led_strip
+            style:
+              left: 15%
+              top: 67.5%
             tap_action:
               action: toggle
             type: state-icon

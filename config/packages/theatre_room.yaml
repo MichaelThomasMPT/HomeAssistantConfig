@@ -428,7 +428,7 @@ automation:
         3003: #Star Wars
           music_file: '/local/Star_Wars.mp3'
           plex_content_type: PLAYLIST
-          plex_content_id: '{ "playlist_name": "Star Wars Rebels", "shuffle": "0" }'
+          plex_content_id: '{ "playlist_name": "Star Wars", "shuffle": "0" }'
         4004: #Attack on Titan
           music_file: '/local/Attack_on_Titan.mp3'
           plex_content_type: PLAYLIST

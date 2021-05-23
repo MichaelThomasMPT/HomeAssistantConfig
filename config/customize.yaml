@@ -49,6 +49,9 @@ light.alfresco_fairy_lights_wall:
 light.alfresco_fairy_lights:
   icon: mdi:string-lights
 
+light.ensuite_led_strip:
+  icon: mdi:led-strip-variant
+
 light.garden_flood_lights:
   icon: mdi:outdoor-lamp
 
