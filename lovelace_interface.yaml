@@ -1572,6 +1572,7 @@ views:
             type: history-graph
           - entities:
               - entity: sensor.server_cupboard_temperature
+              - entity: sensor.processor_temperature
             type: glance
         type: 'custom:stack-in-card'
       - type: history-graph
