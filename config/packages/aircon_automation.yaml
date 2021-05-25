@@ -4,16 +4,29 @@ input_number:
     max: 32
 
 script:
-  #Turn off all zones
+  #Turn off all zones, with 1 second delays as it gets confused if it spams too many commands to the AC at once
   aircon_turn_off_all_zones:
     sequence:
-    - data:
-        entity_id: 
-          - cover.bed_2_3
-          - cover.living
-          - cover.master_bed
-          - cover.theatre
-      service: cover.close_cover
+    - service: cover.close_cover
+      data:
+        entity_id: cover.bed_2_3
+    - delay:
+        seconds: 1
+    - service: cover.close_cover
+      data:
+        entity_id: cover.living
+    - delay:
+        seconds: 1
+    - service: cover.close_cover
+      data:
+        entity_id: cover.master_bed
+    - delay:
+        seconds: 1
+    - service: cover.close_cover
+      data:
+        entity_id: cover.theatre
+    - delay:
+        seconds: 1
 
   #Warm the master bedroom for 60 minutes
   aircon_warm_master:
