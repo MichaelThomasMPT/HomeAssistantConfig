@@ -97,3 +97,7 @@ person.michael:
   entity_picture: "/local/michael.jpg"
 person.laura:
   entity_picture: "/local/laura.jpg"
+
+sensor.daily_solar_energy:
+  unit_of_measurement: kWh
+  device_class: energy

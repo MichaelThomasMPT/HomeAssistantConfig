@@ -61,13 +61,6 @@ sensor:
         value_template: "{{ state_attr('weather.treeby_house', 'forecast')[1].condition }}"
         availability_template: "{{ states('weather.treeby_house') != 'Unavailable' }}"
 
-  # Solar Panels
-  - platform: sems
-    username: !secret sems_username
-    password: !secret sems_password
-    station_id: !secret sems_station_id
-    scan_interval: 300
-    
   #Solar Panel Attributes
   - platform: template
     sensors:
@@ -102,3 +95,8 @@ sensor:
           {%- else -%}
             Online
           {%- endif %}
+
+utility_meter:
+  daily_solar_energy:
+    source: sensor.sems_today_generated
+    cycle: daily
