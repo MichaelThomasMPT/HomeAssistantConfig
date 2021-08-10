@@ -3,10 +3,10 @@ views:
   - title: iGrill Control
     badges: []
     cards:
-      - type: 'custom:stack-in-card'
+      - type: custom:stack-in-card
         title: iGrill Probe Temperatures
         cards:
-          - type: 'custom:dual-gauge-card'
+          - type: custom:dual-gauge-card
             title: Probe 1
             min: 0
             max: 100
@@ -25,7 +25,7 @@ views:
               unit: °C
               colors:
                 - color: var(--label-badge-blue)
-          - type: 'custom:dual-gauge-card'
+          - type: custom:dual-gauge-card
             title: Probe 2
             min: 0
             max: 100
@@ -44,7 +44,7 @@ views:
               unit: °C
               colors:
                 - color: var(--label-badge-blue)
-          - type: 'custom:dual-gauge-card'
+          - type: custom:dual-gauge-card
             title: Probe 3
             min: 0
             max: 100
@@ -63,7 +63,7 @@ views:
               unit: °C
               colors:
                 - color: var(--label-badge-blue)
-          - type: 'custom:mini-graph-card'
+          - type: custom:mini-graph-card
             name: Ambient Probe
             hours_to_show: 0.5
             points_per_hour: 60
@@ -90,7 +90,7 @@ views:
         refresh_interval: 0
         title: iGrill Probe Temperature History
         hours_to_show: 8
-      - type: 'custom:stack-in-card'
+      - type: custom:stack-in-card
         title: iGrill Target Temperature Presets
         cards:
           - type: entities
@@ -107,7 +107,7 @@ views:
                     meat: beef
                     doneness: rare
                 name: Rare
-                icon: 'mdi:cow'
+                icon: mdi:cow
               - type: button
                 tap_action:
                   action: call-service
@@ -116,7 +116,7 @@ views:
                     meat: beef
                     doneness: medium rare
                 name: Medium Rare
-                icon: 'mdi:cow'
+                icon: mdi:cow
               - type: button
                 tap_action:
                   action: call-service
@@ -125,7 +125,7 @@ views:
                     meat: beef
                     doneness: medium
                 name: Medium
-                icon: 'mdi:cow'
+                icon: mdi:cow
               - type: button
                 tap_action:
                   action: call-service
@@ -134,7 +134,7 @@ views:
                     meat: lamb
                     doneness: rare
                 name: Rare
-                icon: 'mdi:sheep'
+                icon: mdi:sheep
               - type: button
                 tap_action:
                   action: call-service
@@ -143,7 +143,7 @@ views:
                     meat: lamb
                     doneness: medium rare
                 name: Medium Rare
-                icon: 'mdi:sheep'
+                icon: mdi:sheep
               - type: button
                 tap_action:
                   action: call-service
@@ -151,7 +151,7 @@ views:
                   service_data:
                     meat: pork
                 name: Medium
-                icon: 'mdi:pig'
+                icon: mdi:pig
               - type: button
                 tap_action:
                   action: call-service
@@ -159,7 +159,7 @@ views:
                   service_data:
                     meat: chicken
                 name: Well Done
-                icon: 'mdi:turkey'
+                icon: mdi:turkey
               - type: button
                 tap_action:
                   action: call-service
@@ -167,7 +167,7 @@ views:
                   service_data:
                     meat: duck
                 name: Well Done
-                icon: 'mdi:duck'
+                icon: mdi:duck
               - type: button
                 tap_action:
                   action: call-service
@@ -175,7 +175,7 @@ views:
                   service_data:
                     meat: fish
                 name: Medium Well
-                icon: 'mdi:fish'
+                icon: mdi:fish
             square: true
       - type: entities
         show_header_toggle: false
@@ -192,7 +192,7 @@ views:
           - entity: sensor.igrill_target_alert_temp_probe_3
           - entity: automation.igrill_google_assistant_notify_when_food_is_ready
             name: Google Home Alerts
-            icon: 'mdi:google-home'
+            icon: mdi:google-home
         state_color: false
       - type: glance
         entities:
@@ -237,7 +237,7 @@ views:
             show_forecast: false
             name: Treeby
             secondary_info_attribute: wind_speed
-          - type: 'custom:dual-gauge-card'
+          - type: custom:dual-gauge-card
             title: Probe 1
             min: 0
             max: 100
@@ -256,7 +256,7 @@ views:
               unit: °C
               colors:
                 - color: var(--label-badge-blue)
-          - type: 'custom:dual-gauge-card'
+          - type: custom:dual-gauge-card
             title: Probe 2
             min: 0
             max: 100
@@ -275,7 +275,7 @@ views:
               unit: °C
               colors:
                 - color: var(--label-badge-blue)
-          - type: 'custom:dual-gauge-card'
+          - type: custom:dual-gauge-card
             title: Probe 3
             min: 0
             max: 100
@@ -294,7 +294,7 @@ views:
               unit: °C
               colors:
                 - color: var(--label-badge-blue)
-          - type: 'custom:mini-graph-card'
+          - type: custom:mini-graph-card
             name: Ambient Probe
             hours_to_show: 0.5
             points_per_hour: 60

@@ -1,6 +1,6 @@
 title: The Treehouse
 views:
-  - icon: 'mdi:home'
+  - icon: mdi:home
     path: default_view
     title: Home
     badges:
@@ -15,7 +15,7 @@ views:
       - entity: script.roomba_clean
         hold_action:
           action: more-info
-        icon: 'mdi:robot-vacuum'
+        icon: mdi:robot-vacuum
         show_icon: true
         show_name: true
         tap_action:
@@ -30,7 +30,7 @@ views:
           - entities:
               - entity: script.turn_off_all_lights
                 name: Turn Off All Lights
-                icon: 'mdi:lightbulb-group-off'
+                icon: mdi:lightbulb-group-off
               - entity: light.alfresco_ceiling_lights
               - entity: light.alfresco_fairy_lights
               - entity: light.dining_room
@@ -62,12 +62,12 @@ views:
             show_header_toggle: false
             title: Lights
             type: entities
-        type: 'custom:stack-in-card'
+        type: custom:stack-in-card
       - cards:
           - card:
               entities:
                 - entity: sensor.sems_status
-                  icon: 'mdi:power'
+                  icon: mdi:power
                   name: Status
               show_header_toggle: false
               title: Solar Panels
@@ -79,13 +79,13 @@ views:
           - card:
               entities:
                 - entity: sensor.sems_status
-                  icon: 'mdi:power'
+                  icon: mdi:power
                   name: Status
                 - entity: sensor.sems_output_power
-                  icon: 'mdi:flash'
+                  icon: mdi:flash
                   name: Current Output Power
                 - entity: sensor.sems_today_generated
-                  icon: 'mdi:solar-power'
+                  icon: mdi:solar-power
                   name: Electricity Generated Today
               show_header_toggle: false
               title: Solar Panels
@@ -116,7 +116,7 @@ views:
             type: picture-entity
         show_header_toggle: false
         title: Garage
-        type: 'custom:stack-in-card'
+        type: custom:stack-in-card
       - entities:
           - entity: binary_sensor.back_door_glass
           - entity: binary_sensor.back_door_flyscreen
@@ -136,16 +136,16 @@ views:
           - cards:
               - entities:
                   - entity: binary_sensor.front_door
-                    icon: 'mdi:door'
+                    icon: mdi:door
                   - entity: sensor.front_door_last_ding
-                    icon: 'mdi:bell-ring'
+                    icon: mdi:bell-ring
                     name: Last Ring
                   - entity: sensor.front_door_last_motion
-                    icon: 'mdi:motion-sensor'
+                    icon: mdi:motion-sensor
                     name: Last Motion
                 title: Front Door
                 type: glance
-            type: 'custom:stack-in-card'
+            type: custom:stack-in-card
         type: vertical-stack
       - cards:
           - columns:
@@ -154,16 +154,16 @@ views:
                 name: Groceries
             entities:
               include: calendar.groceries_list
-            type: 'custom:flex-table-card'
+            type: custom:flex-table-card
           - columns:
               - attr_as_list: all_tasks
                 id: house_stuff
                 name: House Stuff
             entities:
               include: calendar.house_shopping_list
-            type: 'custom:flex-table-card'
+            type: custom:flex-table-card
         title: Shopping Lists
-        type: 'custom:stack-in-card'
+        type: custom:stack-in-card
   - badges: []
     cards:
       - elements:
@@ -280,14 +280,14 @@ views:
               action: toggle
             type: state-icon
           - entity: media_player.theatre_room_tv
-            icon: 'mdi:television-play'
+            icon: mdi:television-play
             style:
               '--paper-item-icon-color': white
               left: 54%
               top: 39.5%
             type: state-icon
           - entity: switch.living_room_tv
-            icon: 'mdi:television-play'
+            icon: mdi:television-play
             style:
               '--paper-item-icon-color': white
               left: 55%
@@ -301,12 +301,12 @@ views:
               '--paper-item-icon-color': white
               left: 17%
               top: 11.5%
-              transform: 'scale(1.5,1.5)'
+              transform: scale(1.5,1.5)
             tap_action:
               action: toggle
             type: state-icon
           - entity: switch.aircon_zone_living
-            icon: 'mdi:air-filter'
+            icon: mdi:air-filter
             style:
               left: 38%
               top: 60%
@@ -314,7 +314,7 @@ views:
               action: toggle
             type: state-icon
           - entity: switch.aircon_zone_theatre
-            icon: 'mdi:air-filter'
+            icon: mdi:air-filter
             style:
               left: 60%
               top: 36%
@@ -322,7 +322,7 @@ views:
               action: toggle
             type: state-icon
           - entity: switch.aircon_zone_master
-            icon: 'mdi:air-filter'
+            icon: mdi:air-filter
             style:
               left: 29%
               top: 85%
@@ -330,7 +330,7 @@ views:
               action: toggle
             type: state-icon
           - entity: switch.aircon_zone_bed23
-            icon: 'mdi:air-filter'
+            icon: mdi:air-filter
             style:
               left: 56%
               top: 20%
@@ -338,7 +338,7 @@ views:
               action: toggle
             type: state-icon
           - entity: switch.aircon_zone_bed23
-            icon: 'mdi:air-filter'
+            icon: mdi:air-filter
             style:
               left: 74%
               top: 18%
@@ -346,33 +346,33 @@ views:
               action: toggle
             type: state-icon
           - entity: climate.ac
-            icon: 'mdi:air-conditioner'
+            icon: mdi:air-conditioner
             style:
               left: 35%
               top: 48%
             type: state-icon
           - entity: script.aircon_cool
-            icon: 'mdi:snowflake'
+            icon: mdi:snowflake
             style:
               '--paper-item-icon-color': blue
               left: 83.5%
               top: 91.5%
-              transform: 'scale(1.8,1.8)'
+              transform: scale(1.8,1.8)
             tap_action:
               action: toggle
             type: state-icon
           - entity: script.aircon_heat
-            icon: 'mdi:fire'
+            icon: mdi:fire
             style:
               '--paper-item-icon-color': darkorange
               left: 83.5%
               top: 86%
-              transform: 'scale(1.8,1.8)'
+              transform: scale(1.8,1.8)
             tap_action:
               action: toggle
             type: state-icon
           - entity: script.roomba_clean
-            icon: 'mdi:robot-vacuum'
+            icon: mdi:robot-vacuum
             style:
               left: 55.5%
               top: 62.45%
@@ -387,7 +387,7 @@ views:
               action: toggle
             type: state-icon
           - entity: sensor.coffees_made_today
-            icon: 'mdi:coffee-maker'
+            icon: mdi:coffee-maker
             state_color: false
             style:
               left: 16%
@@ -471,19 +471,19 @@ views:
               top: 27.5%
             type: state-icon
           - entity: binary_sensor.front_door
-            icon: 'mdi:door'
+            icon: mdi:door
             style:
               left: 42.5%
               top: 18.5%
             type: state-icon
           - entity: sensor.front_door_last_ding
-            icon: 'mdi:doorbell-video'
+            icon: mdi:doorbell-video
             style:
               left: 38.5%
               top: 15.5%
             type: state-icon
           - entity: camera.garage
-            icon: 'mdi:cctv'
+            icon: mdi:cctv
             style:
               left: 35%
               top: 32%
@@ -496,17 +496,17 @@ views:
               action: toggle
             type: state-icon
           - entity: camera.garage
-            icon: 'mdi:cctv'
+            icon: mdi:cctv
             style:
               left: 35%
               top: 32%
             type: state-icon
           - entity: alarm_control_panel.alarm_com
-            icon: 'mdi:shield-home'
+            icon: mdi:shield-home
             style:
               left: 83.5%
               top: 76%
-              transform: 'scale(1.5,1.5)'
+              transform: scale(1.5,1.5)
             type: state-icon
           - entity: light.entry_hall_lights
             style:
@@ -543,7 +543,7 @@ views:
             tap_action:
               action: toggle
             type: state-icon
-            icon: 'mdi:ceiling-light'
+            icon: mdi:ceiling-light
           - entity: light.front_porch_light
             style:
               left: 42.5%
@@ -565,7 +565,7 @@ views:
             tap_action:
               action: toggle
             type: state-icon
-            icon: 'mdi:spotlight-beam'
+            icon: mdi:spotlight-beam
           - entity: light.master_bedroom_ceiling
             style:
               left: 22%
@@ -589,7 +589,7 @@ views:
             type: state-icon
         image: /local/floor-plan.png
         type: picture-elements
-    icon: 'mdi:floor-plan'
+    icon: mdi:floor-plan
     panel: false
     path: floor_plan
     title: Floor Plan
@@ -601,33 +601,33 @@ views:
             group: true
             info: scroll
             source: icon
-            type: 'custom:mini-media-player'
+            type: custom:mini-media-player
           - entity: media_player.kitchen_google_home_hub
             group: true
             hide:
               controls: true
-            type: 'custom:mini-media-player'
+            type: custom:mini-media-player
           - entity: media_player.master_bedroom_speaker
             group: true
             hide:
               controls: true
             name: Master Bedroom Google Home
-            type: 'custom:mini-media-player'
+            type: custom:mini-media-player
           - entity: media_player.office_google_home
             group: true
             hide:
               controls: true
-            type: 'custom:mini-media-player'
+            type: custom:mini-media-player
           - entity: media_player.office_pc_speakers
             group: true
             hide:
               controls: true
-            type: 'custom:mini-media-player'
+            type: custom:mini-media-player
           - entity: media_player.theatre_room_google_home
             group: true
             hide:
               controls: true
-            type: 'custom:mini-media-player'
+            type: custom:mini-media-player
         show_header_toggle: false
         title: Music Players
         type: entities
@@ -821,7 +821,7 @@ views:
                 type: picture-entity
             type: horizontal-stack
         title: Board Game Music Catalog A-G
-        type: 'custom:stack-in-card'
+        type: custom:stack-in-card
       - cards:
           - cards:
               - entity: script.play_playlist_on_all_rooms
@@ -1012,17 +1012,17 @@ views:
                 type: picture-entity
             type: horizontal-stack
         title: Board Game Music Catalog H-Z
-        type: 'custom:stack-in-card'
+        type: custom:stack-in-card
       - entities:
           - artwork: full-cover
             entity: media_player.theatre_room_tv
             hide:
               mute: true
               power_state: false
-            icon: 'mdi:television'
+            icon: mdi:television
             info: short
             name: LG TV
-            type: 'custom:mini-media-player'
+            type: custom:mini-media-player
           - artwork: full-cover
             entity: media_player.theatre_room_chromecast
             hide:
@@ -1030,7 +1030,7 @@ views:
               power_state: false
             info: short
             name: Chromecast
-            type: 'custom:mini-media-player'
+            type: custom:mini-media-player
         show_header_toggle: false
         title: Theatre Room TV
         type: entities
@@ -1042,11 +1042,11 @@ views:
               power_state: false
             info: short
             name: Chromecast
-            type: 'custom:mini-media-player'
+            type: custom:mini-media-player
         show_header_toggle: false
         title: Living Room TV
         type: entities
-      - type: 'custom:mini-media-player'
+      - type: custom:mini-media-player
         entity: media_player.ytube_music_player
         artwork: cover
         hide:
@@ -1061,7 +1061,7 @@ views:
             - name: Gloomhaven
               type: playlist
               id: PLavpVzwAAU9ZiQn69q55xm_Vzj9ZiA-M7
-    icon: 'mdi:music'
+    icon: mdi:music
     path: media
     title: Media
   - badges: []
@@ -1073,7 +1073,7 @@ views:
               - entity: light.theatre_room_ceiling
                 name: Theatre Room Ceiling
               - entity: light.theatre_room_tv_cabinet_led_strip
-              - type: 'custom:rgb-light-card'
+              - type: custom:rgb-light-card
                 entity: light.theatre_room_tv_cabinet_led_strip
                 colors:
                   - color_name: white
@@ -1091,7 +1091,7 @@ views:
               - entity: script.set_movie_lighting
                 hold_action:
                   action: none
-                icon: 'mdi:theater'
+                icon: mdi:theater
                 icon_height: 60px
                 name: Movie Lights
                 show_icon: true
@@ -1105,7 +1105,7 @@ views:
               - entity: script.movie_has_finished
                 hold_action:
                   action: none
-                icon: 'mdi:filmstrip-off'
+                icon: mdi:filmstrip-off
                 icon_height: 60px
                 name: Movie Has Finished
                 show_icon: true
@@ -1126,7 +1126,7 @@ views:
       - entity: script.aircon_cool_theatre
         hold_action:
           action: none
-        icon: 'mdi:home-automation'
+        icon: mdi:home-automation
         icon_height: 60px
         name: Cool Theatre
         show_icon: true
@@ -1143,10 +1143,10 @@ views:
             hide:
               mute: true
               power_state: false
-            icon: 'mdi:television'
+            icon: mdi:television
             info: short
             name: LG TV
-            type: 'custom:mini-media-player'
+            type: custom:mini-media-player
           - artwork: full-cover
             entity: media_player.theatre_room_chromecast
             hide:
@@ -1154,11 +1154,11 @@ views:
               power_state: false
             info: short
             name: Chromecast
-            type: 'custom:mini-media-player'
+            type: custom:mini-media-player
         show_header_toggle: false
         title: Theatre Room TV
         type: entities
-    icon: 'mdi:theater'
+    icon: mdi:theater
     path: theatre
     title: Theatre
   - badges: []
@@ -1170,7 +1170,7 @@ views:
               cards:
                 - entities:
                     - entity: input_number.aircon_countdown_timer
-                      icon: 'mdi:timer-sand'
+                      icon: mdi:timer-sand
                   show_header_toggle: false
                   title: Countdown To Off
                   type: entities
@@ -1178,7 +1178,7 @@ views:
                     - entity: climate.ac
                       hold_action:
                         action: none
-                      icon: 'mdi:clock-outline'
+                      icon: mdi:clock-outline
                       name: 0 Hours
                       show_icon: true
                       show_name: true
@@ -1192,7 +1192,7 @@ views:
                     - entity: climate.ac
                       hold_action:
                         action: none
-                      icon: 'mdi:clock-outline'
+                      icon: mdi:clock-outline
                       name: 0.5 Hours
                       show_icon: true
                       show_name: true
@@ -1206,7 +1206,7 @@ views:
                     - entity: climate.ac
                       hold_action:
                         action: none
-                      icon: 'mdi:clock-outline'
+                      icon: mdi:clock-outline
                       name: 1 Hour
                       show_icon: true
                       show_name: true
@@ -1220,7 +1220,7 @@ views:
                     - entity: climate.ac
                       hold_action:
                         action: none
-                      icon: 'mdi:clock-outline'
+                      icon: mdi:clock-outline
                       name: 1.5 Hours
                       show_icon: true
                       show_name: true
@@ -1234,7 +1234,7 @@ views:
                     - entity: climate.ac
                       hold_action:
                         action: none
-                      icon: 'mdi:clock-outline'
+                      icon: mdi:clock-outline
                       name: 2 Hours
                       show_icon: true
                       show_name: true
@@ -1251,20 +1251,20 @@ views:
               - entity: climate.ac
                 state_not: 'off'
             type: conditional
-        type: 'custom:stack-in-card'
+        type: custom:stack-in-card
         title: Aircon Control
       - entities:
           - entity: switch.aircon_zone_living
-            icon: 'mdi:air-filter'
+            icon: mdi:air-filter
             name: Living Area
           - entity: switch.aircon_zone_theatre
-            icon: 'mdi:air-filter'
+            icon: mdi:air-filter
             name: Theatre
           - entity: switch.aircon_zone_master
-            icon: 'mdi:air-filter'
+            icon: mdi:air-filter
             name: Master Bedroom
           - entity: switch.aircon_zone_bed23
-            icon: 'mdi:air-filter'
+            icon: mdi:air-filter
             name: Bedroom 2 & 3
         show_header_toggle: false
         state_color: true
@@ -1275,7 +1275,7 @@ views:
               - entity: script.aircon_warm_master
                 hold_action:
                   action: none
-                icon: 'mdi:home-automation'
+                icon: mdi:home-automation
                 icon_height: 60px
                 name: Warm Bedroom
                 show_icon: true
@@ -1289,7 +1289,7 @@ views:
               - entity: script.aircon_fan_master
                 hold_action:
                   action: none
-                icon: 'mdi:home-automation'
+                icon: mdi:home-automation
                 icon_height: 60px
                 name: Sleeping Fan
                 show_icon: true
@@ -1305,7 +1305,7 @@ views:
               - entity: script.aircon_cool_theatre
                 hold_action:
                   action: none
-                icon: 'mdi:home-automation'
+                icon: mdi:home-automation
                 icon_height: 60px
                 name: Cool Theatre
                 show_icon: true
@@ -1319,7 +1319,7 @@ views:
               - entity: script.aircon_cool_central_living
                 hold_action:
                   action: none
-                icon: 'mdi:home-automation'
+                icon: mdi:home-automation
                 icon_height: 60px
                 name: Cool Centre
                 show_icon: true
@@ -1335,7 +1335,7 @@ views:
               - entity: script.aircon_cool
                 hold_action:
                   action: none
-                icon: 'mdi:snowflake'
+                icon: mdi:snowflake
                 icon_height: 60px
                 name: Run Cold
                 show_icon: true
@@ -1349,7 +1349,7 @@ views:
               - entity: script.aircon_heat
                 hold_action:
                   action: none
-                icon: 'mdi:fire'
+                icon: mdi:fire
                 icon_height: 60px
                 name: Run Hot
                 show_icon: true
@@ -1365,7 +1365,7 @@ views:
               - entity: script.aircon_blast_cold_for_ten_minutes
                 hold_action:
                   action: none
-                icon: 'mdi:snowflake'
+                icon: mdi:snowflake
                 icon_height: 60px
                 name: 10 Min of Cold
                 show_icon: true
@@ -1378,7 +1378,7 @@ views:
                 type: entity-button
             type: horizontal-stack
         title: Presets
-        type: 'custom:stack-in-card'
+        type: custom:stack-in-card
       - cards:
           - detail: 2
             entity: sensor.current_outdoor_temperature
@@ -1406,11 +1406,11 @@ views:
             name: Office
             type: sensor
         title: Temperature
-        type: 'custom:stack-in-card'
+        type: custom:stack-in-card
       - cards:
           - entities:
               - entity: switch.aircon_on_off
-                icon: 'mdi:power'
+                icon: mdi:power
                 name: Aircon On/Off
             title: Aircon Running State
             type: history-graph
@@ -1419,16 +1419,16 @@ views:
                 name: Solar Output
             title: Solar Output
             type: history-graph
-        type: 'custom:stack-in-card'
+        type: custom:stack-in-card
       - detail: 2
         entity: sensor.living_room_humidity
         graph: line
         name: Humidity Indoors
         type: sensor
-    icon: 'mdi:air-conditioner'
+    icon: mdi:air-conditioner
     path: aircon
     title: Aircon
-  - icon: 'mdi:flower'
+  - icon: mdi:flower
     path: plants
     badges: []
     cards:
@@ -1463,7 +1463,7 @@ views:
         type: horizontal-stack
       - card:
           title: Low Batteries
-          type: 'custom:battery-state-card'
+          type: custom:battery-state-card
         filter:
           exclude:
             - state: '> 50'
@@ -1474,7 +1474,7 @@ views:
           include:
             - attributes:
                 device_class: battery
-        type: 'custom:auto-entities'
+        type: custom:auto-entities
       - card:
           show_header_toggle: false
           title: Unavailable Devices
@@ -1544,12 +1544,12 @@ views:
                       field: description
                       title: Description
                   entity: sensor.potential_breaking_changes
-                  type: 'custom:list-card'
+                  type: custom:list-card
                 conditions:
                   - entity: sensor.potential_breaking_changes
                     state_not: '0'
                 type: conditional
-            type: 'custom:stack-in-card'
+            type: custom:stack-in-card
           - entity: sensor.hacs
             name: HACS Pending Updates
             type: entity
@@ -1574,11 +1574,11 @@ views:
               - entity: sensor.server_cupboard_temperature
               - entity: sensor.processor_temperature
             type: glance
-        type: 'custom:stack-in-card'
+        type: custom:stack-in-card
       - type: history-graph
         entities:
           - entity: sensor.aeon_labs_zw100_multisensor_6_burglar_2
         hours_to_show: 1
         refresh_interval: 0
-    icon: 'mdi:battery-unknown'
+    icon: mdi:battery-unknown
     path: batteries
