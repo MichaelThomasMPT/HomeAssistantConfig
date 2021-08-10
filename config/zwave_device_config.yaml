@@ -25,3 +25,15 @@ light.fibaro_system_fgd212_dimmer_2_level_2:
 light.fibaro_system_fgd212_dimmer_2_level_10:
   ignored: true
   polling_intensity: 0
+sensor.aeon_labs_zw100_multisensor_6_ultraviolet_2:
+  ignored: false
+  polling_intensity: 0
+sensor.laundry_multisensor_6_sourcenodeid:
+  ignored: true
+  polling_intensity: 0
+binary_sensor.laundry_multisensor_6_sensor:
+  ignored: true
+  polling_intensity: 0
+sensor.laundry_multisensor_6_temperature:
+  ignored: false
+  polling_intensity: 0
