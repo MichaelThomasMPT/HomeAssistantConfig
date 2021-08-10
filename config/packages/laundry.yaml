@@ -48,7 +48,7 @@ binary_sensor:
         friendly_name: "Dryer Running With Door Closed"
         value_template: >-
           {{
-            states.sensor.laundry_humidity.state|float >= 70.0
+            states.sensor.laundry_humidity.state|float >= 90.0
             and states.binary_sensor.laundry_door.state == 'off'
           }}
         icon_template: mdi:water-percent-alert
