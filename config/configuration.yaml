@@ -11,6 +11,8 @@ homeassistant:
   external_url: !secret home_assistant_external_url
   internal_url: !secret home_assistant_internal_url
 
+  currency: AUD
+
 # Configure a default setup of Home Assistant (frontend, api, etc)
 default_config:
 
