@@ -156,3 +156,20 @@ alert:
       color: 'red'
       ttl: 0
       priority: high
+
+  kitchen_sink_leak_alerts:
+    title: Leak detected! 
+    name: The kitchen sink or dishwasher is leaking! 
+    entity_id: binary_sensor.water_sensor_kitchen_sink
+    state: 'on'
+    repeat: 
+      - 1 
+    can_acknowledge: true
+    skip_first: true
+    notifiers:
+      - mobile_app_michael_s_galaxy_s10
+    data:
+      group: Kitchen Sink Leak
+      color: 'red'
+      ttl: 0
+      priority: high
