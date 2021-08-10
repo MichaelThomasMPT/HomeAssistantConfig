@@ -1,0 +1,11 @@
+# sensor:
+#   - platform: mqtt
+#     name: "Mazda CX-5"
+#     state_topic: "obd/sensor/mazda/state"
+#     device:
+#       name: "Michael's Mazda CX-5"
+#       manufacturer: "Mazda"
+#       model: "2015 CX-5"
+#       suggested_area: "garage"
+#     icon: mdi:car
+    
