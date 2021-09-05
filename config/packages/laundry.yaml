@@ -8,21 +8,13 @@ light:
       - light.washing_line_light_1
       - light.washing_line_light_2
 
-sensor:
-  - platform: template
-    sensors:
-      washing_machine_power_consumption:
-        friendly_name: "Washing Machine Power Consumption"
-        unit_of_measurement: "w"
-        value_template: "{{ state_attr('switch.washing_machine', 'current_power_w') }}"
-
 binary_sensor:
   - platform: template
     sensors:
       #if power consumption is high enough, washing machine is running
       washing_machine_running:
         friendly_name: "Washing Machine Is Running"
-        value_template: "{{ states('sensor.washing_machine_power_consumption')|float > 5 }}"
+        value_template: "{{ states('sensor.washing_machine_current_consumption')|float > 5 }}"
         delay_off:
           minutes: 10 #Power consumption must be low for 10 minutes before considering the washing machine off
         icon_template: >-
