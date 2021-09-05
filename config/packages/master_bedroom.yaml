@@ -167,7 +167,9 @@ automation:
     id: master_bedroom_toggle_wir_lights_when_motion_detected
     trigger:
       - platform: state
-        entity_id: binary_sensor.wir_motion
+        entity_id: 
+          - binary_sensor.wir_motion
+          - binary_sensor.ensuite_motion
     action:
         #motion detected
       - choose:

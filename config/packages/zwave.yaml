@@ -33,3 +33,11 @@ binary_sensor:
           {{ states('sensor.wir_multisensor_6_burglar') | int > 0 }}
         availability_template: >-
           {{ states('sensor.wir_multisensor_6_burglar') != "Unavailable" }} 
+
+      ensuite_motion:
+        friendly_name: "Ensuite Motion Sensor"
+        device_class: "motion"
+        value_template: >-
+          {{ states('sensor.ensuite_aeon_labs_zw100_multisensor_6_burglar') | int > 0 }}
+        availability_template: >-
+          {{ states('sensor.ensuite_aeon_labs_zw100_multisensor_6_burglar') != "Unavailable" }} 
