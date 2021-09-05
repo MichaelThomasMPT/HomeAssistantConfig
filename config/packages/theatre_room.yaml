@@ -420,7 +420,7 @@ automation:
         1001: #Marvel
           music_file: '/local/Marvel.mp3'
           plex_content_type: PLAYLIST
-          plex_content_id: '{ "playlist_name": "The Falcon and the Winter Soldier", "shuffle": "0" }'
+          plex_content_id: '{ "playlist_name": "Marvel", "shuffle": "0" }'
         2002: #Scrubs //The Crown next?
           music_file: '/local/Scrubs.mp3'
           plex_content_type: PLAYLIST
