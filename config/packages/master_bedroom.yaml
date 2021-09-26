@@ -163,44 +163,55 @@ automation:
       - service: light.toggle
         entity_id: light.master_bedroom_laura_lamp
 
-  - alias: Master Bedroom - Toggle Walk-In-Robe Lights When Motion Detected
-    id: master_bedroom_toggle_wir_lights_when_motion_detected
+  - alias: Master Bedroom - Turn On Walk-In-Robe Lights When Motion Detected
+    id: master_bedroom_turn_on_wir_lights_when_motion_detected
     trigger:
       - platform: state
         entity_id: 
           - binary_sensor.wir_motion
           - binary_sensor.ensuite_motion
+        to: "on"
     action:
-        #motion detected
-      - choose:
+      - choose: 
+        #during the night
         - conditions:
-            - condition: state
-              entity_id: binary_sensor.wir_motion
-              state: "on"
+          - condition: template
+            value_template: '{{ now().hour >= 22 or now().hour <= 6 }}'
           sequence:
-              #at night
-            - choose: 
-              - conditions:
-                - condition: template
-                  value_template: '{{ now().hour >= 22 or now().hour <= 6 }}'
-                sequence:
-                  - service: light.turn_on
-                    target:
-                      entity_id: light.ensuite_led_strip #comes on at 10% automatically
-              #during the day
-              default:
-                - service: light.turn_on
-                  target:
-                    entity_id: light.master_wir
-                  data:
-                    brightness_pct: 100
-        #no motion detected
+            - service: light.turn_on
+              target:
+                entity_id: light.ensuite_led_strip #comes on at 10% automatically
+        #during the day
         default:
-          - service: light.turn_off
+          - service: light.turn_on
             target:
-              entity_id:
-                - light.master_wir
-                - light.ensuite_led_strip
+              entity_id: light.master_wir
+            data:
+              brightness_pct: 100
+  
+  - alias: Master Bedroom - Turn Off Walk-In-Robe Lights When No Motion Detected
+    id: master_bedroom_turn_off_wir_lights_when_no_motion_detected
+    trigger:
+      - platform: state
+        entity_id: 
+          - binary_sensor.wir_motion
+          - binary_sensor.ensuite_motion
+        to: "off"
+    condition:
+      - condition: and
+        conditions:
+          - condition: state
+            entity_id: binary_sensor.wir_motion
+            state: "off"
+          - condition: state
+            entity_id: binary_sensor.ensuite_motion
+            state: "off"
+    action:
+      - service: light.turn_off
+        target:
+          entity_id:
+            - light.master_wir
+            - light.ensuite_led_strip
 
   - alias: Ensuite - Turn On Fan When Shower Running
     id: ensuite_turn_on_fan_when_shower_running
