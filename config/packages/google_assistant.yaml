@@ -25,6 +25,7 @@ cloud:
         - script.movie_has_finished
         - script.done_with_the_theatre_room
         - script.roomba_clean
+        - script.morning_alarms_if_today_is_special_play_music
         - switch.aircon_on_off
         - switch.aircon_zone_bed23
         - switch.aircon_zone_living

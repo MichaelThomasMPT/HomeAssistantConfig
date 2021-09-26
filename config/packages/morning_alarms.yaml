@@ -1,0 +1,23 @@
+script: 
+  morning_alarms_if_today_is_special_play_music:
+    alias: Morning Alarms - If Today Is Special Then Play Music
+    variables: 
+      date_today: >-
+        {{  '%02d' % now().month }}-{{  '%02d' % now().day }}
+    sequence:
+      - choose:
+        - conditions:
+          - condition: template
+            value_template: "{{ date_today == '09-21' }}"
+          sequence:
+            - service: media_player.volume_set
+              data:
+                entity_id: media_player.master_bedroom_speaker
+                volume_level: 0.3
+            - service: media_player.play_media
+              data:
+                entity_id: media_player.master_bedroom_speaker
+                media_content_id: '/local/september_21.mp3'
+                media_content_type: 'audio/mp3'
+  
+
