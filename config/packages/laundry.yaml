@@ -279,8 +279,9 @@ automation:
             color: "red"
             ttl: 0
             priority: high
-      - condition: time
-        before: "22:00:00" # Don't send any house-wide announcements after 10pm as people might be trying to sleep
+      - condition: time # Don't send any house-wide announcements after 10pm as people might be trying to sleep
+        before: "22:00:00" 
+        after: "08:00:00"
       - condition: state
         entity_id: media_player.kitchen_google_home_hub
         state: "off" # Only use text-to-speech on Google Home Hub if it's not already in use, so it doesn't stop any music from playing
