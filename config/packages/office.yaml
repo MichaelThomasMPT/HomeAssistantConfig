@@ -72,6 +72,33 @@ automation:
         data:
           message: Colour printer ink is running low and has been added to your shopping list.
 
+  - alias: Office - Toggle Lamp With Laura's Switch
+    id: office_toggle_lamp_with_laura_switch
+    trigger: 
+      - platform: event
+        event_type: deconz_event
+        event_data: 
+          id: laura_office_lamp_switch
+          event: 1002 
+    action:
+      - choose:
+        # If lamp is off, turn it on
+          - conditions:
+              - condition: state
+                entity_id: light.office_lamp
+                state: "off"
+            sequence: 
+              - service: light.turn_on
+                target:
+                  entity_id: light.office_lamp
+                data:
+                  brightness: 160
+                  color_temp: 400
+        # Otherwise turn off the lamp
+        default:
+          - service: light.turn_off
+            entity_id: light.office_lamp
+
 script:
   flash_office_lamp:
     fields:
