@@ -1,0 +1,36 @@
+automation:
+  - alias: Pets - Toggle Living Room Lights
+    id: pets_toggle_living_room_lights
+    trigger: 
+      - platform: event
+        event_type: deconz_event
+        event_data: 
+          id: artemis_light_switch
+          event: 1002 #short press
+      - platform: event
+        event_type: deconz_event
+        event_data: 
+          id: artemis_light_switch
+          event: 1001 #long press
+    action:
+      - service: notify.mobile_app_michael_s_galaxy_s10
+        data:
+          message: Artemis pushed the lights button! 
+      - choose:
+        # If living room light is off, turn it on
+          - conditions:
+              - condition: state
+                entity_id: light.living_room
+                state: "off"
+            sequence: 
+              - service: light.turn_on
+                target:
+                  entity_id: light.living_room
+        # Otherwise turn off all the central living lights
+        default:
+          - service: light.turn_off
+            entity_id: 
+              - light.living_room
+              - light.dining_room
+              - light.kitchen_lights
+
