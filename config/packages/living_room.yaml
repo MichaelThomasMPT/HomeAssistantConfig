@@ -43,6 +43,30 @@ automation:
         target:
           entity_id: scene.flood_lights_state
 
+  - alias: Living Room - Change Soundbar Input When Tv Power Toggled
+    id: living_room_change_soundbar_input_when_tv_power_toggled
+    trigger:
+      - platform: state
+        entity_id: switch.living_room_tv
+    action:
+      - choose:
+        - conditions:
+            - condition: state
+              entity_id: switch.living_room_tv
+              state: 'off'
+          sequence: 
+            - service: script.living_room_soundbar_set_channel
+              data:
+                channel: 'chromecast'
+        - conditions:
+            - condition: state
+              entity_id: switch.living_room_tv
+              state: 'on'
+          sequence: 
+            - service: script.living_room_soundbar_set_channel
+              data:
+                channel: 'tv'
+
 script:
   turn_off_living_room_tv:
     sequence:
@@ -64,6 +88,74 @@ script:
           entity_id: remote.broadlink_rm_pro_roomba_remote
         data:
           command: b64:JgBQAAABKJMSEhISEjcSEhISEhISEhISEjcSNxISEjcSNxI3EjcSNxISEhISEhI3EhISEhISEhISNxI3EjcSEhI3EjcSNxI3EgAFGgABKEoSAAxWDQUAAAAAAAA=
+  living_room_soundbar_turn_on:
+    sequence:
+      - service: remote.send_command
+        target:
+          entity_id: remote.broadlink_rm_pro_roomba_remote
+        data:
+          command: b64:JgBYAAABO5YSOhI5FDgUOBY2FTYUOBY2FBMVERQTFBIUExQSFBMUExMTFDgUOBQSFBMUEhYRFhETOBQTFBIUOBY2EjoTOBM5FAAFEAABPEsTAAxTAAE9ShQADQU=
+  living_room_soundbar_change_source:
+    sequence:
+      - service: remote.send_command
+        target:
+          entity_id: remote.broadlink_rm_pro_roomba_remote
+        data:
+          command: b64:JgBYAAABO5YUOBM5FDcUOBQ4EzkSOhQ3FBMUExQSFBMUEhQTFBMTExQTFBIUOBQTFBIUExQ4ExMUOBQ4FBIUOBM5FDgSFBY2EwAFEgABPEsUAAxTAAE9ShIADQU=
+  living_room_soundbar_mute:
+    sequence:
+      - service: remote.send_command
+        target:
+          entity_id: remote.broadlink_rm_pro_roomba_remote
+        data:
+          command: b64:JgBYAAABO5YSOhM4EzkUOBI6FDcUOBQ4EhUTExQTFBIUExQTExMUExM4FBMUOBIUFjYTFBQSFBMUEhQ4ExQWNhMTFDgUOBI5EwAFEgABPUoSAAxUAAE8SxQADQU=
+  living_room_soundbar_volume_down:
+    sequence:
+      - service: remote.send_command
+        target:
+          entity_id: remote.broadlink_rm_pro_roomba_remote
+        data:
+          command: b64:JgBYAAABPJUUOBM5FDgTORQ4FTYTORM5FBMTExQTFBIWERQSFBMUExMTFBMVERQ4FDgUEhQTFBIUOBM5FDgUEhQTFDgVNhQ4EwAFEgABPUsVAAxSAAE9SxMADQU=
+  living_room_soundbar_volume_up:
+    sequence:
+      - service: remote.send_command
+        target:
+          entity_id: remote.broadlink_rm_pro_roomba_remote
+        data:
+          command: b64:JgBgAAABPpUUOBY2EzkUOBM4EzkTORQ4EhQUExQSFBMUExMTFBMUEhQTFBMTOBQTFDgSFBQTFBIUOBM5FBMTOBMUFDgSORQ4FQAFEAABPUoUAAxTAAE8ShQADFMAATtMFAANBQAAAAAAAAAA
+  living_room_soundbar_set_channel:
+    fields: 
+      channel: 
+        description: 'Which input should be selected for the soundbar?'
+        example: 'tv'
+    variables: 
+      channel_source_switches:
+        'bluetooth': 
+          source_switch_count: 0
+        'radio': 
+          source_switch_count: 1
+        'tv': 
+          source_switch_count: 2
+        'chromecast': 
+          source_switch_count: 3
+    sequence:
+      - service: switch.turn_off
+        entity_id: switch.living_room_soundbar_smart_plug
+      - delay:
+          seconds: 5
+      - service: switch.turn_on
+        entity_id: switch.living_room_soundbar_smart_plug
+      - delay:
+          seconds: 3
+      - service: script.living_room_soundbar_turn_on
+      - delay:
+          seconds: 2
+      - repeat:
+          count: "{{ channel_source_switches[channel].source_switch_count }}"
+          sequence:
+            - service: script.living_room_soundbar_change_source
+            - delay:
+                seconds: 1
 
 binary_sensor:
   - platform: template

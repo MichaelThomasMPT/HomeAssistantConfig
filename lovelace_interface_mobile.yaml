@@ -545,6 +545,60 @@ views:
             state_color: true
             type: custom:fold-entity-row
           - entities:
+              - type: button
+                tap_action:
+                  action: call-service
+                  service: script.living_room_soundbar_set_channel
+                  service_data:
+                    channel: bluetooth
+                name: Set Soundbar Source - Bluetooth
+                show_state: false
+                icon: hass:soundbar
+              - type: button
+                tap_action:
+                  action: call-service
+                  service: script.living_room_soundbar_set_channel
+                  service_data:
+                    channel: chromecast
+                name: Set Soundbar Source - Chromecast
+                show_state: false
+                icon: hass:soundbar
+              - type: button
+                tap_action:
+                  action: call-service
+                  service: script.living_room_soundbar_set_channel
+                  service_data:
+                    channel: tv
+                name: Set Soundbar Source - TV
+                show_state: false
+                icon: hass:soundbar
+              - type: button
+                tap_action:
+                  action: call-service
+                  service: script.living_room_soundbar_volume_up
+                name: Soundbar - Volume Up
+                icon: mdi:volume-plus
+              - type: button
+                tap_action:
+                  action: call-service
+                  service: script.living_room_soundbar_volume_down
+                name: Soundbar - Volume Down
+                icon: mdi:volume-minus
+              - type: button
+                tap_action:
+                  action: call-service
+                  service: script.living_room_soundbar_mute
+                name: Soundbar - Volume Mute
+                icon: mdi:volume-mute
+            head:
+              label: Soundbar
+              type: section
+            show_header_toggle: false
+            show_name: true
+            show_state: false
+            state_color: true
+            type: custom:fold-entity-row
+          - entities:
               - entity: script.aircon_cool_central_living
                 hold_action:
                   action: none
