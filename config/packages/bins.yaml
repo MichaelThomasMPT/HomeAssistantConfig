@@ -74,3 +74,31 @@ automation:
           message: Don't forget to take the bins out!
           data:
             group: Bins
+
+  - alias: Bins - Notify If Bins Not Brought Back In
+    id: bins_notify_if_bins_not_brought_back_in
+    trigger:
+      - platform: time
+        at: 
+          - '18:30:00'
+          - '19:30:00'
+          - '20:30:00'
+          - '21:00:00'
+          - '21:30:00'
+          - '22:00:00'
+          - '22:30:00'
+          - '23:00:00'
+    condition:
+      condition: and
+      conditions:
+        - condition: time
+          weekday:
+            - mon
+        - condition: template
+          value_template: '{{ (states.var.bins_were_moved_today.state) == "False" }}'
+    action:
+      - service: notify.mobile_app_michael_s_galaxy_s10
+        data:
+          message: Don't forget to bring the bins back in!
+          data:
+            group: Bins
