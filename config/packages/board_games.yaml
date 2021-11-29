@@ -78,73 +78,73 @@ automation:
         data: 
           playlist_name: '{{ tags[trigger.event.data.tag_id].playlist_name }}'
 
-script:
-  play_board_game_music_playlist_in_kitchen:
-    alias: Board Game Music - Play Playlist In Kitchen
-    fields: 
-      playlist_name: 
-        description: 'The playlist which should be played'
-        example: 'pirates'
-    variables:
-      playlists:
-        adventure: 
-          playlist_id: "PLavpVzwAAU9bWWSA9tN7EtDqFGRhF6Dva"
-        ancient: 
-          playlist_id: "PLavpVzwAAU9a5DrqFLhWEcBkoIrPH0aGz"
-        battle: 
-          playlist_id: "PLavpVzwAAU9Y8EJESUQzeIB-XKAfLqfze"
-        cafe: 
-          playlist_id: "PLavpVzwAAU9bi-3jXB2Hs9RNkZZWUxBOG"
-        casino: 
-          playlist_id: "PLavpVzwAAU9ZbA6XJR0oT86FLWGCyDCq5"
-        china: 
-          playlist_id: "PLavpVzwAAU9bHfLOMampDIe_XhYP08bdZ"
-        cities: 
-          playlist_id: "PLavpVzwAAU9biE9BBwvrpnVFNlXSfiM9h"
-        detective: 
-          playlist_id: "PLavpVzwAAU9ZAcIzK_cZGywhaWNC70en6"
-        dungeon: 
-          playlist_id: "PLavpVzwAAU9bi9hKI0po6DE3yibLcIHRk"
-        egyptian: 
-          playlist_id: "PLavpVzwAAU9YdQ_y4gkwtcgj7ReWa5wsy"
-        french: 
-          playlist_id: "PLavpVzwAAU9aUT4bO4IjhRXsIw0ICuM6B"
-        gangster: 
-          playlist_id: "PLavpVzwAAU9bK13tDSN7pogWWsu25K6vA"
-        gloomhaven: 
-          playlist_id: "PLavpVzwAAU9ZiQn69q55xm_Vzj9ZiA-M7"
-        horror: 
-          playlist_id: "PLavpVzwAAU9aR5V1A2lErsNLtqEorawx-"
-        india: 
-          playlist_id: "PLavpVzwAAU9aY5DO92CiaA8qR1DG6UvWP"
-        japan: 
-          playlist_id: "PLavpVzwAAU9Zv5nUaUNKBTPmIwLJ965Q7"
-        magic: 
-          playlist_id: "PLavpVzwAAU9aLuX06cbMK_EvVjlN0Gjvc"
-        medieval_town: 
-          playlist_id: "PLavpVzwAAU9b4G2MeVBZ5o35vJHT-zD3W"
-        meditation: 
-          playlist_id: "PLavpVzwAAU9axEP9wn3OfRSwCtewAUCfT"
-        mythical: 
-          playlist_id: "PLavpVzwAAU9aTzc6mxdSgWFqkB3_39MZ6"
-        pirates: 
-          playlist_id: "PLavpVzwAAU9ZPwauocZ6_5xPJ5LLdXedV"
-        renaissance: 
-          playlist_id: "PLavpVzwAAU9YBF1M0T8txK8p1Suyj6nms"
-        space: 
-          playlist_id: "PLavpVzwAAU9Ywsbz7_I1A5v3Qfpdx43bC"
-        spy: 
-          playlist_id: "PLavpVzwAAU9Z4Isj-XdXkCG6AQ9GjXr1S"
-        water: 
-          playlist_id: "PLavpVzwAAU9aFuWrnrI8E458ILtfUHrif"
-        western: 
-          playlist_id: "PLavpVzwAAU9bsH4JeaXcLxZqGaPM2bjwh"
-    sequence:
-      - service: script.youtube_randomize_playlist
-        data:
-          media_entity: media_player.kitchen_google_home_hub
-          playlist_id: "{{ playlists[playlist_name].playlist_id }}"
-      - service: media_player.volume_set
-        data:
-          entity_id: media_player.kitchen_google_home_hub
-          volume_level: 0.5
+# script:
+#   play_board_game_music_playlist_in_kitchen:
+#     alias: Board Game Music - Play Playlist In Kitchen
+#     fields: 
+#       playlist_name: 
+#         description: 'The playlist which should be played'
+#         example: 'pirates'
+#     variables:
+#       playlists:
+#         adventure: 
+#           playlist_id: "PLavpVzwAAU9bWWSA9tN7EtDqFGRhF6Dva"
+#         ancient: 
+#           playlist_id: "PLavpVzwAAU9a5DrqFLhWEcBkoIrPH0aGz"
+#         battle: 
+#           playlist_id: "PLavpVzwAAU9Y8EJESUQzeIB-XKAfLqfze"
+#         cafe: 
+#           playlist_id: "PLavpVzwAAU9bi-3jXB2Hs9RNkZZWUxBOG"
+#         casino: 
+#           playlist_id: "PLavpVzwAAU9ZbA6XJR0oT86FLWGCyDCq5"
+#         china: 
+#           playlist_id: "PLavpVzwAAU9bHfLOMampDIe_XhYP08bdZ"
+#         cities: 
+#           playlist_id: "PLavpVzwAAU9biE9BBwvrpnVFNlXSfiM9h"
+#         detective: 
+#           playlist_id: "PLavpVzwAAU9ZAcIzK_cZGywhaWNC70en6"
+#         dungeon: 
+#           playlist_id: "PLavpVzwAAU9bi9hKI0po6DE3yibLcIHRk"
+#         egyptian: 
+#           playlist_id: "PLavpVzwAAU9YdQ_y4gkwtcgj7ReWa5wsy"
+#         french: 
+#           playlist_id: "PLavpVzwAAU9aUT4bO4IjhRXsIw0ICuM6B"
+#         gangster: 
+#           playlist_id: "PLavpVzwAAU9bK13tDSN7pogWWsu25K6vA"
+#         gloomhaven: 
+#           playlist_id: "PLavpVzwAAU9ZiQn69q55xm_Vzj9ZiA-M7"
+#         horror: 
+#           playlist_id: "PLavpVzwAAU9aR5V1A2lErsNLtqEorawx-"
+#         india: 
+#           playlist_id: "PLavpVzwAAU9aY5DO92CiaA8qR1DG6UvWP"
+#         japan: 
+#           playlist_id: "PLavpVzwAAU9Zv5nUaUNKBTPmIwLJ965Q7"
+#         magic: 
+#           playlist_id: "PLavpVzwAAU9aLuX06cbMK_EvVjlN0Gjvc"
+#         medieval_town: 
+#           playlist_id: "PLavpVzwAAU9b4G2MeVBZ5o35vJHT-zD3W"
+#         meditation: 
+#           playlist_id: "PLavpVzwAAU9axEP9wn3OfRSwCtewAUCfT"
+#         mythical: 
+#           playlist_id: "PLavpVzwAAU9aTzc6mxdSgWFqkB3_39MZ6"
+#         pirates: 
+#           playlist_id: "PLavpVzwAAU9ZPwauocZ6_5xPJ5LLdXedV"
+#         renaissance: 
+#           playlist_id: "PLavpVzwAAU9YBF1M0T8txK8p1Suyj6nms"
+#         space: 
+#           playlist_id: "PLavpVzwAAU9Ywsbz7_I1A5v3Qfpdx43bC"
+#         spy: 
+#           playlist_id: "PLavpVzwAAU9Z4Isj-XdXkCG6AQ9GjXr1S"
+#         water: 
+#           playlist_id: "PLavpVzwAAU9aFuWrnrI8E458ILtfUHrif"
+#         western: 
+#           playlist_id: "PLavpVzwAAU9bsH4JeaXcLxZqGaPM2bjwh"
+#     sequence:
+#       - service: script.youtube_randomize_playlist
+#         data:
+#           media_entity: media_player.kitchen_google_home_hub
+#           playlist_id: "{{ playlists[playlist_name].playlist_id }}"
+#       - service: media_player.volume_set
+#         data:
+#           entity_id: media_player.kitchen_google_home_hub
+#           volume_level: 0.5
