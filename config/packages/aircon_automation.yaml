@@ -266,9 +266,14 @@ automation:
         value_template: '{{ (states.sensor.living_room_temperature.state | float) > 28.0 }}' #if the inside temperature is > 25 degrees  
       - condition: template
         value_template: '{{ (states.sensor.sems_output_power.state | float) > 2000.0 }}' #if the solar panels are running well
-      - condition: state
-        entity_id: 'alarm_control_panel.alarm_com'
-        state: 'armed_away' #nobody is home
+      - condition: or
+        conditions:
+          - condition: state
+            entity_id: 'alarm_control_panel.alarm_com'
+            state: 'armed_away' #nobody is home
+          - condition: state
+            entity_id: 'alarm_control_panel.alarm_com'
+            state: 'armed_home' #nobody is home
       - condition: state
         entity_id: 'climate.ac'
         state: 'off' #don't run the script if the aircon is already on, as it will restart the countdown timer
@@ -531,6 +536,10 @@ automation:
         entity_id: alarm_control_panel.alarm_com
         to: 'disarmed'
         from: 'armed_away'
+      - platform: state
+        entity_id: alarm_control_panel.alarm_com
+        to: 'disarmed'
+        from: 'armed_home'
     variables: 
       target_temp: 24 #how cold the aircon should run
       comfortable_temp: 25 #considered a comfortable level

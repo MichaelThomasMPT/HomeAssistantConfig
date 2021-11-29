@@ -34,10 +34,14 @@ automation:
   - alias: Alarm System - Turn Off House When Alarm Is Set
     id: alarm_system_turn_off_house_when_alarm_is_set
     trigger:
-      platform: state
-      entity_id: alarm_control_panel.alarm_com
-      from: 'disarmed'
-      to: 'armed_away'
+      - platform: state
+        entity_id: alarm_control_panel.alarm_com
+        from: 'disarmed'
+        to: 'armed_away'
+      - platform: state
+        entity_id: alarm_control_panel.alarm_com
+        from: 'disarmed'
+        to: 'armed_home'
     action:
       - service: script.turn_off_whole_house
         data: 

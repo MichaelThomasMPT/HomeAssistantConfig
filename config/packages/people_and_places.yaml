@@ -130,11 +130,18 @@ automation:
       - condition: state  # from sunset until sunrise
         entity_id: sun.sun
         state: 'below_horizon'
-      - condition: state
-        entity_id: alarm_control_panel.alarm_com
-        state: 'armed_away'
-        for:
-          minutes: 5
+      - condition: or
+        conditions:
+          - condition: state
+            entity_id: alarm_control_panel.alarm_com
+            state: 'armed_away'
+            for:
+              minutes: 5
+          - condition: state
+            entity_id: alarm_control_panel.alarm_com
+            state: 'armed_home'
+            for:
+              minutes: 5
     action:
       - service: light.turn_on
         entity_id:
