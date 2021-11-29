@@ -428,22 +428,22 @@ automation:
           music_file: '/local/Marvel.mp3'
           plex_content_type: PLAYLIST
           plex_content_id: '{ "playlist_name": "Marvel", "shuffle": "0" }'
-        2002: #Scrubs //The Crown next?
-          music_file: '/local/Scrubs.mp3'
+        2002: #Squid Game
+          music_file: '/local/Squid_Game.mp3'
           plex_content_type: PLAYLIST
-          plex_content_id: '{ "playlist_name": "Scrubs", "shuffle": "0" }'
-        3003: #Star Wars
-          music_file: '/local/Star_Wars.mp3'
+          plex_content_id: '{ "playlist_name": "Squid Game", "shuffle": "0" }'
+        3003: #The Great
+          music_file: '/local/The_Great.mp3'
           plex_content_type: PLAYLIST
-          plex_content_id: '{ "playlist_name": "Star Wars", "shuffle": "0" }'
-        4004: #Attack on Titan
-          music_file: '/local/Attack_on_Titan.mp3'
+          plex_content_id: '{ "playlist_name": "The Great", "shuffle": "0" }'
+        4004: #Silicon Valley
+          music_file: '/local/Silicon_Valley.mp3'
           plex_content_type: PLAYLIST
-          plex_content_id: '{ "playlist_name": "Attack on Titan", "shuffle": "0" }'
-        5005: #Last Week Tonight
-          music_file: '/local/Last_Week_Tonight.mp3'
+          plex_content_id: '{ "playlist_name": "Silicon Valley", "shuffle": "0" }'
+        5005: #Succession
+          music_file: '/local/Succession.mp3'
           plex_content_type: PLAYLIST
-          plex_content_id: '{ "playlist_name": "Last Week Tonight", "shuffle": "0" }'
+          plex_content_id: '{ "playlist_name": "Succession", "shuffle": "0" }'
         6006: #Taskmaster
           music_file: '/local/Taskmaster.mp3'
           plex_content_type: PLAYLIST
