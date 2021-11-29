@@ -1,67 +1,102 @@
+automation: 
+  - alias: Christmas - Automatically Turn On Tree Lights When Coming Home
+    id: christmas_automatically_turn_on_tree_lights_when_coming_home
+    trigger:
+      - platform: state
+        entity_id: person.michael
+        to: 'away'
+        from: 'home'
+      - platform: state
+        entity_id: person.laura
+        to: 'away'
+        from: 'home'
+    condition:
+      - condition: or
+        conditions:
+          - condition: state
+            entity_id: person.michael
+            state: 'away'
+            for:
+              minutes: 5
+          - condition: state
+            entity_id: person.laura
+            state: 'away'
+            for:
+              minutes: 5
+    action:
+      - entity_id: switch.christmas_tree_power
+        service: switch.turn_on
 
-# automation: 
-#   - alias: Christmas - Automatically Turn On Tree Lights When Coming Home
-#     id: christmas_automatically_turn_on_tree_lights_when_coming_home
-#     trigger:
-#       - platform: state
-#         entity_id: alarm_control_panel.alarm_com
-#         to: 'disarmed'
-#         from: 'armed_away'
-#     action:
-#       - entity_id: switch.christmas_tree_power
-#         service: switch.turn_on
+  - alias: Christmas - Automatically Turn On Tree Lights At Night
+    id: christmas_automatically_turn_on_tree_lights_at_night
+    trigger:
+      - platform: sun
+        event: sunset
+        offset: "+00:30:00"
+    condition:
+      - condition: state
+        entity_id: 'alarm_control_panel.alarm_com'
+        state: 'disarmed' #we're home
+    action:
+      - entity_id: switch.christmas_tree_power
+        service: switch.turn_on
 
-#   - alias: Christmas - Automatically Turn On Tree Lights At Night
-#     id: christmas_automatically_turn_on_tree_lights_at_night
-#     trigger:
-#       - platform: sun
-#         event: sunset
-#         offset: "+00:30:00"
-#     condition:
-#       - condition: state
-#         entity_id: 'alarm_control_panel.alarm_com'
-#         state: 'disarmed' #we're home
-#     action:
-#       - entity_id: switch.christmas_tree_power
-#         service: switch.turn_on
+  - alias: Christmas - Automatically Turn Off Tree Lights
+    id: christmas_automatically_turn_off_tree_lights
+    trigger:
+      - platform: sun
+        event: sunrise
+        offset: "-00:30:00"
+      - platform: state
+        entity_id: alarm_control_panel.alarm_com
+        to: 'armed_away'
+      - platform: state
+        entity_id: alarm_control_panel.alarm_com
+        to: 'armed_home'
+      - platform: event
+        event_type: deconz_event
+        event_data: 
+          id: master_door_switch #when pressing button in master bedroom to turn off all the house lights, turn off the christmas tree lights too
+          event: 1002 #single click
+    action:
+      - entity_id: switch.christmas_tree_power
+        service: switch.turn_off
 
-#   - alias: Christmas - Automatically Turn Off Tree Lights
-#     id: christmas_automatically_turn_off_tree_lights
-#     trigger:
-#       - platform: sun
-#         event: sunrise
-#         offset: "-00:30:00"
-#       - platform: state
-#         entity_id: alarm_control_panel.alarm_com
-#         to: 'armed_away'
-#       - platform: event
-#         event_type: deconz_event
-#         event_data: 
-#           id: master_door_dimmer #when pressing button in master bedroom to turn off all the house lights, turn off the christmas tree lights too
-#           event: 1002 #single click
-#     action:
-#       - entity_id: switch.christmas_tree_power
-#         service: switch.turn_off
-
-#   - alias: Christmas - Automatically Play Music When Arriving Home During The Day
-#     id: christmas_automatically_play_music_when_arriving_home
-#     variables: 
-#       christmas_playlist_id: "PLavpVzwAAU9aMvBGybe2vuMvPFgRhym_J" #Christmas Background Music
-#     trigger: 
-#       - platform: state
-#         entity_id: alarm_control_panel.alarm_com
-#         to: 'disarmed'
-#         from: 'armed_away'
-#     condition: 
-#       - condition: state 
-#         entity_id: sun.sun
-#         state: 'above_horizon' #day time
-#     action:
-#       - service: script.youtube_randomize_playlist
-#         data:
-#           media_entity: media_player.kitchen_google_home_hub
-#           playlist_id: "{{ christmas_playlist_id }}"
-#       - service: media_player.volume_set
-#         data:
-#           entity_id: media_player.kitchen_google_home_hub
-#           volume_level: 0.6
+  - alias: Christmas - Automatically Play Music When Arriving Home During The Day
+    id: christmas_automatically_play_music_when_arriving_home
+    variables: 
+      christmas_playlist_id: "PLavpVzwAAU9aMvBGybe2vuMvPFgRhym_J" #Christmas Background Music
+    trigger: 
+      - platform: state
+        entity_id: person.michael
+        to: 'away'
+        from: 'home'
+      - platform: state
+        entity_id: person.laura
+        to: 'away'
+        from: 'home'
+    condition: 
+      - condition: time
+        before: "21:00:00"
+      - condition: time
+        after: "08:00:00"
+      - condition: or
+        conditions:
+          - condition: state
+            entity_id: person.michael
+            state: 'away'
+            for:
+              minutes: 5
+          - condition: state
+            entity_id: person.laura
+            state: 'away'
+            for:
+              minutes: 5
+    action:
+      - service: spotcast.start
+        data:
+          uri: 'spotify:playlist:37i9dQZF1DWZv6UE8BMPO0'
+          random_song: true
+          shuffle: true
+          start_volume: 70
+          entity_id: media_player.central_living_speakers
