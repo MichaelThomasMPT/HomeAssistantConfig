@@ -6,16 +6,26 @@ plant:
       temperature: sensor.monstera_temperature
       conductivity: sensor.monstera_conductivity
       brightness: sensor.monstera_light
+
     #Monstera-specific values from the MiFlora app
+    # min_moisture: 15
+    # max_moisture: 60
+    # min_conductivity: 350
+    # max_conductivity: 2000
+    # min_temperature: 12
+    # max_temperature: 32
+    # min_brightness: 800
+    # max_brightness: 15000
+
+    #Mint-specific values from the MiFlora app
     min_moisture: 15
     max_moisture: 60
     min_conductivity: 350
     max_conductivity: 2000
-    min_temperature: 12
+    min_temperature: 8
     max_temperature: 32
-    min_brightness: 800
-    max_brightness: 15000
-
+    min_brightness: 3000
+    max_brightness: 60000
 
 alert:
   plant_watering_reminder:
