@@ -133,11 +133,18 @@ script:
           until:
             - condition: template
               value_template: "{{ not is_state('media_player.plex_for_lg', 'unavailable') }}"
-      - service: media_player.play_media
-        data:
-          entity_id: media_player.plex_for_lg
-          media_content_type: '{{ plex_content_type }}'
-          media_content_id: '{{ plex_content_id }}'
+      - repeat:
+          sequence:
+            - service: media_player.play_media #Keep trying to play media until it starts
+              data:
+                entity_id: media_player.plex_for_lg
+                media_content_type: '{{ plex_content_type }}'
+                media_content_id: '{{ plex_content_id }}'
+            - delay:
+                seconds: 10
+          until:
+            - condition: template
+              value_template: "{{ is_state('media_player.plex_for_lg', 'playing') }}"
       - condition: or #all further steps will only run if this condition is true
         conditions:
           - condition: template
