@@ -1,133 +1,133 @@
-script:
-  roomba_clean:
-    alias: Roomba - Clean House
-    sequence: 
-      - data:
-          entity_id: switch.roomba
-        service: switch.turn_on
-      - data:
-          entity_id: switch.roomba
-        service: switch.turn_on
-      - data:
-          entity_id: switch.roomba
-        service: switch.turn_on
+# script:
+#   roomba_clean:
+#     alias: Roomba - Clean House
+#     sequence: 
+#       - data:
+#           entity_id: switch.roomba
+#         service: switch.turn_on
+#       - data:
+#           entity_id: switch.roomba
+#         service: switch.turn_on
+#       - data:
+#           entity_id: switch.roomba
+#         service: switch.turn_on
 
-  roomba_return_to_dock:
-    alias: Roomba - Return To Dock
-    sequence: 
-      - data:
-          entity_id: switch.roomba
-        service: switch.turn_off
-      - data:
-          entity_id: switch.roomba
-        service: switch.turn_off
-      - data:
-          entity_id: switch.roomba
-        service: switch.turn_off
-      - delay:
-          seconds: 5
-      - data:
-          entity_id: switch.roomba
-        service: switch.turn_off
-      - data:
-          entity_id: switch.roomba
-        service: switch.turn_off
-      - data:
-          entity_id: switch.roomba
-        service: switch.turn_off
+#   roomba_return_to_dock:
+#     alias: Roomba - Return To Dock
+#     sequence: 
+#       - data:
+#           entity_id: switch.roomba
+#         service: switch.turn_off
+#       - data:
+#           entity_id: switch.roomba
+#         service: switch.turn_off
+#       - data:
+#           entity_id: switch.roomba
+#         service: switch.turn_off
+#       - delay:
+#           seconds: 5
+#       - data:
+#           entity_id: switch.roomba
+#         service: switch.turn_off
+#       - data:
+#           entity_id: switch.roomba
+#         service: switch.turn_off
+#       - data:
+#           entity_id: switch.roomba
+#         service: switch.turn_off
 
-automation:
-  - alias: Roomba - Run the roomba when leaving the house
-    id: roomba_run_the_roomba_when_leaving_the_house
-    trigger:
-      - platform: state
-        entity_id: alarm_control_panel.alarm_com
-        to: 'armed_away'
-    condition:
-      - condition: state
-        entity_id: binary_sensor.any_kitchen_chair_upright
-        state: "off" #all kitchen chairs are up on the counter
-    action:
-      - service: script.roomba_clean
-      - service: notify.mobile_app_michael_s_galaxy_s10
-        data:
-          message: Roomba buddy has been started. 
+# automation:
+#   - alias: Roomba - Run the roomba when leaving the house
+#     id: roomba_run_the_roomba_when_leaving_the_house
+#     trigger:
+#       - platform: state
+#         entity_id: alarm_control_panel.alarm_com
+#         to: 'armed_away'
+#     condition:
+#       - condition: state
+#         entity_id: binary_sensor.any_kitchen_chair_upright
+#         state: "off" #all kitchen chairs are up on the counter
+#     action:
+#       - service: script.roomba_clean
+#       - service: notify.mobile_app_michael_s_galaxy_s10
+#         data:
+#           message: Roomba buddy has been started. 
 
-    #If roomba never returned to dock, notify me when I get home
-  - alias: Roomba - Alert When Roomba Doesn't Return To Dock
-    id: roomba_alert_when_roomba_does_not_return_to_dock
-    trigger:
-      - platform: time_pattern
-        hours: '/1'
-      - platform: state
-        entity_id: person.michael
-        to: 'home'
-    condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id: person.michael
-          state: 'home'
-        - condition: state
-          entity_id: binary_sensor.roomba_contact_sensor
-          state: 'on' #roomba is not docked
-          for:
-            hours: 3
-    action:
-      - service: notify.mobile_app_michael_s_galaxy_s10
-        data:
-          message: Roomba buddy didn't make it home. :(
+#     #If roomba never returned to dock, notify me when I get home
+#   - alias: Roomba - Alert When Roomba Doesn't Return To Dock
+#     id: roomba_alert_when_roomba_does_not_return_to_dock
+#     trigger:
+#       - platform: time_pattern
+#         hours: '/1'
+#       - platform: state
+#         entity_id: person.michael
+#         to: 'home'
+#     condition:
+#       condition: and
+#       conditions:
+#         - condition: state
+#           entity_id: person.michael
+#           state: 'home'
+#         - condition: state
+#           entity_id: binary_sensor.roomba_contact_sensor
+#           state: 'on' #roomba is not docked
+#           for:
+#             hours: 3
+#     action:
+#       - service: notify.mobile_app_michael_s_galaxy_s10
+#         data:
+#           message: Roomba buddy didn't make it home. :(
 
-    #Once Roomba has returned to dock and had time to recharge, ask whether to re-run if we're not home yet
-  - alias: Roomba - Ask Whether To Re-run Roomba Once Finished If Not Yet Home
-    id: roomba_ask_whether_to_re_run_roomba_once_finished_if_not_yet_home
-    trigger:
-      - platform: state
-        entity_id: binary_sensor.roomba_contact_sensor
-        to: 'off' #roomba has re-docked
-        for:
-          hours: 3
-    condition:
-      condition: or
-      conditions:
-        - condition: state
-          entity_id: person.michael
-          state: 'away'
-        - condition: state
-          entity_id: alarm_control_panel.alarm_com
-          state: 'armed_away'
-    action:
-      - service: notify.mobile_app_michael_s_galaxy_s10
-        data:
-          message: "Roomba has finished and charge. Should he be run again?"
-          data:
-            actions:
-              - action: "run_roomba_again"
-                title: "Run Roomba Again"
-  - alias: Roomba - Run the roomba when notification action is tapped
-    id: roomba_run_the_roomba_when_notification_action_is_tapped
-    trigger:
-      platform: event
-      event_type: mobile_app_notification_action
-      event_data:
-        action: run_roomba_again
-    action:
-      service: script.roomba_clean
+#     #Once Roomba has returned to dock and had time to recharge, ask whether to re-run if we're not home yet
+#   - alias: Roomba - Ask Whether To Re-run Roomba Once Finished If Not Yet Home
+#     id: roomba_ask_whether_to_re_run_roomba_once_finished_if_not_yet_home
+#     trigger:
+#       - platform: state
+#         entity_id: binary_sensor.roomba_contact_sensor
+#         to: 'off' #roomba has re-docked
+#         for:
+#           hours: 3
+#     condition:
+#       condition: or
+#       conditions:
+#         - condition: state
+#           entity_id: person.michael
+#           state: 'away'
+#         - condition: state
+#           entity_id: alarm_control_panel.alarm_com
+#           state: 'armed_away'
+#     action:
+#       - service: notify.mobile_app_michael_s_galaxy_s10
+#         data:
+#           message: "Roomba has finished and charge. Should he be run again?"
+#           data:
+#             actions:
+#               - action: "run_roomba_again"
+#                 title: "Run Roomba Again"
+#   - alias: Roomba - Run the roomba when notification action is tapped
+#     id: roomba_run_the_roomba_when_notification_action_is_tapped
+#     trigger:
+#       platform: event
+#       event_type: mobile_app_notification_action
+#       event_data:
+#         action: run_roomba_again
+#     action:
+#       service: script.roomba_clean
 
 
-switch:
-  - platform: broadlink
-    mac: '34:ea:34:99:eb:42'
-    switches:
-      - name: Roomba
-        command_on: 'JgD8AGEgIV8gXyBfXCIhXyBfIAACoGIfIGAfYB9gXSIfYR5hHgACol8iHmIdYh1iXCIfYR5hHgACo2EgHmEfYR1iXCIeYh1iHQACq2AhH2EeYR9gXCMfYB9gHwAComAhH2AfYR9gXCIgYB9gHwACoWAiH2AfYB9gXCMfYB9hHgAComAhH2EeYR5hXCIgYCBfIAACoGEgIGAfYB9gXSIfYR5hHgACql8jHWIdYh1iXCMeYR5hHgACo18iHmEeYh1iXCIeYh1iHQACo18jHWIdYh5hXSIeYh1iHQACo18jHWIdYh1iXCIfYR5hHgACq18iHmEeYh1iXCIeYh1iHgANBQAAAAAAAAAAAAAAAA=='
-        command_off: 'JgCQAGAhHmIfYB9gH2BdIh5iXAACbGAhHmIeYR5hH2BdIh5iXAACZGAhHmIeYR5hH2BdIh5iXAACZGEhH2AfYB9gIF9eISBgXgACYl8iIGAfYB9gH2BfICBgXgACamEhH2AfYB9gH2BfICBgXgACYmEgIGAfYCBfIF9cIx9hXAACZGAhHmIeYR5hH2BdIh5iXAANBQAAAAAAAAAA'
+# switch:
+#   - platform: broadlink
+#     mac: '34:ea:34:99:eb:42'
+#     switches:
+#       - name: Roomba
+#         command_on: 'JgD8AGEgIV8gXyBfXCIhXyBfIAACoGIfIGAfYB9gXSIfYR5hHgACol8iHmIdYh1iXCIfYR5hHgACo2EgHmEfYR1iXCIeYh1iHQACq2AhH2EeYR9gXCMfYB9gHwAComAhH2AfYR9gXCIgYB9gHwACoWAiH2AfYB9gXCMfYB9hHgAComAhH2EeYR5hXCIgYCBfIAACoGEgIGAfYB9gXSIfYR5hHgACql8jHWIdYh1iXCMeYR5hHgACo18iHmEeYh1iXCIeYh1iHQACo18jHWIdYh5hXSIeYh1iHQACo18jHWIdYh1iXCIfYR5hHgACq18iHmEeYh1iXCIeYh1iHgANBQAAAAAAAAAAAAAAAA=='
+#         command_off: 'JgCQAGAhHmIfYB9gH2BdIh5iXAACbGAhHmIeYR5hH2BdIh5iXAACZGAhHmIeYR5hH2BdIh5iXAACZGEhH2AfYB9gIF9eISBgXgACYl8iIGAfYB9gH2BfICBgXgACamEhH2AfYB9gH2BfICBgXgACYmEgIGAfYCBfIF9cIx9hXAACZGAhHmIeYR5hH2BdIh5iXAANBQAAAAAAAAAA'
 
-sensor:
-  #Have a template sensor for hte front end to read whether the roomba is docked or not
-  - platform: template
-    sensors:
-      roomba_docked:
-        friendly_name: "Roomba"
-        value_template: >-
-          {% if states.binary_sensor.roomba_contact_sensor.state == 'on' %}Running{% else %}Docked{% endif %}
+# sensor:
+#   #Have a template sensor for hte front end to read whether the roomba is docked or not
+#   - platform: template
+#     sensors:
+#       roomba_docked:
+#         friendly_name: "Roomba"
+#         value_template: >-
+#           {% if states.binary_sensor.roomba_contact_sensor.state == 'on' %}Running{% else %}Docked{% endif %}
