@@ -4,12 +4,12 @@ automation:
     trigger:
       - platform: state
         entity_id: person.michael
-        to: 'away'
-        from: 'home'
+        from: 'away'
+        to: 'home'
       - platform: state
         entity_id: person.laura
-        to: 'away'
-        from: 'home'
+        from: 'away'
+        to: 'home'
     condition:
       - condition: or
         conditions:
@@ -69,12 +69,12 @@ automation:
     trigger: 
       - platform: state
         entity_id: person.michael
-        to: 'away'
-        from: 'home'
+        from: 'away'
+        to: 'home'
       - platform: state
         entity_id: person.laura
-        to: 'away'
-        from: 'home'
+        from: 'away'
+        to: 'home'
     condition: 
       - condition: time
         before: "21:00:00"
