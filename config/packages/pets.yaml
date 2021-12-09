@@ -78,3 +78,26 @@ automation:
               - light.dining_room
               - light.kitchen_lights
 
+  - alias: Pets - Pretend To Ring Doorbell
+    id: pets_pretend_to_ring_doorbell
+    trigger: 
+      - platform: time
+        at: 
+          - '09:58:00'
+          - '11:58:00'
+          - '02:58:00'
+          - '05:58:00'
+    action:
+      - service: notify.mobile_app_michael_s_galaxy_s10
+        data:
+          message: "This is a fake doorbell to desensitise the dog."
+          data:
+            group: "Doggy Doorbell"
+      - service: notify.mobile_app_lauras_iphone
+        data:
+          message: "This is a fake doorbell to desensitise the dog."
+      - service: media_player.play_media
+        data:
+          entity_id: media_player.central_living_speakers
+          media_content_id: '/local/doorbell.mp3'
+          media_content_type: 'audio/mp3'
