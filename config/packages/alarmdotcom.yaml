@@ -30,6 +30,45 @@ automation:
       - service: notify.mobile_app_michael_s_galaxy_s10
         data:
           message: The house alarm was not set and nobody is home.
+
+  #If the alarm was in armed_home mode for more than 5 minutes and then it stays armed for more than
+  #one minute after coming home, remind us to disarm the alarm
+  - alias: Alarm System - Notify If Alarm Not Disarmed When Coming Home
+    id: alarm_system_notify_if_alarm_not_disarmed_when_coming_home
+    mode: single
+    trigger:
+      - platform: state
+        entity_id: 
+          - binary_sensor.garage_door_internal
+        to: 'on' #open
+    condition:
+      - condition: state
+        entity_id: alarm_control_panel.alarm_com
+        state: 'armed_home' #armed_home mode is silent when coming home, hence the need for this automation
+        for:
+          minutes: 5
+    action:
+      - delay:
+          minutes: 1
+      - condition: state
+        entity_id: alarm_control_panel.alarm_com
+        state: 'armed_home'
+      - service: notify.mobile_app_michael_s_galaxy_s10
+        data:
+          message: Don't forget to disarm the alarm!
+          title: Alarm is armed!
+          data:
+            group: Disarm Alarm
+            color: 'red'
+            ttl: 0
+            priority: high
+      - service: notify.mobile_app_lauras_iphone
+        data:
+          message: Don't forget to disarm the alarm!
+      - service: tts.google_translate_say
+        data:
+          entity_id: media_player.kitchen_google_home_hub
+          message: Don't forget to disarm the alarm!
           
   - alias: Alarm System - Turn Off House When Alarm Is Set
     id: alarm_system_turn_off_house_when_alarm_is_set
