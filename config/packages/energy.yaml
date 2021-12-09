@@ -1,0 +1,81 @@
+template:
+  - sensor:
+      name: Alfresco Ceiling Lights Total Daily Energy
+      state: >-
+        {{ states('sensor.alfresco_ceiling_lights_power') }}
+      icon: mdi:flash
+      unit_of_measurement: 'kWh'
+      state_class: 'total_increasing'
+      device_class: 'energy'
+  - sensor:
+      name: Dining Room Lights Total Daily Energy
+      state: >-
+        {{ states('sensor.dining_room_lights_energy') }}
+      icon: mdi:flash
+      unit_of_measurement: 'kWh'
+      state_class: 'total_increasing'
+      device_class: 'energy'
+  - sensor:
+      name: Ensuite Fan Total Daily Energy
+      state: >-
+        {{ states('sensor.ensuite_fan_energy') }}
+      icon: mdi:flash
+      unit_of_measurement: 'kWh'
+      state_class: 'total_increasing'
+      device_class: 'energy'
+  - sensor:
+      name: Entry Hall Lights Total Daily Energy
+      state: >-
+        {{ states('sensor.entry_hall_lights_energy') }}
+      icon: mdi:flash
+      unit_of_measurement: 'kWh'
+      state_class: 'total_increasing'
+      device_class: 'energy'
+  - sensor:
+      name: Kitchen Island Light Total Daily Energy
+      state: >-
+        {{ states('sensor.kitchen_island_light_energy') }}
+      icon: mdi:flash
+      unit_of_measurement: 'kWh'
+      state_class: 'total_increasing'
+      device_class: 'energy'
+  - sensor:
+      name: Living Room Lights Total Daily Energy
+      state: >-
+        {{ states('sensor.living_room_lights_energy') }}
+      icon: mdi:flash
+      unit_of_measurement: 'kWh'
+      state_class: 'total_increasing'
+      device_class: 'energy'
+  - sensor:
+      name: Master Bedroom Lights Total Daily Energy
+      state: >-
+        {{ states('sensor.master_bedroom_ceiling_energy') }}
+      icon: mdi:flash
+      unit_of_measurement: 'kWh'
+      state_class: 'total_increasing'
+      device_class: 'energy'
+  - sensor:
+      name: Master Bedroom Walk-in-robe Total Daily Energy
+      state: >-
+        {{ states('sensor.master_bedroom_walk_in_robe_energy') }}
+      icon: mdi:flash
+      unit_of_measurement: 'kWh'
+      state_class: 'total_increasing'
+      device_class: 'energy'
+  - sensor:
+      name: Side Hallway Lights Total Daily Energy
+      state: >-
+        {{ states('sensor.side_hallway_lights_energy') }}
+      icon: mdi:flash
+      unit_of_measurement: 'kWh'
+      state_class: 'total_increasing'
+      device_class: 'energy'
+  - sensor:
+      name: Theatre Room Ceiling Total Daily Energy
+      state: >-
+        {{ states('sensor.theatre_room_ceiling_energy') }}
+      icon: mdi:flash
+      unit_of_measurement: 'kWh'
+      state_class: 'total_increasing'
+      device_class: 'energy'
