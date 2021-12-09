@@ -2,7 +2,7 @@ input_boolean:
   uni_parking_reminder_toggle:
     name: Remind Laura To Pay For Parking
     icon: mdi:parking
-    initial: 'off'
+    initial: false
 
 automation:
   - alias: Uni Parking - Activate Reminder When Arriving At Uni

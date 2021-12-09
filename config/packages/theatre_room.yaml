@@ -345,7 +345,7 @@ automation:
           id: theatre_room_remote
           event: 1002 #centre button
     action:
-      - service_template: >
+      - service: >
           {% if is_state('light.theatre_room_ceiling', 'on') %}
             script.turn_off_theatre_room_lights
           {% else %} 

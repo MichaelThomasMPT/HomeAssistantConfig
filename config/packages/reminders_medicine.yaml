@@ -2,7 +2,7 @@ input_boolean:
   medicine_reminder_toggle:
     name: Remind Me To Take Medicine
     icon: mdi:pill
-    initial: 'off'
+    initial: false
 
 automation:
   - alias: Medicine - Activate Reminder When Medicine Needs Taking
@@ -10,7 +10,7 @@ automation:
     trigger:
       - platform: time
         at: 
-          - '7:00:00'
+          - '07:00:00'
           - '19:00:00'
     action:
       - service: input_boolean.turn_on

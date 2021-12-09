@@ -191,10 +191,10 @@ script:
     fields: 
       target_temperature: 
         description: 'What temperature should the aircon run at?'
-        example: 25
+        example: "25"
       comfortable_temperature_max:
         description: 'What maximum temperature should be considered comfortable enough?'
-        example: 26
+        example: "26"
     sequence:
       #Set the comfortable temperature in a number helper
       - service: input_number.set_value

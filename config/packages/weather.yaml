@@ -1,4 +1,4 @@
-weather:
+# weather:
   # - platform: bom
   #   station: IDW60901.94608
 
