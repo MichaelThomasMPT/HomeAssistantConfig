@@ -211,6 +211,8 @@ script:
           hvac_mode: cool
         service: climate.set_hvac_mode
       - service: script.aircon_turn_off_all_zones
+      - delay:
+          seconds: 5
       - data:
           entity_id: cover.living
         service: cover.open_cover
@@ -274,10 +276,10 @@ automation:
       - service: script.aircon_cool_central_living #run the aircon in the central living area
       - delay: #wait until it's up and running
           seconds: 30 
-      - service: input_number.set_value #stop the aircon after 15 minutes
+      - service: input_number.set_value #stop the aircon after 20 minutes
         data_template: 
           entity_id: input_number.aircon_countdown_timer
-          value: 15
+          value: 20
 
   - alias: Temperature - Warm Puppy Nights
     id: temperature_warm_puppy_nights
