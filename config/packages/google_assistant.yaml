@@ -39,20 +39,18 @@ cloud:
       exclude_entities:
         - light.theatre_room
         - light.theatre_room_2
-        - light.fibaro_system_fgd212_dimmer_2_level_2
-        - light.fibaro_system_fgd212_dimmer_2_level_4
         - light.office
         - light.office_2
         - light.range_extender_2
         - input_select.igrill_presets_probe
     entity_config:
-      # switch.christmas_tree_power:
-      #   name: Christmas Tree
-      #   aliases:
-      #     - Christmas Tree
-      #     - Christmas Tree Switch
-      #     - Christmas Tree Lights
-      #     - Christmas Lights
+      switch.christmas_tree_power:
+        name: Christmas Tree
+        aliases:
+          - Christmas Tree
+          - Christmas Tree Switch
+          - Christmas Tree Lights
+          - Christmas Lights
       switch.aircon_on_off:
         name: Aircon
         aliases:
