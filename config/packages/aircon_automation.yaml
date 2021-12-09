@@ -256,24 +256,17 @@ automation:
     action:
       - service: script.aircon_warm_master
 
-  - alias: Temperature - Solar Cooling
-    id: temperature_solar_cooling
+  - alias: Temperature - Puppy Cooling While Away
+    id: temperature_puppy_cooling_while_away
     trigger:
       platform: time_pattern
-      minutes: "/10" #This will match every 1 minutes
+      minutes: "/10" #This will match every 10 minutes
     condition:
       - condition: template
-        value_template: '{{ (states.sensor.living_room_temperature.state | float) > 28.0 }}' #if the inside temperature is > 25 degrees  
-      - condition: template
-        value_template: '{{ (states.sensor.sems_output_power.state | float) > 2000.0 }}' #if the solar panels are running well
-      - condition: or
-        conditions:
+        value_template: '{{ (states.sensor.living_room_temperature.state | float) > 28.0 }}' #if the inside temperature is > 28 degrees  
           - condition: state
             entity_id: 'alarm_control_panel.alarm_com'
-            state: 'armed_away' #nobody is home
-          - condition: state
-            entity_id: 'alarm_control_panel.alarm_com'
-            state: 'armed_home' #nobody is home
+        state: 'armed_home' #dog is home
       - condition: state
         entity_id: 'climate.ac'
         state: 'off' #don't run the script if the aircon is already on, as it will restart the countdown timer
