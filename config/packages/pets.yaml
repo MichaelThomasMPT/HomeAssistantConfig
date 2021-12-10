@@ -85,8 +85,8 @@ automation:
         at: 
           - '09:58:00'
           - '11:58:00'
-          - '02:58:00'
-          - '05:58:00'
+          - '14:58:00'
+          - '17:58:00'
     action:
       - service: notify.mobile_app_michael_s_galaxy_s10
         data:
