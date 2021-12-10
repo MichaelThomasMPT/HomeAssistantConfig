@@ -266,8 +266,8 @@ automation:
     condition:
       - condition: template
         value_template: '{{ (states.sensor.living_room_temperature.state | float) > 28.0 }}' #if the inside temperature is > 28 degrees  
-          - condition: state
-            entity_id: 'alarm_control_panel.alarm_com'
+      - condition: state
+        entity_id: 'alarm_control_panel.alarm_com'
         state: 'armed_home' #dog is home
       - condition: state
         entity_id: 'climate.ac'
