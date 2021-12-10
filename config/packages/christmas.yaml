@@ -2,27 +2,12 @@ automation:
   - alias: Christmas - Automatically Turn On Tree Lights When Coming Home
     id: christmas_automatically_turn_on_tree_lights_when_coming_home
     trigger:
-      - platform: state
-        entity_id: person.michael
-        from: 'away'
-        to: 'home'
-      - platform: state
-        entity_id: person.laura
-        from: 'away'
-        to: 'home'
-    condition:
-      - condition: or
-        conditions:
-          - condition: state
-            entity_id: person.michael
-            state: 'away'
-            for:
-              minutes: 5
-          - condition: state
-            entity_id: person.laura
-            state: 'away'
-            for:
-              minutes: 5
+      - platform: zone
+        entity_id:
+          - person.michael
+          - person.laura
+        zone: zone.home
+        event: enter 
     action:
       - entity_id: switch.christmas_tree_power
         service: switch.turn_on
@@ -66,32 +51,20 @@ automation:
     id: christmas_automatically_play_music_when_arriving_home
     variables: 
       christmas_playlist_id: "PLavpVzwAAU9aMvBGybe2vuMvPFgRhym_J" #Christmas Background Music
-    trigger: 
-      - platform: state
-        entity_id: person.michael
-        from: 'away'
-        to: 'home'
-      - platform: state
-        entity_id: person.laura
-        from: 'away'
-        to: 'home'
+    trigger:
+      - platform: zone
+        entity_id:
+          - person.michael
+          - person.laura
+        zone: zone.home
+        event: enter 
     condition: 
       - condition: time
         before: "21:00:00"
       - condition: time
-        after: "08:00:00"
-      - condition: or
-        conditions:
-          - condition: state
-            entity_id: person.michael
-            state: 'away'
-            for:
-              minutes: 5
-          - condition: state
-            entity_id: person.laura
-            state: 'away'
-            for:
-              minutes: 5
+        after: "08:00:00" 
+      - condition: template
+        value_template: "{{ not (is_state('person.michael', 'home') and is_state('person.laura', 'home')) }}"
     action:
       - service: spotcast.start
         data:
