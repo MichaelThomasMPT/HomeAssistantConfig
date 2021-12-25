@@ -199,16 +199,6 @@ automation:
       - service: light.turn_on
         entity_id:
           - light.entry_hall_lights
-          
-camera:
-  - platform: mjpeg
-    still_image_url: !secret motioneye_still_image_url
-    mjpeg_url: !secret motioneye_mjpeg_url
-    name: garage
-    username: !secret motioneye_username
-    password: !secret motioneye_password
-    authentication: basic
-    verify_ssl: false
 
 alert:
   garage_camera_unavailable_alerts:

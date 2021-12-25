@@ -33,12 +33,11 @@ views:
             type: picture-elements
           - columns: 3
             entities:
-              - entity: camera.garage
-                name: Garage
-              - entity: camera.swann_camera_1
-              - entity: camera.swann_camera_2
-              - entity: camera.swann_camera_3
-              - entity: camera.swann_camera_4
+              - entity: camera.garage_camera
+              - entity: camera.side_path
+              - entity: camera.alfresco_camera
+              - entity: camera.backyard_camera
+              - entity: camera.living_room_camera_sd
             head:
               label: Cameras
               type: section

@@ -109,9 +109,9 @@ views:
                 name: Laura's Car
             type: entities
           - aspect_ratio: 70%
-            camera_image: camera.garage
+            camera_image: camera.garage_camera
             camera_view: live
-            entity: camera.garage
+            entity: camera.garage_camera
             name: Garage Camera
             type: picture-entity
         show_header_toggle: false

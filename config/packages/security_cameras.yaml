@@ -1,0 +1,42 @@
+camera:
+  - platform: ffmpeg
+    name: Garage Camera
+    input: !secret swann_dvr_garage_camera_hd
+  - platform: ffmpeg
+    name: Side Path
+    input: !secret swann_dvr_side_path_camera_hd
+  # - platform: ffmpeg
+  #   name: Swann Camera 3
+  #   input: !secret swann_dvr_camera_3_hd
+  # - platform: ffmpeg
+  #   name: Swann Camera 4
+  #   input: !secret swann_dvr_camera_4_hd
+
+input_boolean:
+  living_room_camera_privacy_mode:
+    name: Living Room Camera Privacy Mode
+    icon: mdi:cctv-off
+    initial: "on"
+
+automation:
+  - alias: Security Cameras - Toggle Living Room Camera Privacy Mode
+    id: security_cameras_toggle_living_room_camera_privacy_mode
+    trigger:
+      - platform: state
+        entity_id: input_boolean.living_room_camera_privacy_mode
+    action:
+      - choose:
+          - conditions:
+              - condition: state
+                entity_id: input_boolean.living_room_camera_privacy_mode
+                state: "off"
+            sequence:
+              - service: tapo_control.set_privacy_mode
+                data: 
+                  entity_id: camera.living_room_camera_sd
+                  privacy_mode: "off"
+        default:
+          - service: tapo_control.set_privacy_mode
+            data:
+              entity_id: camera.living_room_camera_sd
+              privacy_mode: "on"
