@@ -12,15 +12,6 @@ views:
       - entity: weather.treeby_house
         name: Treeby
         type: weather-forecast
-      - entity: script.roomba_clean
-        hold_action:
-          action: more-info
-        icon: mdi:robot-vacuum
-        show_icon: true
-        show_name: true
-        tap_action:
-          action: toggle
-        type: entity-button
       - entities:
           - entity: sensor.away_from_home_state_validity
         show_name: false
