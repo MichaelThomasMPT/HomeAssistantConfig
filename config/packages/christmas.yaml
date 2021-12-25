@@ -2,12 +2,27 @@ automation:
   - alias: Christmas - Automatically Turn On Tree Lights When Coming Home
     id: christmas_automatically_turn_on_tree_lights_when_coming_home
     trigger:
-      - platform: zone
-        entity_id:
-          - person.michael
-          - person.laura
-        zone: zone.home
-        event: enter 
+      - platform: state
+        entity_id: person.michael
+        to: 'away'
+        from: 'home'
+      - platform: state
+        entity_id: person.laura
+        to: 'away'
+        from: 'home'
+    condition:
+      - condition: or
+        conditions:
+          - condition: state
+            entity_id: person.michael
+            state: 'away'
+            for:
+              minutes: 5
+          - condition: state
+            entity_id: person.laura
+            state: 'away'
+            for:
+              minutes: 5
     action:
       - entity_id: switch.christmas_tree_power
         service: switch.turn_on
@@ -50,21 +65,33 @@ automation:
   - alias: Christmas - Automatically Play Music When Arriving Home During The Day
     id: christmas_automatically_play_music_when_arriving_home
     variables: 
-      christmas_playlist_id: "PLavpVzwAAU9aMvBGybe2vuMvPFgRhym_J" #Christmas Background Music
-    trigger:
-      - platform: zone
-        entity_id:
-          - person.michael
-          - person.laura
-        zone: zone.home
-        event: enter 
+      christmas_playlist_id: "0tynRbEDdLrBkwyWwPHD3F" #Michael Buble plus others
+    trigger: 
+      - platform: state
+        entity_id: person.michael
+        to: 'away'
+        from: 'home'
+      - platform: state
+        entity_id: person.laura
+        to: 'away'
+        from: 'home'
     condition: 
       - condition: time
         before: "21:00:00"
       - condition: time
-        after: "08:00:00" 
-      - condition: template
-        value_template: "{{ not (is_state('person.michael', 'home') and is_state('person.laura', 'home')) }}"
+        after: "08:00:00"
+      - condition: or
+        conditions:
+          - condition: state
+            entity_id: person.michael
+            state: 'away'
+            for:
+              minutes: 5
+          - condition: state
+            entity_id: person.laura
+            state: 'away'
+            for:
+              minutes: 5
     action:
       - service: spotcast.start
         data:

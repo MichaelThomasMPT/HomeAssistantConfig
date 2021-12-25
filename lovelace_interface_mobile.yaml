@@ -494,6 +494,9 @@ views:
                 - entity: light.kitchen_lights
                   name: Kitchen
                   toggle: true
+                - entity: switch.christmas_tree_power
+                  name: Tree
+                  toggle: true
           - entities:
               - entity: sensor.roomba_docked
                 icon: mdi:robot-vacuum
@@ -1324,6 +1327,7 @@ views:
                 icon: mdi:lightbulb-group-off
               - entity: light.alfresco_ceiling_lights
               - entity: light.alfresco_fairy_lights
+              - entity: switch.christmas_tree_power
               - entity: light.dining_room
               - entity: light.ensuite_light
               - entity: light.ensuite_led_strip
