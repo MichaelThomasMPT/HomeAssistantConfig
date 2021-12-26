@@ -485,7 +485,6 @@ automation:
               data:
                 brightness_pct: 50
                 color_name: green
-                flash: short
             - service: script.aircon_fan_theatre
         default: #If fan is already running in the theatre, turn on the aircon instead
           - service: light.turn_on
@@ -494,7 +493,6 @@ automation:
             data:
               brightness_pct: 50
               color_name: blue
-              flash: short
           - service: script.aircon_cool_theatre
       - delay:
           seconds: 3
@@ -516,7 +514,6 @@ automation:
         data:
           brightness_pct: 50
           color_name: white
-          flash: short
       - service: climate.turn_off
         entity_id: climate.ac
       - delay:
