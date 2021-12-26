@@ -53,6 +53,12 @@ zone:
     radius: 900
     icon: mdi:school
 
+  - name: Local Train Station
+    latitude: !secret zone_local_train_station_latitude
+    longitude: !secret zone_local_train_station_longitude
+    radius: 300
+    icon: mdi:train
+
 automation:
   # - alias: Location - Notify Michael If Laura Leaving Work
   #   id: location_notify_michael_if_laura_leaving_work
@@ -115,6 +121,38 @@ automation:
       - service: notify.mobile_app_michael_s_galaxy_s10
         data:
           message: Did you forget to bring your work laptop with you?
+
+  - alias: Location - Remind Michael To Pay For Train Parking
+    id: location_remind_michael_to_pay_for_train_parking
+    mode: single
+    trigger:
+      - platform: state
+        entity_id:
+          - sensor.michael_s_galaxy_s10_bluetooth_connection
+    variables: 
+      mazda_mac_address: !secret mazda_bluetooth_mac_address
+    condition:
+      - alias: "Check whether the Mazda was just disconnected"
+        condition: template
+        value_template: >
+          {{ 
+            mazda_mac_address not in state_attr('sensor.michael_s_galaxy_s10_bluetooth_connection', 'connected_paired_devices')
+            and mazda_mac_address in trigger.from_state.attributes['connected_paired_devices']
+          }}
+      - alias: "Check whether Michael is at the train station"
+        condition: zone
+        entity_id: person.michael
+        zone: zone.local_train_station
+    action:
+      - delay:
+          minutes: 2
+      - service: notify.mobile_app_michael_s_galaxy_s10
+        data:
+          message: Don't forget to pay for parking! 
+          data:
+            color: '#FFA000'
+            ttl: 0
+            priority: high
 
   - alias: Location - Fade Lights On When Arriving Home After Dark
     id: location_fade_lights_on_when_disarming_after_dark
