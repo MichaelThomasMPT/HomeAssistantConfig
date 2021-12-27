@@ -1,3 +1,8 @@
+input_boolean:
+  enable_christmas_automations:
+    name: Enable Christmas Automations
+    icon: mdi:pine-tree
+
 automation: 
   - alias: Christmas - Automatically Turn On Tree Lights When Coming Home
     id: christmas_automatically_turn_on_tree_lights_when_coming_home
@@ -11,6 +16,9 @@ automation:
         to: 'away'
         from: 'home'
     condition:
+      - condition: state
+        entity_id: input_boolean.enable_christmas_automations
+        state: 'on'
       - condition: or
         conditions:
           - condition: state
@@ -35,6 +43,9 @@ automation:
         offset: "+00:30:00"
     condition:
       - condition: state
+        entity_id: input_boolean.enable_christmas_automations
+        state: 'on'
+      - condition: state
         entity_id: 'alarm_control_panel.alarm_com'
         state: 'disarmed' #we're home
     action:
@@ -58,6 +69,10 @@ automation:
         event_data: 
           id: master_door_switch #when pressing button in master bedroom to turn off all the house lights, turn off the christmas tree lights too
           event: 1002 #single click
+    condition:
+      - condition: state
+        entity_id: input_boolean.enable_christmas_automations
+        state: 'on'
     action:
       - entity_id: switch.christmas_tree_power
         service: switch.turn_off
@@ -76,6 +91,9 @@ automation:
         to: 'away'
         from: 'home'
     condition: 
+      - condition: state
+        entity_id: input_boolean.enable_christmas_automations
+        state: 'on'
       - condition: time
         before: "21:00:00"
       - condition: time

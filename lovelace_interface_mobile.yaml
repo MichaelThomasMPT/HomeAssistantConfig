@@ -481,22 +481,23 @@ views:
             image: /local/header-image-dark.png
             type: picture-elements
           - type: entities
-            entities: []
-            footer:
-              type: buttons
-              entities:
-                - entity: light.living_room
-                  name: Living
-                  toggle: true
-                - entity: light.dining_room
-                  name: Dining
-                  toggle: true
-                - entity: light.kitchen_lights
-                  name: Kitchen
-                  toggle: true
-                - entity: switch.christmas_tree_power
+            entities:
+              - entity: light.living_room
+                name: Living
+                toggle: true
+              - entity: light.dining_room
+                name: Dining
+                toggle: true
+              - entity: light.kitchen_lights
+                name: Kitchen
+                toggle: true
+              - type: conditional
+                conditions:
+                  - entity: input_boolean.enable_christmas_automations
+                    state: 'on'
+                row:
+                  entity: switch.christmas_tree_power
                   name: Tree
-                  toggle: true
           - entities:
               - entity: sensor.roomba_docked
                 icon: mdi:robot-vacuum
@@ -1327,7 +1328,13 @@ views:
                 icon: mdi:lightbulb-group-off
               - entity: light.alfresco_ceiling_lights
               - entity: light.alfresco_fairy_lights
-              - entity: switch.christmas_tree_power
+              - type: conditional
+                conditions:
+                  - entity: input_boolean.enable_christmas_automations
+                    state: 'on'
+                row:
+                  entity: switch.christmas_tree_power
+                  name: Tree
               - entity: light.dining_room
               - entity: light.ensuite_light
               - entity: light.ensuite_led_strip
