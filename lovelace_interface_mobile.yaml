@@ -499,28 +499,6 @@ views:
                   entity: switch.christmas_tree_power
                   name: Tree
           - entities:
-              - entity: sensor.roomba_docked
-                icon: mdi:robot-vacuum
-                name: Roomba
-              - entity: script.roomba_clean
-                hold_action:
-                  action: more-info
-                icon: mdi:robot-vacuum
-                name: Roomba
-                show_icon: true
-                show_name: true
-                tap_action:
-                  action: toggle
-                type: button
-            head:
-              label: Roomba
-              type: section
-            show_header_toggle: false
-            show_name: true
-            show_state: false
-            state_color: true
-            type: custom:fold-entity-row
-          - entities:
               - entity: switch.living_room_tv
                 state_color: true
               - entity: media_player.living_room_chromecast
