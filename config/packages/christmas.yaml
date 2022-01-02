@@ -1,4 +1,5 @@
 input_boolean:
+  #Set this to 'on' during Christmas season!
   enable_christmas_automations:
     name: Enable Christmas Automations
     icon: mdi:pine-tree
