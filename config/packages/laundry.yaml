@@ -129,10 +129,9 @@ automation:
           - conditions:
               - condition: and
                 conditions:
-                  # from just before sunset until sunrise
-                  - condition: sun
-                    after: sunset
-                    after_offset: "-00:30:00"
+                  - condition: state #from sunset until sunrise
+                    entity_id: sun.sun
+                    state: "below_horizon"
                   # Either door has been opened
                   - condition: or
                     conditions:
