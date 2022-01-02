@@ -1,26 +1,7 @@
 light:
   - platform: switch
-    name: Alfresco Fairy Lights - Ceiling
-    entity_id: switch.alfresco_fairy_lights_ceiling
-  - platform: switch
-    name: Alfresco Fairy Lights - Wall
-    entity_id: switch.alfresco_fairy_lights_wall
-  - platform: template
-    lights:
-      alfresco_fairy_lights:
-        icon_template: mdi:string-lights
-        friendly_name: "Alfresco Fairy Lights"
-        value_template: "{{ states('light.alfresco_fairy_lights_ceiling') == 'on' or states('light.alfresco_fairy_lights_wall') == 'on'}}"
-        turn_on:
-          service: light.turn_on
-          entity_id:
-            - light.alfresco_fairy_lights_ceiling
-            - light.alfresco_fairy_lights_wall
-        turn_off:
-          service: light.turn_off
-          entity_id:
-            - light.alfresco_fairy_lights_ceiling
-            - light.alfresco_fairy_lights_wall
+    name: Alfresco Fairy Lights
+    entity_id: switch.alfresco_fairy_lights_smart_plug
 
 automation:
   - alias: Garden - Turn On Outdoor Lights When Both Back Doors Are Opened
