@@ -221,7 +221,7 @@ views:
             secondary_info: last-updated
         title: Latest iGrill Updates
       - type: weather-forecast
-        entity: weather.banjup
+        entity: weather.treeby_house
         show_forecast: false
         name: Treeby
         secondary_info_attribute: wind_speed
@@ -233,7 +233,7 @@ views:
       - type: grid
         cards:
           - type: weather-forecast
-            entity: weather.banjup
+            entity: weather.treeby_house
             show_forecast: false
             name: Treeby
             secondary_info_attribute: wind_speed
@@ -325,5 +325,12 @@ views:
             refresh_interval: 0
             hours_to_show: 8
             title: Last 8 Hours
+          - type: picture-entity
+            entity: camera.alfresco_camera
+            name: Garage
+            camera_image: camera.alfresco_camera
+            camera_view: live
+            show_name: false
+            show_state: false
         columns: 2
         square: false

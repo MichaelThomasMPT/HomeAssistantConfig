@@ -19,9 +19,9 @@ views:
             show_name: false
             show_state: false
           - type: picture-entity
-            entity: camera.living_room_camera_sd
+            entity: camera.living_room_camera_hd
             name: Living Room
-            camera_image: camera.living_room_camera_sd
+            camera_image: camera.living_room_camera_hd
             camera_view: live
             show_name: false
             show_state: false
@@ -44,7 +44,7 @@ views:
               - type: button
                 tap_action:
                   action: toggle
-                entity: input_boolean.living_room_camera_privacy_mode
+                entity: switch.living_room_camera_privacy_mode
                 show_state: true
                 name: Privacy Mode
               - type: button
@@ -77,6 +77,13 @@ views:
                     device_id: 3cf71e0c142a900622f37d4d238030ce
                 name: Dining Room
                 icon: mdi:camera-control
+          - type: picture-entity
+            entity: camera.last_front_door_motion
+            name: Last Motion
+            camera_image: camera.last_front_door_motion
+            camera_view: live
+            show_name: true
+            show_state: false
             columns: 4
         columns: 3
         square: false

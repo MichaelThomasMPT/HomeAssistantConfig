@@ -184,7 +184,7 @@ views:
                 hide_when_off: true
                 name: Ceiling Light
                 toggle: true
-              - entity: camera.garage
+              - entity: camera.garage_camera
                 hide_when_off: true
                 name: Camera
                 toggle: true
@@ -923,10 +923,8 @@ views:
             footer:
               type: buttons
               entities:
-                - entity: light.alfresco_fairy_lights_ceiling
-                  name: Fairy Ceiling
-                - entity: light.alfresco_fairy_lights_wall
-                  name: Fairy Wall
+                - entity: light.alfresco_fairy_lights
+                  name: Fairy Lights
                 - entity: light.alfresco_ceiling_lights
                   name: LED Ceiling
                 - entity: light.garden_flood_lights
