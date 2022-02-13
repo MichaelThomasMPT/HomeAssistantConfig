@@ -27,18 +27,18 @@ plant:
     min_brightness: 3000
     max_brightness: 60000
 
-alert:
-  plant_watering_reminder:
-    name: "The alfresco monstera needs attention"
-    title: "The alfresco monstera needs attention"
-    message: "Problem: {{ state_attr('plant.alfresco_monstera', 'problem') }}"
-    entity_id: plant.alfresco_monstera
-    state: 'problem'
-    repeat: 1440 #24 hours
-    can_acknowledge: true
-    skip_first: false
-    notifiers:
-      - mobile_app_lauras_iphone
-      - mobile_app_michael_s_galaxy_s10
-    data:
-      group: MiFlora
+# alert:
+#   plant_watering_reminder:
+#     name: "The alfresco monstera needs attention"
+#     title: "The alfresco monstera needs attention"
+#     message: "Problem: {{ state_attr('plant.alfresco_monstera', 'problem') }}"
+#     entity_id: plant.alfresco_monstera
+#     state: 'problem'
+#     repeat: 1440 #24 hours
+#     can_acknowledge: true
+#     skip_first: false
+#     notifiers:
+#       - mobile_app_lauras_iphone
+#       - mobile_app_michael_s_galaxy_s10
+#     data:
+#       group: MiFlora
