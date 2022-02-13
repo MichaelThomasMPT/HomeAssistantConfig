@@ -1181,12 +1181,12 @@ views:
               - entity: sensor.sems_status
                 icon: mdi:power
                 name: Status
-              - entity: sensor.sems_output_power
+              - entity: sensor.solar_panels_generating_now
                 icon: mdi:flash
                 name: Current Output Power
-              - entity: sensor.sems_today_generated
+              - entity: sensor.solar_panels_generated_total
                 icon: mdi:solar-power
-                name: Electricity Generated Today
+                name: Electricity Generated Total
             head:
               label: Solar Panels
               type: section
