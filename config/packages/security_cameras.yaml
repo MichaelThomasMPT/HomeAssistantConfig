@@ -68,3 +68,15 @@ automation:
       - service: switch.turn_on
         target:
           entity_id: switch.living_room_camera_privacy_mode
+
+  - alias: Security Cameras - Take Snapshot Of Back Garden Every Day
+    id: security_cameras_take_snapshot_of_back_garden_every_day
+    trigger:
+      - platform: time
+        at: "13:15:00"
+    action:
+      service: camera.snapshot
+      target:
+        entity_id: camera.backyard_camera
+      data:
+        filename: '/tmp/GardenTimeLapse/backyard_timelapse_{{ now().strftime("%Y%m%d") }}.jpg'
