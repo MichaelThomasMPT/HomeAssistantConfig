@@ -482,29 +482,3 @@ automation:
       - service: switch.turn_on
         entity_id: switch.theatre_led_strip_smart_plug
 
-
-############## LG TV ##############
-
-# Turn on wake-on-lan support
-wake_on_lan:
-
-# LG TV
-webostv:
-    host: !secret theatre_room_tv_ip_address
-    name: Theatre Room TV
-    turn_on_action:
-      service: wake_on_lan.send_magic_packet
-      data:
-        mac: "A8:23:FE:E4:84:05"
-    customize:
-      sources:
-        - 'ABC iview'
-        - 'Amazon Prime Video'
-        - Chromecast
-        - 'Live TV'
-        - Netflix
-        - Plex
-        - Stan
-        - YouTube
-
-############## LG TV ##############

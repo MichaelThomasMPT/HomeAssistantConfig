@@ -4,18 +4,6 @@ breaking_changes:
 
 # Check for new versions of Home Assistant in DockerHub & GitHub
 sensor:
-  - platform: version
-    source: docker
-    name: ha_docker_version_stable
-
-  - platform: version
-    beta: true
-    source: docker
-    name: ha_docker_version_beta
-
-  - platform: version
-    name: ha_version
-    source: local
 
   - platform: rest
     name: ha_github_version
