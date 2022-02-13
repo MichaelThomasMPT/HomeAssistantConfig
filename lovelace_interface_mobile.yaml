@@ -6,6 +6,254 @@ views:
     cards:
       - cards:
           - elements:
+              - entity: binary_sensor.ac_filter
+                style:
+                  bottom: 20%
+                  right: 3%
+                  transform: initial
+                type: state-icon
+              - entity: climate.ac
+                style:
+                  bottom: 20%
+                  font-weight: bold
+                  right: 21%
+                  transform: initial
+                type: state-label
+              - entity: climate.ac
+                attribute: temperature
+                style:
+                  bottom: 20%
+                  right: 13%
+                  transform: initial
+                type: state-label
+              - entity: sensor.blank
+                hold-action: none
+                prefix: Air Conditioning
+                style:
+                  bottom: 20%
+                  font-size: 150%
+                  left: 5%
+                  transform: initial
+                tap-action: none
+                type: state-label
+            image: /local/header-image-dark.png
+            type: picture-elements
+          - type: thermostat
+            entity: climate.ac
+          - card:
+              cards:
+                - entities:
+                    - entity: input_number.aircon_countdown_timer
+                      icon: mdi:timer-sand
+                  show_header_toggle: false
+                  title: Countdown To Off
+                  type: entities
+                - cards:
+                    - entity: climate.ac
+                      hold_action:
+                        action: none
+                      icon: mdi:clock-outline
+                      name: 0 Hours
+                      show_icon: true
+                      show_name: true
+                      tap_action:
+                        action: call-service
+                        service: input_number.set_value
+                        service_data:
+                          entity_id: input_number.aircon_countdown_timer
+                          value: 0
+                      type: entity-button
+                    - entity: climate.ac
+                      hold_action:
+                        action: none
+                      icon: mdi:clock-outline
+                      name: 0.5 Hours
+                      show_icon: true
+                      show_name: true
+                      tap_action:
+                        action: call-service
+                        service: input_number.set_value
+                        service_data:
+                          entity_id: input_number.aircon_countdown_timer
+                          value: 30
+                      type: entity-button
+                    - entity: climate.ac
+                      hold_action:
+                        action: none
+                      icon: mdi:clock-outline
+                      name: 1 Hour
+                      show_icon: true
+                      show_name: true
+                      tap_action:
+                        action: call-service
+                        service: input_number.set_value
+                        service_data:
+                          entity_id: input_number.aircon_countdown_timer
+                          value: 60
+                      type: entity-button
+                    - entity: climate.ac
+                      hold_action:
+                        action: none
+                      icon: mdi:clock-outline
+                      name: 1.5 Hours
+                      show_icon: true
+                      show_name: true
+                      tap_action:
+                        action: call-service
+                        service: input_number.set_value
+                        service_data:
+                          entity_id: input_number.aircon_countdown_timer
+                          value: 90
+                      type: entity-button
+                    - entity: climate.ac
+                      hold_action:
+                        action: none
+                      icon: mdi:clock-outline
+                      name: 2 Hours
+                      show_icon: true
+                      show_name: true
+                      tap_action:
+                        action: call-service
+                        service: input_number.set_value
+                        service_data:
+                          entity_id: input_number.aircon_countdown_timer
+                          value: 120
+                      type: entity-button
+                  type: horizontal-stack
+              type: vertical-stack
+            conditions:
+              - entity: climate.ac
+                state_not: 'off'
+            type: conditional
+          - entities:
+              - entity: switch.aircon_zone_living
+                icon: mdi:air-filter
+                name: Living Area
+              - entity: switch.aircon_zone_theatre
+                icon: mdi:air-filter
+                name: Theatre
+              - entity: switch.aircon_zone_master
+                icon: mdi:air-filter
+                name: Master Bedroom
+              - entity: switch.aircon_zone_bed23
+                icon: mdi:air-filter
+                name: Bedroom 2 & 3
+            head:
+              label: Zones
+              type: section
+            show_header_toggle: false
+            state_color: true
+            title: Zones
+            type: entities
+          - entities:
+              - entity: script.aircon_warm_master
+                hold_action:
+                  action: none
+                icon: mdi:home-automation
+                icon_height: 60px
+                name: Warm Bedroom
+                show_icon: true
+                show_name: true
+                tap_action:
+                  action: call-service
+                  service: script.turn_on
+                  service_data:
+                    entity_id: script.aircon_warm_master
+                type: button
+              - entity: script.aircon_fan_master
+                hold_action:
+                  action: none
+                icon: mdi:home-automation
+                icon_height: 60px
+                name: Sleeping Fan
+                show_icon: true
+                show_name: true
+                tap_action:
+                  action: call-service
+                  service: script.turn_on
+                  service_data:
+                    entity_id: script.aircon_fan_master
+                type: button
+              - entity: script.aircon_fan_master
+                hold_action:
+                  action: none
+                icon: mdi:home-automation
+                icon_height: 60px
+                name: Office Fan
+                show_icon: true
+                show_name: true
+                tap_action:
+                  action: call-service
+                  service: script.turn_on
+                  service_data:
+                    entity_id: script.aircon_fan_office
+                type: button
+              - entity: script.aircon_cool_theatre
+                hold_action:
+                  action: none
+                icon: mdi:home-automation
+                icon_height: 60px
+                name: Cool Theatre
+                show_icon: true
+                show_name: true
+                tap_action:
+                  action: call-service
+                  service: script.turn_on
+                  service_data:
+                    entity_id: script.aircon_cool_theatre
+                type: button
+              - entity: script.aircon_cool_central_living
+                hold_action:
+                  action: none
+                icon: mdi:home-automation
+                icon_height: 60px
+                name: Cool Centre
+                show_icon: true
+                show_name: true
+                tap_action:
+                  action: call-service
+                  service: script.turn_on
+                  service_data:
+                    entity_id: script.aircon_cool_central_living
+                type: button
+              - entity: script.aircon_blast_cold_for_ten_minutes
+                hold_action:
+                  action: none
+                icon: mdi:snowflake
+                icon_height: 60px
+                name: 10 Min of Cold
+                show_icon: true
+                show_name: true
+                tap_action:
+                  action: call-service
+                  service: script.turn_on
+                  service_data:
+                    entity_id: script.aircon_blast_cold_for_ten_minutes
+                type: button
+            head:
+              label: Presets
+              type: section
+            title: Presets
+            type: custom:fold-entity-row
+          - title: Temperatures
+            type: custom:fold-entity-row
+            head:
+              label: Temperatures
+              type: section
+            entities:
+              - entity: sensor.living_room_temperature
+                name: Living Room
+              - entity: sensor.theatre_temperature
+                name: Theatre Room
+              - entity: sensor.master_bedroom_temperature
+                name: Master Bedroom
+              - entity: sensor.office_temperature
+                name: Bedroom 2 & 3
+              - entity: sensor.current_outdoor_temperature
+                name: Outside
+        type: custom:stack-in-card
+      - cards:
+          - elements:
               - entity: alarm_control_panel.alarm_com
                 style:
                   bottom: 20%
@@ -946,254 +1194,6 @@ views:
         type: custom:stack-in-card
       - cards:
           - elements:
-              - entity: binary_sensor.ac_filter
-                style:
-                  bottom: 20%
-                  right: 3%
-                  transform: initial
-                type: state-icon
-              - entity: climate.ac
-                style:
-                  bottom: 20%
-                  font-weight: bold
-                  right: 21%
-                  transform: initial
-                type: state-label
-              - entity: climate.ac
-                attribute: temperature
-                style:
-                  bottom: 20%
-                  right: 13%
-                  transform: initial
-                type: state-label
-              - entity: sensor.blank
-                hold-action: none
-                prefix: Air Conditioning
-                style:
-                  bottom: 20%
-                  font-size: 150%
-                  left: 5%
-                  transform: initial
-                tap-action: none
-                type: state-label
-            image: /local/header-image-dark.png
-            type: picture-elements
-          - type: thermostat
-            entity: climate.ac
-          - card:
-              cards:
-                - entities:
-                    - entity: input_number.aircon_countdown_timer
-                      icon: mdi:timer-sand
-                  show_header_toggle: false
-                  title: Countdown To Off
-                  type: entities
-                - cards:
-                    - entity: climate.ac
-                      hold_action:
-                        action: none
-                      icon: mdi:clock-outline
-                      name: 0 Hours
-                      show_icon: true
-                      show_name: true
-                      tap_action:
-                        action: call-service
-                        service: input_number.set_value
-                        service_data:
-                          entity_id: input_number.aircon_countdown_timer
-                          value: 0
-                      type: entity-button
-                    - entity: climate.ac
-                      hold_action:
-                        action: none
-                      icon: mdi:clock-outline
-                      name: 0.5 Hours
-                      show_icon: true
-                      show_name: true
-                      tap_action:
-                        action: call-service
-                        service: input_number.set_value
-                        service_data:
-                          entity_id: input_number.aircon_countdown_timer
-                          value: 30
-                      type: entity-button
-                    - entity: climate.ac
-                      hold_action:
-                        action: none
-                      icon: mdi:clock-outline
-                      name: 1 Hour
-                      show_icon: true
-                      show_name: true
-                      tap_action:
-                        action: call-service
-                        service: input_number.set_value
-                        service_data:
-                          entity_id: input_number.aircon_countdown_timer
-                          value: 60
-                      type: entity-button
-                    - entity: climate.ac
-                      hold_action:
-                        action: none
-                      icon: mdi:clock-outline
-                      name: 1.5 Hours
-                      show_icon: true
-                      show_name: true
-                      tap_action:
-                        action: call-service
-                        service: input_number.set_value
-                        service_data:
-                          entity_id: input_number.aircon_countdown_timer
-                          value: 90
-                      type: entity-button
-                    - entity: climate.ac
-                      hold_action:
-                        action: none
-                      icon: mdi:clock-outline
-                      name: 2 Hours
-                      show_icon: true
-                      show_name: true
-                      tap_action:
-                        action: call-service
-                        service: input_number.set_value
-                        service_data:
-                          entity_id: input_number.aircon_countdown_timer
-                          value: 120
-                      type: entity-button
-                  type: horizontal-stack
-              type: vertical-stack
-            conditions:
-              - entity: climate.ac
-                state_not: 'off'
-            type: conditional
-          - entities:
-              - entity: switch.aircon_zone_living
-                icon: mdi:air-filter
-                name: Living Area
-              - entity: switch.aircon_zone_theatre
-                icon: mdi:air-filter
-                name: Theatre
-              - entity: switch.aircon_zone_master
-                icon: mdi:air-filter
-                name: Master Bedroom
-              - entity: switch.aircon_zone_bed23
-                icon: mdi:air-filter
-                name: Bedroom 2 & 3
-            head:
-              label: Zones
-              type: section
-            show_header_toggle: false
-            state_color: true
-            title: Zones
-            type: entities
-          - entities:
-              - entity: script.aircon_warm_master
-                hold_action:
-                  action: none
-                icon: mdi:home-automation
-                icon_height: 60px
-                name: Warm Bedroom
-                show_icon: true
-                show_name: true
-                tap_action:
-                  action: call-service
-                  service: script.turn_on
-                  service_data:
-                    entity_id: script.aircon_warm_master
-                type: button
-              - entity: script.aircon_fan_master
-                hold_action:
-                  action: none
-                icon: mdi:home-automation
-                icon_height: 60px
-                name: Sleeping Fan
-                show_icon: true
-                show_name: true
-                tap_action:
-                  action: call-service
-                  service: script.turn_on
-                  service_data:
-                    entity_id: script.aircon_fan_master
-                type: button
-              - entity: script.aircon_fan_master
-                hold_action:
-                  action: none
-                icon: mdi:home-automation
-                icon_height: 60px
-                name: Office Fan
-                show_icon: true
-                show_name: true
-                tap_action:
-                  action: call-service
-                  service: script.turn_on
-                  service_data:
-                    entity_id: script.aircon_fan_office
-                type: button
-              - entity: script.aircon_cool_theatre
-                hold_action:
-                  action: none
-                icon: mdi:home-automation
-                icon_height: 60px
-                name: Cool Theatre
-                show_icon: true
-                show_name: true
-                tap_action:
-                  action: call-service
-                  service: script.turn_on
-                  service_data:
-                    entity_id: script.aircon_cool_theatre
-                type: button
-              - entity: script.aircon_cool_central_living
-                hold_action:
-                  action: none
-                icon: mdi:home-automation
-                icon_height: 60px
-                name: Cool Centre
-                show_icon: true
-                show_name: true
-                tap_action:
-                  action: call-service
-                  service: script.turn_on
-                  service_data:
-                    entity_id: script.aircon_cool_central_living
-                type: button
-              - entity: script.aircon_blast_cold_for_ten_minutes
-                hold_action:
-                  action: none
-                icon: mdi:snowflake
-                icon_height: 60px
-                name: 10 Min of Cold
-                show_icon: true
-                show_name: true
-                tap_action:
-                  action: call-service
-                  service: script.turn_on
-                  service_data:
-                    entity_id: script.aircon_blast_cold_for_ten_minutes
-                type: button
-            head:
-              label: Presets
-              type: section
-            title: Presets
-            type: custom:fold-entity-row
-          - title: Temperatures
-            type: custom:fold-entity-row
-            head:
-              label: Temperatures
-              type: section
-            entities:
-              - entity: sensor.living_room_temperature
-                name: Living Room
-              - entity: sensor.theatre_temperature
-                name: Theatre Room
-              - entity: sensor.master_bedroom_temperature
-                name: Master Bedroom
-              - entity: sensor.office_temperature
-                name: Bedroom 2 & 3
-              - entity: sensor.current_outdoor_temperature
-                name: Outside
-        type: custom:stack-in-card
-      - cards:
-          - elements:
               - entity: person.laura
                 style:
                   bottom: 20%
@@ -1261,8 +1261,6 @@ views:
           - entities:
               - entity: input_boolean.medicine_reminder_toggle
                 name: Michael - Medicine Needs Taking
-              - entity: input_boolean.uni_parking_reminder_toggle
-                name: Laura - Parking Reminders
               - entity: input_boolean.washing_machine_notify_michael
               - entity: input_boolean.washing_machine_notify_laura
               - entity: >-
