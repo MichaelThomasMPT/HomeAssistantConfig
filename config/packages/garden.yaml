@@ -124,3 +124,27 @@ automation:
     action:
       - service: "{{ buttons[trigger.event.data.event].service_to_call }}"
         entity_id: light.alfresco_fairy_lights
+
+  - alias: Garden - Turn On Flood Lights If Motion Detected After Dark
+    id: garden_turn_on_flood_lights_if_motion_detected_after_dark
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.backyard_motion
+        from: 'off'
+        to: 'on'
+    condition:
+      - condition: state #from sunset until sunrise
+        entity_id: sun.sun
+        state: "below_horizon"
+    action:
+      - service: light.turn_on
+        target:
+          entity_id: light.garden_flood_lights
+      - wait_for_trigger:
+        - platform: state
+          entity_id: binary_sensor.backyard_motion
+          from: 'on'
+          to: 'off'
+      - service: light.turn_off
+        target:
+          entity_id: light.garden_flood_lights
