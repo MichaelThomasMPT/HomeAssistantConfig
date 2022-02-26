@@ -80,3 +80,19 @@ automation:
         entity_id: camera.backyard_camera
       data:
         filename: '/tmp/GardenTimeLapse/backyard_timelapse_{{ now().strftime("%Y%m%d") }}.jpg'
+
+  - alias: Security Cameras - Notify Michael If Security Cameras Disconnect
+    id: security_cameras_notify_michael_if_security_cameras_disconnect
+    trigger:
+      - platform: state
+        entity_id:
+          - camera.alfresco_camera
+          - camera.backyard_camera
+        to: 'unavailable'
+    action:
+      - service: notify.mobile_app_michael_s_galaxy_s10
+        data:
+          message: >
+            {{ trigger.entity_id }} has become unavailable.
+          data:
+            group: Camera Unavailable
