@@ -45,8 +45,3 @@ influxdb:
         - sun.sun
   tags_attributes:
     - friendly_name
-
-# Aeotec Z-Wave Stick
-zwave:
-  usb_path: /zwaveusbstick
-  device_config: !include zwave_device_config.yaml
