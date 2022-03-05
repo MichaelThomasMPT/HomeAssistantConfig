@@ -15,6 +15,8 @@ binary_sensor.laura_pc:
   icon: mdi:desktop-tower-monitor
 binary_sensor.michael_work_laptop:
   icon: mdi:laptop
+binary_sensor.laura_work_laptop:
+  icon: mdi:laptop
 binary_sensor.back_door_glass:
   device_class: door
 binary_sensor.back_door_flyscreen:
@@ -53,7 +55,7 @@ light.ensuite_led_strip:
   icon: mdi:led-strip-variant
 
 light.garden_flood_lights:
-  icon: mdi:outdoor-lamp
+  icon: mdi:light-flood-down
 
 light.laundry_led_strip:
   icon: mdi:led-strip-variant
