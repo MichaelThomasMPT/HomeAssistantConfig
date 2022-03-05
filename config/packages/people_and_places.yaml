@@ -162,6 +162,20 @@ automation:
             ttl: 0
             priority: high
 
+  - alias: Location - Remind Laura To Pay For Train Parking
+    id: location_remind_laura_to_pay_for_train_parking
+    mode: single
+    trigger:
+      platform: state
+      entity_id: person.laura
+      to: 'Local Train Station'
+      for:
+        minutes: 3
+    action:
+      - service: notify.mobile_app_lauras_iphone
+        data:
+          message: Don't forget to pay for parking! 
+
   - alias: Location - Fade Lights On When Arriving Home After Dark
     id: location_fade_lights_on_when_disarming_after_dark
     mode: single
