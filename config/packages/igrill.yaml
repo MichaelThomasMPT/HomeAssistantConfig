@@ -130,6 +130,15 @@ input_select:
     icon: mdi:thermometer-lines
 
 script:
+  igrill_cast_dashboard_to_living_room_tv:
+    sequence:
+      - service: media_player.play_media
+        data:
+          media_content_id: lovelace-cooking/igrill-dashboard
+          media_content_type: lovelace
+        target:
+          entity_id: media_player.living_room_chromecast
+
   igrill_set_alert_temperature_from_preset:
     fields:
       meat:
