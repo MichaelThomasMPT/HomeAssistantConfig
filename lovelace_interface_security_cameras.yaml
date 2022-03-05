@@ -77,6 +77,16 @@ views:
                     device_id: 3cf71e0c142a900622f37d4d238030ce
                 name: Dining Room
                 icon: mdi:camera-control
+              - type: button
+                tap_action:
+                  action: call-service
+                  service: tapo_control.ptz
+                  service_data:
+                    preset: Dog Bed
+                  target:
+                    device_id: 3cf71e0c142a900622f37d4d238030ce
+                name: Dog Bed
+                icon: mdi:camera-control
           - type: picture-entity
             entity: camera.last_front_door_motion
             name: Last Motion

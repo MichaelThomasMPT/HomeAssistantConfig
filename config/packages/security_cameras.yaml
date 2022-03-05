@@ -89,6 +89,8 @@ automation:
           - camera.alfresco_camera
           - camera.backyard_camera
         to: 'unavailable'
+        for:
+          minutes: 10
     action:
       - service: notify.mobile_app_michael_s_galaxy_s10
         data:
