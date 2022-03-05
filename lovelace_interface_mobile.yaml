@@ -872,6 +872,14 @@ views:
                   right: 46%
                   transform: initial
                 type: state-icon
+              - entity: binary_sensor.laura_work_laptop
+                style:
+                  '--paper-item-icon-color': pink
+                  bottom: 20%
+                  font-weight: bold
+                  right: 53%
+                  transform: initial
+                type: state-icon
               - entity: sensor.office_temperature
                 style:
                   bottom: 20%
