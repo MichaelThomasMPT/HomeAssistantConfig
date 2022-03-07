@@ -1,9 +1,3 @@
-alarm_control_panel:
-  - platform: alarmdotcom
-    scan_interval: 10
-    username: !secret alarmdotcom_username
-    password: !secret alarmdotcom_password
-
 automation:
   - alias: Alarm System - Notify If Alarm Not Set When Nobody Is Home
     id: alarm_system_notify_if_alarm_not_set_when_nobody_is_home
