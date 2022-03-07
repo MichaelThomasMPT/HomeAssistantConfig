@@ -303,6 +303,34 @@ automation:
         data:
           message: "Your food is ready! {{probe_name}} has reached its target temperature."
 
+  - alias: "iGrill - Cast Dashboard to Living Room TV When Probe Connected"
+    id: igrill_cast_dashboard_to_living_room_tv_when_probe_connected
+    trigger:
+      - platform: state
+        entity_id: sensor.igrill_battery
+        from: 'unavailable'
+    action:
+      - service: script.igrill_cast_dashboard_to_living_room_tv
+        data: {}
+  - alias: "iGrill - Turn Off Living Room TV When Probe Disconnected"
+    id: igrill_turn_off_living_room_tv_when_probe_disconnected
+    trigger:
+      - platform: state
+        entity_id: sensor.igrill_battery
+        to: 'unavailable'
+    action:
+      - service: switch.turn_off
+        data: {}
+        target:
+          entity_id: switch.living_room_tv
+      - service: media_player.turn_off
+        data: {}
+        target:
+          entity_id: media_player.living_room_chromecast
+
+
+
+
 alert:
   igrill_temperature_alert_probe_1:
     title: Probe 1 Temperature Alert
