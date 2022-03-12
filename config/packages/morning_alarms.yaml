@@ -17,7 +17,7 @@ script:
             - service: media_player.play_media
               data:
                 entity_id: media_player.master_bedroom_speaker
-                media_content_id: '/local/september_21.mp3'
+                media_content_id: '/local/sounds/september_21.mp3'
                 media_content_type: 'audio/mp3'
   
 

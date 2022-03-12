@@ -1,5 +1,6 @@
-script:
+wake_on_lan: # enables `wake_on_lan` integration
 
+script:
   #Trigger the Hue lights scene for movie watching
   set_movie_lighting:
     sequence:
@@ -244,6 +245,15 @@ script:
           brightness_pct: 20
 
 automation:
+  - alias: Theatre Room - Turn On Theatre Room TV with WakeOnLan
+    trigger:
+      - platform: webostv.turn_on
+        entity_id: media_player.theatre_room_tv
+    action:
+      - service: wake_on_lan.send_magic_packet
+        data:
+          mac: "A8:23:FE:E4:84:05"
+
   # - alias: Theatre Room Blinds - Close
   #   id: theatre_room_blinds_close
   #   trigger:
@@ -424,30 +434,24 @@ automation:
     id: theatre_room_play_plex_media_on_cube_tap
     variables: 
       buttons:
-        1001: #Marvel
-          music_file: '/local/Marvel.mp3'
-          plex_content_type: PLAYLIST
-          plex_content_id: '{ "playlist_name": "Marvel", "shuffle": "0" }'
-        2002: #Squid Game
-          music_file: '/local/Squid_Game.mp3'
-          plex_content_type: PLAYLIST
-          plex_content_id: '{ "playlist_name": "Squid Game", "shuffle": "0" }'
-        3003: #The Great
-          music_file: '/local/The_Great.mp3'
-          plex_content_type: PLAYLIST
-          plex_content_id: '{ "playlist_name": "The Great", "shuffle": "0" }'
-        4004: #Silicon Valley
-          music_file: '/local/Silicon_Valley.mp3'
-          plex_content_type: PLAYLIST
-          plex_content_id: '{ "playlist_name": "Silicon Valley", "shuffle": "0" }'
-        5005: #Succession
-          music_file: '/local/Succession.mp3'
-          plex_content_type: PLAYLIST
-          plex_content_id: '{ "playlist_name": "Succession", "shuffle": "0" }'
-        6006: #Taskmaster
-          music_file: '/local/Taskmaster.mp3'
-          plex_content_type: PLAYLIST
-          plex_content_id: '{ "playlist_name": "Taskmaster", "shuffle": "0" }'
+        1001: #Drive To Survive
+          music_file: '/local/sounds/Drive_To_Survive.mp3'
+          plex_content_id: '{ "playlist_name": "Drive To Survive", "shuffle": "0" }'
+        2002: #Snowpiercer
+          music_file: '/local/sounds/Snowpiercer.mp3'
+          plex_content_id: '{ "playlist_name": "Snowpiercer", "shuffle": "0" }'
+        3003: #The Marvelous Mrs. Maisel
+          music_file: '/local/sounds/Mrs_Maisel.mp3'
+          plex_content_id: '{ "playlist_name": "The Marvelous Mrs. Maisel", "shuffle": "0" }'
+        4004: #Our Flag Means Death
+          music_file: '/local/sounds/Our_Flag_Means_Death.mp3'
+          plex_content_id: '{ "playlist_name": "Our Flag Means Death", "shuffle": "0" }'
+        5005: #Cowboy Bebop
+          music_file: '/local/sounds/Cowboy_Bebop.mp3'
+          plex_content_id: '{ "playlist_name": "Cowboy Bebop", "shuffle": "0" }'
+        6006: #Battlebots
+          music_file: '/local/sounds/Battlebots.mp3'
+          plex_content_id: '{ "playlist_name": "Battlebots", "shuffle": "0" }'
     trigger: 
       - platform: event
         event_type: deconz_event
@@ -460,7 +464,7 @@ automation:
       - service: script.start_plex_media_playing
         data: 
           music_file: '{{ buttons[trigger.event.data.event].music_file }}'
-          plex_content_type: '{{ buttons[trigger.event.data.event].plex_content_type }}'
+          plex_content_type: 'PLAYLIST'
           plex_content_id: '{{ buttons[trigger.event.data.event].plex_content_id }}'
 
   - alias: Theatre Room - Restart LED Strip When Unavailable
