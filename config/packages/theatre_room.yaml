@@ -93,14 +93,33 @@ script:
         entity_id:
           - script.aircon_cool_theatre
 
+  start_netflix_media_playing:
+    alias: Start Netflix Media Playing
+    mode: restart
+    fields:
+      netflix_show_name:
+        description: 'The name of the show in Netflix'
+        example: 'Snowpiercer'
+    sequence:
+      - service: media_player.turn_on #turn on the TV
+        entity_id: media_player.theatre_room_tv 
+      - delay:
+          seconds: 5
+      - wait_template: "{{ is_state('media_player.theatre_room_tv', 'on') }}"
+        timeout: '00:00:20'
+      - wait_template: "{{ is_state('media_player.theatre_room_google_home', 'idle') }}"
+        timeout: '00:00:20'
+      - service: tts.cloud_say
+        data:
+          entity_id: media_player.theatre_room_chromecast
+          message: "Hey Google, play Netflix {{netflix_show_name}} in the Theatre Room"
+
+
   #Start a media file from Plex playing on the theatre room TV
   start_plex_media_playing:
     alias: Start Plex Media Playing
     mode: restart
     fields: 
-      music_file: 
-        description: 'The file location of the song to play at the start of the script'
-        example: '/local/Star_Wars.mp3'
       plex_content_type: 
         description: 'The type of Plex content to be played'
         example: 'PLAYLIST'
@@ -108,11 +127,6 @@ script:
         description: 'The Plex content ID to play on the TV'
         example: '{ "playlist_name": "Star Wars - The Mandalorian", "shuffle": "0" }'
     sequence:
-      - service: media_player.play_media
-        data:
-          entity_id: media_player.theatre_room_google_home
-          media_content_id: '{{ music_file }}'
-          media_content_type: 'audio/mp3'
       - service: cover.close_cover #this would be triggered anyway, but this call makes it occur faster
         entity_id: cover.theatre_blinds 
       - service: script.turn_on #set the lighting
@@ -430,27 +444,33 @@ automation:
     action:
       - service: script.turn_off_theatre_room_lights
 
-  - alias: Theatre Room - Play Plex Media On Cube Tap
-    id: theatre_room_play_plex_media_on_cube_tap
+  - alias: Theatre Room - Play TV Show On Cube Tap
+    id: theatre_room_play_tv_show_on_cube_tap
     variables: 
       buttons:
         1001: #Drive To Survive
           music_file: '/local/sounds/Drive_To_Survive.mp3'
-          plex_content_id: '{ "playlist_name": "Drive To Survive", "shuffle": "0" }'
+          media_location: "NETFLIX"
+          netflix_show_name: "Drive to Survive"
         2002: #Snowpiercer
           music_file: '/local/sounds/Snowpiercer.mp3'
-          plex_content_id: '{ "playlist_name": "Snowpiercer", "shuffle": "0" }'
+          media_location: "NETFLIX"
+          netflix_show_name: "Snowpiercer"
         3003: #The Marvelous Mrs. Maisel
           music_file: '/local/sounds/Mrs_Maisel.mp3'
+          media_location: "PLEX"
           plex_content_id: '{ "playlist_name": "The Marvelous Mrs. Maisel", "shuffle": "0" }'
         4004: #Our Flag Means Death
           music_file: '/local/sounds/Our_Flag_Means_Death.mp3'
+          media_location: "PLEX"
           plex_content_id: '{ "playlist_name": "Our Flag Means Death", "shuffle": "0" }'
         5005: #Cowboy Bebop
           music_file: '/local/sounds/Cowboy_Bebop.mp3'
-          plex_content_id: '{ "playlist_name": "Cowboy Bebop", "shuffle": "0" }'
+          media_location: "NETFLIX"
+          netflix_show_name: "Cowboy Bebop New"
         6006: #Battlebots
           music_file: '/local/sounds/Battlebots.mp3'
+          media_location: "PLEX"
           plex_content_id: '{ "playlist_name": "Battlebots", "shuffle": "0" }'
     trigger: 
       - platform: event
@@ -461,11 +481,30 @@ automation:
     condition: 
       - "{{ trigger.event.data.event in buttons }}"
     action:
-      - service: script.start_plex_media_playing
-        data: 
-          music_file: '{{ buttons[trigger.event.data.event].music_file }}'
-          plex_content_type: 'PLAYLIST'
-          plex_content_id: '{{ buttons[trigger.event.data.event].plex_content_id }}'
+      - service: media_player.play_media
+        data:
+          entity_id: media_player.theatre_room_google_home
+          media_content_id: '{{ buttons[trigger.event.data.event].music_file }}'
+          media_content_type: 'audio/mp3'
+
+      - choose:
+          # IF PLEX
+          - conditions:
+              - condition: template
+                value_template: "{{ buttons[trigger.event.data.event].media_location == 'PLEX' }}"
+            sequence:
+              - service: script.start_plex_media_playing
+                data: 
+                  plex_content_type: 'PLAYLIST'
+                  plex_content_id: '{{ buttons[trigger.event.data.event].plex_content_id }}'
+          # IF NETFLIX
+          - conditions:
+              - condition: template
+                value_template: "{{ buttons[trigger.event.data.event].media_location == 'NETFLIX' }}"
+            sequence:
+              - service: script.start_netflix_media_playing
+                data: 
+                  netflix_show_name: '{{ buttons[trigger.event.data.event].netflix_show_name }}'
 
   - alias: Theatre Room - Restart LED Strip When Unavailable
     id: theatre_room_restart_led_strip_when_unavailable
