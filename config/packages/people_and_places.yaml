@@ -170,7 +170,7 @@ automation:
       entity_id: person.laura
       to: 'Local Train Station'
       for:
-        minutes: 3
+        minutes: 1
     action:
       - service: notify.mobile_app_lauras_iphone
         data:
