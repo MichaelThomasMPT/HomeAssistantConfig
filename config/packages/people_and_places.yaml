@@ -61,7 +61,7 @@ zone:
   - name: Local Train Station
     latitude: !secret zone_local_train_station_latitude
     longitude: !secret zone_local_train_station_longitude
-    radius: 300
+    radius: 200
     icon: mdi:train
 
 automation:
@@ -171,6 +171,7 @@ automation:
       to: 'Local Train Station'
       for:
         minutes: 1
+        seconds: 30
     action:
       - service: notify.mobile_app_lauras_iphone
         data:
