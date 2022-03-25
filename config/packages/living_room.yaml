@@ -31,7 +31,7 @@ script:
         state:  "on"
       - service: remote.send_command
         target:
-          entity_id: remote.broadlink_rm_pro_roomba_remote
+          entity_id: remote.living_room_broadlink_remote
         data:
           command: b64:JgBQAAABKJMSEhISEjcSEhISEhISEhISEjcSNxISEjcSNxI3EjcSNxISEhISEhI3EhISEhISEhISNxI3EjcSEhI3EjcSNxI3EgAFGgABKEoSAAxWDQUAAAAAAAA=
   turn_on_living_room_tv:
@@ -41,42 +41,42 @@ script:
         state:  "off"
       - service: remote.send_command
         target:
-          entity_id: remote.broadlink_rm_pro_roomba_remote
+          entity_id: remote.living_room_broadlink_remote
         data:
           command: b64:JgBQAAABKJMSEhISEjcSEhISEhISEhISEjcSNxISEjcSNxI3EjcSNxISEhISEhI3EhISEhISEhISNxI3EjcSEhI3EjcSNxI3EgAFGgABKEoSAAxWDQUAAAAAAAA=
   living_room_soundbar_turn_on:
     sequence:
       - service: remote.send_command
         target:
-          entity_id: remote.broadlink_rm_pro_roomba_remote
+          entity_id: remote.living_room_broadlink_remote
         data:
           command: b64:JgBYAAABO5YSOhI5FDgUOBY2FTYUOBY2FBMVERQTFBIUExQSFBMUExMTFDgUOBQSFBMUEhYRFhETOBQTFBIUOBY2EjoTOBM5FAAFEAABPEsTAAxTAAE9ShQADQU=
   living_room_soundbar_change_source:
     sequence:
       - service: remote.send_command
         target:
-          entity_id: remote.broadlink_rm_pro_roomba_remote
+          entity_id: remote.living_room_broadlink_remote
         data:
           command: b64:JgBYAAABO5YUOBM5FDcUOBQ4EzkSOhQ3FBMUExQSFBMUEhQTFBMTExQTFBIUOBQTFBIUExQ4ExMUOBQ4FBIUOBM5FDgSFBY2EwAFEgABPEsUAAxTAAE9ShIADQU=
   living_room_soundbar_mute:
     sequence:
       - service: remote.send_command
         target:
-          entity_id: remote.broadlink_rm_pro_roomba_remote
+          entity_id: remote.living_room_broadlink_remote
         data:
           command: b64:JgBYAAABO5YSOhM4EzkUOBI6FDcUOBQ4EhUTExQTFBIUExQTExMUExM4FBMUOBIUFjYTFBQSFBMUEhQ4ExQWNhMTFDgUOBI5EwAFEgABPUoSAAxUAAE8SxQADQU=
   living_room_soundbar_volume_down:
     sequence:
       - service: remote.send_command
         target:
-          entity_id: remote.broadlink_rm_pro_roomba_remote
+          entity_id: remote.living_room_broadlink_remote
         data:
           command: b64:JgBYAAABPJUUOBM5FDgTORQ4FTYTORM5FBMTExQTFBIWERQSFBMUExMTFBMVERQ4FDgUEhQTFBIUOBM5FDgUEhQTFDgVNhQ4EwAFEgABPUsVAAxSAAE9SxMADQU=
   living_room_soundbar_volume_up:
     sequence:
       - service: remote.send_command
         target:
-          entity_id: remote.broadlink_rm_pro_roomba_remote
+          entity_id: remote.living_room_broadlink_remote
         data:
           command: b64:JgBgAAABPpUUOBY2EzkUOBM4EzkTORQ4EhQUExQSFBMUExMTFBMUEhQTFBMTOBQTFDgSFBQTFBIUOBM5FBMTOBMUFDgSORQ4FQAFEAABPUoUAAxTAAE8ShQADFMAATtMFAANBQAAAAAAAAAA
   living_room_soundbar_set_channel:
