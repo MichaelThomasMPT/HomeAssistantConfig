@@ -19,6 +19,11 @@ binary_sensor:
     name: Laura Work Laptop
     count: 2
     scan_interval: 5
+  - platform: group
+    name: Michael In Meeting
+    entities:
+      - binary_sensor.michael_desktop_in_meeting
+      - binary_sensor.michael_work_in_meeting_wifi
 
 automation:
   - alias: Front Hall - Turn On Hallway Light If PC Turned Off At Night
@@ -104,6 +109,31 @@ automation:
           - service: light.turn_off
             entity_id: light.office_lamp
 
+  - alias: Office - Turn On Lamp When Michael Is In A Meeting
+    id: office_turn_on_lamp_when_michael_is_in_a_meeting
+    trigger: 
+      - platform: state
+        entity_id: binary_sensor.michael_in_meeting
+        to: "on"
+    action:
+      - service: scene.create
+        data:
+          scene_id: office_lamp_original_state
+          snapshot_entities:
+            - light.office_lamp
+      - service: light.turn_on
+        target:
+          entity_id: light.office_lamp
+        data:
+          brightness_pct: 1
+          color_name: "red"
+      - wait_for_trigger:
+          - platform: state
+            entity_id: binary_sensor.michael_in_meeting
+            to: "off"
+      - service: scene.turn_on
+        entity_id: scene.office_lamp_original_state
+
 script:
   flash_office_lamp:
     fields:
@@ -119,6 +149,20 @@ script:
           color_name: "{{colour}}"
       - delay:
           seconds: 1
-      - service: light.turn_off
-        target:
-          entity_id: light.office_lamp
+      - choose:
+          #if in meeting, return the light to a red colour
+          - conditions:
+              - condition: state
+                entity_id: binary_sensor.michael_in_meeting
+                state: "on"
+            sequence: 
+              - service: light.turn_on
+                target:
+                  entity_id: light.office_lamp
+                data:
+                  brightness_pct: 1
+                  color_name: "red"
+        #if not in a meeting, turn the light off
+        default:
+          - service: light.turn_off
+            entity_id: light.office_lamp
