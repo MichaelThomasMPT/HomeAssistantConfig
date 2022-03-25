@@ -5,3 +5,22 @@ spotify:
 spotcast:
   sp_dc: !secret spotcast_sp_dc
   sp_key: !secret spotcast_sp_key
+
+script:
+  spotify_swipe_right_on_all_rooms:
+    sequence:
+      service: spotcast.start
+      data:
+        entity_id: media_player.all_rooms
+        uri: spotify:playlist:57T6RAcRkqB5vPeqojKUzs
+        shuffle: true
+        random_song: true
+
+  spotify_swipe_left_on_all_rooms:
+    sequence:
+      service: spotcast.start
+      data:
+        entity_id: media_player.all_rooms
+        uri: spotify:playlist:5UiNzaro2CD4e6G5vEra4D
+        shuffle: true
+        random_song: true

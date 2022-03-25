@@ -26,6 +26,8 @@ cloud:
         - script.done_with_the_theatre_room
         - script.roomba_clean
         - script.morning_alarms_if_today_is_special_play_music
+        - script.spotify_swipe_left_on_all_rooms
+        - script.spotify_swipe_right_on_all_rooms
         - switch.aircon_on_off
         - switch.aircon_zone_bed23
         - switch.aircon_zone_living
