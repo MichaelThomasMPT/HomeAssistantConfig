@@ -177,7 +177,9 @@ automation:
           sequence:
             - service: light.turn_on
               target:
-                entity_id: light.ensuite_led_strip #comes on at 10% automatically
+                entity_id: light.ensuite_led_strip 
+              data:
+                brightness_pct: 1
         #during the day
         default:
           - service: light.turn_on
