@@ -1571,5 +1571,8 @@ views:
           - entity: sensor.aeon_labs_zw100_multisensor_6_burglar_2
         hours_to_show: 1
         refresh_interval: 0
+      - type: glance
+        entities:
+          - entity: sensor.auto_backup
     icon: mdi:battery-unknown
     path: batteries

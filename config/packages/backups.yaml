@@ -1,0 +1,38 @@
+automation:
+  - alias: Backups - Create Backup Each Day
+    id: backups_create_backup_each_day
+    trigger:
+      - platform: time
+        at: "00:00:00"
+    action:
+      - service: auto_backup.backup_full
+        data:
+          # name: "Automatic Backup {{ now().strftime('%Y-%m-%d') }}"
+          # password: !secret home_assistant_backup_password
+          keep_days: 7
+          download_path: "/backups"
+
+  - alias: Backups - Purge Old Backups
+    id: backups_purge_old_backups
+    trigger:
+      - platform: time
+        at: "01:00:00"
+    action:
+      - service: auto_backup.purge
+
+  - alias: Backups - Notify When Backup Fails
+    trigger:
+      platform: event
+      event_type: auto_backup.backup_failed
+    action:
+      - service: notify.mobile_app_michael_s_galaxy_s10
+        data:
+          title: "HA Auto-Backup Failed"
+          message: |-
+            Name: {{ trigger.event.data.name }}
+            Error: {{ trigger.event.data.error }}
+          data:
+            group: "Backups"
+            tag: backups
+            color: 'red'
+            ttl: 0
