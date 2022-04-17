@@ -34,7 +34,7 @@ cloud:
         - switch.aircon_zone_master
         - switch.aircon_zone_theatre
         - switch.christmas_tree_power
-        - switch.living_room_tv
+        - switch.living_room_tv_smart_plug
         - group.aircon_vents
         - cover.theatre_blinds
         - media_player.theatre_room_tv

@@ -747,7 +747,7 @@ views:
                   entity: switch.christmas_tree_power
                   name: Tree
           - entities:
-              - entity: switch.living_room_tv
+              - entity: switch.living_room_tv_smart_plug
                 state_color: true
               - entity: media_player.living_room_chromecast
                 hide_when_off: true

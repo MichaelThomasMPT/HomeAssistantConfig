@@ -3,12 +3,12 @@ automation:
     id: living_room_change_soundbar_input_when_tv_power_toggled
     trigger:
       - platform: state
-        entity_id: switch.living_room_tv
+        entity_id: binary_sensor.living_room_tv
     action:
       - choose:
         - conditions:
             - condition: state
-              entity_id: switch.living_room_tv
+              entity_id: binary_sensor.living_room_tv
               state: 'off'
           sequence: 
             - service: script.living_room_soundbar_set_channel
@@ -16,7 +16,7 @@ automation:
                 channel: 'chromecast'
         - conditions:
             - condition: state
-              entity_id: switch.living_room_tv
+              entity_id: binary_sensor.living_room_tv
               state: 'on'
           sequence: 
             - service: script.living_room_soundbar_set_channel
@@ -118,7 +118,7 @@ binary_sensor:
     sensors:
       living_room_tv:
         friendly_name: "Living Room TV"
-        value_template: "{{ states('sensor.living_room_tv_power')|float > 10 }}"
+        value_template: "{{ states('sensor.living_room_tv_smart_plug_power')|float > 10 }}"
         icon_template: >-
           {% if is_state("binary_sensor.living_room_tv", "on") %}
             mdi:television

@@ -277,7 +277,7 @@ views:
               left: 54%
               top: 39.5%
             type: state-icon
-          - entity: switch.living_room_tv
+          - entity: switch.living_room_tv_smart_switch
             icon: mdi:television-play
             style:
               '--paper-item-icon-color': white
