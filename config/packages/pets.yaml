@@ -1,6 +1,6 @@
 automation:
-  - alias: Living Room - Notify Me If Dog Door Is Used
-    id: living_room_notify_me_if_dog_door_is_used
+  - alias: Pets - Notify Me If Dog Door Is Used
+    id: pets_notify_me_if_dog_door_is_used
     trigger:
       - platform: state
         entity_id: binary_sensor.dog_door
