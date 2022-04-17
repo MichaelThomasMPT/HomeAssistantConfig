@@ -87,6 +87,12 @@ views:
                     device_id: 3cf71e0c142a900622f37d4d238030ce
                 name: Dog Bed
                 icon: mdi:camera-control
+              - type: glance
+                entities:
+                  - entity: binary_sensor.dog_door
+                    icon: mdi:dog-side
+                    name: Dog Door
+                    show_last_changed: true
           - type: picture-entity
             entity: camera.last_front_door_motion
             name: Last Motion

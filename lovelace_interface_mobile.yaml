@@ -909,6 +909,11 @@ views:
                 type: state-label
             image: /local/header-image-dark.png
             type: picture-elements
+          - type: glance
+            entities:
+              - entity: binary_sensor.michael_in_meeting
+              - entity: binary_sensor.michael_work_muted_wifi
+                name: Michael Is Muted
           - entities:
               - entity: light.office_lamp
                 hide_when_off: true
@@ -1354,7 +1359,7 @@ views:
             show_header_toggle: false
             show_name: true
             show_state: false
-            state_color: false
+            state_color: true
             type: custom:fold-entity-row
           - entities:
               - entity: media_player.all_rooms
@@ -1369,6 +1374,8 @@ views:
               - entity: media_player.theatre_room_tv
               - entity: media_player.theatre_room_chromecast
               - entity: media_player.living_room_chromecast
+              - entity: media_player.living_room_soundbar_chromecast_audio
+                name: Living Room Soundbar
             head:
               label: Media
               type: section
