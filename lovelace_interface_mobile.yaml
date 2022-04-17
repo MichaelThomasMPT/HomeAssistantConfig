@@ -487,12 +487,16 @@ views:
                 - entity: light.master_bedroom_ceiling
                   name: Ceiling
                   toggle: true
+                - entity: light.genio_nebula_projector
+                  name: Projector
+                  icon: mdi:weather-night
+                  toggle: true
                 - entity: light.master_bedroom_michael_lamp
-                  name: Michael's Lamp
+                  name: M Lamp
                   icon: mdi:lamp
                   toggle: true
                 - entity: light.master_bedroom_laura_lamp
-                  name: Laura's Lamp
+                  name: L Lamp
                   icon: mdi:lamp
                   toggle: true
           - type: entities
@@ -1332,6 +1336,8 @@ views:
               - entity: light.master_bedroom_ceiling
               - entity: light.master_bedroom_michael_lamp
               - entity: light.master_bedroom_laura_lamp
+              - entity: light.genio_nebula_projector
+                name: Master Bedroom Projector
               - entity: light.master_wir
               - entity: light.office_lamp
               - entity: light.pantry_light

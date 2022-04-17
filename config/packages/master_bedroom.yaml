@@ -47,9 +47,26 @@ var:
   master_bedroom_lights_brightness_control:
     initial_value: stop #allowed values: stop, dim, bright
 
+script:
+  run_bed_time_projector:
+    sequence:
+      - service: light.turn_on
+        target:
+          entity_id: light.genio_nebula_projector 
+        data:
+          brightness_pct: 1
+          hs_color: >-
+            {{ [(range(90, 286) | random),100] }}
+      - delay:
+          minutes: 30
+      - service: light.turn_off
+        target:
+          entity_id: light.genio_nebula_projector
+
 automation:
   - alias: Master Bedroom - Turn Off Everything When Going To Bed
     id: master_bedroom_turn_off_everything_when_going_to_bed
+    mode: single
     trigger:
       - platform: event
         event_type: deconz_event
@@ -73,9 +90,10 @@ automation:
           seconds: 20
       - service: script.turn_off_whole_house #after allowing time to get in to bed, turn off everything in the house
         data:
-          excluded_lights: "['light.master_bedroom', 'light.master_bedroom_michael_lamp', 'light.master_bedroom_laura_lamp']" #Leave the bed side lamp and the corresponding hue group on if it already is
+          #Leave the bed side lamp and the corresponding hue group on if it already is. Also leave the ceiling projector on. 
+          excluded_lights: "['light.master_bedroom', 'light.master_bedroom_michael_lamp', 'light.master_bedroom_laura_lamp', 'light.genio_nebula_projector']" 
           turn_off_aircon: "{{ not aircon_was_running_master_bedroom }}"
-
+      - service: script.run_bed_time_projector
       #proceed to turn on the aircon in the master bedroom for 60 min if the aircon was already on in there
       - condition: template
         value_template: "{{ aircon_was_running_master_bedroom or aircon_was_running_living_room }}"
@@ -233,3 +251,17 @@ automation:
     action:
       - service: switch.turn_off
         entity_id: switch.ensuite_fan
+
+  - alias: Master Bedroom - Turn On Projector When Going To Bed At Night
+    id: master_bedroom_turn_on_projector_when_going_to_bed_at_night
+    mode: single
+    trigger:
+      - platform: state
+        entity_id: light.master_bedroom_ceiling
+        to: "off"
+    condition:
+      - condition: time
+        after: "21:30:00"
+        before: "05:00:00"
+    action:
+      - service: script.run_bed_time_projector
