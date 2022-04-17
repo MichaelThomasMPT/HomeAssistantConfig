@@ -318,6 +318,8 @@ automation:
       - platform: state
         entity_id: sensor.igrill_battery
         to: 'unavailable'
+        for: 
+          minutes: 5
     action:
       - service: switch.turn_off
         data: {}
