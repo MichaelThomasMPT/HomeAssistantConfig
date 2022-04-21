@@ -22,6 +22,20 @@ automation:
             - service: script.living_room_soundbar_set_channel
               data:
                 channel: 'tv'
+  - alias: Living Room - Turn On TV Smart Switch When It Turns Itself Off
+    id: living_room_turn_on_tv_smart_switch_when_it_turns_itself_off
+    mode: queued
+    max: 3
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.living_room_tv_smart_plug
+        to: 'off'
+    action:
+      - service: switch.turn_on
+        target:
+          entity_id: switch.living_room_tv_smart_plug
+      - delay:
+          minutes: 5
 
 script:
   turn_off_living_room_tv:
