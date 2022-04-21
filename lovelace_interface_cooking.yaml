@@ -303,7 +303,7 @@ views:
                 - color: var(--label-badge-blue)
           - type: custom:mini-graph-card
             name: Ambient Probe
-            hours_to_show: 0.5
+            hours_to_show: 0.25
             points_per_hour: 60
             line_width: 2
             height: 50
@@ -332,10 +332,36 @@ views:
             refresh_interval: 0
             hours_to_show: 8
             title: Last 8 Hours
-          - type: picture-entity
+          - show_state: false
+            show_name: false
+            camera_view: auto
+            type: picture-entity
             entity: camera.alfresco_camera
             name: Garage
             camera_image: camera.alfresco_camera
-            camera_view: live
-            show_name: false
-            show_state: false
+  - theme: Backend-selected
+    title: BOM Radar
+    path: bom-radar
+    icon: mdi:weather-cloudy
+    type: panel
+    badges: []
+    cards:
+      - type: custom:bom-radar-card
+        map_style: Voyager
+        center_latitude: -32.13
+        center_longitude: 115.86
+        marker_latitude: -32.13
+        marker_longitude: 115.86
+        radar_location_radius: 3
+        show_marker: true
+        zoom_level: 10
+        show_scale: false
+        show_radar_location: false
+        show_zoom: false
+        show_playback: false
+        show_range: false
+        show_radar_coverage: false
+        show_recenter: false
+        square_map: true
+        extra_labels: false
+        static_map: true
