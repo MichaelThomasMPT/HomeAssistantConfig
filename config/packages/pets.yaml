@@ -1,3 +1,21 @@
+input_boolean:
+  dog_needs_feeding:
+    name: Remind Me To Take Medicine
+    icon: mdi:dog
+binary_sensor:
+  - platform: tod
+    name: breakfast
+    after: "07:00"
+    before: "11:00"
+  - platform: tod
+    name: lunch
+    after: "11:00"
+    before: "15:00"
+  - platform: tod
+    name: dinner
+    after: "17:00"
+    before: "21:00"
+
 automation:
   - alias: Pets - Notify Me If Dog Door Is Used
     id: pets_notify_me_if_dog_door_is_used
@@ -101,3 +119,132 @@ automation:
           entity_id: media_player.central_living_speakers
           media_content_id: '/local/sounds/doorbell.mp3'
           media_content_type: 'audio/mp3'
+
+    # Toggle Dog Alerts
+  - alias: Pets - Toggle Dog Meal Time On
+    id: pets_toggle_dog_meal_time_on
+    trigger: 
+      - platform: state
+        entity_id: 
+          - binary_sensor.breakfast
+          - binary_sensor.lunch
+          - binary_sensor.dinner
+        from: 'off'
+        to: 'on'
+    action:
+      - service: input_boolean.turn_on
+        target:
+          entity_id: input_boolean.dog_needs_feeding
+  - alias: Pets - Toggle Dog Meal Time Off
+    id: pets_toggle_dog_meal_time_off
+    trigger: 
+      - platform: state
+        entity_id: binary_sensor.dog_biscuit_box
+        to: 'on'
+      - platform: event
+        event_type: mobile_app_notification_action
+        event_data:
+          action: dog_was_already_fed
+    action:
+      - service: input_boolean.turn_off
+        target:
+          entity_id: input_boolean.dog_needs_feeding
+    # Alert Michael
+  - alias: Pets - Alert Michael If Dog Not Fed
+    id: pets_dog_not_fed_alert_michael
+    trigger: 
+      - platform: state
+        entity_id: input_boolean.dog_needs_feeding
+        to: 'on'
+        for: '03:00:00'
+    action:
+        # don't alert me if I'm not home as I can't do anything about it
+      - alias: "Wait until Michael has come home"
+        wait_template: "{{ is_state('person.michael', 'home') }}"
+        # once I get home, don't bother reminding me if the dog has since been fed
+      - condition: state
+        entity_id: input_boolean.dog_needs_feeding
+        state:  'on'
+      - service: notify.mobile_app_michael_s_galaxy_s10
+        data:
+          message: >-
+            Don't forget to feed the dog her 
+            {{ 
+              state_attr("binary_sensor.breakfast", "friendly_name") if states("binary_sensor.breakfast") == "on" 
+              else state_attr("binary_sensor.lunch", "friendly_name") if states("binary_sensor.lunch") == "on"
+              else state_attr("binary_sensor.dinner", "friendly_name") if states("binary_sensor.dinner") == "on"
+            }}!
+          data:
+            actions:
+              - action: 'dog_was_already_fed'
+                title: The Dog Was Already Fed
+    # Alert Laura
+  - alias: Pets - Alert Laura If Dog Not Fed
+    id: pets_dog_not_fed_alert_laura
+    trigger: 
+      - platform: state
+        entity_id: input_boolean.dog_needs_feeding
+        to: 'on'
+        for: '03:00:00'
+    action:
+        # don't alert laura if she's not home as she can't do anything about it
+      - alias: "Wait until Laura has come home"
+        wait_template: "{{ is_state('person.laura', 'home') }}"
+        # once she gets home, don't bother reminding her if the dog has since been fed
+      - condition: state
+        entity_id: input_boolean.dog_needs_feeding
+        state:  'on'
+      - service: notify.mobile_app_lauras_iphone
+        data:
+          message: >-
+            Don't forget to feed the dog her 
+            {{ 
+              state_attr("binary_sensor.breakfast", "friendly_name") if states("binary_sensor.breakfast") == "on" 
+              else state_attr("binary_sensor.lunch", "friendly_name") if states("binary_sensor.lunch") == "on"
+              else state_attr("binary_sensor.dinner", "friendly_name") if states("binary_sensor.dinner") == "on"
+            }}!
+    # Alert Google
+  - alias: Pets - Alert The House If Dog Not Fed
+    id: pets_dog_not_fed_alert_house
+    trigger: 
+      - platform: state
+        entity_id: input_boolean.dog_needs_feeding
+        to: 'on'
+        for: '03:00:00'
+    action:
+      - service: tts.google_translate_say
+        data:
+          entity_id: media_player.all_rooms
+          message: >-
+            Don't forget to feed the dog her 
+            {{ 
+              state_attr("binary_sensor.breakfast", "friendly_name") if states("binary_sensor.breakfast") == "on" 
+              else state_attr("binary_sensor.lunch", "friendly_name") if states("binary_sensor.lunch") == "on"
+              else state_attr("binary_sensor.dinner", "friendly_name") if states("binary_sensor.dinner") == "on"
+            }}!
+    # Make Sure Dog Isn't Fed Twice
+  - alias: Pets - Make Sure Dog Doesn't Get Fed Twice
+    id: pets_make_sure_dog_doesnt_get_fed_twice
+    trigger: 
+      - platform: state
+        entity_id: binary_sensor.dog_biscuit_box
+        to: 'on'
+    condition: 
+        # dog was previously fed
+      - condition: state
+        entity_id: input_boolean.dog_needs_feeding
+        state: 'off'
+        for: '00:05:00' #avoid triggering if opening and closing in the one feeding, such as when refilling the container
+    action:
+      - service: tts.google_translate_say
+        data:
+          entity_id: media_player.all_rooms
+          message: >-
+            The dog has already been fed her
+            {{ 
+              state_attr("binary_sensor.breakfast", "friendly_name") if states("binary_sensor.breakfast") == "on" 
+              else state_attr("binary_sensor.lunch", "friendly_name") if states("binary_sensor.lunch") == "on"
+              else state_attr("binary_sensor.dinner", "friendly_name") if states("binary_sensor.dinner") == "on"
+            }}, don't trust her! 
+      - delay: 
+          seconds: 60 #avoid multiple triggers in quick succession when putting the lid back on
