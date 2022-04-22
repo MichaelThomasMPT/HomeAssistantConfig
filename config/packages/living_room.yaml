@@ -28,7 +28,7 @@ automation:
     max: 3
     trigger:
       - platform: state
-        entity_id: binary_sensor.living_room_tv_smart_plug
+        entity_id: switch.living_room_tv_smart_plug
         to: 'off'
     action:
       - service: switch.turn_on
