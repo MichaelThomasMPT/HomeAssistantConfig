@@ -1,0 +1,172 @@
+camera:
+  - platform: xiaomi_cloud_map_extractor
+    host: !secret xiaomi_vacuum_host
+    token: !secret xiaomi_vacuum_token
+    username: !secret xiaomi_cloud_username
+    password: !secret xiaomi_cloud_password
+    draw: ['all']
+    attributes:
+      - calibration_points
+      - charger
+      - rooms
+
+script:
+  vacuum_vacuum_room:
+    alias: "Vacuum a specified room"
+    fields:
+      room:
+        description: "The room to clean - can be: dining room | living room | kitchen | laundry | hallway | theatre | toilet | bathroom | office"
+        example: "kitchen"
+    sequence:
+      - service: script.vacuum_set_manual_mode
+        data:
+          vacuum: 'silent'
+          mopping: 'off'
+      - service: script.vacuum_clean_room
+        data:
+          room: '{{ room }}'
+  vacuum_mop_room:
+    alias: "Mop a specified room"
+    fields:
+      room:
+        description: "The room to clean - can be: dining room | living room | kitchen | laundry | hallway | theatre | toilet | bathroom | office"
+        example: "kitchen"
+    sequence:
+      - service: script.vacuum_set_manual_mode
+        data:
+          vacuum: 'silent'
+          mopping: 'high'
+      - service: script.vacuum_clean_room
+        data:
+          room: '{{ room }}'
+
+  # note: better to use script.vacuum_vacuum_room or script.vacuum_mop_room instead
+  vacuum_clean_room:
+    alias: "Clean a specified room with the vacuum"
+    fields:
+      room:
+        description: "The room to clean - can be: dining room | living room | kitchen | laundry | hallway | theatre | toilet | bathroom | office"
+        example: "kitchen"
+    sequence:
+      - alias: "Config variables"
+        variables:
+          config_room:
+            kitchen: 17
+            'living room': 18
+            laundry: 19
+            theatre: 20
+            bathroom: 21
+            hallway: 22
+            office: 24
+            'dining room': 25
+            toilet: 26
+          room_to_clean: "{{ config_room[room] }}"
+      - service: vacuum.send_command
+        target:
+          entity_id: vacuum.robo_buddy
+        data_template:
+          command: app_segment_clean
+          params: "{{ room_to_clean }}"
+
+  vacuum_set_manual_mode:
+    alias: "Set Roborock manual vacuum and mopping settings"
+    fields:
+      vacuum:
+        description: "Vacuum mode - can be: silent | balanced | turbo | max"
+        example: "max"
+      mopping:
+        description: "Mopping mode - can be: off | low | medium | high"
+        example: "off"
+    sequence:
+      - alias: "Config variables"
+        variables:
+          config_vacuum:
+            silent: 101
+            balanced: 102
+            turbo: 103
+            max: 104
+          config_mopping:
+            'off': 200
+            low: 201
+            medium: 202
+            high: 203
+          vacuum_mode: "{{ config_vacuum[vacuum] }}"
+          mopping_mode: "{{ config_mopping[mopping] }}"
+      - choose:
+          - alias: "Invalid vacuum value"
+            conditions: "{{ vacuum not in config_vacuum|list }}"
+            sequence:
+              - service: system_log.write
+                data:
+                  message: "Invalid vacuum value '{{ vacuum }}'. Valid values are {{ config_vacuum|list|join(', ') }}"
+                  level: warning
+                  logger: roborock
+          - alias: "Invalid mopping value"
+            conditions: "{{ mopping not in config_mopping|list }}"
+            sequence:
+              - service: system_log.write
+                data:
+                  message: "Invalid mopping value '{{ lavaggio }}'. Valid values are {{ config_mopping|list|join(', ') }}"
+                  level: warning
+                  logger: roborock
+        default:
+          - alias: "Set vacuum mode"
+            service: vacuum.send_command
+            target:
+              entity_id: vacuum.robo_buddy
+            data:
+              command: set_custom_mode
+              params: "[{{ vacuum_mode }}]"
+          - alias: "Set mopping mode"
+            service: vacuum.send_command
+            target:
+              entity_id: vacuum.robo_buddy
+            data:
+              command: set_water_box_custom_mode
+              params: "[{{ mopping_mode }}]"
+
+automation:
+  - alias: Vacuum - Run the vacuum when leaving the house
+    id: vacuum_run_the_roomba_when_leaving_the_house
+    trigger:
+      - platform: state
+        entity_id: alarm_control_panel.alarm_com
+        from: 'disarmed'
+        to: 
+          - 'armed_away'
+          - 'armed_home'
+    condition:
+      - condition: state
+        entity_id: vacuum.robo_buddy
+        attribute: battery_level
+        state: 100
+    action:
+      - service: script.vacuum_set_manual_mode
+        data:
+          vacuum: 'balanced'
+          mopping: 'off'
+      - service: vacuum.start
+        target:
+          entity_id: vacuum.robo_buddy
+  - alias: Vacuum - Send the vacuum to base when returning home
+    id: vacuum_send_the_vacuum_to_base_when_returning_home
+    trigger:
+      - platform: state
+        entity_id: alarm_control_panel.alarm_com
+        from: 
+          - 'armed_away'
+          - 'armed_home'
+        to: 'disarmed'
+    condition:
+      - condition: not
+        conditions:
+          - condition: state
+            entity_id: vacuum.robo_buddy
+            state:
+              - 'charging'
+              - 'docked'
+    action:
+      - service: vacuum.return_to_base
+        target:
+          entity_id: vacuum.robo_buddy
+

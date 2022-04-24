@@ -1,0 +1,107 @@
+views:
+  - title: Home
+    cards:
+      - type: custom:xiaomi-vacuum-map-card
+        title: Xiaomi Vacuum Map Card
+        preset_name: Live map
+        entity: vacuum.robo_buddy
+        map_source:
+          camera: camera.xiaomi_cloud_map_extractor
+        calibration_source:
+          camera: true
+        map_modes:
+          - template: vacuum_clean_segment
+            predefined_selections:
+              - id: 24
+                label:
+                  text: Office
+                  x: 22200
+                  'y': 11075
+                  offset_y: 35
+                icon:
+                  name: mdi:laptop
+                  x: 22200
+                  'y': 11075
+              - id: 22
+                label:
+                  text: Hallway
+                  x: 27500
+                  'y': 15175
+                  offset_y: 35
+                icon:
+                  name: mdi:image-frame
+                  x: 27500
+                  'y': 15175
+              - id: 21
+                label:
+                  text: Bathroom
+                  x: 21900
+                  'y': 15075
+                  offset_y: 35
+                icon:
+                  name: mdi:shower
+                  x: 21900
+                  'y': 15075
+              - id: 26
+                label:
+                  text: Toilet
+                  x: 23675
+                  'y': 15875
+                  offset_y: 35
+                icon:
+                  name: mdi:toilet
+                  x: 23675
+                  'y': 15875
+              - id: 20
+                label:
+                  text: Theatre
+                  x: 24525
+                  'y': 19000
+                  offset_y: 35
+                icon:
+                  name: mdi:television
+                  x: 24525
+                  'y': 19000
+              - id: 19
+                label:
+                  text: Laundry
+                  x: 29050
+                  'y': 18000
+                  offset_y: 35
+                icon:
+                  name: mdi:iron-board
+                  x: 29050
+                  'y': 18000
+              - id: 17
+                label:
+                  text: Kitchen
+                  x: 31200
+                  'y': 22550
+                  offset_y: 35
+                icon:
+                  name: mdi:pot-mix
+                  x: 31200
+                  'y': 22550
+              - id: 18
+                label:
+                  text: Living Room
+                  x: 27700
+                  'y': 22550
+                  offset_y: 35
+                icon:
+                  name: mdi:billiards-rack
+                  x: 27700
+                  'y': 22450
+              - id: 25
+                label:
+                  text: Dining Room
+                  x: 27700
+                  'y': 27100
+                  offset_y: 35
+                icon:
+                  name: mdi:table-chair
+                  x: 27700
+                  'y': 26950
+          - template: vacuum_clean_zone
+          - template: vacuum_goto
+          - template: vacuum_follow_path
