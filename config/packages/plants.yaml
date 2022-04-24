@@ -1,12 +1,12 @@
 plant:
-  alfresco_monstera:
+  alfresco_fig:
     sensors:
-      moisture: sensor.monstera_moisture
-      battery: sensor.monstera_battery
-      temperature: sensor.monstera_temperature
-      conductivity: sensor.monstera_conductivity
-      brightness: sensor.monstera_light
-
+      moisture: sensor.fig_moisture
+      battery: sensor.fig_battery
+      temperature: sensor.fig_temperature
+      conductivity: sensor.fig_conductivity
+      brightness: sensor.fig_light
+ 
     #Monstera-specific values from the MiFlora app
     # min_moisture: 15
     # max_moisture: 60
@@ -18,13 +18,23 @@ plant:
     # max_brightness: 15000
 
     #Mint-specific values from the MiFlora app
+    # min_moisture: 15
+    # max_moisture: 60
+    # min_conductivity: 350
+    # max_conductivity: 2000
+    # min_temperature: 8
+    # max_temperature: 32
+    # min_brightness: 3000
+    # max_brightness: 60000
+
+    #Fig-specific values from the MiFlora app
     min_moisture: 15
     max_moisture: 60
     min_conductivity: 350
     max_conductivity: 2000
-    min_temperature: 8
-    max_temperature: 32
-    min_brightness: 3000
+    min_temperature: 5
+    max_temperature: 35
+    min_brightness: 3500
     max_brightness: 60000
 
 # alert:

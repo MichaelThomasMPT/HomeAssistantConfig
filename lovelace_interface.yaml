@@ -1424,8 +1424,8 @@ views:
     badges: []
     cards:
       - type: plant-status
-        entity: plant.alfresco_monstera
-        name: Monstera (Alfresco)
+        entity: plant.alfresco_fig
+        name: Fig (Alfresco)
   - badges: []
     cards:
       - cards:
