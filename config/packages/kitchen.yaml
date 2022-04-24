@@ -137,6 +137,20 @@ automation:
           default:
             - service: light.turn_off
               entity_id: light.kitchen_ceiling_light
+  - alias: Kitchen - Turn On Dishwasher Smart Switch When It Turns Itself Off
+    id: kitchen_turn_on_dishwasher_smart_switch_when_it_turns_itself_off
+    mode: queued
+    max: 3
+    trigger:
+      - platform: state
+        entity_id: switch.dishwasher_smart_plug
+        to: 'off'
+    action:
+      - service: switch.turn_on
+        target:
+          entity_id: switch.dishwasher_smart_plug
+      - delay:
+          minutes: 5
 
 alert:
   freezer_door_alerts:
