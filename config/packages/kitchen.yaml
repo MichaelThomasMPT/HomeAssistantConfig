@@ -22,6 +22,17 @@ sensor:
 binary_sensor:
   - platform: template
     sensors:
+      dishwasher:
+        friendly_name: "Dishwasher"
+        value_template: "{{ states('sensor.dishwasher_smart_plug_power')|float > 20 }}"
+        icon_template: >-
+          {% if is_state("binary_sensor.dishwasher", "on") %}
+            mdi:dishwasher
+          {% else %}
+            mdi:dishwasher-off
+          {% endif %}
+  - platform: template
+    sensors:
       kitchen_chair_1_upright:
         friendly_name: "Kitchen Chair 1 Upright"
         icon_template: mdi:table-chair

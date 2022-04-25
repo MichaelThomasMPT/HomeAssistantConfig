@@ -974,7 +974,7 @@ views:
                   right: 5%
                   transform: initial
                 type: state-label
-              - entity: binary_sensor.any_kitchen_chair_upright
+              - entity: binary_sensor.dishwasher
                 style:
                   bottom: 20%
                   font-weight: bold
