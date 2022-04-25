@@ -68,6 +68,8 @@ script:
           command: app_segment_clean
           params: "{{ room_to_clean }}"
 
+  # this script is from "matlar" on the HomeAssistant forums
+  # https://community.home-assistant.io/t/s7-mop-control/317393/18
   vacuum_set_manual_mode:
     alias: "Set Roborock manual vacuum and mopping settings"
     fields:
