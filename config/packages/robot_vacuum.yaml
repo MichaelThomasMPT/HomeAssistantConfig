@@ -125,6 +125,142 @@ script:
               command: set_water_box_custom_mode
               params: "[{{ mopping_mode }}]"
 
+##########################################################
+################### Scripts for Google ###################
+##########################################################
+  vacuum_google_vacuum_dining_room:
+    alias: "Google - Vacuum the dining room"
+    sequence:
+      - service: script.vacuum_vacuum_room
+        data:
+          room: 'dining room'
+  vacuum_google_vacuum_living_room:
+    alias: "Google - Vacuum the living room"
+    sequence:
+      - service: script.vacuum_vacuum_room
+        data:
+          room: 'living room'
+  vacuum_google_vacuum_kitchen:
+    alias: "Google - Vacuum the kitchen"
+    sequence:
+      - service: script.vacuum_vacuum_room
+        data:
+          room: 'kitchen'
+  vacuum_google_vacuum_laundry:
+    alias: "Google - Vacuum the laundry"
+    sequence:
+      - service: script.vacuum_vacuum_room
+        data:
+          room: 'laundry'
+  vacuum_google_vacuum_hallway:
+    alias: "Google - Vacuum the hallway"
+    sequence:
+      - service: script.vacuum_vacuum_room
+        data:
+          room: 'hallway'
+  vacuum_google_vacuum_theatre:
+    alias: "Google - Vacuum the theatre"
+    sequence:
+      - service: script.vacuum_vacuum_room
+        data:
+          room: 'theatre'
+  vacuum_google_vacuum_toilet:
+    alias: "Google - Vacuum the toilet"
+    sequence:
+      - service: script.vacuum_vacuum_room
+        data:
+          room: 'toilet'
+  vacuum_google_vacuum_bathroom:
+    alias: "Google - Vacuum the bathroom"
+    sequence:
+      - service: script.vacuum_vacuum_room
+        data:
+          room: 'bathroom'
+  vacuum_google_vacuum_office:
+    alias: "Google - Vacuum the office"
+    sequence:
+      - service: script.vacuum_vacuum_room
+        data:
+          room: 'office'
+  vacuum_google_mop_dining_room:
+    alias: "Google - Mop the dining room"
+    sequence:
+      - service: script.vacuum_mop_room
+        data:
+          room: 'dining room'
+  vacuum_google_mop_living_room:
+    alias: "Google - Mop the living room"
+    sequence:
+      - service: script.vacuum_mop_room
+        data:
+          room: 'living room'
+  vacuum_google_mop_kitchen:
+    alias: "Google - Mop the kitchen"
+    sequence:
+      - service: script.vacuum_mop_room
+        data:
+          room: 'kitchen'
+  vacuum_google_mop_laundry:
+    alias: "Google - Mop the laundry"
+    sequence:
+      - service: script.vacuum_mop_room
+        data:
+          room: 'laundry'
+  vacuum_google_mop_hallway:
+    alias: "Google - Mop the hallway"
+    sequence:
+      - service: script.vacuum_mop_room
+        data:
+          room: 'hallway'
+  vacuum_google_mop_theatre:
+    alias: "Google - Mop the theatre"
+    sequence:
+      - service: script.vacuum_mop_room
+        data:
+          room: 'theatre'
+  vacuum_google_mop_toilet:
+    alias: "Google - Mop the toilet"
+    sequence:
+      - service: script.vacuum_mop_room
+        data:
+          room: 'toilet'
+  vacuum_google_mop_bathroom:
+    alias: "Google - Mop the bathroom"
+    sequence:
+      - service: script.vacuum_mop_room
+        data:
+          room: 'bathroom'
+  vacuum_google_mop_office:
+    alias: "Google - Mop the office"
+    sequence:
+      - service: script.vacuum_mop_room
+        data:
+          room: 'office'
+  vacuum_google_vacuum_house:
+    alias: "Google - Vacuum the house"
+    sequence:
+      - service: script.vacuum_set_manual_mode
+        data:
+          vacuum: 'silent'
+          mopping: 'off'
+      - service: vacuum.start
+        target:
+          entity_id: vacuum.robo_buddy
+  vacuum_google_mop_house:
+    alias: "Google - Mop the house"
+    sequence:
+      - service: script.vacuum_set_manual_mode
+        data:
+          vacuum: 'silent'
+          mopping: 'high'
+      - service: vacuum.start
+        target:
+          entity_id: vacuum.robo_buddy
+##########################################################
+################### Scripts for Google ###################
+##########################################################
+
+
 automation:
   - alias: Vacuum - Run the vacuum when leaving the house
     id: vacuum_run_the_roomba_when_leaving_the_house

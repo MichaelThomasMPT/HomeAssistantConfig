@@ -24,10 +24,29 @@ cloud:
         - script.time_for_star_wars
         - script.movie_has_finished
         - script.done_with_the_theatre_room
-        - script.roomba_clean
         - script.morning_alarms_if_today_is_special_play_music
         - script.spotify_swipe_left_on_all_rooms
         - script.spotify_swipe_right_on_all_rooms
+        - script.vacuum_google_vacuum_dining_room
+        - script.vacuum_google_vacuum_living_room
+        - script.vacuum_google_vacuum_kitchen
+        - script.vacuum_google_vacuum_laundry
+        - script.vacuum_google_vacuum_hallway
+        - script.vacuum_google_vacuum_theatre
+        - script.vacuum_google_vacuum_toilet
+        - script.vacuum_google_vacuum_bathroom
+        - script.vacuum_google_vacuum_office
+        - script.vacuum_google_mop_dining_room
+        - script.vacuum_google_mop_living_room
+        - script.vacuum_google_mop_kitchen
+        - script.vacuum_google_mop_laundry
+        - script.vacuum_google_mop_hallway
+        - script.vacuum_google_mop_theatre
+        - script.vacuum_google_mop_toilet
+        - script.vacuum_google_mop_bathroom
+        - script.vacuum_google_mop_office
+        - script.vacuum_google_vacuum_house
+        - script.vacuum_google_mop_house
         - switch.aircon_on_off
         - switch.aircon_zone_bed23
         - switch.aircon_zone_living
