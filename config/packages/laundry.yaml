@@ -4,6 +4,7 @@ light:
     entity_id: switch.laundry_led_smart_plug
   - platform: group
     name: Washing Line Lights
+    unique_id: washing_line_lights
     entities:
       - light.washing_line_light_1
       - light.washing_line_light_2
