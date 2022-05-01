@@ -90,13 +90,13 @@ sensor:
 input_number:
   igrill_ambient_alert_low_temp:
     name: Ambient Low Temp
-    initial: 180
+    initial: 120
     min: 70
     max: 250
     step: 5
   igrill_ambient_alert_high_temp:
     name: Ambient High Temp
-    initial: 200
+    initial: 140
     min: 70
     max: 250
     step: 5
