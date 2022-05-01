@@ -98,3 +98,29 @@ automation:
             {{ trigger.entity_id }} has become unavailable.
           data:
             group: Camera Unavailable
+
+  - alias: Security Cameras - Sync Surveillance Station Home Mode With Alarm Status
+    id: security_cameras_sync_surveillance_station_home_mode_with_alarm_status
+    trigger:
+      - platform: state
+        entity_id: alarm_control_panel.alarm_com
+    action:
+      - choose:
+        - conditions:
+            - condition: state
+              entity_id: alarm_control_panel.alarm_com
+              state: 
+                - 'armed_home'
+                - 'armed_away'
+          sequence:
+            - service: switch.turn_off
+              target:
+                entity_id: switch.homenas_home_mode
+        - conditions:
+            - condition: state
+              entity_id: alarm_control_panel.alarm_com
+              state: 'disarmed'
+          sequence:
+            - service: switch.turn_on
+              target:
+                entity_id: switch.homenas_home_mode
