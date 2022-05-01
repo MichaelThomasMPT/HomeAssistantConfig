@@ -13,9 +13,11 @@ script:
         group_name: "Theatre Room"
         scene_name: "Movie Watching"
     - service: light.turn_on
-      data_template:
+      target: 
         entity_id: light.theatre_room_tv_cabinet_led_strip
-        rgb_color: "{{ [[119,73,255],[0,255,255],[255,0,255]]|random }}" #purple, pink or teal
+      data:
+        hs_color: >-
+            {{ [(range(0, 360) | random),100] }}
         brightness: 1
     alias: Movie Lighting Scene
 
