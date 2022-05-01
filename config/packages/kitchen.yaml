@@ -24,7 +24,7 @@ binary_sensor:
     sensors:
       dishwasher:
         friendly_name: "Dishwasher"
-        value_template: "{{ states('sensor.dishwasher_smart_plug_power')|float > 20 }}"
+        value_template: "{{ states('sensor.dishwasher_smart_plug_power')|float > 5 }}"
         icon_template: >-
           {% if is_state("binary_sensor.dishwasher", "on") %}
             mdi:dishwasher
