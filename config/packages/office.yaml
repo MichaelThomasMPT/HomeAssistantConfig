@@ -134,6 +134,32 @@ automation:
       - service: scene.turn_on
         entity_id: scene.office_lamp_original_state
 
+  - alias: Office - Mute Office Speakers When Michael Is In A Meeting
+    id: office_mute_office_speakers_when_michael_is_in_a_meeting
+    trigger: 
+      - platform: state
+        entity_id: binary_sensor.michael_in_meeting
+        to: "on"
+    action:
+      - service: media_player.volume_mute
+        data:
+          is_volume_muted: true
+        target:
+          entity_id: 
+            - media_player.office_google_home
+            - media_player.office_pc_speakers
+      - wait_for_trigger:
+          - platform: state
+            entity_id: binary_sensor.michael_in_meeting
+            to: "off"
+      - service: media_player.volume_mute
+        data:
+          is_volume_muted: false
+        target:
+          entity_id: 
+            - media_player.office_google_home
+            - media_player.office_pc_speakers
+
 script:
   flash_office_lamp:
     fields:
