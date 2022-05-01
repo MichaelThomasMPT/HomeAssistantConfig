@@ -61,6 +61,9 @@ script:
             'dining room': 25
             toilet: 26
           room_to_clean: "{{ config_room[room] }}"
+      - service: vacuum.stop #stop any existing tasks
+        target:
+          entity_id: vacuum.robo_buddy
       - service: vacuum.send_command
         target:
           entity_id: vacuum.robo_buddy
