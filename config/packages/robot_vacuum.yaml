@@ -278,6 +278,9 @@ automation:
           - 'armed_home'
     condition:
       - condition: state
+        entity_id: input_boolean.holiday_mode
+        state: "off" #don't run if on holiday
+      - condition: state
         entity_id: vacuum.robo_buddy
         attribute: battery_level
         state: 100

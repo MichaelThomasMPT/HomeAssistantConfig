@@ -63,6 +63,9 @@ automation:
     condition:
       condition: and
       conditions:
+        - condition: state
+          entity_id: input_boolean.holiday_mode
+          state: "off" #don't run if on holiday
         - condition: time
           weekday:
             - sun
@@ -91,6 +94,9 @@ automation:
     condition:
       condition: and
       conditions:
+        - condition: state
+          entity_id: input_boolean.holiday_mode
+          state: "off" #don't run if on holiday
         - condition: time
           weekday:
             - mon

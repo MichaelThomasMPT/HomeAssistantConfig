@@ -54,7 +54,7 @@ automation:
         data:
           brightness_pct: 100
 
- #if garden lights left on during the day, turn them off.
+  #if garden lights left on during the day, turn them off.
   - alias: Garden - Turn Off Outdoor Lights If Left On During The Day
     id: garden_turn_off_outdoor_lights_if_left_on_during_the_day
     mode: single

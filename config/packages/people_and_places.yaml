@@ -12,6 +12,11 @@ binary_sensor:
     country: AU
     province: WA
 
+input_boolean:
+  holiday_mode:
+    name: Holiday Mode
+    icon: mdi:palm-tree
+
 ios:
   
 # Push Notifications  

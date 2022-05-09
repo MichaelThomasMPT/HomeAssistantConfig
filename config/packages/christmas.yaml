@@ -44,6 +44,9 @@ automation:
         offset: "+00:30:00"
     condition:
       - condition: state
+        entity_id: input_boolean.holiday_mode
+        state: "off" #don't run if on holiday
+      - condition: state
         entity_id: input_boolean.enable_christmas_automations
         state: 'on'
       - condition: state

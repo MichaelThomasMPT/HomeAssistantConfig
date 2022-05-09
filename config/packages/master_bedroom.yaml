@@ -259,6 +259,7 @@ automation:
       - platform: state
         entity_id: light.master_bedroom_ceiling
         to: "off"
+        from: "on"
     condition:
       - condition: time
         after: "21:30:00"

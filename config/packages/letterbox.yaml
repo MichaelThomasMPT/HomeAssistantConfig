@@ -18,6 +18,9 @@ automation:
     mode: single #for cooldown
     condition:
       - condition: state
+        entity_id: input_boolean.holiday_mode
+        state: "off" #don't run if on holiday
+      - condition: state
         entity_id: var.mail_was_delivered_today
         state: 'False'
     action:

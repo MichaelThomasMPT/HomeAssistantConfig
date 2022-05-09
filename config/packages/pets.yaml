@@ -105,6 +105,10 @@ automation:
           - '11:58:00'
           - '14:58:00'
           - '17:58:00'
+    condition:
+      - condition: state
+        entity_id: input_boolean.holiday_mode
+        state: "off" #don't run if on holiday
     action:
       - service: notify.mobile_app_michael_s_galaxy_s10
         data:
@@ -131,6 +135,10 @@ automation:
           - binary_sensor.dinner
         from: 'off'
         to: 'on'
+    condition:
+      - condition: state
+        entity_id: input_boolean.holiday_mode
+        state: "off" #don't run if on holiday
     action:
       - service: input_boolean.turn_on
         target:

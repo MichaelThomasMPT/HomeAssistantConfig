@@ -32,6 +32,7 @@ automation:
       platform: state
       entity_id: binary_sensor.michael_pc
       to: "off"
+      from: "on"
     condition:
       condition: state  # from sunset until sunrise
       entity_id: sun.sun

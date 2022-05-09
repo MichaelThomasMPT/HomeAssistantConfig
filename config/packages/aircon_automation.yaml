@@ -244,6 +244,9 @@ automation:
       - platform: time
         at: '06:00:00'
     condition:
+      - condition: state
+        entity_id: input_boolean.holiday_mode
+        state: "off" #don't run if on holiday
       - condition: time
         weekday:
           - mon
@@ -288,6 +291,9 @@ automation:
         entity_id: sensor.living_room_temperature
         below: 18
     condition:
+      - condition: state
+        entity_id: input_boolean.holiday_mode
+        state: "off" #don't run if on holiday
       - condition: or
         conditions:
         - condition: time
