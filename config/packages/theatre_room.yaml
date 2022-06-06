@@ -260,6 +260,21 @@ script:
           brightness_pct: 1
 
 automation:
+  - alias: Theatre Room - Turn On TV Smart Switch When It Turns Itself Off
+    id: theatre_room_turn_on_tv_smart_switch_when_it_turns_itself_off
+    mode: queued
+    max: 3
+    trigger:
+      - platform: state
+        entity_id: switch.theatre_room_tv_smart_plug
+        to: 'off'
+    action:
+      - service: switch.turn_on
+        target:
+          entity_id: switch.theatre_room_tv_smart_plug
+      - delay:
+          minutes: 5
+
   - alias: Theatre Room - Turn On Theatre Room TV with WakeOnLan
     trigger:
       - platform: webostv.turn_on

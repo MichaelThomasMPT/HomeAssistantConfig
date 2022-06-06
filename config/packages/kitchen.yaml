@@ -63,6 +63,32 @@ binary_sensor:
               states('binary_sensor.kitchen_chair_4_upright') == 'on'  }} 
 
 automation:
+  - alias: Kitchen - Turn On Main Fridge When It Turns Itself Off
+    id: kitchen_turn_on_main_fridge_when_it_turns_itself_off
+    mode: queued
+    trigger:
+      - platform: state
+        entity_id: switch.main_fridge_smart_plug
+        to: 'off'
+    action:
+      - service: switch.turn_on
+        target:
+          entity_id: switch.main_fridge_smart_plug
+      - delay:
+          minutes: 5
+  - alias: Kitchen - Turn On Drinks Fridge When It Turns Itself Off
+    id: kitchen_turn_on_drinks_fridge_when_it_turns_itself_off
+    mode: queued
+    trigger:
+      - platform: state
+        entity_id: switch.drinks_fridge_smart_plug
+        to: 'off'
+    action:
+      - service: switch.turn_on
+        target:
+          entity_id: switch.drinks_fridge_smart_plug
+      - delay:
+          minutes: 5
   #if coffee machine left open, send a push notification.
   - alias: Kitchen - Notify If Coffee Machine Closed for 5 Minutes
     id: kitchen_notify_if_coffee_machine_closed_for_5_minutes
@@ -195,6 +221,42 @@ alert:
       - mobile_app_michael_s_galaxy_s10
     data:
       group: Kitchen Sink Leak
+      color: 'red'
+      ttl: 0
+      priority: high
+
+  main_fridge_power_alerts:
+    title: Main Fridge Has No Power!
+    name: The main fridge's smart plug is turned off.
+    entity_id: switch.main_fridge_smart_plug
+    state: 'off'
+    repeat: 
+      - 5 #minutes to wait before the first alert
+      - 1 #minues between alerts once started
+    can_acknowledge: false
+    skip_first: true
+    notifiers:
+      - mobile_app_michael_s_galaxy_s10
+    data:
+      group: Fridges
+      color: 'red'
+      ttl: 0
+      priority: high
+
+  drinks_fridge_power_alerts:
+    title: Drinks Fridge Has No Power!
+    name: The drinks fridge's smart plug is turned off.
+    entity_id: switch.drinks_fridge_smart_plug
+    state: 'off'
+    repeat: 
+      - 5 #minutes to wait before the first alert
+      - 1 #minues between alerts once started
+    can_acknowledge: false
+    skip_first: true
+    notifiers:
+      - mobile_app_michael_s_galaxy_s10
+    data:
+      group: Fridges
       color: 'red'
       ttl: 0
       priority: high
