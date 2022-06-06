@@ -40,10 +40,14 @@ automation:
       conditions:
         - condition: state
           entity_id: binary_sensor.garage_door_external
-          state: 'off'
+          state:
+            - 'off'
+            - 'unavailable'
         - condition: state
           entity_id: binary_sensor.garage_door_internal
-          state: 'off'
+          state:
+            - 'off'
+            - 'unavailable'
         - condition: state
           entity_id: cover.garage_door
           state: 'closed'
@@ -54,10 +58,14 @@ automation:
         conditions:
           - condition: state
             entity_id: binary_sensor.garage_door_external
-            state: 'off'
+            state:
+              - 'off'
+              - 'unavailable'
           - condition: state
             entity_id: binary_sensor.garage_door_internal
-            state: 'off'
+            state:
+              - 'off'
+              - 'unavailable'
           - condition: state
             entity_id: cover.garage_door
             state: 'closed'
