@@ -1,12 +1,16 @@
 input_boolean:
-  medicine_reminder_toggle:
-    name: Remind Me To Take Medicine
+  medicine_reminder_michael_toggle:
+    name: Remind Michael To Take Medicine
+    icon: mdi:pill
+    initial: false
+  medicine_reminder_laura_toggle:
+    name: Remind Laura To Take Medicine
     icon: mdi:pill
     initial: false
 
 automation:
-  - alias: Medicine - Activate Reminder When Medicine Needs Taking
-    id: medicine_activate_reminder_when_medicine_needs_taking
+  - alias: Medicine - Activate Michael Reminder When Medicine Needs Taking
+    id: medicine_activate_michael_reminder_when_medicine_needs_taking
     trigger:
       - platform: time
         at: 
@@ -15,27 +19,50 @@ automation:
     action:
       - service: input_boolean.turn_on
         data:
-          entity_id: input_boolean.medicine_reminder_toggle
+          entity_id: input_boolean.medicine_reminder_michael_toggle
 
-  - alias: Medicine - Deactivate Reminder Once Medicine Is Taken
-    id: medicine_deactivate_reminder_once_medicine_is_taken
+  - alias: Medicine - Activate Laura Reminder When Medicine Needs Taking
+    id: medicine_activate_laura_reminder_when_medicine_needs_taking
+    trigger:
+      - platform: time
+        at: 
+          - '20:30:00'
+    action:
+      - service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.medicine_reminder_laura_toggle
+
+  - alias: Medicine - Deactivate Michael Reminder Once Medicine Is Taken
+    id: medicine_deactivate_michael_reminder_once_medicine_is_taken
     trigger:
       platform: event
       event_type: mobile_app_notification_action
       event_data:
-        action: medicine_reminder_finished
+        action: medicine_reminder_michael_finished
     action:
       - service: input_boolean.turn_off
         data:
-          entity_id: input_boolean.medicine_reminder_toggle
+          entity_id: input_boolean.medicine_reminder_michael_toggle
 
-  - alias: Medicine - Pause Medicine Notifications Until Home
-    id: medicine_pause_medicine_notifications_until_home
+  - alias: Medicine - Deactivate Laura Reminder Once Medicine Is Taken
+    id: medicine_deactivate_laura_reminder_once_medicine_is_taken
     trigger:
       platform: event
       event_type: mobile_app_notification_action
       event_data:
-        action: medicine_reminder_mute_until_home
+        action: medicine_reminder_laura_finished
+    action:
+      - service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.medicine_reminder_laura_toggle
+
+  - alias: Medicine - Pause Michael Medicine Notifications Until Home
+    id: medicine_pause_michael_medicine_notifications_until_home
+    trigger:
+      platform: event
+      event_type: mobile_app_notification_action
+      event_data:
+        action: medicine_reminder_michael_mute_until_home
     condition:
       - condition: state
         entity_id: person.michael
@@ -43,16 +70,36 @@ automation:
     action:
       - service: input_boolean.turn_off
         data:
-          entity_id: input_boolean.medicine_reminder_toggle
+          entity_id: input_boolean.medicine_reminder_michael_toggle
       - wait_template: "{{ is_state('person.michael', 'home') }}"
       - service: input_boolean.turn_on
         data:
-          entity_id: input_boolean.medicine_reminder_toggle    
+          entity_id: input_boolean.medicine_reminder_michael_toggle
+
+  - alias: Medicine - Pause Laura Medicine Notifications Until Home
+    id: medicine_pause_laura_medicine_notifications_until_home
+    trigger:
+      platform: event
+      event_type: mobile_app_notification_action
+      event_data:
+        action: medicine_laura_reminder_mute_until_home
+    condition:
+      - condition: state
+        entity_id: person.laura
+        state: 'not_home'
+    action:
+      - service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.medicine_reminder_laura_toggle
+      - wait_template: "{{ is_state('person.laura', 'home') }}"
+      - service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.medicine_reminder_laura_toggle
 
 alert:
-  medicine_reminder:
+  medicine_reminder_michael:
     name: Remember to take your medicine.
-    entity_id: input_boolean.medicine_reminder_toggle
+    entity_id: input_boolean.medicine_reminder_michael_toggle
     state: 'on'
     repeat: 15
     can_acknowledge: true
@@ -62,7 +109,23 @@ alert:
     data:
       group: Medicine
       actions:
-        - action: "medicine_reminder_finished" 
+        - action: "medicine_reminder_michael_finished" 
           title: "I've Taken It"
-        - action: "medicine_reminder_mute_until_home" 
+        - action: "medicine_reminder_michael_mute_until_home" 
+          title: "Mute Until I'm Home"
+  medicine_reminder_laura:
+    name: Remember to take your medicine.
+    entity_id: input_boolean.medicine_reminder_laura_toggle
+    state: 'on'
+    repeat: 15
+    can_acknowledge: true
+    skip_first: false
+    notifiers:
+      - mobile_app_lauras_iphone
+    data:
+      group: Medicine
+      actions:
+        - action: "medicine_reminder_laura_finished" 
+          title: "I've Taken It"
+        - action: "medicine_reminder_laura_mute_until_home" 
           title: "Mute Until I'm Home"
