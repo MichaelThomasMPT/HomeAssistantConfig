@@ -86,6 +86,38 @@ script:
       service: cover.open_cover
     alias: Aircon Fan Office
 
+  aircon_heat_office:
+    sequence:
+    - data:
+        entity_id: climate.ac
+        hvac_mode: heat
+      service: climate.set_hvac_mode
+    - data:
+        entity_id: climate.ac
+        temperature: 25
+      service: climate.set_temperature
+    - service: script.aircon_turn_off_all_zones
+    - data:
+        entity_id: cover.bed_2_3
+      service: cover.open_cover
+    alias: Aircon Heat Office
+
+  aircon_cool_office:
+    sequence:
+    - data:
+        entity_id: climate.ac
+        hvac_mode: cool
+      service: climate.set_hvac_mode
+    - data:
+        entity_id: climate.ac
+        temperature: 23
+      service: climate.set_temperature
+    - service: script.aircon_turn_off_all_zones
+    - data:
+        entity_id: cover.bed_2_3
+      service: cover.open_cover
+    alias: Aircon Cool Office
+
   #Run the fan in the theatre
   aircon_fan_theatre:
     sequence:
@@ -408,11 +440,6 @@ automation:
       - platform: event
         event_type: deconz_event
         event_data: 
-          id: office_aircon_switch_michael
-          event: 1002 
-      - platform: event
-        event_type: deconz_event
-        event_data: 
           id: office_aircon_switch_laura
           event: 1002 
     action:
@@ -440,11 +467,6 @@ automation:
   - alias: Temperature - Office Button Trigger - Off
     id: temperature_office_button_trigger_off
     trigger:
-      - platform: event
-        event_type: deconz_event
-        event_data: 
-          id: office_aircon_switch_michael
-          event: 2002 
       - platform: event
         event_type: deconz_event
         event_data: 
