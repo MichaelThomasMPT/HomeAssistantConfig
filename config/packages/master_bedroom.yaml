@@ -3,13 +3,13 @@ binary_sensor:
   - platform: threshold
     name: Ensuite Shower Above Humidity Threshold
     entity_id: sensor.ensuite_shower_humidity
-    upper: 92
+    upper: 85
   - platform: trend
     sensors:
       ensuite_shower_humidity_falling:
         entity_id: sensor.ensuite_shower_humidity
         sample_duration: 3600 #last 1 hour
-        min_gradient: -0.002 #Humidity is dropping fast enough
+        min_gradient: -0.003 #Humidity is dropping fast enough
         max_samples: 5
   - platform: template
     sensors:
