@@ -190,24 +190,6 @@ automation:
           minutes: 5
 
 alert:
-  freezer_door_alerts:
-    title: Freezer Door Left Open
-    name: The scullery freezer door was left open! 
-    entity_id: binary_sensor.freezer_door
-    state: 'on'
-    repeat: 
-      - 3 #minutes to wait before the first alert
-      - 1 #minues between alerts once started
-    can_acknowledge: false
-    skip_first: true
-    notifiers:
-      - mobile_app_michael_s_galaxy_s10
-    data:
-      group: Freezer Door
-      color: 'red'
-      ttl: 0
-      priority: high
-
   kitchen_sink_leak_alerts:
     title: Leak detected! 
     name: The kitchen sink or dishwasher is leaking! 
@@ -229,24 +211,6 @@ alert:
     title: Main Fridge Has No Power!
     name: The main fridge's smart plug is turned off.
     entity_id: switch.main_fridge_smart_plug
-    state: 'off'
-    repeat: 
-      - 5 #minutes to wait before the first alert
-      - 1 #minues between alerts once started
-    can_acknowledge: false
-    skip_first: true
-    notifiers:
-      - mobile_app_michael_s_galaxy_s10
-    data:
-      group: Fridges
-      color: 'red'
-      ttl: 0
-      priority: high
-
-  drinks_fridge_power_alerts:
-    title: Drinks Fridge Has No Power!
-    name: The drinks fridge's smart plug is turned off.
-    entity_id: switch.drinks_fridge_smart_plug
     state: 'off'
     repeat: 
       - 5 #minutes to wait before the first alert
