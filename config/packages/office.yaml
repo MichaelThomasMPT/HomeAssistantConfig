@@ -161,6 +161,56 @@ automation:
             - media_player.office_google_home
             - media_player.office_pc_speakers
 
+  - alias: Office - Blinds Open In The Morning
+    id: office_blinds_open_in_the_morning
+    trigger: 
+      - platform: time
+        at: 
+          - '08:00:00'
+    condition:
+      - condition: state  # from sunset until sunrise
+        entity_id: alarm_control_panel.alarm_com
+        state: 'disarmed'
+    action:
+      - service: cover.open
+        target:
+          entity_id: cover.office_blinds
+
+  - alias: Office - Blinds Mid At Lunch Time
+    id: office_blinds_mid_at_lunch_time
+    trigger: 
+      - platform: time
+        at: 
+          - '12:30:00'
+    condition:
+      - condition: state  # from sunset until sunrise
+        entity_id: alarm_control_panel.alarm_com
+        state: 'disarmed'
+    action:
+      - service: cover.set_cover_position
+        data:
+          position: 40
+        target:
+          entity_id: cover.office_blinds
+
+  - alias: Office - Blinds Close When Required
+    id: office_blinds_close_when_required
+    trigger: 
+      - platform: state
+        entity_id: 
+          - alarm_control_panel.alarm_com
+        to:
+          - "armed_home"
+          - "armed_away"
+      - platform: time
+        at: 
+          - '23:30:00'
+    action:
+      - service: cover.close
+        target:
+          entity_id: cover.office_blinds
+
+
 script:
   flash_office_lamp:
     fields:
