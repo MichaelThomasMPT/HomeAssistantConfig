@@ -49,16 +49,17 @@ var:
 
 script:
   run_bed_time_projector:
+    mode: single
     sequence:
         #first set the brightness...
       - service: light.turn_on
         target:
-          entity_id: light.genio_nebula_projector_lamp
+          entity_id: light.genio_nebula_projector_tuya_cloud
         data:
           brightness_pct: 1
         #...then change the colour (these can't be done in the same call for some reason)
       - delay:
-          seconds: 1
+          seconds: 3
       - service: light.turn_on
         target:
           entity_id: light.genio_nebula_projector_lamp 
@@ -71,7 +72,7 @@ script:
         target:
           entity_id: light.genio_nebula_projector_laser 
         data:
-          brightness_pct: 15
+          brightness_pct: 13
       - delay:
           seconds: 5
       - service: number.set_value
@@ -79,11 +80,6 @@ script:
           entity_id: number.genio_nebula_projector_rotation_speed
         data:
           value: '500'
-      - delay:
-          minutes: 30
-      - service: light.turn_off
-        target:
-          entity_id: light.genio_nebula_projector_lamp
 
 automation:
   - alias: Master Bedroom - Turn Off Everything When Going To Bed
@@ -115,7 +111,6 @@ automation:
           #Leave the bed side lamp and the corresponding hue group on if it already is. Also leave the ceiling projector on. 
           excluded_lights: "['light.master_bedroom', 'light.master_bedroom_michael_lamp', 'light.master_bedroom_laura_lamp', 'light.genio_nebula_projector_lamp', 'light.genio_nebula_projector_laser', 'light.genio_nebula_projector_tuya_cloud']" 
           turn_off_aircon: "{{ not aircon_was_running_master_bedroom }}"
-      - service: script.run_bed_time_projector
       #proceed to turn on the aircon in the master bedroom for 60 min if the aircon was already on in there
       - condition: template
         value_template: "{{ aircon_was_running_master_bedroom or aircon_was_running_living_room }}"
@@ -284,7 +279,27 @@ automation:
         from: "on"
     condition:
       - condition: time
-        after: "21:30:00"
+        after: "20:30:00"
         before: "05:00:00"
     action:
       - service: script.run_bed_time_projector
+
+  - alias: Master Bedroom - Turn Off Projector After 30 Minutes
+    id: master_bedroom_turn_off_projector_after_30_minutes
+    trigger:
+      - platform: state
+        entity_id: light.genio_nebula_projector_lamp
+        to: "on"
+        for:
+          minutes: 30
+      - platform: state
+        entity_id: light.genio_nebula_projector_tuya_cloud
+        to: "on"
+        for:
+          minutes: 30
+    action:
+      - service: light.turn_off
+        target:
+          entity_id:
+            - light.genio_nebula_projector_lamp
+            - light.genio_nebula_projector_tuya_cloud
