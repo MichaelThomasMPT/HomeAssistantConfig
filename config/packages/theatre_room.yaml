@@ -470,22 +470,22 @@ automation:
           music_file: '/local/sounds/Snowpiercer.mp3'
           media_location: "NETFLIX"
           netflix_show_name: "Snowpiercer"
-        3003: #The Marvelous Mrs. Maisel
-          music_file: '/local/sounds/Mrs_Maisel.mp3'
+        3003: #Marvel
+          music_file: '/local/sounds/Marvel.mp3'
           media_location: "PLEX"
-          plex_content_id: '{ "playlist_name": "The Marvelous Mrs. Maisel", "shuffle": "0" }'
-        4004: #Our Flag Means Death
-          music_file: '/local/sounds/Our_Flag_Means_Death.mp3'
+          plex_content_id: '{ "playlist_name": "Marvel", "shuffle": "0" }'
+        4004: #Gruen
+          music_file: '/local/sounds/Gruen.mp3'
           media_location: "PLEX"
-          plex_content_id: '{ "playlist_name": "Our Flag Means Death", "shuffle": "0" }'
-        5005: #Cowboy Bebop
-          music_file: '/local/sounds/Cowboy_Bebop.mp3'
-          media_location: "NETFLIX"
-          netflix_show_name: "Cowboy Bebop New"
-        6006: #Battlebots
-          music_file: '/local/sounds/Battlebots.mp3'
+          plex_content_id: '{ "playlist_name": "Gruen", "shuffle": "0" }'
+        5005: #Last Week Tonight
+          music_file: '/local/sounds/Last_Week_Tonight.mp3'
           media_location: "PLEX"
-          plex_content_id: '{ "playlist_name": "Battlebots", "shuffle": "0" }'
+          plex_content_id: '{ "playlist_name": "Last Week Tonight", "shuffle": "0" }'
+        6006: #Westworld
+          music_file: '/local/sounds/Westworld.mp3'
+          media_location: "PLEX"
+          plex_content_id: '{ "playlist_name": "Westworld", "shuffle": "0" }'
     trigger: 
       - platform: event
         event_type: deconz_event
