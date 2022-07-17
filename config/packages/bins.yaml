@@ -4,6 +4,13 @@ var:
     initial_value: False
     restore: true #when the server restarts, make sure state is maintained
 
+input_boolean:
+  take_bins_out_alerts:
+    name: Take Bins Out Alerts
+    icon: mdi:trash-can
+    initial: true
+
+
 automation:
   #If both doors were open at the same time, then the bins were moved today
   - alias: Bins - Were Bins Moved Today?
@@ -41,10 +48,14 @@ automation:
         data:
           entity_id: var.bins_were_moved_today
           value: False
+      - service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.take_bins_out_alerts
       #if notification automation was disabled, turn it back on
       - service: automation.turn_on
         entity_id:
           - automation.bins_notify_if_bins_not_taken_out
+          - automation.bins_notify_if_bins_not_brought_back_in
 
   #Alert me if the bins need taking out
   - alias: Bins - Notify If Bins Not Taken Out
@@ -66,6 +77,9 @@ automation:
         - condition: state
           entity_id: input_boolean.holiday_mode
           state: "off" #don't run if on holiday
+        - condition: state
+          entity_id: input_boolean.take_bins_out_alerts
+          state: "on" #only run when enabled
         - condition: time
           weekday:
             - sun
@@ -97,6 +111,9 @@ automation:
         - condition: state
           entity_id: input_boolean.holiday_mode
           state: "off" #don't run if on holiday
+        - condition: state
+          entity_id: input_boolean.take_bins_out_alerts
+          state: "on" #only run when enabled
         - condition: time
           weekday:
             - mon
