@@ -154,7 +154,7 @@ automation:
         data:
           message: Garage door cannot be reached.
           data:
-            image: /api/camera_proxy/camera.garage
+            image: /api/camera_proxy/camera.garage_camera
           
   #if not closing garage when leaving home, send a notification. 
   - alias: Garage - Notify If Garage Door Left Open When Leaving Home
@@ -174,7 +174,7 @@ automation:
         data:
           message: Garage door was left open.
           data:
-            image: /api/camera_proxy/camera.garage
+            image: /api/camera_proxy/camera.garage_camera
             actions:
               - action: "close_garage"
                 title: "Close Garage Door"

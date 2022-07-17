@@ -1,17 +1,3 @@
-camera:
-  - platform: ffmpeg
-    name: Garage Camera
-    input: !secret swann_dvr_garage_camera_hd
-  - platform: ffmpeg
-    name: Side Path
-    input: !secret swann_dvr_side_path_camera_hd
-  # - platform: ffmpeg
-  #   name: Swann Camera 3
-  #   input: !secret swann_dvr_camera_3_hd
-  # - platform: ffmpeg
-  #   name: Swann Camera 4
-  #   input: !secret swann_dvr_camera_4_hd
-
 switch:
   - platform: template
     switches:
