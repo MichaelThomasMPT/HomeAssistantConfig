@@ -1,0 +1,28 @@
+automation:
+  - alias: 3D Printer - Notify Me When Print Has Finished
+    id: 3d_printer_notify_me_when_print_has_finished
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.octoprint_printing
+        from: "on"
+        to: "off"
+    variables:
+      notification_title: 3D Print Finished
+      notification_message: Your 3D print has completed.
+    action:
+      - alias: "Only announce between 9am and 9pm"
+        wait_template: "{{ now().hour < 21 and now().hour >= 9 }}"
+      - service: notify.mobile_app_michael_s_galaxy_s10
+        data:
+          title: "{{ notification_title }}"
+          message: "{{ notification_message }}"
+          data:
+            group: "3D Printer"
+            image: /api/camera_proxy/camera.ender_3_s1
+      - condition: state
+        entity_id: media_player.kitchen_google_home_hub
+        state: "off" # Only use text-to-speech on Google Home Hub if it's not already in use, so it doesn't stop any music from playing
+      - service: tts.google_translate_say
+        data:
+          entity_id: media_player.all_rooms
+          message: "{{ notification_message }}"
