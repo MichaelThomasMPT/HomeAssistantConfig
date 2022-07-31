@@ -16,9 +16,12 @@ automation:
         data:
           entity_id: 
             - automation.theatre_room_blinds_open_automatically
-            - automation.theatre_room_motion_turn_on_lights_when_motion_detected
+            - automation.theatre_room_lights_turn_on_lights_when_motion_detected
             - automation.theatre_room_lights_turn_off_lamps_after_no_activity
             - automation.theatre_room_lights_manual_control_movie_lights
+            - automation.office_blinds_close_when_required
+            - automation.office_blinds_mid_at_lunch_time
+            - automation.office_blinds_open_in_the_morning
 
   #When guests go home, reactivate automations
   - alias: Guests - Deactivate Guest Mode
@@ -32,9 +35,12 @@ automation:
         data:
           entity_id: 
             - automation.theatre_room_blinds_open_automatically
-            - automation.theatre_room_motion_turn_on_lights_when_motion_detected
+            - automation.theatre_room_lights_turn_on_lights_when_motion_detected
             - automation.theatre_room_lights_turn_off_lamps_after_no_activity
             - automation.theatre_room_lights_manual_control_movie_lights
+            - automation.office_blinds_close_when_required
+            - automation.office_blinds_mid_at_lunch_time
+            - automation.office_blinds_open_in_the_morning
 
   #Once per day, ask if guest mode should be deactivated
   - alias: Guests - Notification To Deactivate Guest Mode
