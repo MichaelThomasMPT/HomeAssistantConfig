@@ -5,39 +5,36 @@ binary_sensor:
     count: 2
     scan_interval: 30
 
-sensor:
-  - platform: mqtt
-    state_topic: "igrill/igrill_v2/probe1"
-    name: "iGrill Probe 1"
-    qos: 0
-    unit_of_measurement: "°C"
-    expire_after: 120 #2 minutes
-  - platform: mqtt
-    state_topic: "igrill/igrill_v2/probe2"
-    name: "iGrill Probe 2"
-    qos: 0
-    unit_of_measurement: "°C"
-    expire_after: 120 #2 minutes
-  - platform: mqtt
-    state_topic: "igrill/igrill_v2/probe3"
-    name: "iGrill Probe 3"
-    qos: 0
-    unit_of_measurement: "°C"
-    expire_after: 120 #2 minutes
-  - platform: mqtt
-    state_topic: "igrill/igrill_v2/probe4"
-    name: "iGrill Probe 4"
-    qos: 0
-    unit_of_measurement: "°C"
-    expire_after: 120 #2 minutes
-  - platform: mqtt
-    state_topic: "igrill/igrill_v2/battery"
-    name: "iGrill Battery"
-    qos: 0
-    unit_of_measurement: "%"
-    icon: mdi:battery
-    expire_after: 120 #2 minutes
+mqtt:
+  sensor:
+    - state_topic: "igrill/igrill_v2/probe1"
+      name: "iGrill Probe 1"
+      qos: 0
+      unit_of_measurement: "°C"
+      expire_after: 120 #2 minutes
+    - state_topic: "igrill/igrill_v2/probe2"
+      name: "iGrill Probe 2"
+      qos: 0
+      unit_of_measurement: "°C"
+      expire_after: 120 #2 minutes
+    - state_topic: "igrill/igrill_v2/probe3"
+      name: "iGrill Probe 3"
+      qos: 0
+      unit_of_measurement: "°C"
+      expire_after: 120 #2 minutes
+    - state_topic: "igrill/igrill_v2/probe4"
+      name: "iGrill Probe 4"
+      qos: 0
+      unit_of_measurement: "°C"
+      expire_after: 120 #2 minutes
+    - state_topic: "igrill/igrill_v2/battery"
+      name: "iGrill Battery"
+      qos: 0
+      unit_of_measurement: "%"
+      icon: mdi:battery
+      expire_after: 120 #2 minutes
 
+sensor:
   - platform: template
     sensors:
       igrill_ambient_alert_temp:
@@ -60,7 +57,8 @@ sensor:
     sensors:
       igrill_target_alert_temp_probe_1:
         value_template:
-          '{% if (states.sensor.igrill_probe_1.state | int) >= (states.input_number.igrill_probe_1_target_temp.state | int) %}
+          '{% if states.sensor.igrill_probe_1.state != "unavailable"
+              and (states.sensor.igrill_probe_1.state | int) >= (states.input_number.igrill_probe_1_target_temp.state | int) %}
             Alert
           {% else %}
             Normal
@@ -70,7 +68,8 @@ sensor:
     sensors:
       igrill_target_alert_temp_probe_2:
         value_template:
-          '{% if (states.sensor.igrill_probe_2.state | int) >= (states.input_number.igrill_probe_2_target_temp.state | int) %}
+          '{% if states.sensor.igrill_probe_2.state != "unavailable"
+              and (states.sensor.igrill_probe_2.state | int) >= (states.input_number.igrill_probe_2_target_temp.state | int) %}
             Alert
           {% else %}
             Normal
@@ -80,7 +79,8 @@ sensor:
     sensors:
       igrill_target_alert_temp_probe_3:
         value_template:
-          '{% if (states.sensor.igrill_probe_3.state | int) >= (states.input_number.igrill_probe_3_target_temp.state | int) %}
+          '{% if states.sensor.igrill_probe_3.state != "unavailable"
+              and (states.sensor.igrill_probe_3.state | int) >= (states.input_number.igrill_probe_3_target_temp.state | int) %}
             Alert
           {% else %}
             Normal
