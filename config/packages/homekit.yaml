@@ -42,6 +42,7 @@ homekit:
         - light.range_extender_2
         - light.theatre_room
         - light.theatre_room_2
+        - media_player.theatre_room_tv
     entity_config:
       cover.bed_2_3:
         name: Aircon Vent - Bedroom 2 & 3
