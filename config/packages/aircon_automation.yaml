@@ -346,6 +346,12 @@ automation:
         data:
           entity_id: input_number.aircon_countdown_timer
           value: 30
+      - delay: #wait extra time just in case it hasn't turned off yet
+          minutes: 60
+      - service: climate.turn_off
+        entity_id:
+          - climate.ac
+
 
   - alias: Temperature - Master Bed Button Trigger - Fan
     id: temperature_master_bed_button_trigger_fan
