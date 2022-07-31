@@ -14,7 +14,7 @@ homeassistant:
   allowlist_external_dirs:
     - "/tmp"
   currency: AUD
-
+  
 # Configure a default setup of Home Assistant (frontend, api, etc)
 default_config:
 
@@ -38,10 +38,9 @@ influxdb:
   database: home_assistant
   max_retries: 3
   default_measurement: state
+  api_version: 1
   exclude:
     entities:
-        - sensor.es_cluster_health
-        - sensor.es_publish_queue
         - sun.sun
   tags_attributes:
     - friendly_name
