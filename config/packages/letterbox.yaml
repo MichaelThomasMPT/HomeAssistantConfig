@@ -12,7 +12,6 @@ automation:
     trigger:
       platform: state
       entity_id: 
-        - binary_sensor.letterbox_motion
         - binary_sensor.letterbox_door
       to: 'on'
     mode: single #for cooldown
