@@ -23,7 +23,16 @@ binary_sensor:
     name: Michael In Meeting
     entities:
       - binary_sensor.michael_desktop_in_meeting
-      - binary_sensor.michael_work_in_meeting_wifi
+      - binary_sensor.michael_work_in_meeting 
+
+input_number:
+  office_blinds_height:
+    name: Office Blinds Height
+    min: 0
+    max: 100
+    step: 10
+    unit_of_measurement: "%"
+    icon: mdi:roller-shade
 
 automation:
   - alias: Front Hall - Turn On Hallway Light If PC Turned Off At Night
@@ -172,9 +181,11 @@ automation:
         entity_id: alarm_control_panel.alarm_com
         state: 'disarmed'
     action:
-      - service: cover.open
+      - service: input_number.set_value
+        data:
+          value: 100
         target:
-          entity_id: cover.office_blinds
+          entity_id: input_number.office_blinds_height
 
   - alias: Office - Blinds Mid At Lunch Time
     id: office_blinds_mid_at_lunch_time
@@ -187,11 +198,11 @@ automation:
         entity_id: alarm_control_panel.alarm_com
         state: 'disarmed'
     action:
-      - service: cover.set_cover_position
+      - service: input_number.set_value
         data:
-          position: 40
+          value: 40
         target:
-          entity_id: cover.office_blinds
+          entity_id: input_number.office_blinds_height
 
   - alias: Office - Blinds Close When Required
     id: office_blinds_close_when_required
@@ -206,10 +217,24 @@ automation:
         at: 
           - '23:30:00'
     action:
-      - service: cover.close
+      - service: input_number.set_value
+        data:
+          value: 0
+        target:
+          entity_id: input_number.office_blinds_height
+
+  - alias: Office - Blinds Set Height Manually
+    id: office_blinds_set_height_manually
+    trigger: 
+      - platform: state
+        entity_id: 
+          - input_number.office_blinds_height
+    action:
+      - service: cover.set_cover_position
         target:
           entity_id: cover.office_blinds
-
+        data:
+          position: '{{ states("input_number.office_blinds_height") }}'
 
 script:
   flash_office_lamp:
