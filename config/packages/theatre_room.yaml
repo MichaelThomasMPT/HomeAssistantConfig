@@ -284,49 +284,6 @@ automation:
         data:
           mac: "A8:23:FE:E4:84:05"
 
-  # - alias: Theatre Room Blinds - Close
-  #   id: theatre_room_blinds_close
-  #   trigger:
-  #     - platform: sun
-  #       event: sunset
-  #     - platform: state
-  #       entity_id: alarm_control_panel.alarm_com
-  #       to: 'armed'
-  #     - platform: state
-  #       entity_id: media_player.theatre_room_tv
-  #       from: 'off' #from off = turning on
-  #   action:
-  #     - service: cover.close_cover
-  #       entity_id: cover.theatre_blinds
-        
-  # - alias: Theatre Room Blinds - Open Automatically
-  #   id: theatre_room_blinds_open_automatically
-  #   trigger:
-  #     - platform: sun
-  #       event: sunrise
-  #     - platform: state
-  #       entity_id: alarm_control_panel.alarm_com
-  #       to: 'disarmed'
-  #       from: 'armed_away'
-  #     - platform: state
-  #       entity_id: media_player.theatre_room_tv
-  #       to: 'off'
-  #   condition:
-  #     condition: and #ONLY open if house is disarmed AND TV is off AND it's day time
-  #     conditions:
-  #       - condition: state 
-  #         entity_id: sun.sun
-  #         state: 'above_horizon' #day time
-  #       - condition: state
-  #         entity_id: alarm_control_panel.alarm_com
-  #         state: 'disarmed'
-  #       - condition: state
-  #         entity_id: media_player.theatre_room_tv
-  #         state: 'off'
-  #   action:
-  #     - service: cover.open_cover
-  #       entity_id: cover.theatre_blinds
-
   - alias: Theatre Room Lights Manual Control - Change LED Strip Colour
     id: theatre_room_lights_manual_control_change_led_strip_colour
     trigger:

@@ -61,41 +61,6 @@ sensor:
         value_template: "{{ state_attr('weather.treeby_house', 'forecast')[1].condition }}"
         availability_template: "{{ states('weather.treeby_house') != 'Unavailable' }}"
 
-  #Solar Panel Attributes
-  - platform: template
-    sensors:
-      sems_name:
-        friendly_name: "Solar Panel - Name"
-        value_template: '{{ states.sensor.sems_portal.attributes["name"] }}'
-      sems_capacity:
-        friendly_name: "Solar Panel - Capacity"
-        value_template: '{{ states.sensor.sems_portal.attributes["capacity"] }}'
-        unit_of_measurement: "kW"
-      sems_output_power:
-        friendly_name: "Solar Panel Output"
-        value_template: '{{ states.sensor.sems_portal.attributes["outputpower"] }}'
-        unit_of_measurement: "W"
-      sems_inner_temperature:
-        friendly_name: "Solar Panel - Inner Temperature"
-        value_template: '{{ states.sensor.sems_portal.attributes["tempperature"] }}'
-        unit_of_measurement: "°C"
-      sems_total_generated: 
-        friendly_name: "Solar Panel - Total Electricity Generated"
-        value_template: '{{ states.sensor.sems_portal.attributes["etotal"] }}'     
-        unit_of_measurement: "kWh"
-      sems_today_generated: 
-        friendly_name: "Solar Panel - Electricity Generated Today"
-        value_template: '{{ states.sensor.sems_portal.attributes["eday"] }}'     
-        unit_of_measurement: "kWh"
-      sems_status: 
-        friendly_name: "Solar Panel - Status"
-        value_template: >-
-          {% if is_state_attr("sensor.sems_portal", "status", -1) -%}
-            Offline
-          {%- else -%}
-            Online
-          {%- endif %}
-
 utility_meter:
   daily_solar_energy:
     source: sensor.sems_today_generated
