@@ -1,10 +1,3 @@
-# NOTE: Aircon countdown timer is still controlled using the older IP-based approach as the 
-#       new integration cannot yet accept a template or variable in place of the number
-rest_command:
-  aircon_control:
-    url: "http://192.168.1.106:2025/setAircon?json={{ command }}"
-    method: "GET"
-
 input_number:
   aircon_countdown_timer:
     name: Aircon Countdown Timer
@@ -20,9 +13,11 @@ automation:
       platform: state
       entity_id: input_number.aircon_countdown_timer
     action:
-      - service: rest_command.aircon_control
-        data_template:
-          command: '{"ac1":{"info":{"countDownToOff":{{ states.input_number.aircon_countdown_timer.state | int }}}}}'
+      - service: advantage_air.set_time_to
+        data:
+          minutes: "{{ states.input_number.aircon_countdown_timer.state | int }}"
+        target:
+          entity_id: sensor.ac_time_to_off
   - alias: Aircon Control - Adjust Countdown Timer From Sensor
     id: aircon_control_adjust_countdown_timer_from_sensor
     trigger:
