@@ -16,8 +16,21 @@ script:
                 volume_level: 0.3
             - service: media_player.play_media
               data:
-                entity_id: media_player.master_bedroom_speaker
+                entity_id: media_player.all_rooms
                 media_content_id: '/local/sounds/september_21.mp3'
                 media_content_type: 'audio/mp3'
   
 
+automation:
+  - alias: "Morning Alarms - September Twenty-First"
+    id: morning_alarms_september_twenty_first
+    trigger:
+      - platform: time
+        at: 
+          - '08:00:00'
+    condition:
+      - condition: template
+        value_template:  >-
+          {{ '%02d' % now().month + '-%02d' % now().day == '09-21' }}
+    action:
+      - service: script.morning_alarms_if_today_is_special_play_music
