@@ -419,10 +419,10 @@ automation:
     id: theatre_room_play_tv_show_on_cube_tap
     variables: 
       buttons:
-        1001: #Drive To Survive
-          music_file: '/local/sounds/Drive_To_Survive.mp3'
-          media_location: "NETFLIX"
-          netflix_show_name: "Drive to Survive"
+        1001: #House of the Dragon
+          music_file: '/local/sounds/House_of_the_Dragon.mp3'
+          media_location: "PLEX"
+          plex_content_id: '{ "playlist_name": "House of the Dragon", "shuffle": "0" }'
         2002: #Snowpiercer
           music_file: '/local/sounds/Snowpiercer.mp3'
           media_location: "NETFLIX"
@@ -431,14 +431,14 @@ automation:
           music_file: '/local/sounds/Marvel.mp3'
           media_location: "PLEX"
           plex_content_id: '{ "playlist_name": "Marvel", "shuffle": "0" }'
-        4004: #Gruen
-          music_file: '/local/sounds/Gruen.mp3'
+        4004: #Star Wars
+          music_file: '/local/sounds/Star_Wars.mp3'
           media_location: "PLEX"
-          plex_content_id: '{ "playlist_name": "Gruen", "shuffle": "0" }'
-        5005: #Last Week Tonight
-          music_file: '/local/sounds/Last_Week_Tonight.mp3'
+          plex_content_id: '{ "playlist_name": "Star Wars", "shuffle": "0" }'
+        5005: #Taskmaster
+          music_file: '/local/sounds/Taskmaster.mp3'
           media_location: "PLEX"
-          plex_content_id: '{ "playlist_name": "Last Week Tonight", "shuffle": "0" }'
+          plex_content_id: '{ "playlist_name": "Taskmaster", "shuffle": "0" }'
         6006: #Westworld
           music_file: '/local/sounds/Westworld.mp3'
           media_location: "PLEX"
