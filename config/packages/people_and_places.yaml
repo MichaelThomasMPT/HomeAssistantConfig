@@ -89,6 +89,25 @@ automation:
         data:
           message: Laura is leaving work.
 
+  - alias: Location - Notify Laura If Michael Leaving Work
+    id: location_notify_laura_if_michael_leaving_work
+    trigger:
+      platform: zone
+      entity_id: device_tracker.michael_galaxy_s10
+      zone: zone.michael_s_work
+      event: leave
+    condition:
+      - condition: time
+        after: "16:00:00"
+        before: "19:00:00"
+      - condition: state
+        entity_id: binary_sensor.workday_sensor
+        state: "on"
+    action:
+      - service: notify.mobile_app_lauras_iphone
+        data:
+          message: Michael is leaving work.
+
   #Notify when someone comes homes
   - alias: Location - Notify When Someone Comes Home
     id: location_notify_when_someone_comes_home
