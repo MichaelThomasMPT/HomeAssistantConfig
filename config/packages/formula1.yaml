@@ -9,6 +9,10 @@ automation:
     condition:
       - condition: template
         value_template: "{{ state_attr('calendar.formula_1', 'message')|truncate(10, True, '') == 'Grand Prix'}}"
+      - condition: time
+        before: "21:00:00"
+      - condition: time
+        after: "08:00:00"
     action:
       - service: media_player.play_media
         data:
