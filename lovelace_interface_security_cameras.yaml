@@ -4,88 +4,77 @@ views:
     cards:
       - type: grid
         cards:
-          - type: picture-entity
+          - show_state: false
+            show_name: false
+            camera_view: auto
+            type: picture-entity
             entity: camera.garage_camera
             name: Garage
             camera_image: camera.garage_camera
-            camera_view: live
+          - show_state: false
             show_name: false
-            show_state: false
-          - type: picture-entity
+            camera_view: auto
+            type: picture-entity
             entity: camera.side_path
             name: Side Path
             camera_image: camera.side_path
-            camera_view: live
+          - show_state: false
             show_name: false
-            show_state: false
-          - type: picture-entity
-            entity: camera.living_room_camera_hd
+            camera_view: auto
+            type: picture-entity
+            entity: camera.living_room_camera_sd
             name: Living Room
             camera_image: camera.living_room_camera_hd
-            camera_view: live
+          - show_state: false
             show_name: false
-            show_state: false
-          - type: picture-entity
+            camera_view: auto
+            type: picture-entity
             entity: camera.alfresco_camera
             name: Alfresco
             camera_image: camera.alfresco_camera
-            camera_view: live
+          - show_state: false
             show_name: false
-            show_state: false
-          - type: picture-entity
+            camera_view: auto
+            type: picture-entity
             entity: camera.backyard_camera
             name: Backyard
             camera_image: camera.backyard_camera
-            camera_view: live
-            show_name: false
-            show_state: false
-          - type: grid
+          - square: false
+            columns: 3
+            type: grid
             cards:
-              - type: button
+              - show_name: true
+                show_icon: true
+                type: button
                 tap_action:
                   action: toggle
-                entity: switch.living_room_camera_privacy_mode
+                entity: switch.living_room_camera_privacy
                 show_state: true
                 name: Privacy Mode
-              - type: button
+                icon: mdi:eye-outline
+              - show_name: true
+                show_icon: true
+                type: button
                 tap_action:
                   action: call-service
-                  service: tapo_control.ptz
-                  service_data:
-                    preset: Dog Door
+                  service: select.select_option
+                  data:
+                    option: Central Room
                   target:
-                    device_id: 3cf71e0c142a900622f37d4d238030ce
-                name: Dog Door
+                    entity_id: select.living_room_camera_move_to_preset
+                name: Central Room
                 icon: mdi:camera-control
-              - type: button
+              - show_name: true
+                show_icon: true
+                type: button
                 tap_action:
                   action: call-service
-                  service: tapo_control.ptz
-                  service_data:
-                    preset: Couches
+                  service: select.select_option
+                  data:
+                    option: Kitchen
                   target:
-                    device_id: 3cf71e0c142a900622f37d4d238030ce
-                name: Couches
-                icon: mdi:camera-control
-              - type: button
-                tap_action:
-                  action: call-service
-                  service: tapo_control.ptz
-                  service_data:
-                    preset: Dining Room
-                  target:
-                    device_id: 3cf71e0c142a900622f37d4d238030ce
-                name: Dining Room
-                icon: mdi:camera-control
-              - type: button
-                tap_action:
-                  action: call-service
-                  service: tapo_control.ptz
-                  service_data:
-                    preset: Dog Bed
-                  target:
-                    device_id: 3cf71e0c142a900622f37d4d238030ce
-                name: Dog Bed
+                    entity_id: select.living_room_camera_move_to_preset
+                name: Kitchen
                 icon: mdi:camera-control
               - type: glance
                 entities:
@@ -99,6 +88,12 @@ views:
             camera_image: camera.last_front_door_motion
             camera_view: live
             show_name: true
+            show_state: false
+            columns: 4
+          - type: picture-entity
+            entity: camera.ender_3_s1
+            camera_image: camera.ender_3_s1
+            camera_view: live
             show_state: false
             columns: 4
         columns: 3
