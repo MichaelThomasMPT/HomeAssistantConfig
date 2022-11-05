@@ -1,25 +1,3 @@
-switch:
-  - platform: template
-    switches:
-      living_room_camera_privacy_mode:
-        friendly_name: Living Room Camera Privacy Mode
-        icon_template:  >-
-          {% if is_state('switch.living_room_camera_privacy_mode', 'on') %}
-            mdi:cctv-off
-          {% else %}
-            mdi:cctv
-          {% endif %}
-        turn_on:
-          service: tapo_control.set_privacy_mode
-          data:
-            entity_id: camera.living_room_camera_sd
-            privacy_mode: "on"
-        turn_off:
-          service: tapo_control.set_privacy_mode
-          data: 
-            entity_id: camera.living_room_camera_sd
-            privacy_mode: "off"
-
 automation:
   - alias: Security Cameras - Turn Off Living Room Camera Privacy Mode When Leaving House
     id: security_cameras_turn_off_living_room_camera_privacy_mode_when_leaving_house
@@ -35,14 +13,14 @@ automation:
     action:
       - service: switch.turn_off
         target:
-          entity_id: switch.living_room_camera_privacy_mode
+          entity_id: switch.living_room_camera_privacy
       - delay:
           seconds: 10
-      - service: tapo_control.ptz
-        target:
-          entity_id: camera.living_room_camera_sd
+      - service: select.select_option
         data:
-          preset: Couches
+          option: Central Room
+        target:
+          entity_id: select.living_room_camera_move_to_preset
  
   - alias: Security Cameras - Turn On Living Room Camera Privacy Mode When Arriving Home
     id: security_cameras_turn_on_living_room_camera_privacy_mode_when_arriving_home
@@ -53,7 +31,7 @@ automation:
     action:
       - service: switch.turn_on
         target:
-          entity_id: switch.living_room_camera_privacy_mode
+          entity_id: switch.living_room_camera_privacy
 
   - alias: Security Cameras - Take Snapshot Of Back Garden Every Day
     id: security_cameras_take_snapshot_of_back_garden_every_day
