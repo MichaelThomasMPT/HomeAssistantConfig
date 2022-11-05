@@ -1,3 +1,5 @@
+powercalc:
+
 template:
   - sensor:
       name: "Living Room Soundbar: Electric Consumption [kWh]"
