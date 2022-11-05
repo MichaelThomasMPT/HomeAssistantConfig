@@ -7,10 +7,10 @@ binary_sensor:
     name: breakfast
     after: "07:00"
     before: "11:00"
-  - platform: tod
-    name: lunch
-    after: "11:00"
-    before: "15:00"
+  # - platform: tod
+  #   name: lunch
+  #   after: "11:00"
+  #   before: "15:00"
   - platform: tod
     name: dinner
     after: "17:00"
@@ -131,7 +131,7 @@ automation:
       - platform: state
         entity_id: 
           - binary_sensor.breakfast
-          - binary_sensor.lunch
+          # - binary_sensor.lunch
           - binary_sensor.dinner
         from: 'off'
         to: 'on'
