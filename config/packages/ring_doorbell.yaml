@@ -4,9 +4,9 @@ sensor:
   - platform: template
     sensors:
       ring_last_ding:
-        value_template: '{{ as_timestamp(states.sensor.front_door_last_ding.attributes["created_at"]) | timestamp_custom("%I:%M:%S%p, %a %d %B %Y", True) }}'
+        value_template: '{% if states.sensor.front_door_last_ding.state not in ("unavailable", "unknown") %}{{ as_timestamp(states.sensor.front_door_last_ding.attributes["created_at"]) | timestamp_custom("%I:%M:%S%p, %a %d %B %Y", True) }}{% else %}unknown{% endif %}'
       ring_last_motion:
-        value_template: '{{ as_timestamp(states.sensor.front_door_last_motion.attributes["created_at"]) | timestamp_custom("%I:%M:%S%p, %a %d %B %Y", True) }}'
+        value_template: '{% if states.sensor.front_door_last_motion.state not in ("unavailable", "unknown") %}{{ as_timestamp(states.sensor.front_door_last_motion.attributes["created_at"]) | timestamp_custom("%I:%M:%S%p, %a %d %B %Y", True) }}{% else %}unknown{% endif %}'
 
 automation:
   - alias: Front Door - When Doorbell Is Rung After Dark, Turn On Light

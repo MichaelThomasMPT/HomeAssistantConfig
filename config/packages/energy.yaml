@@ -12,7 +12,7 @@ template:
   - sensor:
       name: "Theatre Room TV: Electric Consumption [kWh]"
       state: >-
-        {{ float(states('sensor.theatre_room_tv_smart_plug_power')) / 1000 }}
+        {% if states('sensor.theatre_room_tv_smart_plug_power') not in ('unknown', 'unavailable') %}{{ float(states('sensor.theatre_room_tv_smart_plug_power')) / 1000 }}{% else %}0{% endif %}
       icon: mdi:flash
       unit_of_measurement: 'kWh'
       state_class: 'total_increasing'
