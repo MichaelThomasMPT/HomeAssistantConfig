@@ -237,6 +237,31 @@ automation:
         data:
           transition: 60
 
+  - alias: Location - Remind Laura Not To Leave Lunch At Work
+    id: location_remind_laura_not_to_leave_lunch_at_work
+    mode: single #prevents reminding multiple times too quickly
+    trigger:
+      - platform: zone
+        entity_id: device_tracker.lauras_iphone
+        zone: zone.laura_s_work
+        event: leave
+      - platform: state
+        entity_id: sensor.lauras_iphone_ssid
+        from: "BYOD"
+    condition:
+      - condition: time
+        after: "15:00:00"
+        before: "19:00:00"
+      - condition: state
+        entity_id: binary_sensor.workday_sensor
+        state: "on"
+    action:
+      - service: notify.mobile_app_lauras_iphone
+        data:
+          message: Don't forget to remove your lunch from the work fridge!
+      - delay: 
+          minutes: 15 #prevents reminding multiple times too quickly 
+
 person:
   - name: Michael
     id: michael
