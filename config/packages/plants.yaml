@@ -1,31 +1,10 @@
 plant:
-  alfresco_fig:
+  fig:
     sensors:
-      moisture: sensor.fig_moisture
-      battery: sensor.fig_battery
-      temperature: sensor.fig_temperature
-      conductivity: sensor.fig_conductivity
-      brightness: sensor.fig_light
- 
-    #Monstera-specific values from the MiFlora app
-    # min_moisture: 15
-    # max_moisture: 60
-    # min_conductivity: 350
-    # max_conductivity: 2000
-    # min_temperature: 12
-    # max_temperature: 32
-    # min_brightness: 800
-    # max_brightness: 15000
-
-    #Mint-specific values from the MiFlora app
-    # min_moisture: 15
-    # max_moisture: 60
-    # min_conductivity: 350
-    # max_conductivity: 2000
-    # min_temperature: 8
-    # max_temperature: 32
-    # min_brightness: 3000
-    # max_brightness: 60000
+      moisture: sensor.fig_tree_moisture
+      temperature: sensor.fig_tree_temperature
+      conductivity: sensor.fig_tree_conductivity
+      brightness: sensor.fig_tree_illuminance
 
     #Fig-specific values from the MiFlora app
     min_moisture: 15
@@ -37,13 +16,54 @@ plant:
     min_brightness: 3500
     max_brightness: 60000
 
+  mint:
+    sensors:
+      moisture: sensor.mint_moisture
+      temperature: sensor.mint_temperature
+      conductivity: sensor.mint_conductivity
+      brightness: sensor.mint_illuminance
+
+    #Mint-specific values from the MiFlora app
+    min_moisture: 15
+    max_moisture: 60
+    min_conductivity: 350
+    max_conductivity: 2000
+    min_temperature: 8
+    max_temperature: 32
+    min_brightness: 3000
+    max_brightness: 60000
+
+  herb_planter:
+    sensors:
+      moisture: sensor.herb_planter_moisture
+      temperature: sensor.herb_planter_temperature
+      conductivity: sensor.herb_planter_conductivity
+      brightness: sensor.herb_planter_illuminance
+
+    #Coriander-specific values from the MiFlora app
+    min_moisture: 25
+    max_moisture: 65
+    min_conductivity: 100
+    max_conductivity: 2000
+    min_temperature: 5
+    max_temperature: 35
+    min_brightness: 2800
+    max_brightness: 85000
+
+template:
+  - binary_sensor:
+      - name: "A plant has a problem"
+        unique_id: plant_has_problem
+        state: "{% if 'problem' in states.plant|map(attribute='state') %}on{% else %}off{% endif %}" #if any plant has a problem, this will be on
+        device_class: battery
+
 alert:
   plant_watering_reminder:
-    name: "The fig tree needs attention"
-    title: "The fig tree needs attention"
-    message: "Problem: {{ state_attr('plant.alfresco_fig', 'problem') }}"
-    entity_id: plant.alfresco_fig
-    state: 'problem'
+    name: "Your plants needs attention"
+    title: "Your plants needs attention"
+    message: "Plants with problems:\n{% for state in states.plant %}{% if state.state == 'problem' %}{{ state.name + '\n'}}{% endif %}{% endfor %}"
+    entity_id: binary_sensor.a_plant_has_a_problem
+    state: 'on'
     repeat: 1440 #24 hours
     can_acknowledge: true
     skip_first: false
