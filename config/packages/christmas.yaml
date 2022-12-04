@@ -4,34 +4,67 @@ input_boolean:
     name: Enable Christmas Automations
     icon: mdi:pine-tree
 
+  people_away_from_home_long_enough_for_christmas_to_trigger:
+    name: People Away From Home Long Enough For Christmas To Trigger
+    icon: mdi:timer-marker-outline
+
 automation: 
+  - alias: Christmas - Ready Christmas Automations When We Have Been Away For Long Enough
+    id: christmas_ready_christmas_automations_when_we_have_been_away_for_long_enough
+    trigger:
+      - platform: state
+        entity_id: person.michael
+        to: 'not_home'
+        from: 'home'
+        # for:
+          # minutes: 5
+      - platform: state
+        entity_id: person.laura
+        to: 'not_home'
+        from: 'home'
+        for:
+          minutes: 5
+    condition:
+      - condition: and
+        conditions:
+          - condition: state
+            entity_id: person.michael
+            state: 'not_home'
+          - condition: state
+            entity_id: person.laura
+            state: 'not_home'
+    action: 
+      - service: input_boolean.turn_on
+        target:
+          entity_id: input_boolean.people_away_from_home_long_enough_for_christmas_to_trigger
+
+  - alias: Christmas - Start Christmas Automations When We Arrive Home
+    id: christmas_start_christmas_automations_when_we_arrive_home
+    trigger:
+      - platform: state
+        entity_id: person.michael
+        from: 'not_home'
+        to: 'home'
+      - platform: state
+        entity_id: person.laura
+        from: 'not_home'
+        to: 'home'
+    action: 
+      - service: input_boolean.turn_off
+        target:
+          entity_id: input_boolean.people_away_from_home_long_enough_for_christmas_to_trigger
+
   - alias: Christmas - Automatically Turn On Tree Lights When Coming Home
     id: christmas_automatically_turn_on_tree_lights_when_coming_home
     trigger:
       - platform: state
-        entity_id: person.michael
-        to: 'away'
-        from: 'home'
-      - platform: state
-        entity_id: person.laura
-        to: 'away'
-        from: 'home'
+        entity_id: input_boolean.people_away_from_home_long_enough_for_christmas_to_trigger
+        from: 'on'
+        to: 'off'
     condition:
       - condition: state
         entity_id: input_boolean.enable_christmas_automations
         state: 'on'
-      - condition: or
-        conditions:
-          - condition: state
-            entity_id: person.michael
-            state: 'away'
-            for:
-              minutes: 5
-          - condition: state
-            entity_id: person.laura
-            state: 'away'
-            for:
-              minutes: 5
     action:
       - entity_id: switch.christmas_tree_power
         service: switch.turn_on
@@ -83,17 +116,11 @@ automation:
 
   - alias: Christmas - Automatically Play Music When Arriving Home During The Day
     id: christmas_automatically_play_music_when_arriving_home
-    variables: 
-      christmas_playlist_id: "0tynRbEDdLrBkwyWwPHD3F" #Michael Buble plus others
     trigger: 
       - platform: state
-        entity_id: person.michael
-        to: 'away'
-        from: 'home'
-      - platform: state
-        entity_id: person.laura
-        to: 'away'
-        from: 'home'
+        entity_id: input_boolean.people_away_from_home_long_enough_for_christmas_to_trigger
+        from: 'on'
+        to: 'off'
     condition: 
       - condition: state
         entity_id: input_boolean.enable_christmas_automations
@@ -102,18 +129,6 @@ automation:
         before: "21:00:00"
       - condition: time
         after: "08:00:00"
-      - condition: or
-        conditions:
-          - condition: state
-            entity_id: person.michael
-            state: 'away'
-            for:
-              minutes: 5
-          - condition: state
-            entity_id: person.laura
-            state: 'away'
-            for:
-              minutes: 5
     action:
       - service: spotcast.start
         data:
