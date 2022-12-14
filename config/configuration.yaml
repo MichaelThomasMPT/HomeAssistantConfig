@@ -14,6 +14,7 @@ homeassistant:
   allowlist_external_dirs:
     - "/tmp"
   currency: AUD
+  country: AU
   
 # Configure a default setup of Home Assistant (frontend, api, etc)
 default_config:
@@ -31,16 +32,3 @@ sensor: !include sensors.yaml
 discovery:
 ssdp:
 zeroconf:
-    
-influxdb:
-  host: !secret influx_db_ip_address
-  port: !secret influx_db_port
-  database: home_assistant
-  max_retries: 3
-  default_measurement: state
-  api_version: 1
-  exclude:
-    entities:
-        - sun.sun
-  tags_attributes:
-    - friendly_name

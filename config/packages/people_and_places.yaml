@@ -18,12 +18,6 @@ input_boolean:
     icon: mdi:palm-tree
 
 ios:
-  
-# Push Notifications  
-notify:
-  - name: pushbullet
-    platform: pushbullet
-    api_key: !secret pushbullet_api_key
 
 zone:
   - name: Michael's Work

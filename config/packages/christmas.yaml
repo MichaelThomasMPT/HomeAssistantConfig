@@ -74,7 +74,6 @@ automation:
     trigger:
       - platform: sun
         event: sunset
-        offset: "+00:30:00"
     condition:
       - condition: state
         entity_id: input_boolean.holiday_mode
@@ -135,5 +134,5 @@ automation:
           uri: 'spotify:playlist:37i9dQZF1DWZv6UE8BMPO0'
           random_song: true
           shuffle: true
-          start_volume: 70
+          start_volume: 50
           entity_id: media_player.central_living_speakers
