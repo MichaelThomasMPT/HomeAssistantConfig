@@ -1,0 +1,24 @@
+template:
+  - binary_sensor:
+      michael_phone_docked_in_car:
+        friendly_name: "Michael's Phone Is Docked In The Car"
+        value_template: "{{states('binary_sensor.michael_s_galaxy_s10_is_charging') and 'FC:35:E6:53:2C:C9 (Mazda)' in state_attr('sensor.michael_s_galaxy_s10_bluetooth_connection', 'connected_paired_devices')}}"
+        
+automation:
+  - alias: Driving - Launch Google Maps When Phone Connects To Car
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.michael_s_galaxy_s10_is_charging
+        from: "off"
+        to: "on"
+      - platform: state
+        entity_id: sensor.michael_s_galaxy_s10_bluetooth_connection
+
+      
+      
+    action:
+      - service: notify.mobile_app_<your_device_id_here>
+        data:
+          message: "command_launch_app"
+          data:
+            package_name: "com.twitter.android"
