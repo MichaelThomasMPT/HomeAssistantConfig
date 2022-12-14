@@ -1,0 +1,16 @@
+sensor:
+  - platform: min_max
+    type: sum
+    unique_id : pi_hole_total_ads_blocked_today
+    name : Pi-Hole Total Ads Blocked Today
+    round_digits: 0
+    entity_ids:
+      - sensor.pi_hole_nas_ads_blocked_today
+      - sensor.pi_hole_nuc_ads_blocked_today
+switch:
+  - platform: group
+    unique_id: switch.pi_hole_combined
+    name: Pi-Hole Ad Blocking
+    entities:
+      - switch.pi_hole_nas
+      - switch.pi_hole_nuc
