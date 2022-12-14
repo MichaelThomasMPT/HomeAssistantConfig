@@ -1,0 +1,20 @@
+influxdb:
+  host: !secret influx_db_ip_address
+  port: !secret influx_db_port
+  database: home_assistant
+  max_retries: 3
+  default_measurement: state
+  api_version: 1
+  exclude:
+    entities:
+        - sun.sun
+  tags_attributes:
+    - friendly_name
+
+splunk:
+  token: !secret splunk_token
+  host: !secret splunk_host
+  port: !secret splunk_port
+  filter:
+    exclude_entities:
+      - sun.sun
