@@ -306,7 +306,6 @@ views:
             hours_to_show: 0.25
             points_per_hour: 60
             line_width: 2
-            height: 50
             entities:
               - entity: sensor.igrill_probe_4
                 name: Ambient Probe
@@ -314,9 +313,11 @@ views:
               - entity: input_number.igrill_ambient_alert_low_temp
                 name: Minimum Target
                 color: var(--label-badge-green)
+                unit: °C
               - entity: input_number.igrill_ambient_alert_high_temp
                 name: Maximum Target
                 color: var(--label-badge-red)
+                unit: °C
             align_state: center
             show:
               fill: false

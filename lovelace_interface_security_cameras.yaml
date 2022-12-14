@@ -4,54 +4,51 @@ views:
     cards:
       - type: grid
         cards:
-          - show_state: false
-            show_name: false
-            camera_view: auto
-            type: picture-entity
-            entity: camera.garage_camera
-            name: Garage
+          - camera_view: auto
+            type: picture-glance
+            title: Garage
+            image: https://demo.home-assistant.io/stub_config/kitchen.png
+            entities:
+              - entity: light.garage
             camera_image: camera.garage_camera
-          - show_state: false
-            show_name: false
-            camera_view: auto
-            type: picture-entity
-            entity: camera.side_path
-            name: Side Path
+            entity: camera.garage_camera
+          - camera_view: auto
+            type: picture-glance
+            title: Side Path
+            image: https://demo.home-assistant.io/stub_config/kitchen.png
+            entities:
+              - entity: light.washing_line_lights
             camera_image: camera.side_path
-          - show_state: false
-            show_name: false
-            camera_view: auto
-            type: picture-entity
-            entity: camera.living_room_camera_sd
-            name: Living Room
+            entity: camera.side_path
+          - camera_view: auto
+            type: picture-glance
+            title: Living Room
+            image: https://demo.home-assistant.io/stub_config/kitchen.png
+            entities:
+              - entity: switch.living_room_camera_privacy
             camera_image: camera.living_room_camera_hd
-          - show_state: false
-            show_name: false
-            camera_view: auto
-            type: picture-entity
-            entity: camera.alfresco_camera
-            name: Alfresco
+            entity: camera.living_room_camera_sd
+          - camera_view: auto
+            type: picture-glance
+            title: Alfresco
+            image: https://demo.home-assistant.io/stub_config/kitchen.png
+            entities:
+              - entity: light.alfresco_ceiling_lights
+              - entity: light.alfresco_fairy_lights
             camera_image: camera.alfresco_camera
-          - show_state: false
-            show_name: false
-            camera_view: auto
-            type: picture-entity
-            entity: camera.backyard_camera
-            name: Backyard
+            entity: camera.alfresco_camera
+          - camera_view: auto
+            type: picture-glance
+            image: https://demo.home-assistant.io/stub_config/kitchen.png
+            entities:
+              - entity: light.garden_flood_lights
+            title: Backyard
             camera_image: camera.backyard_camera
+            entity: camera.backyard_camera
           - square: false
             columns: 3
             type: grid
             cards:
-              - show_name: true
-                show_icon: true
-                type: button
-                tap_action:
-                  action: toggle
-                entity: switch.living_room_camera_privacy
-                show_state: true
-                name: Privacy Mode
-                icon: mdi:eye-outline
               - show_name: true
                 show_icon: true
                 type: button
@@ -62,7 +59,7 @@ views:
                     option: Central Room
                   target:
                     entity_id: select.living_room_camera_move_to_preset
-                name: Central Room
+                name: Centered
                 icon: mdi:camera-control
               - show_name: true
                 show_icon: true

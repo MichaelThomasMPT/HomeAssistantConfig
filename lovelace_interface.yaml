@@ -1,1160 +1,188 @@
-title: The Treehouse
 views:
-  - icon: mdi:home
-    path: default_view
+  - theme: Backend-selected
     title: Home
-    badges:
-      - entity: person.michael
-      - entity: person.laura
-      - entity: weather.treeby_house
-      - entity: sun.sun
+    icon: mdi:home-assistant
+    badges: []
     cards:
-      - entity: weather.treeby_house
-        name: Treeby
-        type: weather-forecast
-      - entities:
-          - entity: sensor.away_from_home_state_validity
-        show_name: false
-        title: House State Validity
-        type: glance
-      - cards:
-          - entities:
-              - entity: script.turn_off_all_lights
-                name: Turn Off All Lights
-                icon: mdi:lightbulb-group-off
-              - entity: light.alfresco_ceiling_lights
-              - entity: light.alfresco_fairy_lights
-              - entity: light.dining_room
-              - entity: light.ensuite_light
-              - entity: light.ensuite_led_strip
-              - entity: light.entry_hall_lights
-              - entity: light.front_porch_light
-              - entity: light.garage_light
-              - entity: light.garden_flood_lights
-              - entity: light.kitchen_ceiling_light
-              - entity: light.kitchen_island
-              - entity: light.laundry_ceiling
-              - entity: light.laundry_led_strip
-              - entity: light.living_room
-              - entity: light.master_bedroom_ceiling
-              - entity: light.master_bedroom_michael_lamp
-              - entity: light.master_bedroom_laura_lamp
-              - entity: light.master_wir
-              - entity: light.office_lamp
-              - entity: light.pantry_light
-              - entity: light.scullery_light
-              - entity: light.side_hall
-              - entity: light.theatre_room_ceiling
-              - entity: light.theatre_room_left_lamp
-              - entity: light.theatre_room_right_lamp
-              - entity: light.theatre_room_tv_cabinet_led_strip
-              - entity: light.washing_line_lights
-            head: null
-            show_header_toggle: false
-            title: Lights
-            type: entities
-        type: custom:stack-in-card
-      - cards:
-          - card:
-              entities:
-                - entity: sensor.sems_status
-                  icon: mdi:power
-                  name: Status
-              show_header_toggle: false
-              title: Solar Panels
-              type: entities
-            conditions:
-              - entity: sensor.sems_status
-                state: Offline
-            type: conditional
-          - card:
-              entities:
-                - entity: sensor.sems_status
-                  icon: mdi:power
-                  name: Status
-                - entity: sensor.sems_output_power
-                  icon: mdi:flash
-                  name: Current Output Power
-                - entity: sensor.sems_today_generated
-                  icon: mdi:solar-power
-                  name: Electricity Generated Today
-              show_header_toggle: false
-              title: Solar Panels
-              type: entities
-            conditions:
-              - entity: sensor.sems_status
-                state: Online
-            type: conditional
-        type: vertical-stack
-      - cards:
-          - entities:
-              - entity: cover.garage_door
-                name: Garage Door
-              - entity: light.garage_light
-                name: Ceiling Light
-              - entity: binary_sensor.garage_door_external
-                name: External Door
-              - entity: device_tracker.ble_car_michael
-                name: Michael's Car
-              - entity: device_tracker.ble_car_laura
-                name: Laura's Car
-            type: entities
-          - aspect_ratio: 70%
-            camera_image: camera.garage_camera
-            camera_view: live
-            entity: camera.garage_camera
-            name: Garage Camera
-            type: picture-entity
-        show_header_toggle: false
-        title: Garage
-        type: custom:stack-in-card
-      - entities:
-          - entity: binary_sensor.back_door_glass
-          - entity: binary_sensor.back_door_flyscreen
-        title: Back Door
-        type: glance
-      - entities:
-          - entity: var.mail_was_delivered_today
-        title: Letterbox
-        type: glance
-      - cards:
-          - entity: alarm_control_panel.alarm_com
-            name: House Alarm
-            states:
-              - arm_home
-              - arm_away
-            type: alarm-panel
-          - cards:
-              - entities:
-                  - entity: binary_sensor.front_door
-                    icon: mdi:door
-                  - entity: sensor.front_door_last_ding
-                    icon: mdi:bell-ring
-                    name: Last Ring
-                  - entity: sensor.front_door_last_motion
-                    icon: mdi:motion-sensor
-                    name: Last Motion
-                title: Front Door
-                type: glance
-            type: custom:stack-in-card
-        type: vertical-stack
-      - cards:
-          - columns:
-              - attr_as_list: all_tasks
-                id: groceries
-                name: Groceries
-            entities:
-              include: calendar.groceries_list
-            type: custom:flex-table-card
-          - columns:
-              - attr_as_list: all_tasks
-                id: house_stuff
-                name: House Stuff
-            entities:
-              include: calendar.house_shopping_list
-            type: custom:flex-table-card
-        title: Shopping Lists
-        type: custom:stack-in-card
-  - badges: []
-    cards:
-      - elements:
-          - entity: light.theatre_room_ceiling
-            style:
-              left: 60%
-              top: 39.5%
+      - square: true
+        columns: 2
+        type: grid
+        cards:
+          - show_name: true
+            show_icon: true
+            type: button
             tap_action:
-              action: toggle
-            type: state-icon
-          - entity: light.theatre_room
-            style:
-              left: 74%
-              top: 44%
-            tap_action:
-              action: toggle
-            type: state-icon
-          - entity: light.theatre_room
-            style:
-              left: 74%
-              top: 34.5%
-            tap_action:
-              action: toggle
-            type: state-icon
-          - entity: light.entry_hall_lights
-            style:
-              left: 42.5%
-              top: 35%
-            tap_action:
-              action: toggle
-            type: state-icon
-          - entity: light.laundry_ceiling
-            style:
-              left: 26.5%
-              top: 37.5%
-            tap_action:
-              action: toggle
-            type: state-icon
-          - entity: light.laundry_led_strip
-            style:
-              left: 24%
-              top: 34.5%
-            tap_action:
-              action: toggle
-            type: state-icon
-          - entity: light.theatre_room_tv_cabinet_led_strip
-            style:
-              left: 49.5%
-              top: 40.5%
-            tap_action:
-              action: toggle
-            type: state-icon
-          - entity: light.washing_line_lights
-            style:
-              left: 9.5%
-              top: 47.5%
-            tap_action:
-              action: toggle
-            type: state-icon
-          - entity: light.washing_line_lights
-            style:
-              left: 9.5%
-              top: 62.5%
-            tap_action:
-              action: toggle
-            type: state-icon
-          - entity: light.entry_hall_lights
-            style:
-              left: 42.5%
-              top: 25%
-            tap_action:
-              action: toggle
-            type: state-icon
-          - entity: light.office_lamp
-            style:
-              left: 66.5%
-              top: 11%
-            tap_action:
-              action: toggle
-            type: state-icon
-          - entity: light.master_bedroom_michael_lamp
-            style:
-              left: 13.5%
-              top: 80.5%
-            tap_action:
-              action: toggle
-            type: state-icon
-          - entity: light.master_bedroom_laura_lamp
-            style:
-              left: 13.5%
-              top: 88.5%
-            tap_action:
-              action: toggle
-            type: state-icon
-          - entity: light.master_wir
-            style:
-              left: 20%
-              top: 75%
-            tap_action:
-              action: toggle
-            type: state-icon
-          - entity: light.scullery_light
-            style:
-              left: 21%
-              top: 43%
-            tap_action:
-              action: toggle
-            type: state-icon
-          - entity: light.pantry_light
-            style:
-              left: 32%
-              top: 43%
-            tap_action:
-              action: toggle
-            type: state-icon
-          - entity: media_player.theatre_room_tv
-            icon: mdi:television-play
-            style:
-              '--paper-item-icon-color': white
-              left: 54%
-              top: 39.5%
-            type: state-icon
-          - entity: switch.living_room_tv_smart_switch
-            icon: mdi:television-play
-            style:
-              '--paper-item-icon-color': white
-              left: 55%
-              top: 66%
-            type: state-icon
-            tap_action:
-              action: toggle
-            state_color: true
-          - entity: cover.garage_door
-            style:
-              '--paper-item-icon-color': white
-              left: 17%
-              top: 11.5%
-              transform: scale(1.5,1.5)
-            tap_action:
-              action: toggle
-            type: state-icon
-          - entity: switch.aircon_zone_living
-            icon: mdi:air-filter
-            style:
-              left: 38%
-              top: 60%
-            tap_action:
-              action: toggle
-            type: state-icon
-          - entity: switch.aircon_zone_theatre
-            icon: mdi:air-filter
-            style:
-              left: 60%
-              top: 36%
-            tap_action:
-              action: toggle
-            type: state-icon
-          - entity: switch.aircon_zone_master
-            icon: mdi:air-filter
-            style:
-              left: 29%
-              top: 85%
-            tap_action:
-              action: toggle
-            type: state-icon
-          - entity: switch.aircon_zone_bed23
-            icon: mdi:air-filter
-            style:
-              left: 56%
-              top: 20%
-            tap_action:
-              action: toggle
-            type: state-icon
-          - entity: switch.aircon_zone_bed23
-            icon: mdi:air-filter
-            style:
-              left: 74%
-              top: 18%
-            tap_action:
-              action: toggle
-            type: state-icon
-          - entity: climate.ac
+              action: navigate
+              navigation_path: /new-and-improved-dashboard/subview-aircon
+            name: Aircon
             icon: mdi:air-conditioner
-            style:
-              left: 35%
-              top: 48%
-            type: state-icon
-          - entity: script.aircon_cool
-            icon: mdi:snowflake
-            style:
-              '--paper-item-icon-color': blue
-              left: 83.5%
-              top: 91.5%
-              transform: scale(1.8,1.8)
+            show_state: false
+          - show_name: true
+            show_icon: true
+            type: button
             tap_action:
-              action: toggle
-            type: state-icon
-          - entity: script.aircon_heat
-            icon: mdi:fire
-            style:
-              '--paper-item-icon-color': darkorange
-              left: 83.5%
-              top: 86%
-              transform: scale(1.8,1.8)
+              action: navigate
+              navigation_path: /lovelace-cooking
+            name: Barbeque
+            icon: mdi:grill
+          - show_name: true
+            show_icon: true
+            type: button
             tap_action:
-              action: toggle
-            type: state-icon
-          - entity: script.roomba_clean
-            icon: mdi:robot-vacuum
-            style:
-              left: 55.5%
-              top: 62.45%
+              action: navigate
+              navigation_path: /security-cameras
+            name: Cameras
+            icon: mdi:cctv
+          - show_name: true
+            show_icon: true
+            type: button
             tap_action:
-              action: toggle
-            type: state-icon
-          - entity: cover.theatre_blinds
-            style:
-              left: 75%
-              top: 39%
-            tap_action:
-              action: toggle
-            type: state-icon
-          - entity: sensor.coffees_made_today
-            icon: mdi:coffee-maker
-            state_color: false
-            style:
-              left: 16%
-              top: 60.5%
-            type: state-icon
-          - entity: binary_sensor.michael_pc
-            style:
-              left: 79.5%
-              top: 12.5%
-            type: state-icon
-          - entity: sensor.canon_ts3300_series
-            style:
-              left: 67.5%
-              top: 15%
-            type: state-icon
-          - entity: binary_sensor.washing_machine_running
-            style:
-              left: 15%
-              top: 35%
-            type: state-icon
-          - entity: media_player.kitchen_google_home_hub
-            style:
-              left: 21.5%
-              top: 60.5%
-            type: state-icon
-          - entity: media_player.office_google_home
-            style:
-              left: 67.5%
-              top: 17.5%
-            type: state-icon
-          - entity: media_player.office_pc_speakers
-            style:
-              left: 79.5%
-              top: 15.5%
-            type: state-icon
-          - entity: media_player.master_bedroom_speaker
-            style:
-              left: 22.5%
-              top: 80%
-            type: state-icon
-          - entity: media_player.ensuite_google_home
-            style:
-              left: 16%
-              top: 70.5%
-            type: state-icon
-          - entity: media_player.theatre_room_google_home
-            style:
-              left: 54%
-              top: 42%
-            type: state-icon
-          - entity: binary_sensor.ensuite_shower
-            style:
-              left: 15.5%
-              top: 64.5%
-            type: state-icon
-          - entity: switch.ensuite_fan
-            style:
-              left: 20%
-              top: 64.5%
-            tap_action:
-              action: toggle
-            type: state-icon
-          - entity: binary_sensor.back_door_glass
-            style:
-              left: 47.5%
-              top: 73%
-            type: state-icon
-          - entity: binary_sensor.laundry_door
-            style:
-              left: 12%
-              top: 37.5%
-            type: state-icon
-          - entity: binary_sensor.garage_door_external
-            style:
-              left: 7.5%
-              top: 33.5%
-            type: state-icon
-          - entity: binary_sensor.garage_door_internal
-            style:
-              left: 38%
-              top: 27.5%
-            type: state-icon
-          - entity: binary_sensor.front_door
+              action: navigate
+              navigation_path: /new-and-improved-dashboard/subview-entry
+            name: Entry
             icon: mdi:door
-            style:
-              left: 42.5%
-              top: 18.5%
-            type: state-icon
-          - entity: sensor.front_door_last_ding
-            icon: mdi:doorbell-video
-            style:
-              left: 38.5%
-              top: 15.5%
-            type: state-icon
-          - entity: camera.garage
-            icon: mdi:cctv
-            style:
-              left: 35%
-              top: 32%
-            type: state-icon
-          - entity: light.garage
-            style:
-              left: 21.5%
-              top: 23.5%
+      - square: true
+        columns: 2
+        type: grid
+        cards:
+          - show_name: true
+            show_icon: true
+            type: button
             tap_action:
-              action: toggle
-            type: state-icon
-          - entity: camera.garage
-            icon: mdi:cctv
-            style:
-              left: 35%
-              top: 32%
-            type: state-icon
-          - entity: alarm_control_panel.alarm_com
-            icon: mdi:shield-home
-            style:
-              left: 83.5%
-              top: 76%
-              transform: scale(1.5,1.5)
-            type: state-icon
-          - entity: light.entry_hall_lights
-            style:
-              left: 57%
-              top: 27.5%
+              action: navigate
+              navigation_path: /new-and-improved-dashboard/subview-garage
+            name: Garage
+            icon: mdi:car
+          - show_name: true
+            show_icon: true
+            type: button
             tap_action:
-              action: toggle
-            type: state-icon
-          - entity: light.dining_room
-            style:
-              left: 48.5%
-              top: 53%
+              action: navigate
+              navigation_path: /new-and-improved-dashboard/subview-garden
+            name: Garden
+            icon: mdi:flower
+          - show_name: true
+            show_icon: true
+            type: button
             tap_action:
-              action: toggle
-            type: state-icon
-          - entity: light.living_room
-            style:
-              left: 48.5%
-              top: 66%
+              action: navigate
+              navigation_path: /new-and-improved-dashboard/subview-kitchen
+            name: Kitchen
+            icon: mdi:chef-hat
+            show_state: false
+          - show_name: true
+            show_icon: true
+            type: button
             tap_action:
-              action: toggle
-            type: state-icon
-          - entity: light.kitchen_ceiling_light
-            style:
-              left: 20.5%
-              top: 53%
+              action: navigate
+              navigation_path: /new-and-improved-dashboard/subview-laundry
+            name: Laundry
+            icon: mdi:washing-machine
+      - square: true
+        columns: 2
+        type: grid
+        cards:
+          - show_name: true
+            show_icon: true
+            type: button
             tap_action:
-              action: toggle
-            type: state-icon
-          - entity: light.kitchen_island
-            style:
-              left: 26.5%
-              top: 53%
+              action: navigate
+              navigation_path: /new-and-improved-dashboard/subview-living-and-dining
+            name: Living & Dining
+            icon: mdi:sofa
+          - show_name: true
+            show_icon: true
+            type: button
             tap_action:
-              action: toggle
-            type: state-icon
-            icon: mdi:ceiling-light
-          - entity: light.front_porch_light
-            style:
-              left: 42.5%
-              top: 15%
+              action: navigate
+              navigation_path: /new-and-improved-dashboard/subview-master-suite
+            name: Master Suite
+            icon: mdi:bed
+          - show_name: true
+            show_icon: true
+            type: button
             tap_action:
-              action: toggle
-            type: state-icon
-          - entity: light.alfresco_ceiling_lights
-            style:
-              left: 48%
-              top: 78%
+              action: navigate
+              navigation_path: /new-and-improved-dashboard/subview-music
+            name: Music
+            icon: mdi:music
+          - show_name: true
+            show_icon: true
+            type: button
             tap_action:
-              action: toggle
-            type: state-icon
-          - entity: light.garden_flood_lights
-            style:
-              left: 62%
-              top: 62%
+              action: navigate
+              navigation_path: /new-and-improved-dashboard/subview-office
+            name: Office
+            icon: mdi:desktop-tower-monitor
+      - square: true
+        columns: 2
+        type: grid
+        cards:
+          - show_name: true
+            show_icon: true
+            type: button
             tap_action:
-              action: toggle
-            type: state-icon
-            icon: mdi:spotlight-beam
-          - entity: light.master_bedroom_ceiling
-            style:
-              left: 22%
-              top: 84.5%
+              action: navigate
+              navigation_path: /new-and-improved-dashboard/subview-people-and-places
+            icon: mdi:account
+            name: People & Places
+          - show_name: true
+            show_icon: true
+            type: button
             tap_action:
-              action: toggle
-            type: state-icon
-          - entity: light.ensuite_light
-            style:
-              left: 20%
-              top: 68%
+              action: navigate
+              navigation_path: /new-and-improved-dashboard/subview-server-and-network
+            name: Server & Network
+            icon: mdi:server-network
+          - show_name: true
+            show_icon: true
+            type: button
             tap_action:
-              action: toggle
-            type: state-icon
-          - entity: light.ensuite_led_strip
-            style:
-              left: 15%
-              top: 67.5%
+              action: navigate
+              navigation_path: /new-and-improved-dashboard/subview-theatre-room
+            name: Theatre
+            icon: mdi:television-classic
+          - show_name: true
+            show_icon: true
+            type: button
             tap_action:
-              action: toggle
-            type: state-icon
-        image: /local/floor-plan.png
-        type: picture-elements
-    icon: mdi:floor-plan
-    panel: false
-    path: floor_plan
-    title: Floor Plan
-  - badges: []
-    cards:
-      - entities:
-          - artwork: cover
-            entity: media_player.all_rooms
-            group: true
-            info: scroll
-            source: icon
-            type: custom:mini-media-player
-          - entity: media_player.kitchen_google_home_hub
-            group: true
-            hide:
-              controls: true
-            type: custom:mini-media-player
-          - entity: media_player.master_bedroom_speaker
-            group: true
-            hide:
-              controls: true
-            name: Master Bedroom Google Home
-            type: custom:mini-media-player
-          - entity: media_player.office_google_home
-            group: true
-            hide:
-              controls: true
-            type: custom:mini-media-player
-          - entity: media_player.office_pc_speakers
-            group: true
-            hide:
-              controls: true
-            type: custom:mini-media-player
-          - entity: media_player.theatre_room_google_home
-            group: true
-            hide:
-              controls: true
-            type: custom:mini-media-player
-        show_header_toggle: false
-        title: Music Players
-        type: entities
-      - cards:
-          - cards:
-              - entity: script.play_playlist_on_all_rooms
-                hold_action:
-                  action: none
-                name: Adventure
-                show_icon: true
-                show_name: true
-                show_state: false
-                state_image:
-                  'off': /local/images/adventure.jpg
-                tap_action:
-                  action: call-service
-                  service: script.play_playlist_on_all_rooms
-                  service_data:
-                    playlist: Board Games - Adventure
-                type: picture-entity
-              - entity: script.play_playlist_on_all_rooms
-                hold_action:
-                  action: none
-                name: Ancient
-                show_icon: true
-                show_name: true
-                show_state: false
-                state_image:
-                  'off': /local/images/ancient.jpg
-                tap_action:
-                  action: call-service
-                  service: script.play_playlist_on_all_rooms
-                  service_data:
-                    playlist: Board Games - Ancient
-                type: picture-entity
-              - entity: script.play_playlist_on_all_rooms
-                hold_action:
-                  action: none
-                name: Battle
-                show_icon: true
-                show_name: true
-                show_state: false
-                state_image:
-                  'off': /local/images/battle.jpg
-                tap_action:
-                  action: call-service
-                  service: script.play_playlist_on_all_rooms
-                  service_data:
-                    playlist: Board Games - Battle
-                type: picture-entity
-            type: horizontal-stack
-          - cards:
-              - entity: script.play_playlist_on_all_rooms
-                hold_action:
-                  action: none
-                name: Cafe
-                show_icon: true
-                show_name: true
-                show_state: false
-                state_image:
-                  'off': /local/images/cafe.jpg
-                tap_action:
-                  action: call-service
-                  service: script.play_playlist_on_all_rooms
-                  service_data:
-                    playlist: Board Games - Cafe
-                type: picture-entity
-              - entity: script.play_playlist_on_all_rooms
-                hold_action:
-                  action: none
-                name: Casino
-                show_icon: true
-                show_name: true
-                show_state: false
-                state_image:
-                  'off': /local/images/casino.jpg
-                tap_action:
-                  action: call-service
-                  service: script.play_playlist_on_all_rooms
-                  service_data:
-                    playlist: Board Games - Casino
-                type: picture-entity
-              - entity: script.play_playlist_on_all_rooms
-                hold_action:
-                  action: none
-                name: China
-                show_icon: true
-                show_name: true
-                show_state: false
-                state_image:
-                  'off': /local/images/china.jpg
-                tap_action:
-                  action: call-service
-                  service: script.play_playlist_on_all_rooms
-                  service_data:
-                    playlist: Board Games - China
-                type: picture-entity
-            type: horizontal-stack
-          - cards:
-              - entity: script.play_playlist_on_all_rooms
-                hold_action:
-                  action: none
-                name: Cities
-                show_icon: true
-                show_name: true
-                show_state: false
-                state_image:
-                  'off': /local/images/city.jpg
-                tap_action:
-                  action: call-service
-                  service: script.play_playlist_on_all_rooms
-                  service_data:
-                    playlist: Board Games - Cities
-                type: picture-entity
-              - entity: script.play_playlist_on_all_rooms
-                hold_action:
-                  action: none
-                name: Detective
-                show_icon: true
-                show_name: true
-                show_state: false
-                state_image:
-                  'off': /local/images/detective.jpg
-                tap_action:
-                  action: call-service
-                  service: script.play_playlist_on_all_rooms
-                  service_data:
-                    playlist: Board Games - Detective
-                type: picture-entity
-              - entity: script.play_playlist_on_all_rooms
-                hold_action:
-                  action: none
-                name: Dungeon
-                show_icon: true
-                show_name: true
-                show_state: false
-                state_image:
-                  'off': /local/images/dungeon.jpg
-                tap_action:
-                  action: call-service
-                  service: script.play_playlist_on_all_rooms
-                  service_data:
-                    playlist: Board Games - Dungeon
-                type: picture-entity
-            type: horizontal-stack
-          - cards:
-              - entity: script.play_playlist_on_all_rooms
-                hold_action:
-                  action: none
-                name: Egypt
-                show_icon: true
-                show_name: true
-                show_state: false
-                state_image:
-                  'off': /local/images/egypt.jpg
-                tap_action:
-                  action: call-service
-                  service: script.play_playlist_on_all_rooms
-                  service_data:
-                    playlist: Board Games - Egyptian
-                type: picture-entity
-              - entity: script.play_playlist_on_all_rooms
-                hold_action:
-                  action: none
-                name: French
-                show_icon: true
-                show_name: true
-                show_state: false
-                state_image:
-                  'off': /local/images/french.png
-                tap_action:
-                  action: call-service
-                  service: script.play_playlist_on_all_rooms
-                  service_data:
-                    playlist: Board Games - French
-                type: picture-entity
-              - entity: script.play_playlist_on_all_rooms
-                hold_action:
-                  action: none
-                name: Gangster
-                show_icon: true
-                show_name: true
-                show_state: false
-                state_image:
-                  'off': /local/images/gangster.jpg
-                tap_action:
-                  action: call-service
-                  service: script.play_playlist_on_all_rooms
-                  service_data:
-                    playlist: Board Games - Gangster
-                type: picture-entity
-            type: horizontal-stack
-        title: Board Game Music Catalog A-G
-        type: custom:stack-in-card
-      - cards:
-          - cards:
-              - entity: script.play_playlist_on_all_rooms
-                hold_action:
-                  action: none
-                name: Horror
-                show_icon: true
-                show_name: true
-                show_state: false
-                state_image:
-                  'off': /local/images/horror.jpg
-                tap_action:
-                  action: call-service
-                  service: script.play_playlist_on_all_rooms
-                  service_data:
-                    playlist: Board Games - Horror
-                type: picture-entity
-              - entity: script.play_playlist_on_all_rooms
-                hold_action:
-                  action: none
-                name: India
-                show_icon: true
-                show_name: true
-                show_state: false
-                state_image:
-                  'off': /local/images/india.jpg
-                tap_action:
-                  action: call-service
-                  service: script.play_playlist_on_all_rooms
-                  service_data:
-                    playlist: Board Games - India
-                type: picture-entity
-              - entity: script.play_playlist_on_all_rooms
-                hold_action:
-                  action: none
-                name: Japan
-                show_icon: true
-                show_name: true
-                show_state: false
-                state_image:
-                  'off': /local/images/japan.jpg
-                tap_action:
-                  action: call-service
-                  service: script.play_playlist_on_all_rooms
-                  service_data:
-                    playlist: Board Games - Japan
-                type: picture-entity
-            type: horizontal-stack
-          - cards:
-              - entity: script.play_playlist_on_all_rooms
-                hold_action:
-                  action: none
-                name: Magic
-                show_icon: true
-                show_name: true
-                show_state: false
-                state_image:
-                  'off': /local/images/magic.jpg
-                tap_action:
-                  action: call-service
-                  service: script.play_playlist_on_all_rooms
-                  service_data:
-                    playlist: Board Games - Magic
-                type: picture-entity
-              - entity: script.play_playlist_on_all_rooms
-                hold_action:
-                  action: none
-                name: Medieval Town
-                show_icon: true
-                show_name: true
-                show_state: false
-                state_image:
-                  'off': /local/images/medieval.jpg
-                tap_action:
-                  action: call-service
-                  service: script.play_playlist_on_all_rooms
-                  service_data:
-                    playlist: Board Games - Medieval Town
-                type: picture-entity
-              - entity: script.play_playlist_on_all_rooms
-                hold_action:
-                  action: none
-                name: Meditation
-                show_icon: true
-                show_name: true
-                show_state: false
-                state_image:
-                  'off': /local/images/meditation.jpg
-                tap_action:
-                  action: call-service
-                  service: script.play_playlist_on_all_rooms
-                  service_data:
-                    playlist: Board Games - Meditation
-                type: picture-entity
-            type: horizontal-stack
-          - cards:
-              - entity: script.play_playlist_on_all_rooms
-                hold_action:
-                  action: none
-                name: Mythical
-                show_icon: true
-                show_name: true
-                show_state: false
-                state_image:
-                  'off': /local/images/mythical.jpg
-                tap_action:
-                  action: call-service
-                  service: script.play_playlist_on_all_rooms
-                  service_data:
-                    playlist: Board Games - Mythical
-                type: picture-entity
-              - entity: script.play_playlist_on_all_rooms
-                hold_action:
-                  action: none
-                name: Pirate
-                show_icon: true
-                show_name: true
-                show_state: false
-                state_image:
-                  'off': /local/images/pirate.jpg
-                tap_action:
-                  action: call-service
-                  service: script.play_playlist_on_all_rooms
-                  service_data:
-                    playlist: Board Games - Pirates
-                type: picture-entity
-              - entity: script.play_playlist_on_all_rooms
-                hold_action:
-                  action: none
-                name: Renaissance
-                show_icon: true
-                show_name: true
-                show_state: false
-                state_image:
-                  'off': /local/images/renaissance.jpg
-                tap_action:
-                  action: call-service
-                  service: script.play_playlist_on_all_rooms
-                  service_data:
-                    playlist: Board Games - Renaissance
-                type: picture-entity
-            type: horizontal-stack
-          - cards:
-              - entity: script.play_playlist_on_all_rooms
-                hold_action:
-                  action: none
-                name: Space
-                show_icon: true
-                show_name: true
-                show_state: false
-                state_image:
-                  'off': /local/images/space.jpg
-                tap_action:
-                  action: call-service
-                  service: script.play_playlist_on_all_rooms
-                  service_data:
-                    playlist: Board Games - Space
-                type: picture-entity
-              - entity: script.play_playlist_on_all_rooms
-                hold_action:
-                  action: none
-                name: Spy
-                show_icon: true
-                show_name: true
-                show_state: false
-                state_image:
-                  'off': /local/images/spy.jpg
-                tap_action:
-                  action: call-service
-                  service: script.play_playlist_on_all_rooms
-                  service_data:
-                    playlist: Board Games - Spy
-                type: picture-entity
-              - entity: script.play_playlist_on_all_rooms
-                hold_action:
-                  action: none
-                name: Western
-                show_icon: true
-                show_name: true
-                show_state: false
-                state_image:
-                  'off': /local/images/western.jpg
-                tap_action:
-                  action: call-service
-                  service: script.play_playlist_on_all_rooms
-                  service_data:
-                    playlist: Board Games - Western
-                type: picture-entity
-            type: horizontal-stack
-        title: Board Game Music Catalog H-Z
-        type: custom:stack-in-card
-      - entities:
-          - artwork: full-cover
-            entity: media_player.theatre_room_tv
-            hide:
-              mute: true
-              power_state: false
-            icon: mdi:television
-            info: short
-            name: LG TV
-            type: custom:mini-media-player
-          - artwork: full-cover
-            entity: media_player.theatre_room_chromecast
-            hide:
-              mute: true
-              power_state: false
-            info: short
-            name: Chromecast
-            type: custom:mini-media-player
-        show_header_toggle: false
-        title: Theatre Room TV
-        type: entities
-      - entities:
-          - artwork: full-cover
-            entity: media_player.living_room_chromecast
-            hide:
-              mute: true
-              power_state: false
-            info: short
-            name: Chromecast
-            type: custom:mini-media-player
-        show_header_toggle: false
-        title: Living Room TV
-        type: entities
-      - type: custom:mini-media-player
-        entity: media_player.ytube_music_player
-        artwork: cover
-        hide:
-          shuffle: false
-          icon_state: false
-        shortcuts:
-          columns: 3
-          buttons:
-            - name: Adventure
-              type: playlist
-              id: PLavpVzwAAU9bWWSA9tN7EtDqFGRhF6Dva
-            - name: Gloomhaven
-              type: playlist
-              id: PLavpVzwAAU9ZiQn69q55xm_Vzj9ZiA-M7
-    icon: mdi:music
-    path: media
-    title: Media
-  - badges: []
+              action: navigate
+              navigation_path: /new-and-improved-dashboard/subview-vacuum
+            name: Vacuum
+            icon: mdi:robot-vacuum
+      - square: true
+        columns: 2
+        type: grid
+        cards:
+          - show_name: true
+            show_icon: true
+            type: button
+            tap_action:
+              action: navigate
+              navigation_path: /new-and-improved-dashboard/subview-whole-house-controls
+            name: Whole House
+            icon: mdi:home
+  - theme: Backend-selected
+    title: Aircon
+    path: subview-aircon
+    icon: mdi:air-conditioner
+    subview: true
+    badges: []
     cards:
       - cards:
-          - entities:
-              - entity: light.theatre_room_left_lamp
-              - entity: light.theatre_room_right_lamp
-              - entity: light.theatre_room_ceiling
-                name: Theatre Room Ceiling
-              - entity: light.theatre_room_tv_cabinet_led_strip
-              - type: custom:rgb-light-card
-                entity: light.theatre_room_tv_cabinet_led_strip
-                colors:
-                  - color_name: white
-                  - color_name: cyan
-                  - color_name: blue
-                  - color_name: fuchsia
-                  - color_name: red
-                  - color_name: orange
-                  - color_name: yellow
-                  - color_name: lime
-            show_header_toggle: true
-            title: Lights
-            type: entities
-          - cards:
-              - entity: script.set_movie_lighting
-                hold_action:
-                  action: none
-                icon: mdi:theater
-                icon_height: 60px
-                name: Movie Lights
-                show_icon: true
-                show_name: true
-                tap_action:
-                  action: call-service
-                  service: script.turn_on
-                  service_data:
-                    entity_id: script.set_movie_lighting
-                type: entity-button
-              - entity: script.movie_has_finished
-                hold_action:
-                  action: none
-                icon: mdi:filmstrip-off
-                icon_height: 60px
-                name: Movie Has Finished
-                show_icon: true
-                show_name: true
-                tap_action:
-                  action: call-service
-                  service: script.turn_on
-                  service_data:
-                    entity_id: script.movie_has_finished
-                type: entity-button
-            type: horizontal-stack
-        type: vertical-stack
-      - entities:
-          - entity: cover.theatre_blinds
-        show_header_toggle: false
-        title: Theatre Room Blinds
-        type: entities
-      - entity: script.aircon_cool_theatre
-        hold_action:
-          action: none
-        icon: mdi:home-automation
-        icon_height: 60px
-        name: Cool Theatre
-        show_icon: true
-        show_name: true
-        tap_action:
-          action: call-service
-          service: script.turn_on
-          service_data:
-            entity_id: script.aircon_cool_theatre
-        type: entity-button
-      - entities:
-          - artwork: full-cover
-            entity: media_player.theatre_room_tv
-            hide:
-              mute: true
-              power_state: false
-            icon: mdi:television
-            info: short
-            name: LG TV
-            type: custom:mini-media-player
-          - artwork: full-cover
-            entity: media_player.theatre_room_chromecast
-            hide:
-              mute: true
-              power_state: false
-            info: short
-            name: Chromecast
-            type: custom:mini-media-player
-        show_header_toggle: false
-        title: Theatre Room TV
-        type: entities
-    icon: mdi:theater
-    path: theatre
-    title: Theatre
-  - badges: []
-    cards:
-      - cards:
+          - elements:
+              - entity: sensor.blank
+                hold-action: none
+                prefix: Air Conditioning
+                style:
+                  bottom: 20%
+                  font-size: 150%
+                  left: 5%
+                  transform: initial
+                tap-action: none
+                type: state-label
+            image: /local/header-image-dark.png
+            type: picture-elements
           - type: thermostat
             entity: climate.ac
           - card:
@@ -1242,337 +270,1201 @@ views:
               - entity: climate.ac
                 state_not: 'off'
             type: conditional
+          - entities:
+              - entity: switch.aircon_zone_living
+                icon: mdi:air-filter
+                name: Living Area
+              - entity: switch.aircon_zone_theatre
+                icon: mdi:air-filter
+                name: Theatre
+              - entity: switch.aircon_zone_master
+                icon: mdi:air-filter
+                name: Master Bedroom
+              - entity: switch.aircon_zone_bed23
+                icon: mdi:air-filter
+                name: Bedroom 2 & 3
+            head:
+              label: Zones
+              type: section
+            show_header_toggle: false
+            state_color: true
+            title: Zones
+            type: entities
         type: custom:stack-in-card
-        title: Aircon Control
-      - entities:
-          - entity: switch.aircon_zone_living
-            icon: mdi:air-filter
-            name: Living Area
-          - entity: switch.aircon_zone_theatre
-            icon: mdi:air-filter
-            name: Theatre
-          - entity: switch.aircon_zone_master
-            icon: mdi:air-filter
-            name: Master Bedroom
-          - entity: switch.aircon_zone_bed23
-            icon: mdi:air-filter
-            name: Bedroom 2 & 3
-        show_header_toggle: false
-        state_color: true
-        title: Aircon Zones
-        type: entities
-      - cards:
-          - cards:
-              - entity: script.aircon_warm_master
-                hold_action:
-                  action: none
-                icon: mdi:home-automation
-                icon_height: 60px
-                name: Warm Bedroom
-                show_icon: true
-                show_name: true
-                tap_action:
-                  action: call-service
-                  service: script.turn_on
-                  service_data:
-                    entity_id: script.aircon_warm_master
-                type: entity-button
-              - entity: script.aircon_fan_master
-                hold_action:
-                  action: none
-                icon: mdi:home-automation
-                icon_height: 60px
-                name: Sleeping Fan
-                show_icon: true
-                show_name: true
-                tap_action:
-                  action: call-service
-                  service: script.turn_on
-                  service_data:
-                    entity_id: script.aircon_fan_master
-                type: entity-button
-            type: horizontal-stack
-          - cards:
-              - entity: script.aircon_cool_theatre
-                hold_action:
-                  action: none
-                icon: mdi:home-automation
-                icon_height: 60px
-                name: Cool Theatre
-                show_icon: true
-                show_name: true
-                tap_action:
-                  action: call-service
-                  service: script.turn_on
-                  service_data:
-                    entity_id: script.aircon_cool_theatre
-                type: entity-button
-              - entity: script.aircon_cool_central_living
-                hold_action:
-                  action: none
-                icon: mdi:home-automation
-                icon_height: 60px
-                name: Cool Centre
-                show_icon: true
-                show_name: true
-                tap_action:
-                  action: call-service
-                  service: script.turn_on
-                  service_data:
-                    entity_id: script.aircon_cool_central_living
-                type: entity-button
-            type: horizontal-stack
-          - cards:
-              - entity: script.aircon_cool
-                hold_action:
-                  action: none
-                icon: mdi:snowflake
-                icon_height: 60px
-                name: Run Cold
-                show_icon: true
-                show_name: true
-                tap_action:
-                  action: call-service
-                  service: script.turn_on
-                  service_data:
-                    entity_id: script.aircon_cool
-                type: entity-button
-              - entity: script.aircon_heat
-                hold_action:
-                  action: none
-                icon: mdi:fire
-                icon_height: 60px
-                name: Run Hot
-                show_icon: true
-                show_name: true
-                tap_action:
-                  action: call-service
-                  service: script.turn_on
-                  service_data:
-                    entity_id: script.aircon_heat
-                type: entity-button
-            type: horizontal-stack
-          - cards:
-              - entity: script.aircon_blast_cold_for_ten_minutes
-                hold_action:
-                  action: none
-                icon: mdi:snowflake
-                icon_height: 60px
-                name: 10 Min of Cold
-                show_icon: true
-                show_name: true
-                tap_action:
-                  action: call-service
-                  service: script.turn_on
-                  service_data:
-                    entity_id: script.aircon_blast_cold_for_ten_minutes
-                type: entity-button
-            type: horizontal-stack
+      - type: entities
+        entities:
+          - entity: script.aircon_warm_master
+            hold_action:
+              action: none
+            icon: mdi:home-automation
+            name: Warm Bedroom
+            tap_action:
+              action: call-service
+              service: script.turn_on
+              service_data:
+                entity_id: script.aircon_warm_master
+            type: button
+          - entity: script.aircon_fan_master
+            hold_action:
+              action: none
+            icon: mdi:home-automation
+            name: Sleeping Fan
+            tap_action:
+              action: call-service
+              service: script.turn_on
+              service_data:
+                entity_id: script.aircon_fan_master
+            type: button
+          - entity: script.aircon_fan_master
+            hold_action:
+              action: none
+            icon: mdi:home-automation
+            name: Office Fan
+            tap_action:
+              action: call-service
+              service: script.turn_on
+              service_data:
+                entity_id: script.aircon_fan_office
+            type: button
+          - entity: script.aircon_cool_theatre
+            hold_action:
+              action: none
+            icon: mdi:home-automation
+            name: Cool Theatre
+            tap_action:
+              action: call-service
+              service: script.turn_on
+              service_data:
+                entity_id: script.aircon_cool_theatre
+            type: button
+          - entity: script.aircon_cool_central_living
+            hold_action:
+              action: none
+            icon: mdi:home-automation
+            name: Cool Centre
+            tap_action:
+              action: call-service
+              service: script.turn_on
+              service_data:
+                entity_id: script.aircon_cool_central_living
+            type: button
+          - entity: script.aircon_blast_cold_for_ten_minutes
+            hold_action:
+              action: none
+            icon: mdi:snowflake
+            name: 10 Min of Cold
+            tap_action:
+              action: call-service
+              service: script.turn_on
+              service_data:
+                entity_id: script.aircon_blast_cold_for_ten_minutes
+            type: button
         title: Presets
-        type: custom:stack-in-card
-      - cards:
-          - detail: 2
-            entity: sensor.current_outdoor_temperature
-            graph: line
-            name: Outside
-            type: sensor
-          - detail: 2
-            entity: sensor.theatre_temperature
-            graph: line
-            name: Theatre Room
-            type: sensor
-          - detail: 2
-            entity: sensor.master_bedroom_temperature
-            graph: line
-            name: Master Bedroom
-            type: sensor
-          - detail: 2
-            entity: sensor.living_room_temperature
-            graph: line
-            name: Living Room
-            type: sensor
-          - detail: 2
-            entity: sensor.office_temperature
-            graph: line
-            name: Office
-            type: sensor
-        title: Temperature
-        type: custom:stack-in-card
-      - cards:
-          - entities:
-              - entity: switch.aircon_on_off
-                icon: mdi:power
-                name: Aircon On/Off
-            title: Aircon Running State
-            type: history-graph
-          - entities:
-              - entity: sensor.sems_output_power
-                name: Solar Output
-            title: Solar Output
-            type: history-graph
-        type: custom:stack-in-card
-      - detail: 2
-        entity: sensor.living_room_humidity
+        show_header_toggle: false
+      - hours_to_show: 48
         graph: line
-        name: Humidity Indoors
         type: sensor
-    icon: mdi:air-conditioner
-    path: aircon
-    title: Aircon
-  - icon: mdi:flower
-    path: plants
+        entity: sensor.living_room_temperature
+        detail: 1
+        name: Living Room Temperature
+      - show_name: true
+        show_icon: true
+        show_state: true
+        type: glance
+        entities:
+          - entity: sensor.master_bedroom_temperature
+            name: Bedroom
+          - entity: sensor.laundry_temperature
+            name: Laundry
+          - entity: sensor.office_temperature
+            name: Office
+          - entity: sensor.herb_planter_temperature
+            name: Outside
+        title: Temperatures
+  - theme: Backend-selected
+    title: Kitchen
+    path: subview-kitchen
+    icon: mdi:chef-hat
+    subview: true
     badges: []
     cards:
-      - type: plant-status
-        entity: plant.alfresco_fig
-        name: Fig (Alfresco)
-  - badges: []
-    cards:
-      - cards:
-          - hold_action:
-              action: none
-            image: >-
-              http://192.168.1.111:112/badge/3f66d990-6c1b-44e0-bd49-e31b43/qFGWAmFz.svg
+      - type: vertical-stack
+        title: Lights
+        cards:
+          - type: tile
+            entity: light.kitchen_ceiling_light
+          - type: tile
+            entity: light.kitchen_island
+            features:
+              - type: light-brightness
+          - type: tile
+            entity: light.scullery_light
+            features:
+              - type: light-brightness
+          - type: horizontal-stack
+            cards:
+              - type: tile
+                entity: light.dining_room
+                name: Dining Room
+              - type: tile
+                entity: light.living_room
+                name: Living Room
+      - type: vertical-stack
+        title: Media
+        cards:
+          - type: media-control
+            entity: media_player.central_living_speakers
+          - type: entities
+            entities:
+              - entity: media_player.kitchen_google_home_hub
+              - entity: media_player.dining_room_google_home
+              - entity: media_player.living_room_soundbar_chromecast_audio
+      - type: vertical-stack
+        title: Camera Feed
+        cards:
+          - camera_view: auto
+            type: picture-glance
+            title: Living Room
+            image: https://demo.home-assistant.io/stub_config/kitchen.png
+            entities:
+              - entity: switch.living_room_camera_privacy
+            camera_image: camera.living_room_camera_hd
+            entity: camera.living_room_camera_sd
+          - square: false
+            columns: 3
+            type: grid
+            cards:
+              - show_name: true
+                show_icon: true
+                type: button
+                tap_action:
+                  action: call-service
+                  service: select.select_option
+                  data:
+                    option: Central Room
+                  target:
+                    entity_id: select.living_room_camera_move_to_preset
+                name: Centered
+                icon: mdi:camera-control
+              - show_name: true
+                show_icon: true
+                type: button
+                tap_action:
+                  action: call-service
+                  service: select.select_option
+                  data:
+                    option: Kitchen
+                  target:
+                    entity_id: select.living_room_camera_move_to_preset
+                name: Kitchen
+                icon: mdi:camera-control
+              - type: glance
+                entities:
+                  - entity: binary_sensor.dog_door
+                    icon: mdi:dog-side
+                    name: Dog Door
+                    show_last_changed: true
+      - type: vertical-stack
+        title: Overview
+        cards:
+          - type: history-graph
+            entities:
+              - entity: binary_sensor.dishwasher
+            hours_to_show: 48
+          - type: tile
+            entity: calendar.groceries_list
+          - show_name: true
+            show_icon: true
+            type: button
             tap_action:
-              action: none
-            type: picture
-          - hold_action:
-              action: none
-            image: >-
-              http://192.168.1.111:112/badge/3f66d990-6c1b-44e0-bd49-e31b43/ZkwS39cc/cron.svg
-            tap_action:
-              action: none
-            type: picture
-          - hold_action:
-              action: none
-            image: >-
-              http://192.168.1.111:112/badge/3f66d990-6c1b-44e0-bd49-e31b43/c2I31vCW/docker.svg
-            tap_action:
-              action: none
-            type: picture
-        title: Server Health Checks
-        type: horizontal-stack
-      - card:
-          title: Low Batteries
-          type: custom:battery-state-card
-        filter:
-          exclude:
-            - state: '> 50'
-            - state: Not Charging
-            - state: charging
-            - state: full
-            - entity_id: sensor.front_door_battery
-          include:
-            - attributes:
-                device_class: battery
-        type: custom:auto-entities
-      - card:
-          show_header_toggle: false
-          title: Unavailable Devices
-          type: entities
-        entities:
-          - cover.axis_gear_034e1400_window_covering
-          - sensor.sems_output_power
-          - light.theatre_room_left_lamp
-          - light.theatre_room_right_lamp
-          - light.theatre_room_ceiling
-          - light.entry_hall_lights
-          - light.office_lamp
-          - cover.aeon_labs_zw062_garage_door_controller_barrier_state_label
-          - media_player.all_rooms
-          - media_player.kitchen_google_home_hub
-          - media_player.master_bedroom_speaker
-          - media_player.office_google_home
-          - media_player.office_pc_speakers
-          - media_player.theatre_room_google_home
-          - sensor.living_room_temperature
-          - sensor.master_bedroom_temperature
-          - sensor.office_temperature
-          - sensor.vibration_sensor
-          - sensor.theatre_room_temperature
-          - binary_sensor.garage_door_external
-          - binary_sensor.back_door_flyscreen
-          - binary_sensor.back_door_glass
-        state_filter:
-          - unavailable
-        type: entity-filter
-      - entities:
-          - entity: input_boolean.uni_parking_reminder_toggle
-            name: Laura - Parking Reminders
-          - entity: input_boolean.medicine_reminder_toggle
-            name: Michael - Medicine Reminders
-          - entity: automation.garage_notify_if_garage_door_left_open_for_5_minutes
-            name: Garage Left Open Alerts
-          - entity: automation.bins_notify_if_bins_not_taken_out
-            name: Take Bins Out Alerts
-          - entity: automation.location_notify_when_someone_comes_home
-            name: Notify When Someone Arrives Home (default off)
-          - entity: input_boolean.guest_mode
-          - entity: input_boolean.washing_machine_notify_michael
-          - entity: input_boolean.washing_machine_notify_laura
-        show_header_toggle: false
-        title: Temporarily Toggle Automations
-        type: entities
-      - cards:
-          - entities:
-              - entity: sensor.ha_version
-              - entity: sensor.ha_docker_version_stable
-              - entity: sensor.ha_docker_version_beta
-              - entity: sensor.ha_github_version
-            show_header_toggle: false
-            title: Home Assistant Versions
-            type: entities
-          - cards:
-              - entity: sensor.potential_breaking_changes
-                name: Potential Breaking Changes
+              action: navigate
+              navigation_path: /lovelace-cooking
+            name: Thermometer Dashboard
+            icon: mdi:thermometer-probe
+      - square: false
+        columns: 1
+        type: grid
+        title: LG Fridge
+        cards:
+          - type: horizontal-stack
+            cards:
+              - hours_to_show: 24
+                graph: line
                 type: sensor
-              - card:
-                  columns:
-                    - add_link: doclink
-                      field: component
-                      title: Component
-                    - add_link: prlink
-                      field: description
-                      title: Description
-                  entity: sensor.potential_breaking_changes
-                  type: custom:list-card
-                conditions:
-                  - entity: sensor.potential_breaking_changes
-                    state_not: '0'
-                type: conditional
-            type: custom:stack-in-card
-          - entity: sensor.hacs
-            name: HACS Pending Updates
-            type: entity
-        type: vertical-stack
-      - entities:
-          - entity: sensor.canon_ts3300_series
-            name: Canon TS3300
-          - entity: sensor.canon_ts3300_series_black
-            name: Black Ink
-          - entity: sensor.canon_ts3300_series_color
-            name: Colour Ink
-        title: Printer
-        type: glance
-      - cards:
-          - entities:
-              - entity: sensor.server_cupboard_temperature
-            hours_to_show: 24
-            refresh_interval: 0
-            title: Server Temperature
-            type: history-graph
-          - entities:
-              - entity: sensor.server_cupboard_temperature
-              - entity: sensor.processor_temperature
+                entity: sensor.refrigerator_freezer_temp
+                name: Freezer
+                detail: 1
+              - hours_to_show: 24
+                graph: line
+                type: sensor
+                entity: sensor.refrigerator_fridge_temp
+                name: Fridge
+                detail: 1
+          - type: glance
+            entities:
+              - entity: sensor.refrigerator
+              - entity: binary_sensor.refrigerator_door_open
+                name: Fridge Door
+          - type: tile
+            entity: switch.refrigerator_express_mode
+  - theme: Backend-selected
+    title: Living & Dining
+    path: subview-living-and-dining
+    icon: mdi:sofa
+    subview: true
+    badges: []
+    cards:
+      - type: vertical-stack
+        title: Lights
+        cards:
+          - type: tile
+            entity: light.living_room
+            name: Living Room
+          - type: tile
+            entity: light.dining_room
+            name: Dining Room
+          - type: tile
+            entity: light.kitchen_lights
+            name: Kitchen
+          - type: conditional
+            conditions:
+              - entity: input_boolean.enable_christmas_automations
+                state: 'on'
+            card:
+              type: tile
+              entity: switch.christmas_tree_power
+      - type: vertical-stack
+        title: Camera Feed
+        cards:
+          - camera_view: auto
+            type: picture-glance
+            title: Living Room
+            image: https://demo.home-assistant.io/stub_config/kitchen.png
+            entities:
+              - entity: switch.living_room_camera_privacy
+            camera_image: camera.living_room_camera_hd
+            entity: camera.living_room_camera_sd
+          - square: false
+            columns: 3
+            type: grid
+            cards:
+              - show_name: true
+                show_icon: true
+                type: button
+                tap_action:
+                  action: call-service
+                  service: select.select_option
+                  data:
+                    option: Central Room
+                  target:
+                    entity_id: select.living_room_camera_move_to_preset
+                name: Centered
+                icon: mdi:camera-control
+              - show_name: true
+                show_icon: true
+                type: button
+                tap_action:
+                  action: call-service
+                  service: select.select_option
+                  data:
+                    option: Kitchen
+                  target:
+                    entity_id: select.living_room_camera_move_to_preset
+                name: Kitchen
+                icon: mdi:camera-control
+              - type: glance
+                entities:
+                  - entity: binary_sensor.dog_door
+                    icon: mdi:dog-side
+                    name: Dog Door
+                    show_last_changed: true
+      - type: vertical-stack
+        title: Doors
+        cards:
+          - show_name: true
+            show_icon: true
+            show_state: true
             type: glance
-        type: custom:stack-in-card
-      - type: history-graph
+            entities:
+              - entity: binary_sensor.back_door_flyscreen
+                name: Flyscreen
+              - entity: binary_sensor.back_door_glass
+                name: Glass
+              - entity: binary_sensor.dog_door
+                name: Dog
+                icon: mdi:dog
+      - type: vertical-stack
+        cards:
+          - type: vertical-stack
+            title: TV
+            cards:
+              - type: tile
+                entity: switch.living_room_tv
+              - type: media-control
+                entity: media_player.living_room_chromecast
+          - type: vertical-stack
+            title: Media
+            cards:
+              - type: media-control
+                entity: media_player.central_living_speakers
+              - type: entities
+                entities:
+                  - entity: media_player.kitchen_google_home_hub
+                  - entity: media_player.dining_room_google_home
+                  - entity: media_player.living_room_soundbar_chromecast_audio
+          - type: grid
+            title: Soundbar
+            cards:
+              - show_name: true
+                show_icon: true
+                type: button
+                tap_action:
+                  action: call-service
+                  service: script.living_room_soundbar_set_channel
+                  service_data:
+                    channel: bluetooth
+                name: Source - Bluetooth
+                show_state: false
+                icon: hass:soundbar
+              - type: button
+                tap_action:
+                  action: call-service
+                  service: script.living_room_soundbar_set_channel
+                  service_data:
+                    channel: chromecast
+                name: Source - Chromecast
+                show_state: false
+                icon: hass:soundbar
+              - type: button
+                tap_action:
+                  action: call-service
+                  service: script.living_room_soundbar_set_channel
+                  service_data:
+                    channel: tv
+                name: Source - Television
+                show_state: false
+                icon: hass:soundbar
+              - type: button
+                tap_action:
+                  action: call-service
+                  service: script.living_room_soundbar_volume_up
+                name: Volume Up
+                icon: mdi:volume-plus
+              - type: button
+                tap_action:
+                  action: call-service
+                  service: script.living_room_soundbar_volume_down
+                name: Volume Down
+                icon: mdi:volume-minus
+              - type: button
+                tap_action:
+                  action: call-service
+                  service: script.living_room_soundbar_mute
+                name: Volume Mute
+                icon: mdi:volume-mute
+  - theme: Backend-selected
+    title: Theatre Room
+    path: subview-theatre-room
+    icon: mdi:television
+    subview: true
+    badges: []
+    cards:
+      - type: vertical-stack
+        title: Lights
+        cards:
+          - features:
+              - type: light-brightness
+            type: tile
+            entity: light.theatre_room_ceiling
+            name: Ceiling
+          - type: tile
+            entity: light.theatre_room
+            name: Lamps
+            features:
+              - type: light-brightness
+          - type: tile
+            entity: light.theatre_room_tv_cabinet_led_strip
+            name: LED Strip
+            features:
+              - type: light-brightness
+          - type: horizontal-stack
+            cards:
+              - show_name: true
+                show_icon: true
+                type: button
+                tap_action:
+                  action: call-service
+                  service: script.set_movie_lighting
+                  data: {}
+                  target: {}
+                entity: script.set_movie_lighting
+                name: Movie Lights
+                icon: mdi:theater
+              - show_name: true
+                show_icon: true
+                type: button
+                tap_action:
+                  action: call-service
+                  service: script.movie_has_finished
+                  data: {}
+                  target: {}
+                entity: script.movie_has_finished
+                name: Movie Has Finished
+                icon: mdi:filmstrip-off
+      - type: vertical-stack
+        title: Media
+        cards:
+          - type: media-control
+            entity: media_player.theatre_room_tv
+          - type: media-control
+            entity: media_player.theatre_room_chromecast
+          - type: media-control
+            entity: media_player.theatre_room_google_home
+  - theme: Backend-selected
+    title: Master Suite
+    path: subview-master-suite
+    icon: mdi:bed-queen
+    subview: true
+    badges: []
+    cards:
+      - type: vertical-stack
+        title: Lights & Fan
+        cards:
+          - type: vertical-stack
+            cards:
+              - features:
+                  - type: light-brightness
+                type: tile
+                entity: light.master_bedroom_ceiling
+                name: Bedroom Ceiling
+              - type: horizontal-stack
+                cards:
+                  - type: tile
+                    entity: light.master_bedroom_michael_lamp
+                    name: Michael's Lamp
+                    features:
+                      - type: light-brightness
+                  - type: tile
+                    entity: light.master_bedroom_laura_lamp
+                    name: Laura's Lamp
+                    features:
+                      - type: light-brightness
+              - type: horizontal-stack
+                cards:
+                  - type: tile
+                    entity: light.genio_nebula_projector
+                    name: Projector Lamp
+                  - type: tile
+                    entity: light.genio_nebula_projector_laser
+                    name: Projector Laser
+              - type: tile
+                entity: light.master_wir
+                name: Walk-In Robe
+                features:
+                  - type: light-brightness
+              - type: horizontal-stack
+                cards:
+                  - type: tile
+                    entity: light.ensuite_light
+                    name: Ensuite Ceiling
+                  - type: tile
+                    entity: switch.ensuite_fan
+                    name: Ensuite Fan
+              - features:
+                  - type: light-brightness
+                type: tile
+                entity: light.ensuite_led_strip
+                name: Ensuite LED Strip
+      - type: vertical-stack
+        title: Media
+        cards:
+          - type: media-control
+            entity: media_player.master_bedroom_speaker
+          - type: media-control
+            entity: media_player.ensuite_google_home
+      - type: vertical-stack
+        title: Temperature
+        cards:
+          - type: horizontal-stack
+            cards:
+              - show_name: true
+                show_icon: true
+                type: button
+                tap_action:
+                  action: toggle
+                entity: script.aircon_warm_master
+                name: Warm Bedroom
+                icon: mdi:fire
+              - show_name: true
+                show_icon: true
+                type: button
+                tap_action:
+                  action: toggle
+                entity: script.aircon_fan_master
+                name: Sleeping Fan
+                icon: mdi:ceiling-fan
+      - type: vertical-stack
+        title: Details
+        cards:
+          - type: glance
+            entities:
+              - binary_sensor.ensuite_shower
+  - theme: Backend-selected
+    title: Office
+    path: subview-office
+    icon: mdi:desktop-tower-monitor
+    subview: true
+    badges: []
+    cards:
+      - type: vertical-stack
+        title: Lights & Blinds
+        cards:
+          - type: entities
+            entities:
+              - entity: light.office_lamp
+                hide_when_off: true
+                name: Lamp
+                toggle: true
+              - type: custom:rgb-light-card
+                entity: light.office_lamp
+                colors:
+                  - brightness_pct: 100
+                    color_temp: 350
+                  - color_name: blue
+                  - color_name: purple
+                  - color_name: red
+                  - color_name: orange
+                  - color_name: yellow
+                  - color_name: lime
+          - type: tile
+            entity: cover.office_blinds
+            features:
+              - type: cover-open-close
+      - type: vertical-stack
+        title: Meeting Status
+        cards:
+          - type: glance
+            entities:
+              - entity: binary_sensor.michael_in_meeting
+                name: Michael In Meeting
+              - entity: binary_sensor.michael_work_muted
+                name: Michael Is Muted
+      - type: vertical-stack
+        title: 3D Printer
+        cards:
+          - type: custom:threedy-card
+            base_entity: sensor.octoprint
+            monitored:
+              - Status
+              - Hotend
+              - Bed
+            printer_type: I3
+            name: Ender 3 S1
+            theme: Default
+            camera_entity: camera.octoprint_camera
+          - type: glance
+            entities:
+              - entity: sensor.octoprint_start_time
+                name: Actual Start Time
+              - entity: sensor.octoprint_estimated_finish_time
+                name: Estimated Finish Time
+            show_name: true
+            show_icon: true
+            show_state: true
+            state_color: false
+      - type: vertical-stack
+        title: Media
+        cards:
+          - type: media-control
+            entity: media_player.office_google_home
+      - type: vertical-stack
+        title: Details
+        cards:
+          - show_name: true
+            show_icon: true
+            show_state: true
+            type: glance
+            entities:
+              - entity: binary_sensor.laura_work_laptop
+              - entity: binary_sensor.michael_work_laptop
+              - entity: binary_sensor.laura_pc
+              - entity: binary_sensor.michael_pc
+              - entity: sensor.canon_ts3300_series
+                name: Canon Printer
+            columns: 2
+  - theme: Backend-selected
+    title: Entry
+    path: subview-entry
+    icon: mdi:door
+    subview: true
+    badges: []
+    cards:
+      - type: alarm-panel
+        states:
+          - arm_home
+          - arm_away
+        entity: alarm_control_panel.alarm_com
+        name: House Alarm
+      - type: vertical-stack
+        cards:
+          - type: tile
+            entity: light.front_porch_light
+            show_entity_picture: false
+          - type: tile
+            entity: light.entry_hall_lights
+          - type: tile
+            entity: light.side_hall
+      - show_name: true
+        show_icon: true
+        show_state: true
+        type: glance
+        title: Doorbell
         entities:
-          - entity: sensor.aeon_labs_zw100_multisensor_6_burglar_2
-        hours_to_show: 1
-        refresh_interval: 0
-      - type: glance
+          - entity: sensor.ring_last_ding
+            name: Last Ding
+          - entity: sensor.ring_last_motion
+            name: Last Motion
+      - show_state: true
+        show_name: true
+        camera_view: live
+        type: picture-entity
+        entity: camera.last_front_door_motion
+        image: https://demo.home-assistant.io/stub_config/bedroom.png
+  - theme: Backend-selected
+    title: Garage
+    path: subview-garage
+    icon: mdi:car
+    subview: true
+    badges: []
+    cards:
+      - features:
+          - type: cover-open-close
+        type: tile
+        entity: cover.garage_door
+        tap_action:
+          action: more-info
+        icon_tap_action:
+          action: more-info
+      - type: tile
+        entity: light.garage
+        name: Garage Light
+      - show_state: false
+        show_name: true
+        camera_view: auto
+        type: picture-entity
+        entity: camera.garage_camera
+        image: https://demo.home-assistant.io/stub_config/bedroom.png
+        name: Garage Camera
+        camera_image: camera.garage_camera
+      - show_name: true
+        show_icon: true
+        show_state: true
+        type: glance
         entities:
-          - entity: sensor.auto_backup
-    icon: mdi:battery-unknown
-    path: batteries
+          - entity: binary_sensor.garage_door_external
+            name: External
+          - entity: binary_sensor.garage_door_internal
+            name: Internal
+          - entity: cover.garage_door
+            name: Roller
+        title: Doors
+  - theme: Backend-selected
+    title: Garden
+    path: subview-garden
+    icon: mdi:flower
+    subview: true
+    badges: []
+    cards:
+      - type: vertical-stack
+        title: Weather
+        cards:
+          - type: weather-forecast
+            entity: weather.banjup
+      - type: vertical-stack
+        title: Lights
+        cards:
+          - type: tile
+            entity: light.alfresco_fairy_lights
+          - type: tile
+            entity: light.alfresco_ceiling_lights
+          - type: tile
+            entity: light.garden_flood_lights
+      - type: vertical-stack
+        title: Doors
+        cards:
+          - show_name: true
+            show_icon: true
+            show_state: true
+            type: glance
+            entities:
+              - entity: binary_sensor.back_door_flyscreen
+                name: Flyscreen
+              - entity: binary_sensor.back_door_glass
+                name: Glass
+              - entity: binary_sensor.dog_door
+                name: Dog
+                icon: mdi:dog
+      - type: vertical-stack
+        title: Camera Feeds
+        cards:
+          - camera_view: auto
+            type: picture-glance
+            title: Alfresco
+            image: https://demo.home-assistant.io/stub_config/kitchen.png
+            entities:
+              - entity: light.alfresco_ceiling_lights
+              - entity: light.alfresco_fairy_lights
+            camera_image: camera.alfresco_camera
+            entity: camera.alfresco_camera
+          - camera_view: auto
+            type: picture-glance
+            image: https://demo.home-assistant.io/stub_config/kitchen.png
+            entities:
+              - entity: light.garden_flood_lights
+            title: Backyard
+            camera_image: camera.backyard_camera
+            entity: camera.backyard_camera
+      - type: vertical-stack
+        title: Plants
+        cards:
+          - type: plant-status
+            entity: plant.fig
+            name: Fig Tree
+          - type: plant-status
+            entity: plant.mint
+            name: Herb Planter
+          - type: plant-status
+            entity: plant.herb_planter
+            name: Mint
+      - type: vertical-stack
+        title: Details
+        cards:
+          - hours_to_show: 48
+            graph: line
+            type: sensor
+            entity: sensor.solar_panels_generating_now
+            detail: 2
+            name: ' Solar Output'
+  - theme: Backend-selected
+    title: People & Places
+    path: subview-people-and-places
+    icon: mdi:account
+    subview: true
+    badges: []
+    cards:
+      - type: vertical-stack
+        title: Location
+        cards:
+          - type: glance
+            entities:
+              - entity: person.michael
+              - entity: person.laura
+          - type: map
+            entities:
+              - entity: person.laura
+              - entity: person.michael
+            dark_mode: false
+      - type: vertical-stack
+        title: Details
+        cards:
+          - type: glance
+            entities:
+              - entity: binary_sensor.dog_biscuit_box
+                icon: mdi:dog-side
+                name: Dog Last Fed
+                show_last_changed: true
+          - show_name: true
+            show_icon: true
+            show_state: true
+            type: glance
+            entities:
+              - entity: var.mail_was_delivered_today
+                icon: mdi:mailbox
+              - entity: var.bins_were_moved_today
+                icon: mdi:trash-can-outline
+            columns: 2
+          - type: entities
+            entities:
+              - entity: input_boolean.guest_mode
+              - entity: input_boolean.holiday_mode
+              - entity: script.set_party_lights
+                name: Set Party Lights
+              - entity: script.reset_party_lights
+                name: Reset Party Lights
+      - type: vertical-stack
+        title: Reminders
+        cards:
+          - type: entities
+            entities:
+              - entity: input_boolean.medicine_reminder_michael_toggle
+                name: Michael - Medicine Needs Taking
+              - entity: input_boolean.medicine_reminder_laura_toggle
+                name: Laura - Medicine Needs Taking
+              - entity: input_boolean.washing_machine_notify_michael
+              - entity: input_boolean.washing_machine_notify_laura
+              - entity: >-
+                  automation.garage_notify_if_garage_door_left_open_for_5_minutes
+                name: Garage Left Open Alerts
+                icon: mdi:garage-alert
+              - entity: input_boolean.take_bins_out_alerts
+              - entity: automation.location_notify_when_someone_comes_home
+                name: Notify When Someone Arrives Home (default off)
+                icon: mdi:home-map-marker
+  - theme: Backend-selected
+    title: Laundry
+    path: subview-laundry
+    icon: mdi:washing-machine
+    subview: true
+    badges: []
+    cards:
+      - type: vertical-stack
+        title: Lights
+        cards:
+          - type: tile
+            entity: light.laundry_ceiling
+          - type: tile
+            entity: light.laundry_led_strip
+          - type: tile
+            entity: light.washing_line_lights
+      - type: horizontal-stack
+        title: Laundry Notifications
+        cards:
+          - type: tile
+            entity: input_boolean.washing_machine_notify_michael
+            name: Notify Michael
+            tap_action:
+              action: toggle
+            icon_tap_action:
+              action: toggle
+          - type: tile
+            entity: input_boolean.washing_machine_notify_laura
+            name: Notify Laura
+            tap_action:
+              action: toggle
+            icon_tap_action:
+              action: toggle
+      - show_name: true
+        show_icon: true
+        show_state: true
+        type: glance
+        entities:
+          - entity: binary_sensor.washing_line
+            name: Washing Line Open?
+          - entity: binary_sensor.washing_machine_needs_emptying
+            name: Washing Machine Empty?
+        columns: 2
+      - type: vertical-stack
+        title: Camera Feed
+        cards:
+          - camera_view: auto
+            type: picture-glance
+            image: https://demo.home-assistant.io/stub_config/kitchen.png
+            entities:
+              - entity: light.washing_line_lights
+            title: Washing Line
+            camera_image: camera.side_path
+            entity: camera.side_path
+      - type: vertical-stack
+        title: Details
+        cards:
+          - type: glance
+            entities:
+              - entity: binary_sensor.laundry_door
+                name: Glass Door
+                icon: mdi:door
+              - entity: binary_sensor.laundry_motion
+                name: Motion Detected?
+  - theme: Backend-selected
+    title: Whole House Controls
+    path: subview-whole-house-controls
+    icon: mdi:home
+    subview: true
+    badges: []
+    cards:
+      - type: vertical-stack
+        title: Toggles
+        cards:
+          - type: entities
+            entities:
+              - entity: input_boolean.guest_mode
+              - entity: input_boolean.holiday_mode
+              - entity: script.set_party_lights
+                name: Set Party Lights
+              - entity: script.reset_party_lights
+                name: Reset Party Lights
+      - type: vertical-stack
+        title: Lights
+        cards:
+          - show_name: true
+            show_icon: true
+            type: button
+            tap_action:
+              action: call-service
+              service: script.turn_off_all_lights
+              data: {}
+              target: {}
+            entity: script.turn_off_all_lights
+            name: Turn Off All Lights
+            icon_height: 30px
+          - type: custom:auto-entities
+            entities:
+              - switch.christmas_tree_power
+            filter:
+              include:
+                - domain: light
+              exclude:
+                - state: unavailable
+            sort:
+              method: friendly_name
+            card:
+              type: entities
+              state_color: true
+      - type: vertical-stack
+        title: Media
+        cards:
+          - type: custom:auto-entities
+            card:
+              type: entities
+            filter:
+              include:
+                - domain: media_player
+              exclude:
+                - state: unavailable
+                - entity_id: media_player.spotify_micker_t
+            sort:
+              method: friendly_name
+  - theme: Backend-selected
+    title: Music
+    path: subview-music
+    icon: mdi:music
+    subview: true
+    badges: []
+    cards:
+      - type: custom:spotify-card
+        limit: 10
+        always_play_random_song: true
+        filter_devices:
+          - plex.*
+          - .*chromecast
+          - office_speaker_group
+          - theatre_room_tv
+          - spotify_micker_t
+        default_device: central_living_speakers
+        hide_connect_devices: true
+      - type: vertical-stack
+        cards:
+          - type: grid
+            title: Speaker Groups
+            square: false
+            columns: 1
+            cards:
+              - type: media-control
+                entity: media_player.all_rooms
+              - type: media-control
+                entity: media_player.central_living_speakers
+          - type: grid
+            title: Individual Speakers
+            square: false
+            columns: 2
+            cards:
+              - type: media-control
+                entity: media_player.dining_room_google_home
+              - type: media-control
+                entity: media_player.ensuite_google_home
+              - type: media-control
+                entity: media_player.kitchen_google_home_hub
+              - type: media-control
+                entity: media_player.living_room_soundbar_chromecast_audio
+              - type: media-control
+                entity: media_player.master_bedroom_speaker
+              - type: media-control
+                entity: media_player.office_google_home
+              - type: media-control
+                entity: media_player.theatre_room_google_home
+  - theme: Backend-selected
+    title: Vacuum
+    path: subview-vacuum
+    icon: mdi:robot-vacuum
+    subview: true
+    badges: []
+    cards:
+      - type: custom:xiaomi-vacuum-map-card
+        title: Robo Buddy Controls
+        preset_name: Live map
+        entity: vacuum.robo_buddy
+        map_source:
+          camera: camera.xiaomi_cloud_map_extractor
+        calibration_source:
+          camera: true
+        map_modes:
+          - template: vacuum_clean_segment
+            predefined_selections:
+              - id: 24
+                label:
+                  text: Office
+                  x: 22200
+                  'y': 11075
+                  offset_y: 35
+                icon:
+                  name: mdi:laptop
+                  x: 22200
+                  'y': 11075
+              - id: 22
+                label:
+                  text: Hallway
+                  x: 27500
+                  'y': 15175
+                  offset_y: 35
+                icon:
+                  name: mdi:image-frame
+                  x: 27500
+                  'y': 15175
+              - id: 21
+                label:
+                  text: Bathroom
+                  x: 21900
+                  'y': 15075
+                  offset_y: 35
+                icon:
+                  name: mdi:shower
+                  x: 21900
+                  'y': 15075
+              - id: 26
+                label:
+                  text: Toilet
+                  x: 23675
+                  'y': 15875
+                  offset_y: 35
+                icon:
+                  name: mdi:toilet
+                  x: 23675
+                  'y': 15875
+              - id: 20
+                label:
+                  text: Theatre
+                  x: 24525
+                  'y': 19000
+                  offset_y: 35
+                icon:
+                  name: mdi:television
+                  x: 24525
+                  'y': 19000
+              - id: 19
+                label:
+                  text: Laundry
+                  x: 29050
+                  'y': 18000
+                  offset_y: 35
+                icon:
+                  name: mdi:iron-board
+                  x: 29050
+                  'y': 18000
+              - id: 17
+                label:
+                  text: Kitchen
+                  x: 31200
+                  'y': 22550
+                  offset_y: 35
+                icon:
+                  name: mdi:pot-mix
+                  x: 31200
+                  'y': 22550
+              - id: 18
+                label:
+                  text: Living Room
+                  x: 27700
+                  'y': 22550
+                  offset_y: 35
+                icon:
+                  name: mdi:billiards-rack
+                  x: 27700
+                  'y': 22450
+              - id: 25
+                label:
+                  text: Dining Room
+                  x: 27700
+                  'y': 27100
+                  offset_y: 35
+                icon:
+                  name: mdi:table-chair
+                  x: 27700
+                  'y': 26950
+          - template: vacuum_clean_zone
+          - template: vacuum_goto
+          - template: vacuum_follow_path
+        map_locked: true
+      - show_name: true
+        show_icon: true
+        show_state: true
+        type: glance
+        entities:
+          - entity: sensor.robo_buddy_last_clean_area
+            name: Last Clean Area
+          - entity: sensor.robo_buddy_last_clean_duration
+            name: Last Clean Time
+          - entity: sensor.robo_buddy_last_clean_end
+            name: Last Clean Ended
+          - entity: sensor.robo_buddy_total_clean_area
+            name: Total Clean Area
+          - entity: sensor.robo_buddy_total_duration
+            name: Total Clean Time
+          - entity: sensor.robo_buddy_total_clean_count
+            name: Total Clean Count
+        columns: 3
+        title: Robo Buddy Statistics
+  - theme: Backend-selected
+    title: Server & Network
+    path: subview-server-and-network
+    icon: mdi:server-network
+    subview: true
+    badges: []
+    cards:
+      - type: vertical-stack
+        title: Pi-Hole Ad Blocking
+        cards:
+          - type: gauge
+            entity: sensor.pi_hole_total_ads_blocked_today
+            max: 25000
+          - type: entities
+            entities:
+              - entity: switch.pi_hole_ad_blocking
+      - type: vertical-stack
+        title: Server Temperatures
+        cards:
+          - type: history-graph
+            entities:
+              - entity: sensor.server_cupboard_temperature
+          - type: glance
+            entities:
+              - entity: sensor.server_cupboard_temperature
+                name: Cupboard Temp
+              - entity: sensor.processor_temperature
+                name: Processor Temp
+      - type: vertical-stack
+        title: Low Batteries
+        cards:
+          - type: custom:auto-entities
+            card:
+              type: entities
+            filter:
+              include:
+                - name: '*Battery*'
+              exclude:
+                - state: unavailable
+                - state: '>= 50'
+                - state: .*[a-z,A-Z]*.*
+                - numeric: false
+                - entity_id: sensor.michael_s_galaxy_s10_battery_temperature
+                - entity_id: sensor.michael_s_galaxy_s10_battery_power
+      - type: vertical-stack
+        title: Canon TS3300 Printer
+        cards:
+          - type: glance
+            entities:
+              - entity: sensor.canon_ts3300_series
+                name: Printer Status
+              - entity: sensor.canon_ts3300_series_black
+                name: Black Ink
+              - entity: sensor.canon_ts3300_series_color
+                name: Colour Ink
+title: My Home
