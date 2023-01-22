@@ -284,6 +284,9 @@ automation:
         entity_id: vacuum.robo_buddy
         attribute: battery_level
         state: 100
+      - condition: state
+        entity_id: vacuum.robo_buddy
+        state: "docked"
     action:
       - service: script.vacuum_set_manual_mode
         data:
