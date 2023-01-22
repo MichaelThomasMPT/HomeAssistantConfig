@@ -110,7 +110,7 @@ script:
       service: climate.set_hvac_mode
     - data:
         entity_id: climate.ac
-        temperature: 23
+        temperature: 24
       service: climate.set_temperature
     - service: script.aircon_turn_off_all_zones
     - data:
@@ -136,7 +136,7 @@ script:
     sequence:
     - data:
         entity_id: climate.ac
-        temperature: 21
+        temperature: 24
       service: climate.set_temperature
     - data:
         entity_id: climate.ac
@@ -153,7 +153,7 @@ script:
     sequence:
     - data:
         entity_id: climate.ac
-        temperature: 23
+        temperature: 24
       service: climate.set_temperature
     - data:
         entity_id: climate.ac
@@ -170,7 +170,7 @@ script:
     sequence:
     - data:
         entity_id: climate.ac
-        temperature: 23
+        temperature: 24
       service: climate.set_temperature
     - data:
         entity_id: climate.ac
@@ -204,7 +204,7 @@ script:
             - climate.ac
       - data:
           entity_id: climate.ac
-          temperature: 23
+          temperature: 24
           hvac_mode: cool
         service: climate.set_temperature
       - data:
