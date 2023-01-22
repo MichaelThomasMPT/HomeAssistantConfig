@@ -43,6 +43,11 @@ automation:
       - service: input_boolean.turn_off
         data:
           entity_id: input_boolean.medicine_reminder_michael_toggle
+      - service: notify.mobile_app_michael_s_galaxy_s10
+        data:
+          message: "clear_notification"
+          data:
+            tag: "medicine-reminders"
 
   - alias: Medicine - Deactivate Laura Reminder Once Medicine Is Taken
     id: medicine_deactivate_laura_reminder_once_medicine_is_taken
@@ -108,6 +113,7 @@ alert:
       - mobile_app_michael_s_galaxy_s10
     data:
       group: Medicine
+      tag: medicine-reminders
       actions:
         - action: "medicine_reminder_michael_finished" 
           title: "I've Taken It"
