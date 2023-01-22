@@ -64,6 +64,8 @@ cloud:
         - light.office_2
         - light.range_extender_2
         - input_select.igrill_presets_probe
+        - climate.refrigerator_freezer
+        - climate.refrigerator_fridge
     entity_config:
       switch.christmas_tree_power:
         name: Christmas Tree
