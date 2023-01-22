@@ -63,6 +63,12 @@ zone:
     radius: 200
     icon: mdi:train
 
+  - name: Crown Perth
+    latitude: -31.9597198
+    longitude: 115.8943751
+    radius: 400
+    icon: mdi:dice-6
+
 automation:
   - alias: Location - Notify Michael If Laura Leaving Work
     id: location_notify_michael_if_laura_leaving_work
@@ -255,6 +261,38 @@ automation:
           message: Don't forget to remove your lunch from the work fridge!
       - delay: 
           minutes: 15 #prevents reminding multiple times too quickly 
+
+  - alias: Location - Remind Me To Bring My Crown Rewards Card
+    id: location_remind_me_to_bring_my_crown_rewards_card
+    trigger:
+      #Check 8 hours and 1 hour before each event in either calendar.
+      - platform: calendar
+        event: start
+        entity_id: calendar.laura_mickey
+        offset: "-08:00:00"
+      - platform: calendar
+        event: start
+        entity_id: calendar.laura_mickey
+        offset: "-01:00:00"
+      - platform: calendar
+        event: start
+        entity_id: calendar.personal
+        offset: "-08:00:00"
+      - platform: calendar
+        event: start
+        entity_id: calendar.personal
+        offset: "-01:00:00"
+    condition:
+      #If the event contains Crown Perth or Crown Metropol Perth in the location
+      - condition: template
+        value_template: '{{ trigger.calendar_event.location is search(".*Crown (Metropol )?Perth.*", ignorecase=True) }}'
+    action:
+      - service: notify.mobile_app_michael_s_galaxy_s10
+        data:
+          title: "Remember Your Crown Rewards Card"
+          message: "You may need it when you go to {{trigger.calendar_event.summary}}."
+          data:
+            group: "Crown Rewards"
 
 person:
   - name: Michael
