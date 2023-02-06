@@ -11,12 +11,13 @@ influxdb:
   tags_attributes:
     - friendly_name
 
-splunk:
-  token: !secret splunk_token
-  host: !secret splunk_host
-  port: !secret splunk_port
-  ssl: false
-  verify_ssl: false
-  filter:
-    exclude_entities:
-      - sun.sun
+#Splunk is no longer working so commenting this out for now.
+# splunk:
+#   token: !secret splunk_token
+#   host: !secret splunk_host
+#   port: !secret splunk_port
+#   ssl: false
+#   verify_ssl: false
+#   filter:
+#     exclude_entities:
+#       - sun.sun
