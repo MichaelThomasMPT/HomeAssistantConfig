@@ -419,10 +419,10 @@ automation:
     id: theatre_room_play_tv_show_on_cube_tap
     variables: 
       buttons:
-        1001: #House of the Dragon
-          music_file: '/local/sounds/House_of_the_Dragon.mp3'
+        1001: #The Last Of Us
+          music_file: '/local/sounds/The_Last_Of_Us.mp3'
           media_location: "PLEX"
-          plex_content_id: '{ "playlist_name": "House of the Dragon", "shuffle": "0" }'
+          plex_content_id: '{ "playlist_name": "The Last Of Us", "shuffle": "0" }'
         2002: #Snowpiercer
           music_file: '/local/sounds/Snowpiercer.mp3'
           media_location: "NETFLIX"
@@ -439,10 +439,10 @@ automation:
           music_file: '/local/sounds/Taskmaster.mp3'
           media_location: "PLEX"
           plex_content_id: '{ "playlist_name": "Taskmaster", "shuffle": "0" }'
-        6006: #Westworld
-          music_file: '/local/sounds/Westworld.mp3'
+        6006: #Battlebots 
+          music_file: '/local/sounds/Battlebots.mp3'
           media_location: "PLEX"
-          plex_content_id: '{ "playlist_name": "Westworld", "shuffle": "0" }'
+          plex_content_id: '{ "playlist_name": "Battlebots", "shuffle": "0" }'
     trigger: 
       - platform: event
         event_type: deconz_event
