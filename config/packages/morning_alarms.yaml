@@ -33,4 +33,4 @@ automation:
         value_template:  >-
           {{ '%02d' % now().month + '-%02d' % now().day == '09-21' }}
     action:
-      - service: script.morning_alarms_if_today_is_special_play_music
+      - service: script.morning_alarms_if_today_is_special_play_music 
