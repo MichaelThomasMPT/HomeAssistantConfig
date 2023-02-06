@@ -65,12 +65,12 @@ script:
     - data:
         entity_id: cover.master_bed
       service: cover.open_cover
-    - delay:
-        seconds: 10
-    - data:
-        entity_id: input_number.aircon_countdown_timer
-        value: 120
-      service: input_number.set_value
+    # - delay:
+    #     seconds: 10
+    # - data:
+    #     entity_id: input_number.aircon_countdown_timer
+    #     value: 120
+    #   service: input_number.set_value
     alias: Aircon Fan Master
     
   #Run the fan in the office
@@ -352,7 +352,6 @@ automation:
         entity_id:
           - climate.ac
 
-
   - alias: Temperature - Master Bed Button Trigger - Fan
     id: temperature_master_bed_button_trigger_fan
     mode: single
@@ -499,10 +498,10 @@ automation:
     mode: queued #Make it so you can press the button twice as quickly as you want
     trigger:
       - platform: event
-        event_type: deconz_event
+        event_type: zha_event
         event_data: 
-          id: theatre_aircon_button
-          event: 1002 
+          device_ieee: !secret zha_theatre_aircon_button
+          command: "on"
     action:
       - service: scene.create
         data:
@@ -545,10 +544,10 @@ automation:
     id: temperature_theatre_button_trigger_off
     trigger:
       - platform: event
-        event_type: deconz_event
+        event_type: zha_event
         event_data: 
-          id: theatre_aircon_button
-          event: 2002 
+          device_ieee: !secret zha_theatre_aircon_button
+          command: "off"
     action:
       - service: light.turn_on
         target:
