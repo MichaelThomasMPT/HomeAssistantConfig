@@ -1,38 +1,50 @@
-binary_sensor:
-  - platform: ping
-    name: Raspberry Pi Bluetooth Hub
-    host: !secret raspberry_pi_bluetooth_hub_ip_address
-    count: 2
-    scan_interval: 30
-
-mqtt:
-  sensor:
-    - state_topic: "igrill/igrill_v2/probe1"
-      name: "iGrill Probe 1"
-      qos: 0
-      unit_of_measurement: "°C"
-      expire_after: 120 #2 minutes
-    - state_topic: "igrill/igrill_v2/probe2"
-      name: "iGrill Probe 2"
-      qos: 0
-      unit_of_measurement: "°C"
-      expire_after: 120 #2 minutes
-    - state_topic: "igrill/igrill_v2/probe3"
-      name: "iGrill Probe 3"
-      qos: 0
-      unit_of_measurement: "°C"
-      expire_after: 120 #2 minutes
-    - state_topic: "igrill/igrill_v2/probe4"
-      name: "iGrill Probe 4"
-      qos: 0
-      unit_of_measurement: "°C"
-      expire_after: 120 #2 minutes
-    - state_topic: "igrill/igrill_v2/battery"
-      name: "iGrill Battery"
-      qos: 0
+template:
+  - sensor:
+      state: >
+        {% if states('sensor.igrill_v2_temp_1') | int <= 0 %}
+        unavailable
+        {% else %}
+        {{states('sensor.igrill_v2_temp_1') | int}}
+        {% endif %}
+      unit_of_measurement: °C
+      state_class: measurement
+      name: iGrill Probe 1
+  - sensor:
+      state: >
+        {% if states('sensor.igrill_v2_temp_2') | int <= 0 %}
+        unavailable
+        {% else %}
+        {{states('sensor.igrill_v2_temp_2') | int}}
+        {% endif %}
+      unit_of_measurement: °C
+      state_class: measurement
+      name: iGrill Probe 2
+  - sensor:
+      state: >
+        {% if states('sensor.igrill_v2_temp_3') | int <= 0 %}
+        unavailable
+        {% else %}
+        {{states('sensor.igrill_v2_temp_3') | int}}
+        {% endif %}
+      unit_of_measurement: °C
+      state_class: measurement
+      name: iGrill Probe 3
+  - sensor:
+      state: >
+        {% if states('sensor.igrill_v2_temp_4') | int <= 0 %}
+        unavailable
+        {% else %}
+        {{states('sensor.igrill_v2_temp_4') | int}}
+        {% endif %}
+      unit_of_measurement: °C
+      state_class: measurement
+      name: iGrill Probe 4
+  - sensor:
+      state:
+        "{{states('sensor.igrill_v2_battery') | int}}"
+      name: iGrill Battery
       unit_of_measurement: "%"
-      icon: mdi:battery
-      expire_after: 120 #2 minutes
+      state_class: measurement
 
 sensor:
   - platform: template
@@ -306,29 +318,40 @@ automation:
   - alias: "iGrill - Cast Dashboard to Living Room TV When Probe Connected"
     id: igrill_cast_dashboard_to_living_room_tv_when_probe_connected
     trigger:
+      #if any value changes, it must be connected
       - platform: state
-        entity_id: sensor.igrill_battery
-        from: 'unavailable'
+        entity_id: 
+          - sensor.igrill_battery
+          - sensor.igrill_probe_1
+          - sensor.igrill_probe_2
+          - sensor.igrill_probe_3
+          - sensor.igrill_probe_4
+    condition:
+      - condition: state 
+        entity_id: binary_sensor.living_room_tv
+        state: 'off'
     action:
       - service: script.igrill_cast_dashboard_to_living_room_tv
         data: {}
-  - alias: "iGrill - Turn Off Living Room TV When Probe Disconnected"
-    id: igrill_turn_off_living_room_tv_when_probe_disconnected
-    trigger:
-      - platform: state
-        entity_id: sensor.igrill_battery
-        to: 'unavailable'
-        for: 
-          minutes: 5
-    action:
-      - service: switch.turn_off
-        data: {}
-        target:
-          entity_id: switch.living_room_tv_smart_plug
-      - service: media_player.turn_off
-        data: {}
-        target:
-          entity_id: media_player.living_room_chromecast
+
+  ### NOTE This automation is temporarily disabled as right now the iGrill doesn't report when it has disconnected ###
+  # - alias: "iGrill - Turn Off Living Room TV When Probe Disconnected"
+  #   id: igrill_turn_off_living_room_tv_when_probe_disconnected
+  #   trigger:
+  #     - platform: state
+  #       entity_id: sensor.igrill_battery
+  #       to: 'unavailable'
+  #       for: 
+  #         minutes: 5
+  #   action:
+  #     - service: switch.turn_off
+  #       data: {}
+  #       target:
+  #         entity_id: switch.living_room_tv_smart_plug
+  #     - service: media_player.turn_off
+  #       data: {}
+  #       target:
+  #         entity_id: media_player.living_room_chromecast
 
 
 
