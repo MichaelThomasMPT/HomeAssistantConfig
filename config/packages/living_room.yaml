@@ -1,4 +1,17 @@
 automation: 
+  - alias: Living Room - Toggle Living Room Table Lamp With Button
+    id: living_room_toggle_living_room_table_lamp_with_button
+    trigger: 
+      - platform: event
+        event_type: zha_event
+        event_data: 
+          device_ieee: !secret zha_living_room_table_lamp_button
+    action:
+      - service: light.toggle
+        target:
+          entity_id: light.living_room_table_lamp
+
+
   - alias: Living Room - Change Soundbar Input When Tv Power Toggled
     id: living_room_change_soundbar_input_when_tv_power_toggled
     trigger:
