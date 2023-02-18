@@ -13,7 +13,7 @@ views:
             type: button
             tap_action:
               action: navigate
-              navigation_path: /new-and-improved-dashboard/subview-aircon
+              navigation_path: /lovelace/subview-aircon
             name: Aircon
             icon: mdi:air-conditioner
             show_state: false
@@ -38,7 +38,7 @@ views:
             type: button
             tap_action:
               action: navigate
-              navigation_path: /new-and-improved-dashboard/subview-entry
+              navigation_path: /lovelace/subview-entry
             name: Entry
             icon: mdi:door
       - square: true
@@ -50,7 +50,15 @@ views:
             type: button
             tap_action:
               action: navigate
-              navigation_path: /new-and-improved-dashboard/subview-garage
+              navigation_path: /lovelace/subview-formula-one
+            name: Formula One
+            icon: mdi:car-sports
+          - show_name: true
+            show_icon: true
+            type: button
+            tap_action:
+              action: navigate
+              navigation_path: /lovelace/subview-garage
             name: Garage
             icon: mdi:car
           - show_name: true
@@ -58,7 +66,7 @@ views:
             type: button
             tap_action:
               action: navigate
-              navigation_path: /new-and-improved-dashboard/subview-garden
+              navigation_path: /lovelace/subview-garden
             name: Garden
             icon: mdi:flower
           - show_name: true
@@ -66,18 +74,10 @@ views:
             type: button
             tap_action:
               action: navigate
-              navigation_path: /new-and-improved-dashboard/subview-kitchen
+              navigation_path: /lovelace/subview-kitchen
             name: Kitchen
             icon: mdi:chef-hat
             show_state: false
-          - show_name: true
-            show_icon: true
-            type: button
-            tap_action:
-              action: navigate
-              navigation_path: /new-and-improved-dashboard/subview-laundry
-            name: Laundry
-            icon: mdi:washing-machine
       - square: true
         columns: 2
         type: grid
@@ -87,7 +87,15 @@ views:
             type: button
             tap_action:
               action: navigate
-              navigation_path: /new-and-improved-dashboard/subview-living-and-dining
+              navigation_path: /lovelace/subview-laundry
+            name: Laundry
+            icon: mdi:washing-machine
+          - show_name: true
+            show_icon: true
+            type: button
+            tap_action:
+              action: navigate
+              navigation_path: /lovelace/subview-living-and-dining
             name: Living & Dining
             icon: mdi:sofa
           - show_name: true
@@ -95,7 +103,7 @@ views:
             type: button
             tap_action:
               action: navigate
-              navigation_path: /new-and-improved-dashboard/subview-master-suite
+              navigation_path: /lovelace/subview-master-suite
             name: Master Suite
             icon: mdi:bed
           - show_name: true
@@ -103,17 +111,9 @@ views:
             type: button
             tap_action:
               action: navigate
-              navigation_path: /new-and-improved-dashboard/subview-music
+              navigation_path: /lovelace/subview-music
             name: Music
             icon: mdi:music
-          - show_name: true
-            show_icon: true
-            type: button
-            tap_action:
-              action: navigate
-              navigation_path: /new-and-improved-dashboard/subview-office
-            name: Office
-            icon: mdi:desktop-tower-monitor
       - square: true
         columns: 2
         type: grid
@@ -123,7 +123,15 @@ views:
             type: button
             tap_action:
               action: navigate
-              navigation_path: /new-and-improved-dashboard/subview-people-and-places
+              navigation_path: /lovelace/subview-office
+            name: Office
+            icon: mdi:desktop-tower-monitor
+          - show_name: true
+            show_icon: true
+            type: button
+            tap_action:
+              action: navigate
+              navigation_path: /lovelace/subview-people-and-places
             icon: mdi:account
             name: People & Places
           - show_name: true
@@ -131,7 +139,7 @@ views:
             type: button
             tap_action:
               action: navigate
-              navigation_path: /new-and-improved-dashboard/subview-server-and-network
+              navigation_path: /lovelace/subview-server-and-network
             name: Server & Network
             icon: mdi:server-network
           - show_name: true
@@ -139,17 +147,9 @@ views:
             type: button
             tap_action:
               action: navigate
-              navigation_path: /new-and-improved-dashboard/subview-theatre-room
+              navigation_path: /lovelace/subview-theatre-room
             name: Theatre
             icon: mdi:television-classic
-          - show_name: true
-            show_icon: true
-            type: button
-            tap_action:
-              action: navigate
-              navigation_path: /new-and-improved-dashboard/subview-vacuum
-            name: Vacuum
-            icon: mdi:robot-vacuum
       - square: true
         columns: 2
         type: grid
@@ -159,7 +159,15 @@ views:
             type: button
             tap_action:
               action: navigate
-              navigation_path: /new-and-improved-dashboard/subview-whole-house-controls
+              navigation_path: /lovelace/subview-vacuum
+            name: Vacuum
+            icon: mdi:robot-vacuum
+          - show_name: true
+            show_icon: true
+            type: button
+            tap_action:
+              action: navigate
+              navigation_path: /lovelace/subview-whole-house-controls
             name: Whole House
             icon: mdi:home
   - theme: Backend-selected
@@ -170,19 +178,6 @@ views:
     badges: []
     cards:
       - cards:
-          - elements:
-              - entity: sensor.blank
-                hold-action: none
-                prefix: Air Conditioning
-                style:
-                  bottom: 20%
-                  font-size: 150%
-                  left: 5%
-                  transform: initial
-                tap-action: none
-                type: state-label
-            image: /local/header-image-dark.png
-            type: picture-elements
           - type: thermostat
             entity: climate.ac
           - card:
@@ -291,6 +286,7 @@ views:
             title: Zones
             type: entities
         type: custom:stack-in-card
+        title: Aircon
       - type: entities
         entities:
           - entity: script.aircon_warm_master
@@ -521,6 +517,13 @@ views:
             entity: light.living_room
             name: Living Room
           - type: tile
+            entity: light.living_room_table_lamp
+            name: Living Room Lamp
+            tap_action:
+              action: toggle
+            features:
+              - type: light-brightness
+          - type: tile
             entity: light.dining_room
             name: Dining Room
           - type: tile
@@ -591,7 +594,7 @@ views:
               - entity: binary_sensor.back_door_glass
                 name: Glass
               - entity: binary_sensor.dog_door
-                name: Dog
+                name: Dog Flap
                 icon: mdi:dog
       - type: vertical-stack
         cards:
@@ -931,6 +934,72 @@ views:
         entity: camera.last_front_door_motion
         image: https://demo.home-assistant.io/stub_config/bedroom.png
   - theme: Backend-selected
+    title: Formula One
+    path: subview-formula-one
+    icon: mdi:car-sports
+    subview: true
+    badges: []
+    cards:
+      - type: entities
+        entities:
+          - input_boolean.formula_one_avoid_spoilers
+      - type: custom:formulaone-card
+        card_type: next_race
+        title: Next Race
+        date_locale: nl
+        image_clickable: false
+      - type: conditional
+        conditions:
+          - entity: input_boolean.formula_one_avoid_spoilers
+            state: 'off'
+        card:
+          type: custom:formulaone-card
+          card_type: last_result
+          title: Last Result
+      - type: conditional
+        conditions:
+          - entity: input_boolean.formula_one_avoid_spoilers
+            state: 'on'
+        card:
+          type: markdown
+          content: This card has been hidden to avoid spoilers.
+          title: Last Race
+      - type: conditional
+        conditions:
+          - entity: input_boolean.formula_one_avoid_spoilers
+            state: 'off'
+        card:
+          type: custom:formulaone-card
+          card_type: driver_standings
+          title: Driver Standings
+          standings:
+            show_flag: true
+            show_team: true
+      - type: conditional
+        conditions:
+          - entity: input_boolean.formula_one_avoid_spoilers
+            state: 'on'
+        card:
+          type: markdown
+          content: This card has been hidden to avoid spoilers.
+          title: Driver Standings
+      - type: conditional
+        conditions:
+          - entity: input_boolean.formula_one_avoid_spoilers
+            state: 'off'
+        card:
+          type: custom:formulaone-card
+          card_type: constructor_standings
+          title: Constructor Standings
+      - type: conditional
+        conditions:
+          - entity: input_boolean.formula_one_avoid_spoilers
+            state: 'on'
+        card:
+          type: markdown
+          content: This card has been hidden to avoid spoilers.
+          title: Constructor Standings
+  - theme: Backend-selected
     title: Garage
     path: subview-garage
     icon: mdi:car
@@ -1181,6 +1250,12 @@ views:
     subview: true
     badges: []
     cards:
+      - type: alarm-panel
+        states:
+          - arm_home
+          - arm_away
+        entity: alarm_control_panel.alarm_com
+        name: House Alarm
       - type: vertical-stack
         title: Toggles
         cards:
@@ -1467,4 +1542,11 @@ views:
                 name: Black Ink
               - entity: sensor.canon_ts3300_series_color
                 name: Colour Ink
+  - theme: Backend-selected
+    path: subview-media-server
+    title: Media Server
+    icon: mdi:movie-open
+    subview: true
+    badges: []
+    cards: []
 title: My Home
