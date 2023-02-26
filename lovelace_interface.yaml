@@ -723,6 +723,52 @@ views:
             entity: media_player.theatre_room_chromecast
           - type: media-control
             entity: media_player.theatre_room_google_home
+      - type: horizontal-stack
+        title: TV's VPN Location
+        cards:
+          - type: vertical-stack
+            cards:
+              - type: entity
+                entity: sensor.nas_vpn_geographical_location
+                name: Current Location
+                icon: mdi:earth
+                state_color: false
+              - type: horizontal-stack
+                cards:
+                  - type: picture
+                    image: https://www.worldometers.info/img/flags/as-flag.gif
+                    tap_action:
+                      action: call-service
+                      service: script.nas_vpn_connect
+                      data:
+                        vpnCountry: None
+                  - type: picture
+                    image: https://www.worldometers.info/img/flags/ja-flag.gif
+                    tap_action:
+                      action: call-service
+                      service: script.nas_vpn_connect
+                      data:
+                        vpnCountry: NordVPN - Japan
+                  - type: picture
+                    image: https://www.worldometers.info/img/flags/uk-flag.gif
+                    tap_action:
+                      action: call-service
+                      service: script.nas_vpn_connect
+                      data:
+                        vpnCountry: NordVPN - UK
+                  - type: picture
+                    image: https://www.worldometers.info/img/flags/us-flag.gif
+                    tap_action:
+                      action: call-service
+                      service: script.nas_vpn_connect
+                      data:
+                        vpnCountry: NordVPN - USA
+              - type: history-graph
+                entities:
+                  - entity: sensor.nas_vpn_geographical_location
+                    name: VPN
+                hours_to_show: 12
+                title: Location History
   - theme: Backend-selected
     title: Master Suite
     path: subview-master-suite
