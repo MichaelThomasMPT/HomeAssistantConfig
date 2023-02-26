@@ -231,6 +231,15 @@ automation:
             for:
               minutes: 5
     action:
+      - service: light.toggle
+        target:
+          entity_id: light.living_room_table_lamp
+        data:
+          rgb_color:
+            - 255
+            - 206
+            - 64
+          brightness: 165
       - service: light.turn_on
         entity_id:
         - light.kitchen_island
