@@ -28,6 +28,75 @@ sensor:
       - type: processor_temperature
       - type: last_boot
 
+#Change the Synology NAS/Theatre Room TV VPN Connection
+shell_command:
+  nas_vpn_disconnect: >
+    ssh {{ nas_ssh_connection_string }} 'bash /volume1/NAS\ Config/VPN\ Scripts/disconnectfromvpn.sh'
+  nas_vpn_connect_japan: >
+    ssh {{ nas_ssh_connection_string }} 'bash /volume1/NAS\ Config/VPN\ Scripts/connecttovpn.sh NordVPN_Japan'
+  nas_vpn_connect_uk: >
+    ssh {{ nas_ssh_connection_string }} 'bash /volume1/NAS\ Config/VPN\ Scripts/connecttovpn.sh NordVPN_UK'
+  nas_vpn_connect_usa: >
+    ssh {{ nas_ssh_connection_string }} 'bash /volume1/NAS\ Config/VPN\ Scripts/connecttovpn.sh NordVPN_USA'
+script:
+  nas_vpn_connect:
+    alias: Connect NAS VPN
+    fields: 
+      vpnCountry:
+        name: VPN & Country
+        description: "The VPN and Country to connect to"
+        selector:
+          select:
+            options:
+              - None
+              - NordVPN - Japan
+              - NordVPN - UK
+              - NordVPN - USA
+    sequence:
+      - choose:
+          - conditions: >
+              {{ vpnCountry == "None" }}
+            sequence:
+              - service: shell_command.nas_vpn_disconnect
+                data: 
+                  nas_ssh_connection_string: !secret nas_ssh_connection_string
+          - conditions: >
+              {{ vpnCountry == "NordVPN - Japan" }}
+            sequence:
+              - service: shell_command.nas_vpn_connect_japan
+                data: 
+                  nas_ssh_connection_string: !secret nas_ssh_connection_string
+          - conditions: >
+              {{ vpnCountry == "NordVPN - UK" }}
+            sequence:
+              - service: shell_command.nas_vpn_connect_uk
+                data: 
+                  nas_ssh_connection_string: !secret nas_ssh_connection_string
+          - conditions: >
+              {{ vpnCountry == "NordVPN - USA" }}
+            sequence:
+              - service: shell_command.nas_vpn_connect_usa
+                data: 
+                  nas_ssh_connection_string: !secret nas_ssh_connection_string
+    mode: single
+sensor:
+  - platform: command_line
+    name: NAS VPN Location
+    command: ssh -i /config/ssh/id_rsa -o 'StrictHostKeyChecking=no' root@192.168.1.222 -p 222 'curl ipinfo.io'
+    json_attributes:
+      - city
+      - region
+      - country
+    scan_interval: 30
+    value_template: "{{ value_json.ip }}"
+template:
+  - sensor:
+      - name: "NAS VPN Geographical Location"
+        state: >
+          {{  state_attr('sensor.nas_vpn_location', 'city') + ', ' 
+            + state_attr('sensor.nas_vpn_location', 'region') + ', ' 
+            + state_attr('sensor.nas_vpn_location', 'country') }}
+
 automation:
   #if server is getting too hot, send a push notification.
   - alias: Server Management - Notify If Server Temperature Too Hot
