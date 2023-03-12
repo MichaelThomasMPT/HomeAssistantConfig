@@ -1,7 +1,20 @@
 template:
+  - sensor: 
+      state: >
+        {% if (as_timestamp(now()) - as_timestamp(states.sensor.igrill_v2_temp_1.last_changed)) | timestamp_custom("%H:%M:%S", false) >= '00:05:00' 
+          and (as_timestamp(now()) - as_timestamp(states.sensor.igrill_v2_temp_2.last_changed)) | timestamp_custom("%H:%M:%S", false) >= '00:05:00' 
+          and (as_timestamp(now()) - as_timestamp(states.sensor.igrill_v2_temp_3.last_changed)) | timestamp_custom("%H:%M:%S", false) >= '00:05:00' 
+          and (as_timestamp(now()) - as_timestamp(states.sensor.igrill_v2_temp_4.last_changed)) | timestamp_custom("%H:%M:%S", false) >= '00:05:00' 
+          and (as_timestamp(now()) - as_timestamp(states.sensor.igrill_v2_battery.last_changed)) | timestamp_custom("%H:%M:%S", false) >= '00:00:05' 
+        %}
+          unavailable
+        {% else %}
+          available
+        {% endif %}
+      name: iGrill Status
   - sensor:
       state: >
-        {% if states('sensor.igrill_v2_temp_1') | int <= 0 %}
+        {% if ( states('sensor.igrill_v2_temp_1') | int <= 0 ) or ( states('sensor.igrill_status') == 'unavailable' ) %}
         unavailable
         {% else %}
         {{states('sensor.igrill_v2_temp_1') | int}}
@@ -11,7 +24,7 @@ template:
       name: iGrill Probe 1
   - sensor:
       state: >
-        {% if states('sensor.igrill_v2_temp_2') | int <= 0 %}
+        {% if ( states('sensor.igrill_v2_temp_2') | int <= 0 ) or ( states('sensor.igrill_status') == 'unavailable' ) %}
         unavailable
         {% else %}
         {{states('sensor.igrill_v2_temp_2') | int}}
@@ -21,7 +34,7 @@ template:
       name: iGrill Probe 2
   - sensor:
       state: >
-        {% if states('sensor.igrill_v2_temp_3') | int <= 0 %}
+        {% if ( states('sensor.igrill_v2_temp_3') | int <= 0 ) or ( states('sensor.igrill_status') == 'unavailable' ) %}
         unavailable
         {% else %}
         {{states('sensor.igrill_v2_temp_3') | int}}
@@ -31,7 +44,7 @@ template:
       name: iGrill Probe 3
   - sensor:
       state: >
-        {% if states('sensor.igrill_v2_temp_4') | int <= 0 %}
+        {% if ( states('sensor.igrill_v2_temp_4') | int <= 0 ) or ( states('sensor.igrill_status') == 'unavailable' ) %}
         unavailable
         {% else %}
         {{states('sensor.igrill_v2_temp_4') | int}}
@@ -40,8 +53,12 @@ template:
       state_class: measurement
       name: iGrill Probe 4
   - sensor:
-      state:
-        "{{states('sensor.igrill_v2_battery') | int}}"
+      state: >
+        {% if ( states('sensor.igrill_v2_temp_1') | int <= 0 ) or ( states('sensor.igrill_status') == 'unavailable' ) %}
+        unavailable
+        {% else %}        
+          {{ states('sensor.igrill_v2_battery') | int }}
+        {% endif %}
       name: iGrill Battery
       unit_of_measurement: "%"
       state_class: measurement
