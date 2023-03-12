@@ -1,120 +1,127 @@
 template:
   - sensor: 
+      #iGrill will be available as long as there is an update every 5 minutes
+      #For the first 5 minutes and 30 seconds after a restart, disable iGrill to avoid notifications
       state: >
-        {% if (as_timestamp(now()) - as_timestamp(states.sensor.igrill_v2_temp_1.last_changed)) | timestamp_custom("%H:%M:%S", false) >= '00:05:00' 
+        {% if (as_timestamp(now()) - as_timestamp(states('sensor.uptime'))) | timestamp_custom("%H:%M:%S", false) <= '00:05:30' or
+        (     
+              (as_timestamp(now()) - as_timestamp(states.sensor.igrill_v2_temp_1.last_changed)) | timestamp_custom("%H:%M:%S", false) >= '00:05:00' 
           and (as_timestamp(now()) - as_timestamp(states.sensor.igrill_v2_temp_2.last_changed)) | timestamp_custom("%H:%M:%S", false) >= '00:05:00' 
           and (as_timestamp(now()) - as_timestamp(states.sensor.igrill_v2_temp_3.last_changed)) | timestamp_custom("%H:%M:%S", false) >= '00:05:00' 
           and (as_timestamp(now()) - as_timestamp(states.sensor.igrill_v2_temp_4.last_changed)) | timestamp_custom("%H:%M:%S", false) >= '00:05:00' 
           and (as_timestamp(now()) - as_timestamp(states.sensor.igrill_v2_battery.last_changed)) | timestamp_custom("%H:%M:%S", false) >= '00:00:05' 
+        )
         %}
-          unavailable
+          disconnected
         {% else %}
-          available
+          connected
         {% endif %}
       name: iGrill Status
   - sensor:
       state: >
-        {% if ( states('sensor.igrill_v2_temp_1') | int <= 0 ) or ( states('sensor.igrill_status') == 'unavailable' ) %}
-        unavailable
-        {% else %}
         {{states('sensor.igrill_v2_temp_1') | int}}
+      availability: >
+        {% if ( states('sensor.igrill_v2_temp_1') | int <= 0 ) or ( is_state('sensor.igrill_status', 'disconnected') ) %}
+        False
+        {% else %}
+        True
         {% endif %}
       unit_of_measurement: °C
       state_class: measurement
       name: iGrill Probe 1
   - sensor:
       state: >
-        {% if ( states('sensor.igrill_v2_temp_2') | int <= 0 ) or ( states('sensor.igrill_status') == 'unavailable' ) %}
-        unavailable
-        {% else %}
         {{states('sensor.igrill_v2_temp_2') | int}}
+      availability: >
+        {% if ( states('sensor.igrill_v2_temp_2') | int <= 0 ) or ( is_state('sensor.igrill_status', 'disconnected') ) %}
+        False
+        {% else %}
+        True
         {% endif %}
       unit_of_measurement: °C
       state_class: measurement
       name: iGrill Probe 2
   - sensor:
       state: >
-        {% if ( states('sensor.igrill_v2_temp_3') | int <= 0 ) or ( states('sensor.igrill_status') == 'unavailable' ) %}
-        unavailable
-        {% else %}
         {{states('sensor.igrill_v2_temp_3') | int}}
+      availability: >
+        {% if ( states('sensor.igrill_v2_temp_3') | int <= 0 ) or ( is_state('sensor.igrill_status', 'disconnected') ) %}
+        False
+        {% else %}
+        True
         {% endif %}
       unit_of_measurement: °C
       state_class: measurement
       name: iGrill Probe 3
   - sensor:
       state: >
-        {% if ( states('sensor.igrill_v2_temp_4') | int <= 0 ) or ( states('sensor.igrill_status') == 'unavailable' ) %}
-        unavailable
-        {% else %}
         {{states('sensor.igrill_v2_temp_4') | int}}
+      availability: >
+        {% if ( states('sensor.igrill_v2_temp_4') | int <= 0 ) or ( is_state('sensor.igrill_status', 'disconnected') ) %}
+        False
+        {% else %}
+        True
         {% endif %}
       unit_of_measurement: °C
       state_class: measurement
       name: iGrill Probe 4
   - sensor:
       state: >
-        {% if ( states('sensor.igrill_v2_temp_1') | int <= 0 ) or ( states('sensor.igrill_status') == 'unavailable' ) %}
-        unavailable
-        {% else %}        
-          {{ states('sensor.igrill_v2_battery') | int }}
+        {{ states('sensor.igrill_v2_battery') | int }}
+      availability: >
+        {% if ( states('sensor.igrill_v2_temp_1') | int <= 0 ) or ( is_state('sensor.igrill_status', 'disconnected') ) %}
+        False
+        {% else %}
+        True        
         {% endif %}
       name: iGrill Battery
       unit_of_measurement: "%"
       state_class: measurement
-
-sensor:
-  - platform: template
-    sensors:
-      igrill_ambient_alert_temp:
-        value_template:
-          '
-          {%
-            if states.sensor.igrill_probe_4.state != "unavailable"
-            and (
-              (states.sensor.igrill_probe_4.state | int) < (states.input_number.igrill_ambient_alert_low_temp.state | int) 
-              or (states.sensor.igrill_probe_4.state | int) > (states.input_number.igrill_ambient_alert_high_temp.state | int) 
-            ) 
-          -%}
-            Alert
-          {% else %}
-            Normal
-          {% endif %}
-          '
-        friendly_name: Grill Ambient Temp Alert
-  - platform: template
-    sensors:
-      igrill_target_alert_temp_probe_1:
-        value_template:
-          '{% if states.sensor.igrill_probe_1.state != "unavailable"
-              and (states.sensor.igrill_probe_1.state | int) >= (states.input_number.igrill_probe_1_target_temp.state | int) %}
-            Alert
-          {% else %}
-            Normal
-          {% endif %}'
-        friendly_name: Probe 1 Target Alert
-  - platform: template
-    sensors:
-      igrill_target_alert_temp_probe_2:
-        value_template:
-          '{% if states.sensor.igrill_probe_2.state != "unavailable"
-              and (states.sensor.igrill_probe_2.state | int) >= (states.input_number.igrill_probe_2_target_temp.state | int) %}
-            Alert
-          {% else %}
-            Normal
-          {% endif %}'
-        friendly_name: Probe 2 Target Alert
-  - platform: template
-    sensors:
-      igrill_target_alert_temp_probe_3:
-        value_template:
-          '{% if states.sensor.igrill_probe_3.state != "unavailable"
-              and (states.sensor.igrill_probe_3.state | int) >= (states.input_number.igrill_probe_3_target_temp.state | int) %}
-            Alert
-          {% else %}
-            Normal
-          {% endif %}'
-        friendly_name: Probe 3 Target Alert
+  - sensor:
+      unique_id: igrill_ambient_alert_temp
+      state: >
+        {%
+          if states('sensor.igrill_probe_4') != "unavailable"
+          and (
+            (states('sensor.igrill_probe_4') | int) < (states('input_number.igrill_ambient_alert_low_temp') | int) 
+            or (states('sensor.igrill_probe_4') | int) > (states('input_number.igrill_ambient_alert_high_temp') | int) 
+          ) 
+        -%}
+          Alert
+        {% else %}
+          Normal
+        {% endif %}
+      name: iGrill Ambient Temp Alert
+  - sensor:
+      unique_id: igrill_target_alert_temp_probe_1
+      state: >
+        {% if states('sensor.igrill_probe_1') != "unavailable"
+            and (states('sensor.igrill_probe_1') | int) >= (states('input_number.igrill_probe_1_target_temp') | int) %}
+          Alert
+        {% else %}
+          Normal
+        {% endif %}
+      name: Probe 1 Target Alert
+  - sensor:
+      unique_id: igrill_target_alert_temp_probe_2
+      state: >
+        {% if states('sensor.igrill_probe_2') != "unavailable"
+            and (states('sensor.igrill_probe_2') | int) >= (states('input_number.igrill_probe_2_target_temp') | int) %}
+          Alert
+        {% else %}
+          Normal
+        {% endif %}
+      name: Probe 2 Target Alert
+  - sensor:
+      unique_id: igrill_target_alert_temp_probe_3
+      state: >
+        {% if states('sensor.igrill_probe_3') != "unavailable"
+            and (states('sensor.igrill_probe_3') | int) >= (states('input_number.igrill_probe_3_target_temp') | int) %}
+          Alert
+        {% else %}
+          Normal
+        {% endif %}
+      name: Probe 3 Target Alert
 
 input_number:
   igrill_ambient_alert_low_temp:
@@ -230,7 +237,7 @@ automation:
     action:
       - service: notify.mobile_app_michael_s_galaxy_s10
         data:
-          message: "iGrill ambient temp outside limits. Currently {{ states.sensor.igrill_probe_4.state }} C"
+          message: "iGrill ambient temp outside limits. Currently {{ states('sensor.igrill_probe_4') }} C"
           data:
             group: iGrill Ambient
             tag: igrill_ambient
@@ -248,7 +255,7 @@ automation:
     action:
       - service: notify.mobile_app_michael_s_galaxy_s10
         data:
-          message: "iGrill ambient within limits. Currently {{ states.sensor.igrill_probe_4.state }} C"
+          message: "iGrill ambient within limits. Currently {{ states('sensor.igrill_probe_4') }} C"
           data:
             group: iGrill Ambient
             tag: igrill_ambient
@@ -262,43 +269,27 @@ automation:
     trigger:
       - platform: state
         entity_id: 
-          - sensor.igrill_probe_1
-          - sensor.igrill_probe_2
-          - sensor.igrill_probe_3
-          - sensor.igrill_probe_4
-        to: 'unavailable'
+          - sensor.igrill_status
+        to: "disconnected"
+        from: "connected"
       - platform: state
         entity_id: 
-          - sensor.igrill_probe_1
-          - sensor.igrill_probe_2
-          - sensor.igrill_probe_3
-          - sensor.igrill_probe_4
-        from: 'unavailable'
+          - sensor.igrill_status
+        to: "connected"
+        from: "disconnected"
     variables:
-      availability_text: >- 
-        {% if trigger.from_state.state == "unavailable" -%}
+      availability_text: >
+        {% if trigger.to_state.state == "connected" %}
           has reconnected
-        {%- elif trigger.to_state.state == "unavailable" -%}
+        {% elif trigger.to_state.state == "disconnected" %}
           has disconnected
-        {%- else -%}
+        {% else %}
           requires attention
-        {%- endif %}
-      unavailable_probe_name: >- 
-        {% if trigger.entity_id == "sensor.igrill_probe_1" -%}
-          probe 1
-        {%- elif trigger.entity_id == "sensor.igrill_probe_2" -%}
-          probe 2
-        {%- elif trigger.entity_id == "sensor.igrill_probe_3" -%}
-          probe 3
-        {%- elif trigger.entity_id == "sensor.igrill_probe_4" -%}
-          probe 4
-        {%- else -%}
-          An unknown probe
-        {%- endif %}
+        {% endif %}
     action:
       - service: notify.mobile_app_michael_s_galaxy_s10
         data:
-          message: "iGrill {{ unavailable_probe_name }} {{ availability_text }}."
+          message: "Your iGrill device {{ availability_text }}."
           data:
             group: iGrill Probe Availability
             color: 'purple'
@@ -317,16 +308,16 @@ automation:
           - sensor.igrill_target_alert_temp_probe_3
         to: 'Alert'
     variables:
-      probe_name: >- 
-        {% if trigger.entity_id == "sensor.igrill_target_alert_temp_probe_1" -%}
+      probe_name: > 
+        {% if trigger.entity_id == "sensor.igrill_target_alert_temp_probe_1" %}
           Probe 1
-        {%- elif trigger.entity_id == "sensor.igrill_target_alert_temp_probe_2" -%}
+        {% elif trigger.entity_id == "sensor.igrill_target_alert_temp_probe_2" %}
           Probe 2
-        {%- elif trigger.entity_id == "sensor.igrill_target_alert_temp_probe_3" -%}
+        {% elif trigger.entity_id == "sensor.igrill_target_alert_temp_probe_3" %}
           Probe 3
-        {%- else -%}
+        {% else %}
           An unknown probe
-        {%- endif %}
+        {% endif %}
     action:
       - service: notify.kitchen_google_home_hub 
         data:
@@ -338,11 +329,8 @@ automation:
       #if any value changes, it must be connected
       - platform: state
         entity_id: 
-          - sensor.igrill_battery
-          - sensor.igrill_probe_1
-          - sensor.igrill_probe_2
-          - sensor.igrill_probe_3
-          - sensor.igrill_probe_4
+          - sensor.igrill_status
+        to: "connected"
     condition:
       - condition: state 
         entity_id: binary_sensor.living_room_tv
@@ -351,24 +339,23 @@ automation:
       - service: script.igrill_cast_dashboard_to_living_room_tv
         data: {}
 
-  ### NOTE This automation is temporarily disabled as right now the iGrill doesn't report when it has disconnected ###
-  # - alias: "iGrill - Turn Off Living Room TV When Probe Disconnected"
-  #   id: igrill_turn_off_living_room_tv_when_probe_disconnected
-  #   trigger:
-  #     - platform: state
-  #       entity_id: sensor.igrill_battery
-  #       to: 'unavailable'
-  #       for: 
-  #         minutes: 5
-  #   action:
-  #     - service: switch.turn_off
-  #       data: {}
-  #       target:
-  #         entity_id: switch.living_room_tv_smart_plug
-  #     - service: media_player.turn_off
-  #       data: {}
-  #       target:
-  #         entity_id: media_player.living_room_chromecast
+  - alias: "iGrill - Turn Off Living Room TV When Probe Disconnected"
+    id: igrill_turn_off_living_room_tv_when_probe_disconnected
+    trigger:
+      - platform: state
+        entity_id: sensor.igrill_status
+        to: 'disconnected'
+        for: 
+          minutes: 5
+    action:
+      - service: switch.turn_off
+        data: {}
+        target:
+          entity_id: switch.living_room_tv_smart_plug
+      - service: media_player.turn_off
+        data: {}
+        target:
+          entity_id: media_player.living_room_chromecast
 
 
 
@@ -376,7 +363,7 @@ automation:
 alert:
   igrill_temperature_alert_probe_1:
     title: Probe 1 Temperature Alert
-    name: Probe 1 has reached {{ states.input_number.igrill_probe_1_target_temp.state }} C, currently {{ states.sensor.igrill_probe_1.state }} C.
+    name: Probe 1 has reached {{ states('input_number.igrill_probe_1_target_temp') }} C, currently {{ states('sensor.igrill_probe_1') }} C.
     entity_id: sensor.igrill_target_alert_temp_probe_1
     state: 'Alert'
     repeat: 
@@ -392,7 +379,7 @@ alert:
       clickAction: "/lovelace-cooking/0"
   igrill_temperature_alert_probe_2:
     title: Probe 2 Temperature Alert
-    name: Probe 2 has reached {{ states.input_number.igrill_probe_2_target_temp.state }} C, currently {{ states.sensor.igrill_probe_2.state }} C.
+    name: Probe 2 has reached {{ states('input_number.igrill_probe_2_target_temp') }} C, currently {{ states('sensor.igrill_probe_2') }} C.
     entity_id: sensor.igrill_target_alert_temp_probe_2
     state: 'Alert'
     repeat: 
@@ -408,7 +395,7 @@ alert:
       clickAction: "/lovelace-cooking/0"
   igrill_temperature_alert_probe_3:
     title: Probe 3 Temperature Alert
-    name: Probe 3 has reached {{ states.input_number.igrill_probe_3_target_temp.state }} C, currently {{ states.sensor.igrill_probe_3.state }} C.
+    name: Probe 3 has reached {{ states('input_number.igrill_probe_3_target_temp') }} C, currently {{ states('sensor.igrill_probe_3') }} C.
     entity_id: sensor.igrill_target_alert_temp_probe_3
     state: 'Alert'
     repeat: 
