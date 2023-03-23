@@ -20,3 +20,40 @@ script:
         uri: spotify:playlist:5UiNzaro2CD4e6G5vEra4D
         shuffle: true
         random_song: true
+
+automation:
+  #When arriving home, transfer any spotify music playing from my phone to the house
+  - alias: Spotify - Transfer music to All Rooms when arriving home
+    id: spotify_transfer_music_to_all_rooms_when_arriving_home
+    trigger:
+      - platform: zone
+        entity_id: person.michael
+        zone: zone.home
+        event: enter
+    condition:
+      - condition: state
+        entity_id: media_player.spotify_micker_t
+        state: 'playing'
+      - condition: or
+        conditions:
+          - condition: state
+            entity_id: alarm_control_panel.alarm_com
+            state: 'armed_away'
+            for:
+              minutes: 5
+          - condition: state
+            entity_id: alarm_control_panel.alarm_com
+            state: 'armed_home'
+            for:
+              minutes: 5
+    action:
+      - alias: "Wait until garage door opens"
+        wait_for_trigger:
+          - platform: state
+            entity_id: cover.garage_door
+            to: "opening"
+      - delay:
+          seconds: 5
+      - service: spotcast.start
+        data:
+          device_name: All Rooms
