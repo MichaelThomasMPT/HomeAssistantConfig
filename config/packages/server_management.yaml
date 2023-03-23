@@ -1,3 +1,19 @@
+binary_sensor:
+  - platform: rest
+    resource: !secret sonarr_indexer_testall_url
+    headers:
+      X-API-KEY: !secret sonarr_api_key
+    method: POST
+    name: Sonarr VPN Status
+    device_class: connectivity
+    value_template: "{{ 'False' not in (value_json | map(attribute='isValid') | join(', ')) }}"
+
+rest_command:
+  restart_server_vpn:
+    url: !secret olivetin_api_url
+    method: post
+    payload: '{"actionName": "Restart VPN"}'
+
 sensor:
   - platform: rest
     name: healthcheckio
@@ -113,3 +129,21 @@ automation:
         data:
           title: "WARNING: The server is getting hot!"
           message: "Processor temperature: {{ states('sensor.processor_temperature') }}, cupboard temperature: {{ states('sensor.server_cupboard_temperature') }}"
+  - alias: Server Management - Restart VPN if Sonarr disconnected for too long
+    id: server_management_restart_vpn_if_sonarr_disconnected_for_too_long
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.sonarr_vpn_status
+        to:  "off"
+        for:
+          minutes: 20
+    action:
+      - service: notify.mobile_app_michael_s_galaxy_s10
+        data:
+          title: "The VPN was automatically restarted"
+          message: "Sonarr had lost conenction to the VPN."
+          data:
+            group: "VPN_Restart"
+      - service: rest_command.restart_server_vpn
+      #TODO: If still not fixed after a further 20 minutes, alert me (or try again?)
+      
