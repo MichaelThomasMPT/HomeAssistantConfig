@@ -16,7 +16,7 @@ automation:
         offset: -00:15:00
     condition:
       - condition: template
-        value_template: "{{ state_attr('calendar.formula_1', 'message')|truncate(10, True, '') == 'Grand Prix'}}"
+        value_template: "{{ state_attr('calendar.formula_1', 'message')|truncate(14, True, '') == 'F1: Grand Prix'}}"
       - condition: time
         before: "21:00:00"
       - condition: time
@@ -60,7 +60,7 @@ automation:
         entity_id: calendar.formula_1
     condition:
       - condition: template
-        value_template: "{{ state_attr('calendar.formula_1', 'message')|truncate(10, True, '') == 'Grand Prix'}}"
+        value_template: "{{ state_attr('calendar.formula_1', 'message')|truncate(14, True, '') == 'F1: Grand Prix'}}"
     action:
       - service: input_boolean.turn_on
         data:
