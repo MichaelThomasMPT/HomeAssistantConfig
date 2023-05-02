@@ -374,33 +374,10 @@ automation:
     condition:
       #If theatre room is inactive and at least one lamp is on, turn all the lights off
       - condition: state
-        entity_id: 
-          - light.theatre_room_ceiling
-          - binary_sensor.theatre_motion
-          - media_player.theatre_room_tv
+        entity_id: binary_sensor.theatre_room_occupancy
         state: 'off'
         for:
-          minutes: 20
-      - condition: or
-        conditions:
-          - condition: state
-            entity_id: 
-              - light.theatre_room_left_lamp
-            state: 'on'
-            for:
-              minutes: 10
-          - condition: state
-            entity_id: 
-              - light.theatre_room_right_lamp
-            state: 'on'
-            for:
-              minutes: 10
-          - condition: state
-            entity_id: 
-              - light.theatre_room_tv_cabinet_led_strip
-            state: 'on'
-            for:
-              minutes: 10
+          minutes: 10
     action:
       - service: script.turn_off_theatre_room_lights
 
