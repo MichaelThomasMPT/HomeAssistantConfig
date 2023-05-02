@@ -87,10 +87,10 @@ automation:
     mode: single
     trigger:
       - platform: event
-        event_type: deconz_event
-        event_data:
-          id: master_door_switch
-          event: 1002 #single click
+        event_type: zha_event
+        event_data: 
+          device_ieee: !secret zha_master_bedroom_lights_remote
+          command: "toggle" #middle button
     action:
       - variables:
           #is the aircon already running in the master bedroom?
@@ -131,15 +131,17 @@ automation:
     id: master_bedroom_toggle_michael_lamp_light
     trigger:
       - platform: event
-        event_type: deconz_event
-        event_data:
-          id: master_bed_switch_2 #michael's button
-          event: 1002 #single press
+        event_type: zha_event
+        event_data: 
+          device_ieee: !secret zha_michael_master_bedroom_button
+          command: "single"
       - platform: event
-        event_type: deconz_event
-        event_data:
-          id: master_door_switch #door button
-          event: 5002 #right arrow
+        event_type: zha_event
+        event_data: 
+          device_ieee: !secret zha_master_bedroom_lights_remote
+          command: "press" #side buttons
+          params:
+            param1: 256 #right button
     action:
       - service: light.toggle
         entity_id: light.master_bedroom_michael_lamp
@@ -150,20 +152,20 @@ automation:
     id: master_bedroom_adjust_master_bedroom_light_brightness_from_button_press
     trigger:
       - platform: event
-        event_type: deconz_event
-        event_data:
-          id: master_door_switch #door button
-          event: 2002 #bright
+        event_type: zha_event
+        event_data: 
+          device_ieee: !secret zha_master_bedroom_lights_remote
+          command: "step_with_on_off" #top button
       - platform: event
-        event_type: deconz_event
-        event_data:
-          id: master_door_switch #door button
-          event: 3002 #dim
+        event_type: zha_event
+        event_data: 
+          device_ieee: !secret zha_master_bedroom_lights_remote
+          command: "step" #bottom button
     action:
       - choose:
           - conditions:
               - condition: template
-                value_template: "{{ trigger.event.data.event == 2002 }}" #bright button pressed
+                value_template: "{{ trigger.event.data.command == 'step_with_on_off' }}" #bright button pressed
             sequence:
               - service: light.turn_on
                 entity_id: light.master_bedroom_ceiling
@@ -171,7 +173,7 @@ automation:
                   brightness_pct: 100
           - conditions:
               - condition: template
-                value_template: "{{ trigger.event.data.event == 3002 }}" #dim button pressed
+                value_template: "{{ trigger.event.data.command == 'step' }}" #dim button pressed
             sequence:
               - service: light.turn_on
                 entity_id: light.master_bedroom_ceiling
@@ -182,15 +184,17 @@ automation:
     id: master_bedroom_toggle_laura_lamp_light
     trigger:
       - platform: event
-        event_type: deconz_event
-        event_data:
-          id: master_bed_switch_1 #laura's button
-          event: 1002 #single press
+        event_type: zha_event
+        event_data: 
+          device_ieee: !secret zha_laura_master_bedroom_button
+          command: "single"
       - platform: event
-        event_type: deconz_event
-        event_data:
-          id: master_door_switch #door button
-          event: 4002 #left arrow
+        event_type: zha_event
+        event_data: 
+          device_ieee: !secret zha_master_bedroom_lights_remote
+          command: "press" #side buttons
+          params:
+            param1: 257 #left button
     action:
       - service: light.toggle
         entity_id: light.master_bedroom_laura_lamp

@@ -96,10 +96,10 @@ automation:
     id: office_toggle_lamp_with_laura_switch
     trigger: 
       - platform: event
-        event_type: deconz_event
+        event_type: zha_event
         event_data: 
-          id: laura_office_lamp_switch
-          event: 1002 
+          device_ieee: !secret zha_laura_office_lights_switch
+          command: "single"
     action:
       - choose:
         # If lamp is off, turn it on

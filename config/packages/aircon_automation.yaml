@@ -358,15 +358,15 @@ automation:
     max_exceeded: silent
     trigger:
       - platform: event
-        event_type: deconz_event
+        event_type: zha_event
         event_data: 
-          id: master_bed_switch_1 #laura's button
-          event: 1004 #double press
+          device_ieee: !secret zha_laura_master_bedroom_button
+          command: "double"
       - platform: event
-        event_type: deconz_event
+        event_type: zha_event
         event_data: 
-          id: master_bed_switch_2 #michael's button
-          event: 1004 #double press
+          device_ieee: !secret zha_michael_master_bedroom_button
+          command: "double"
     condition:
       - condition: or
         conditions:
@@ -391,15 +391,15 @@ automation:
     max_exceeded: silent
     trigger:
       - platform: event
-        event_type: deconz_event
+        event_type: zha_event
         event_data: 
-          id: master_bed_switch_1 #laura's button
-          event: 1004 #double press
+          device_ieee: !secret zha_laura_master_bedroom_button
+          command: "double"
       - platform: event
-        event_type: deconz_event
+        event_type: zha_event
         event_data: 
-          id: master_bed_switch_2 #michael's button
-          event: 1004 #double press
+          device_ieee: !secret zha_michael_master_bedroom_button
+          command: "double"
     condition:
       - condition: and
         conditions:
@@ -422,15 +422,15 @@ automation:
     id: temperature_master_bed_button_trigger_off
     trigger:
       - platform: event
-        event_type: deconz_event
+        event_type: zha_event
         event_data: 
-          id: master_bed_switch_1 #laura's button
-          event: 1004 #double press 
+          device_ieee: !secret zha_laura_master_bedroom_button
+          command: "double"
       - platform: event
-        event_type: deconz_event
+        event_type: zha_event
         event_data: 
-          id: master_bed_switch_2 #michael's button
-          event: 1004 #double press
+          device_ieee: !secret zha_michael_master_bedroom_button
+          command: "double"
     condition:
         #only run if aircon is not off
       - condition: not
@@ -451,10 +451,10 @@ automation:
     #TODO: Perhaps for the winter make this also trigger the office heater
     trigger:
       - platform: event
-        event_type: deconz_event
+        event_type: zha_event
         event_data: 
-          id: office_aircon_switch_laura
-          event: 1002 
+          device_ieee: !secret zha_laura_office_aircon_button
+          command: "on"
     action:
       - choose:
         - conditions: #If aircon office zone off or aircon off in general
@@ -481,10 +481,10 @@ automation:
     id: temperature_office_button_trigger_off
     trigger:
       - platform: event
-        event_type: deconz_event
+        event_type: zha_event
         event_data: 
-          id: office_aircon_switch_laura
-          event: 2002 
+          device_ieee: !secret zha_laura_office_aircon_button
+          command: "off"
     action:
       - service: script.flash_office_lamp
         data: 

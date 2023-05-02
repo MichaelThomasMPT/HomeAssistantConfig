@@ -133,10 +133,10 @@ automation:
     id: kitchen_turn_on_lights_using_island_switch
     trigger: 
       - platform: event
-        event_type: deconz_event
+        event_type: zha_event
         event_data: 
-          id: kitchen_lights_switch
-          event: 1002 #on switch
+          device_ieee: !secret zha_kitchen_island_lights_switch
+          command: "on"
     action:
       - choose:
         # If ceiling lights are off, turn them on
@@ -156,10 +156,10 @@ automation:
     id: kitchen_turn_off_lights_using_island_switch
     trigger: 
       - platform: event
-        event_type: deconz_event
+        event_type: zha_event
         event_data: 
-          id: kitchen_lights_switch
-          event: 2002 #off switch
+          device_ieee: !secret zha_kitchen_island_lights_switch
+          command: "off"
     action:
       - choose:
         # If kitchen island lights are on, turn them off

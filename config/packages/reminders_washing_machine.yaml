@@ -47,10 +47,10 @@ automation:
     id: washing_machine_turn_on_washing_machine_notifications_for_michael
     trigger:
       - platform: event
-        event_type: deconz_event
+        event_type: zha_event
         event_data: 
-          id: washing_notifications_switch
-          event: 1002 #michael
+          device_ieee: !secret zha_washing_machine_notifications_switch
+          command: "on" #michael
     action:
       - service: input_boolean.turn_on
         data:
@@ -65,10 +65,10 @@ automation:
     id: washing_machine_turn_on_washing_machine_notifications_for_laura
     trigger:
       - platform: event
-        event_type: deconz_event
+        event_type: zha_event
         event_data: 
-          id: washing_notifications_switch
-          event: 2002 #laura
+          device_ieee: !secret zha_washing_machine_notifications_switch
+          command: "off" #laura
     action:
       - service: input_boolean.turn_on
         data:

@@ -288,21 +288,10 @@ automation:
     id: theatre_room_lights_manual_control_change_led_strip_colour
     trigger:
       - platform: event
-        event_type: deconz_event
+        event_type: zha_event
         event_data: 
-          id: theatre_room_remote
-          event: 4002 #left button
-      - platform: event
-        event_type: deconz_event
-        event_data: 
-          id: theatre_room_remote
-          event: 5002 #right button
-    condition:
-      #Change colour if light is on, but don't turn it on if it's currently off
-      - condition: state
-        entity_id: 
-          - light.theatre_room_tv_cabinet_led_strip
-        state: 'on'
+          device_ieee: !secret zha_theatre_room_lights_remote
+          command: "press" #both side buttons
     action:
     - service: light.turn_on
       data_template:
@@ -313,10 +302,10 @@ automation:
     id: theatre_room_lights_manual_control_movie_lights
     trigger:
       - platform: event
-        event_type: deconz_event
+        event_type: zha_event
         event_data: 
-          id: theatre_room_remote
-          event: 3002 #bottom button
+          device_ieee: !secret zha_theatre_room_lights_remote
+          command: "step" #bottom button
     action:
       - service: script.set_movie_lighting 
 
@@ -324,10 +313,10 @@ automation:
     id: theatre_room_lights_manual_control_movie_has_finished
     trigger:
       - platform: event
-        event_type: deconz_event
+        event_type: zha_event
         event_data: 
-          id: theatre_room_remote
-          event: 2002 #top button
+          device_ieee: !secret zha_theatre_room_lights_remote
+          command: "step_with_on_off" #top button
     action:
       - service: script.movie_has_finished
 
@@ -335,10 +324,10 @@ automation:
     id: theatre_room_lights_manual_control_toggle_lights
     trigger:
       - platform: event
-        event_type: deconz_event
+        event_type: zha_event
         event_data: 
-          id: theatre_room_remote
-          event: 1002 #centre button
+          device_ieee: !secret zha_theatre_room_lights_remote
+          command: "toggle" #center button
     action:
       - service: >
           {% if is_state('light.theatre_room_ceiling', 'on') %}
@@ -445,37 +434,37 @@ automation:
           plex_content_id: '{ "playlist_name": "Battlebots", "shuffle": "0" }'
     trigger: 
       - platform: event
-        event_type: deconz_event
+        event_type: zha_event
         event_data: 
-          id: magic_cube
-          gesture: 6 #double tap
+          device_ieee: !secret zha_theatre_room_magic_cube
+          command: "knock"
     condition: 
-      - "{{ trigger.event.data.event in buttons }}"
+      - "{{ trigger.event.data.args.activated_face in buttons }}"
     action:
       - service: media_player.play_media
         data:
           entity_id: media_player.theatre_room_google_home
-          media_content_id: '{{ buttons[trigger.event.data.event].music_file }}'
+          media_content_id: '{{ buttons[trigger.event.data.args.activated_face].music_file }}'
           media_content_type: 'audio/mp3'
 
       - choose:
           # IF PLEX
           - conditions:
               - condition: template
-                value_template: "{{ buttons[trigger.event.data.event].media_location == 'PLEX' }}"
+                value_template: "{{ buttons[trigger.event.data.args.activated_face].media_location == 'PLEX' }}"
             sequence:
               - service: script.start_plex_media_playing
                 data: 
                   plex_content_type: 'PLAYLIST'
-                  plex_content_id: '{{ buttons[trigger.event.data.event].plex_content_id }}'
+                  plex_content_id: '{{ buttons[trigger.event.data.args.activated_face].plex_content_id }}'
           # IF NETFLIX
           - conditions:
               - condition: template
-                value_template: "{{ buttons[trigger.event.data.event].media_location == 'NETFLIX' }}"
+                value_template: "{{ buttons[trigger.event.data.args.activated_face].media_location == 'NETFLIX' }}"
             sequence:
               - service: script.start_netflix_media_playing
                 data: 
-                  netflix_show_name: '{{ buttons[trigger.event.data.event].netflix_show_name }}'
+                  netflix_show_name: '{{ buttons[trigger.event.data.args.activated_face].netflix_show_name }}'
 
   - alias: Theatre Room - Restart LED Strip When Unavailable
     id: theatre_room_restart_led_strip_when_unavailable
@@ -495,4 +484,3 @@ automation:
           seconds: 10
       - service: switch.turn_on
         entity_id: switch.theatre_led_strip_smart_plug
-

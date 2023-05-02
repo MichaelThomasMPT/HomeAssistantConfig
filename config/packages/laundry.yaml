@@ -50,10 +50,10 @@ automation:
     id: laundry_turn_on_laundry_lights_when_button_pressed
     trigger:
       - platform: event
-        event_type: deconz_event
-        event_data:
-          id: laundry_wall_switch
-          event: 1002 #single press, left button
+        event_type: zha_event
+        event_data: 
+          device_ieee: !secret zha_laundry_lights_switch
+          command: "left_single"
     action:
       - choose:
           - conditions:
@@ -81,10 +81,10 @@ automation:
     id: laundry_turn_on_washing_line_lights_when_button_pressed
     trigger:
       - platform: event
-        event_type: deconz_event
-        event_data:
-          id: laundry_wall_switch
-          event: 2002 #single press, right button
+        event_type: zha_event
+        event_data: 
+          device_ieee: !secret zha_laundry_lights_switch
+          command: "right_single"
     action:
       - choose:
           - conditions:
