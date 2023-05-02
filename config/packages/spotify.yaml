@@ -52,8 +52,6 @@ automation:
           - platform: state
             entity_id: cover.garage_door
             to: "opening"
-      - delay:
-          seconds: 5
       - service: spotcast.start
         data:
           device_name: All Rooms
