@@ -171,6 +171,132 @@ views:
             name: Whole House
             icon: mdi:home
   - theme: Backend-selected
+    title: Kitchen
+    path: subview-kitchen
+    icon: mdi:chef-hat
+    subview: true
+    badges: []
+    cards:
+      - type: vertical-stack
+        title: Lights
+        cards:
+          - type: tile
+            entity: light.kitchen_ceiling_light
+          - type: tile
+            entity: light.kitchen_island
+            features:
+              - type: light-brightness
+          - type: tile
+            entity: light.scullery_light
+            features:
+              - type: light-brightness
+          - type: horizontal-stack
+            cards:
+              - type: tile
+                entity: light.dining_room
+                name: Dining Room
+              - type: tile
+                entity: light.living_room
+                name: Living Room
+      - type: vertical-stack
+        title: Media
+        cards:
+          - type: media-control
+            entity: media_player.central_living_speakers
+          - type: entities
+            entities:
+              - entity: media_player.kitchen_google_home_hub
+              - entity: media_player.dining_room_google_home
+              - entity: media_player.living_room_soundbar_chromecast_audio
+      - type: vertical-stack
+        title: Camera Feed
+        cards:
+          - camera_view: auto
+            type: picture-glance
+            title: Living Room
+            image: https://demo.home-assistant.io/stub_config/kitchen.png
+            entities:
+              - entity: switch.living_room_camera_privacy
+            camera_image: camera.living_room_camera_hd
+            entity: camera.living_room_camera_sd
+          - square: false
+            columns: 3
+            type: grid
+            cards:
+              - show_name: true
+                show_icon: true
+                type: button
+                tap_action:
+                  action: call-service
+                  service: select.select_option
+                  data:
+                    option: Central Room
+                  target:
+                    entity_id: select.living_room_camera_move_to_preset
+                name: Centered
+                icon: mdi:camera-control
+              - show_name: true
+                show_icon: true
+                type: button
+                tap_action:
+                  action: call-service
+                  service: select.select_option
+                  data:
+                    option: Kitchen
+                  target:
+                    entity_id: select.living_room_camera_move_to_preset
+                name: Kitchen
+                icon: mdi:camera-control
+              - type: glance
+                entities:
+                  - entity: binary_sensor.dog_door
+                    icon: mdi:dog-side
+                    name: Dog Door
+                    show_last_changed: true
+      - type: vertical-stack
+        title: Overview
+        cards:
+          - type: history-graph
+            entities:
+              - entity: binary_sensor.dishwasher
+            hours_to_show: 48
+          - type: tile
+            entity: calendar.groceries_list
+          - show_name: true
+            show_icon: true
+            type: button
+            tap_action:
+              action: navigate
+              navigation_path: /lovelace-cooking
+            name: Thermometer Dashboard
+            icon: mdi:thermometer-probe
+      - square: false
+        columns: 1
+        type: grid
+        title: LG Fridge
+        cards:
+          - type: horizontal-stack
+            cards:
+              - hours_to_show: 24
+                graph: line
+                type: sensor
+                entity: sensor.refrigerator_freezer_temp
+                name: Freezer
+                detail: 1
+              - hours_to_show: 24
+                graph: line
+                type: sensor
+                entity: sensor.refrigerator_fridge_temp
+                name: Fridge
+                detail: 1
+          - type: glance
+            entities:
+              - entity: sensor.refrigerator
+              - entity: binary_sensor.refrigerator_door_open
+                name: Fridge Door
+          - type: tile
+            entity: switch.refrigerator_express_mode
+  - theme: Backend-selected
     title: Aircon
     path: subview-aircon
     icon: mdi:air-conditioner
@@ -377,132 +503,6 @@ views:
           - entity: sensor.herb_planter_temperature
             name: Outside
         title: Temperatures
-  - theme: Backend-selected
-    title: Kitchen
-    path: subview-kitchen
-    icon: mdi:chef-hat
-    subview: true
-    badges: []
-    cards:
-      - type: vertical-stack
-        title: Lights
-        cards:
-          - type: tile
-            entity: light.kitchen_ceiling_light
-          - type: tile
-            entity: light.kitchen_island
-            features:
-              - type: light-brightness
-          - type: tile
-            entity: light.scullery_light
-            features:
-              - type: light-brightness
-          - type: horizontal-stack
-            cards:
-              - type: tile
-                entity: light.dining_room
-                name: Dining Room
-              - type: tile
-                entity: light.living_room
-                name: Living Room
-      - type: vertical-stack
-        title: Media
-        cards:
-          - type: media-control
-            entity: media_player.central_living_speakers
-          - type: entities
-            entities:
-              - entity: media_player.kitchen_google_home_hub
-              - entity: media_player.dining_room_google_home
-              - entity: media_player.living_room_soundbar_chromecast_audio
-      - type: vertical-stack
-        title: Camera Feed
-        cards:
-          - camera_view: auto
-            type: picture-glance
-            title: Living Room
-            image: https://demo.home-assistant.io/stub_config/kitchen.png
-            entities:
-              - entity: switch.living_room_camera_privacy
-            camera_image: camera.living_room_camera_hd
-            entity: camera.living_room_camera_sd
-          - square: false
-            columns: 3
-            type: grid
-            cards:
-              - show_name: true
-                show_icon: true
-                type: button
-                tap_action:
-                  action: call-service
-                  service: select.select_option
-                  data:
-                    option: Central Room
-                  target:
-                    entity_id: select.living_room_camera_move_to_preset
-                name: Centered
-                icon: mdi:camera-control
-              - show_name: true
-                show_icon: true
-                type: button
-                tap_action:
-                  action: call-service
-                  service: select.select_option
-                  data:
-                    option: Kitchen
-                  target:
-                    entity_id: select.living_room_camera_move_to_preset
-                name: Kitchen
-                icon: mdi:camera-control
-              - type: glance
-                entities:
-                  - entity: binary_sensor.dog_door
-                    icon: mdi:dog-side
-                    name: Dog Door
-                    show_last_changed: true
-      - type: vertical-stack
-        title: Overview
-        cards:
-          - type: history-graph
-            entities:
-              - entity: binary_sensor.dishwasher
-            hours_to_show: 48
-          - type: tile
-            entity: calendar.groceries_list
-          - show_name: true
-            show_icon: true
-            type: button
-            tap_action:
-              action: navigate
-              navigation_path: /lovelace-cooking
-            name: Thermometer Dashboard
-            icon: mdi:thermometer-probe
-      - square: false
-        columns: 1
-        type: grid
-        title: LG Fridge
-        cards:
-          - type: horizontal-stack
-            cards:
-              - hours_to_show: 24
-                graph: line
-                type: sensor
-                entity: sensor.refrigerator_freezer_temp
-                name: Freezer
-                detail: 1
-              - hours_to_show: 24
-                graph: line
-                type: sensor
-                entity: sensor.refrigerator_fridge_temp
-                name: Fridge
-                detail: 1
-          - type: glance
-            entities:
-              - entity: sensor.refrigerator
-              - entity: binary_sensor.refrigerator_door_open
-                name: Fridge Door
-          - type: tile
-            entity: switch.refrigerator_express_mode
   - theme: Backend-selected
     title: Living & Dining
     path: subview-living-and-dining
