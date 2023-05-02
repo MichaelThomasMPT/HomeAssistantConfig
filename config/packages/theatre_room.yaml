@@ -385,30 +385,30 @@ automation:
     id: theatre_room_play_tv_show_on_cube_tap
     variables: 
       buttons:
-        1001: #The Last Of Us
+        1: #The Last Of Us
           music_file: '/local/sounds/The_Last_Of_Us.mp3'
           media_location: "PLEX"
           plex_content_id: '{ "playlist_name": "The Last Of Us", "shuffle": "0" }'
-        2002: #Snowpiercer
-          music_file: '/local/sounds/Snowpiercer.mp3'
-          media_location: "NETFLIX"
-          netflix_show_name: "Snowpiercer"
-        3003: #Marvel
+        2: #Marvel
           music_file: '/local/sounds/Marvel.mp3'
           media_location: "PLEX"
           plex_content_id: '{ "playlist_name": "Marvel", "shuffle": "0" }'
-        4004: #Star Wars
-          music_file: '/local/sounds/Star_Wars.mp3'
-          media_location: "PLEX"
-          plex_content_id: '{ "playlist_name": "Star Wars", "shuffle": "0" }'
-        5005: #Taskmaster
+        3: #Taskmaster
           music_file: '/local/sounds/Taskmaster.mp3'
           media_location: "PLEX"
           plex_content_id: '{ "playlist_name": "Taskmaster", "shuffle": "0" }'
-        6006: #Battlebots 
+        4: #Battlebots 
           music_file: '/local/sounds/Battlebots.mp3'
           media_location: "PLEX"
           plex_content_id: '{ "playlist_name": "Battlebots", "shuffle": "0" }'
+        5: #Star Wars
+          music_file: '/local/sounds/Star_Wars.mp3'
+          media_location: "PLEX"
+          plex_content_id: '{ "playlist_name": "Star Wars", "shuffle": "0" }'
+        6: #Snowpiercer
+          music_file: '/local/sounds/Snowpiercer.mp3'
+          media_location: "NETFLIX"
+          netflix_show_name: "Snowpiercer"
     trigger: 
       - platform: event
         event_type: zha_event
