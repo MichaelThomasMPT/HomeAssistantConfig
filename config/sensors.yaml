@@ -1,3 +1,5 @@
+- platform: uptime
+
 # Home Away Status
 - platform: template
   sensors:

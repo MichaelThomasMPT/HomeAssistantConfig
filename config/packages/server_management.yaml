@@ -1,18 +1,28 @@
 binary_sensor:
   - platform: rest
-    resource: !secret sonarr_indexer_testall_url
+    resource: !secret sonarr_health_url
     headers:
       X-API-KEY: !secret sonarr_api_key
-    method: POST
+    method: GET
     name: Sonarr VPN Status
     device_class: connectivity
-    value_template: "{{ 'False' not in (value_json | map(attribute='isValid') | join(', ')) }}"
+    value_template: "{{ 'error' not in (value_json | map(attribute='type') | join(', ')) }}"
 
 rest_command:
   restart_server_vpn:
     url: !secret olivetin_api_url
     method: post
     payload: '{"actionName": "Restart VPN"}'
+  sonarr_test_trackers:
+    url: !secret sonarr_indexer_testall_url
+    headers:
+      X-API-KEY: !secret sonarr_api_key
+    method: POST
+  radarr_test_trackers:
+    url: !secret radarr_indexer_testall_url
+    headers:
+      X-API-KEY: !secret radarr_api_key
+    method: POST
 
 sensor:
   - platform: rest
@@ -44,6 +54,24 @@ sensor:
       - type: processor_temperature
       - type: last_boot
 
+  - platform: command_line
+    name: NAS VPN Location
+    command: ssh -i /config/ssh/id_rsa -o 'StrictHostKeyChecking=no' root@192.168.1.222 -p 222 'curl ipinfo.io'
+    json_attributes:
+      - city
+      - region
+      - country
+    scan_interval: 30
+    value_template: "{{ value_json.ip }}"
+
+template:
+  - sensor:
+      - name: "NAS VPN Geographical Location"
+        state: >
+          {{  state_attr('sensor.nas_vpn_location', 'city') + ', ' 
+            + state_attr('sensor.nas_vpn_location', 'region') + ', ' 
+            + state_attr('sensor.nas_vpn_location', 'country') }}
+
 #Change the Synology NAS/Theatre Room TV VPN Connection
 shell_command:
   nas_vpn_disconnect: >
@@ -54,6 +82,7 @@ shell_command:
     ssh {{ nas_ssh_connection_string }} 'bash /volume1/NAS\ Config/VPN\ Scripts/connecttovpn.sh NordVPN_UK'
   nas_vpn_connect_usa: >
     ssh {{ nas_ssh_connection_string }} 'bash /volume1/NAS\ Config/VPN\ Scripts/connecttovpn.sh NordVPN_USA'
+  
 script:
   nas_vpn_connect:
     alias: Connect NAS VPN
@@ -95,23 +124,6 @@ script:
                 data: 
                   nas_ssh_connection_string: !secret nas_ssh_connection_string
     mode: single
-sensor:
-  - platform: command_line
-    name: NAS VPN Location
-    command: ssh -i /config/ssh/id_rsa -o 'StrictHostKeyChecking=no' root@192.168.1.222 -p 222 'curl ipinfo.io'
-    json_attributes:
-      - city
-      - region
-      - country
-    scan_interval: 30
-    value_template: "{{ value_json.ip }}"
-template:
-  - sensor:
-      - name: "NAS VPN Geographical Location"
-        state: >
-          {{  state_attr('sensor.nas_vpn_location', 'city') + ', ' 
-            + state_attr('sensor.nas_vpn_location', 'region') + ', ' 
-            + state_attr('sensor.nas_vpn_location', 'country') }}
 
 automation:
   #if server is getting too hot, send a push notification.
@@ -129,6 +141,7 @@ automation:
         data:
           title: "WARNING: The server is getting hot!"
           message: "Processor temperature: {{ states('sensor.processor_temperature') }}, cupboard temperature: {{ states('sensor.server_cupboard_temperature') }}"
+
   - alias: Server Management - Restart VPN if Sonarr disconnected for too long
     id: server_management_restart_vpn_if_sonarr_disconnected_for_too_long
     trigger:
@@ -145,5 +158,19 @@ automation:
           data:
             group: "VPN_Restart"
       - service: rest_command.restart_server_vpn
-      #TODO: If still not fixed after a further 20 minutes, alert me (or try again?)
+      - delay:
+          minutes: 5
+      - service: rest_command.sonarr_test_trackers
+      - service: rest_command.radarr_test_trackers
+      - delay:
+          minutes: 5
+      - condition: state
+        entity_id: binary_sensor.sonarr_vpn_status
+        state: "off"
+      - service: notify.mobile_app_michael_s_galaxy_s10
+        data:
+          title: "The VPN restart was not successful"
+          message: "Sonarr Still has no access to the VPN"
+          data:
+            group: "VPN_Restart"
       
