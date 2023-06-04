@@ -7,11 +7,6 @@ homeassistant:
   # Impacts weather/sunrise data (altitude above sea level in meters)
   elevation: 0
 
-binary_sensor:
-  - platform: workday
-    country: AU
-    province: WA
-
 input_boolean:
   holiday_mode:
     name: Holiday Mode
@@ -43,7 +38,7 @@ zone:
     latitude: !secret zone_laura_work_latitude
     longitude: !secret zone_laura_work_longitude
     radius: 220
-    icon: mdi:store
+    icon: mdi:briefcase
 
   - name: Greg's House
     latitude: !secret zone_greg_house_latitude
