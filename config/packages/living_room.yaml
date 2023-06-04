@@ -130,7 +130,7 @@ script:
       - service: switch.turn_off
         entity_id: switch.living_room_soundbar_smart_plug
       - delay:
-          seconds: 5
+          seconds: 8
       - service: switch.turn_on
         entity_id: switch.living_room_soundbar_smart_plug
       - delay:
