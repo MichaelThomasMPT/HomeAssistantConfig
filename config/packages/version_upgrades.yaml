@@ -72,16 +72,16 @@ automation:
           version: '{{ states.sensor.ha_docker_version_stable.state }}'
 
   # Triggered from Github action. We only auto-apply minor releases.
-  - alias: "Version Update - Upgrade HASS From Github Action Webhook"
-    initial_state: 'on'
-    trigger:
-      platform: webhook
-      webhook_id: !secret hass_upgrade_webhook
-    action:
-      - service: notify.pushbullet
-        data_template:
-          message: >-
-            New Version Ready To Be Applied: {{ states.sensor.ha_docker_version_stable.state }} Changes: https://git.io/JvkT4 Tested: https://git.io/Jvt3w 
+  # - alias: "Version Update - Upgrade HASS From Github Action Webhook"
+  #   initial_state: 'on'
+  #   trigger:
+  #     platform: webhook
+  #     webhook_id: !secret hass_upgrade_webhook
+  #   action:
+  #     - service: notify.pushbullet
+  #       data_template:
+  #         message: >-
+  #           New Version Ready To Be Applied: {{ states.sensor.ha_docker_version_stable.state }} Changes: https://git.io/JvkT4 Tested: https://git.io/Jvt3w 
       # Disabling the auto-updates for now, but still notifying when an update is ready
       # - service: shell_command.upgrade_hass
       #   data:
