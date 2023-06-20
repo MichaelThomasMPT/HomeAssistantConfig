@@ -1,0 +1,34 @@
+blueprint:
+  name: Nag Me Notifications
+  description: Keep notifying me about something that has happened until I've dealt with it, with the option to snooze.
+  domain: automation
+  input:
+    trigger_entity:
+      name: Trigger entity
+      description: A state change of this entity will be used to trigger this automation.
+      selector:
+        entity:
+    trigger_state:
+      name: Trigger state
+      description: When "Trigger Entity" changes to this state the automation will be triggered. Leave this blank if you would like to trigger on any state change. #TODO LEAVE BLANK SUPPORT
+      default: ""
+    notify_device:
+      name: Device to notify
+      description: This device needs to run the official Home Assistant app to receive notifications.
+      selector:
+        device:
+          integration: mobile_app
+
+  trigger:
+    platform: state
+    entity_id: binary_sensor.motion_kitchen
+
+  mode: restart
+  action:
+    service: notify.mobile_app_michael_s_galaxy_s10
+    data:
+      message: The washing machine has finished. 
+    target:
+      entity_id: light.kitchen
+    
+
