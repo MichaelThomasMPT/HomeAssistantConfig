@@ -516,16 +516,80 @@ views:
           - type: tile
             entity: light.living_room
             name: Living Room
-          - type: tile
-            entity: light.living_room_table_lamp
-            name: Living Room Lamp
+          - features:
+              - type: light-brightness
+            type: tile
+            entity: light.living_room_tv_led_strip_local
+            name: Living Room TV LED Strip
             tap_action:
               action: toggle
-            features:
-              - type: light-brightness
+            icon: mdi:led-strip
+            icon_tap_action:
+              action: more-info
+          - type: horizontal-stack
+            cards:
+              - type: horizontal-stack
+                cards:
+                  - show_name: true
+                    show_icon: true
+                    type: button
+                    tap_action:
+                      action: call-service
+                      service: light.turn_on
+                      target:
+                        entity_id: light.living_room_tv_led_strip_local
+                      data:
+                        effect: Music
+                    entity: light.living_room_tv_led_strip_local
+                    icon_height: 30px
+                    icon: mdi:party-popper
+                    name: Party
+                  - show_name: true
+                    show_icon: true
+                    type: button
+                    tap_action:
+                      action: call-service
+                      service: light.turn_on
+                      data:
+                        brightness_pct: 50
+                        rgb_color:
+                          - 255
+                          - 63
+                          - 15
+                      target:
+                        entity_id: light.living_room_tv_led_strip_local
+                    entity: light.living_room_tv_led_strip_local
+                    icon_height: 30px
+                    icon: mdi:moon-waning-crescent
+                    name: Night
+                  - show_name: true
+                    show_icon: true
+                    type: button
+                    tap_action:
+                      action: call-service
+                      service: light.turn_on
+                      data:
+                        brightness_pct: 100
+                        rgb_color:
+                          - 0
+                          - 255
+                          - 255
+                      target:
+                        entity_id: light.living_room_tv_led_strip_local
+                    entity: light.living_room_tv_led_strip_local
+                    icon_height: 30px
+                    icon: mdi:television-classic
+                    name: TV
           - type: tile
             entity: light.dining_room
             name: Dining Room
+          - features:
+              - type: light-brightness
+            type: tile
+            entity: light.dining_room_table_lamp
+            name: Dining Room Lamp
+            tap_action:
+              action: toggle
           - type: tile
             entity: light.kitchen_lights
             name: Kitchen
@@ -786,6 +850,15 @@ views:
                 type: tile
                 entity: light.master_bedroom_ceiling
                 name: Bedroom Ceiling
+              - features:
+                  - type: light-brightness
+                type: tile
+                entity: light.master_bedroom_led_strip_online
+                icon: mdi:led-strip
+                vertical: false
+                icon_tap_action:
+                  action: more-info
+                name: Master Bed LED Strip
               - type: horizontal-stack
                 cards:
                   - type: tile
@@ -1150,7 +1223,10 @@ views:
             name: Herb Planter
           - type: plant-status
             entity: plant.herb_planter
-            name: Mint
+            name: Mint Bush
+          - type: plant-status
+            entity: plant.olive_trees
+            name: Olive Trees
       - type: vertical-stack
         title: Details
         cards:
@@ -1225,6 +1301,95 @@ views:
               - entity: automation.location_notify_when_someone_comes_home
                 name: Notify When Someone Arrives Home (default off)
                 icon: mdi:home-map-marker
+      - type: vertical-stack
+        title: House Phone
+        cards:
+          - type: tile
+            entity: binary_sensor.house_phone_call_in_progress
+            vertical: false
+            show_entity_picture: false
+            icon: mdi:phone-in-talk
+            name: Call in Progress?
+          - type: tile
+            entity: select.house_phone_assist_pipeline
+            icon: mdi:card-account-phone
+            name: Who is answering the phone?
+            icon_tap_action:
+              action: more-info
+            tap_action:
+              action: call-service
+              service: select.select_next
+              target:
+                entity_id: select.house_phone_assist_pipeline
+              data:
+                cycle: true
+      - type: grid
+        cards:
+          - show_name: true
+            show_icon: true
+            type: button
+            tap_action:
+              action: call-service
+              service: select.select_option
+              target:
+                entity_id: select.house_phone_assist_pipeline
+              data:
+                option: Artemis OpenAI
+            entity: select.house_phone_assist_pipeline
+            icon: mdi:dog
+            name: Artemis
+          - show_name: true
+            show_icon: true
+            type: button
+            tap_action:
+              action: call-service
+              service: select.select_option
+              target:
+                entity_id: select.house_phone_assist_pipeline
+              data:
+                option: Billy Bass OpenAI
+            entity: select.house_phone_assist_pipeline
+            icon: mdi:fish
+            name: Billy Bass
+          - show_name: true
+            show_icon: true
+            type: button
+            tap_action:
+              action: call-service
+              service: select.select_option
+              target:
+                entity_id: select.house_phone_assist_pipeline
+              data:
+                option: Generic OpenAI
+            entity: select.house_phone_assist_pipeline
+            icon: mdi:face-man
+            name: Generic Aussie
+          - show_name: true
+            show_icon: true
+            type: button
+            tap_action:
+              action: call-service
+              service: select.select_option
+              target:
+                entity_id: select.house_phone_assist_pipeline
+              data:
+                option: Generic OpenAI with Local Translation
+            entity: select.house_phone_assist_pipeline
+            icon: mdi:face-woman
+            name: Local Aussie
+          - show_name: true
+            show_icon: true
+            type: button
+            tap_action:
+              action: call-service
+              service: select.select_option
+              target:
+                entity_id: select.house_phone_assist_pipeline
+              data:
+                option: Home Assistant (Local)
+            entity: select.house_phone_assist_pipeline
+            icon: mdi:home-assistant
+            name: Home Assistant
   - theme: Backend-selected
     title: Laundry
     path: subview-laundry
