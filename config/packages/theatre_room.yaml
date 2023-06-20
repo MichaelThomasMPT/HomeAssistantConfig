@@ -115,7 +115,6 @@ script:
           entity_id: media_player.theatre_room_chromecast
           message: "Hey Google, play Netflix {{netflix_show_name}} in the Theatre Room"
 
-
   #Start a media file from Plex playing on the theatre room TV
   start_plex_media_playing:
     alias: Start Plex Media Playing
@@ -372,14 +371,13 @@ automation:
       platform: time_pattern
       minutes: '/1' #run every minute
     condition:
-      #If theatre room is inactive and at least one lamp is on, turn all the lights off
       - condition: state
         entity_id: binary_sensor.theatre_room_occupancy
         state: 'off'
         for:
           minutes: 10
     action:
-      - service: script.turn_off_theatre_room_lights
+      - service: script.done_with_the_theatre_room
 
   - alias: Theatre Room - Play TV Show On Cube Tap
     id: theatre_room_play_tv_show_on_cube_tap
