@@ -1,4 +1,24 @@
 automation:
+  - alias: Front Door - Toggle Porch Light With Central Switch
+    id: front_door_toggle_porch_light_with_central_switch
+    variables: 
+      #map the on/off buttons to the appropriate service
+      buttons: 
+        "on":
+          service_to_call: light.turn_on
+        "off":
+          service_to_call: light.turn_off
+    trigger: 
+      - platform: event
+        event_type: zha_event
+        event_data: 
+          device_ieee: !secret zha_central_switch_for_front_porch_light
+    condition: 
+      - "{{ trigger.event.data.command in buttons }}"
+    action:
+      - service: "{{ buttons[trigger.event.data.command].service_to_call }}"
+        entity_id: light.front_porch_light
+
   - alias: Front Door - Turn On Porch Light If Front Door Opened After Sunset
     id: front_door_turn_on_porch_light_if_front_door_opened_after_sunset
     trigger:
