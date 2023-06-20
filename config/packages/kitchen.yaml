@@ -123,8 +123,10 @@ automation:
     trigger: 
       - platform: state
         entity_id: binary_sensor.scullery_motion
+      - platform: state
+        entity_id: binary_sensor.scullery_occupancy
     action:
-      - service: "{% if states.binary_sensor.scullery_motion.state == 'on' -%} light.turn_on {%- else -%} light.turn_off {%- endif %}"
+      - service: "{% if states.binary_sensor.scullery_motion.state == 'on' or states.binary_sensor.scullery_occupancy.state == 'on' -%}light.turn_on{%- else -%}light.turn_off{%- endif %}"
         entity_id: 
           - light.scullery_light
           - light.pantry_light
