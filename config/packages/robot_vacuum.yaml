@@ -9,6 +9,7 @@ camera:
       - calibration_points
       - charger
       - rooms
+    scan_interval: 600
 
 script:
   vacuum_vacuum_room:
@@ -317,3 +318,14 @@ automation:
         target:
           entity_id: vacuum.robo_buddy
 
+  - alias: Vacuum - Update Robo-buddy Map Extractor Camera
+    description: >-
+      Used to control when the Robo Buddy's map extractor camera updates. By default
+      it is happening too often and blocking me from viewing the robot's map in the
+      Xiaomi app. 
+    use_blueprint:
+      path: PiotrMachowski/update_map_extractor.yaml
+      input:
+        vacuum: vacuum.robo_buddy
+        camera: camera.xiaomi_cloud_map_extractor
+        mode_to_handle: two_intervals
