@@ -101,9 +101,13 @@ automation:
           - light.master_wir
           - light.ensuite_light
       - service: light.turn_on #next turn the ceiling lights on dim to help navigate to bed
-        entity_id: light.master_bedroom_ceiling
+        entity_id: light.master_bedroom_led_strip_online
         data:
-          brightness_pct: 5
+          brightness_pct: 10
+          rgb_color:
+            - 255
+            - 63
+            - 15
       - delay:
           seconds: 20
       - service: script.turn_off_whole_house #after allowing time to get in to bed, turn off everything in the house
@@ -272,6 +276,19 @@ automation:
     action:
       - service: switch.turn_off
         entity_id: switch.ensuite_fan
+
+  - alias: Ensuite - Turn Off lights When No Motion
+    id: ensuite_turn_off_lights_when_no_motion
+    trigger:
+      platform: state
+      entity_id: binary_sensor.ensuite_motion
+      to: "off"
+      for:
+        minutes: 30
+    action:
+      - service: light.turn_off
+        entity_id: light.ensuite_light
+
 
   - alias: Master Bedroom - Turn On Projector When Going To Bed At Night
     id: master_bedroom_turn_on_projector_when_going_to_bed_at_night
