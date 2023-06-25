@@ -27,6 +27,7 @@ frontend:
 group: !include groups.yaml
 script: !include scripts.yaml
 sensor: !include sensors.yaml
+automation: !include automations.yaml
 
 # Discover some devices automatically
 discovery:
