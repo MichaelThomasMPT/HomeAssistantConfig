@@ -36,6 +36,8 @@ script:
         entity_id: switch.living_room_tv_smart_plug
       - service: cover.close_cover
         entity_id: cover.theatre_blinds
+      - service: climate.turn_off
+        entity_id: climate.alfresco_heater
       # only proceed if requesting to turn off the aircon
       - condition: template
         value_template: "{{ turn_off_aircon }}" 

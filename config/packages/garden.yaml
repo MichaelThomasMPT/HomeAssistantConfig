@@ -3,6 +3,35 @@ light:
     name: Alfresco Fairy Lights
     entity_id: switch.alfresco_fairy_lights_smart_plug
 
+template:
+  select:
+    - name: "Alfresco Temperature"
+      unique_id: alfresco_temperature
+      state: "{% if states('select.alfresco_heater_temperature_level') == '2' %}high{% else %}low{% endif %}"
+      options: "{{ ['high', 'low'] }}"
+      select_option:
+        - service: select.select_option
+          data:
+            option: "{% if option == 'high' %}2{% else %}1{% endif %}"
+          target:
+            entity_id: select.alfresco_heater_temperature_level
+
+switch:
+  - platform: template
+    switches:
+      alfresco_heater:
+        friendly_name: Alfresco Heater
+        value_template: "{{ is_state('climate.alfresco_heater', 'heat') }}"
+        turn_on:
+          service: climate.turn_on
+          target:
+            entity_id: climate.alfresco_heater
+        turn_off:
+          service: climate.turn_off
+          target:
+            entity_id: climate.alfresco_heater
+        icon_template: mdi:patio-heater
+
 automation:
   - alias: Garden - Turn On Washing Line Lights When Motion Detected
     id: garden_turn_on_washing_line_lights_when_motion_detected
@@ -169,3 +198,68 @@ automation:
       - service: light.turn_off
         target:
           entity_id: light.garden_flood_lights
+
+  - alias: Garden - Turn Off Alfresco Heater After Four Hours 
+    id: garden_turn_off_alfresco_heater_after_four_hours
+    trigger:
+      - platform: state
+        entity_id: switch.alfresco_heater
+        to: 'on'
+        for: 
+          hours: 4
+    action:
+      - service: switch.turn_off
+        target:
+          entity_id: switch.alfresco_heater
+      - service: notify.mobile_app_michael_s_galaxy_s10
+        data:
+          message: It had been on for 4 hours.
+          title: The Patio Heater Was Switched Off
+          data:
+            group: Patio heater
+            actions:
+              - action: "turn_alfresco_heater_on" 
+                title: "Hey, I was still using that!"
+
+  - alias: Garden - Notify Michael If Alfresco Heater On For Two Hours 
+    id: garden_notify_micahel_if_alfresco_heater_on_for_two_hours
+    trigger:
+      - platform: state
+        entity_id: switch.alfresco_heater
+        to: 'on'
+        for: 
+          hours: 2
+    action:
+      - service: notify.mobile_app_michael_s_galaxy_s10
+        data:
+          message: The patio heater has been on for 2 hours. Should it be?
+          title: Patio Heater Is On
+          data:
+            group: Patio heater
+            actions:
+              - action: "turn_alfresco_heater_off" 
+                title: "Nah, turn it off"
+
+  - alias: Garden - Turn Off Alfresco Heater On Notification Action
+    id: garden_turn_off_alfresco_heater_on_notifcation_action
+    trigger:
+      platform: event
+      event_type: mobile_app_notification_action
+      event_data:
+        action: turn_alfresco_heater_off
+    action:
+      - service: switch.turn_off
+        data:
+          entity_id: switch.alfresco_heater
+          
+  - alias: Garden - Turn On Alfresco Heater On Notification Action
+    id: garden_turn_on_alfresco_heater_on_notifcation_action
+    trigger:
+      platform: event
+      event_type: mobile_app_notification_action
+      event_data:
+        action: turn_alfresco_heater_on
+    action:
+      - service: switch.turn_on
+        data:
+          entity_id: switch.alfresco_heater

@@ -66,6 +66,7 @@ cloud:
         - input_select.igrill_presets_probe
         - climate.refrigerator_freezer
         - climate.refrigerator_fridge
+        - climate.alfresco_heater
     entity_config:
       switch.christmas_tree_power:
         name: Christmas Tree
@@ -107,6 +108,11 @@ cloud:
         name: Alfresco Fairy Lights
         aliases:
           - Fairy Lights
+      switch.alfresco_heater:
+        name: Alfresco Heater
+        aliases:
+          - Patio Heater
+          - Outdoor Heater
 
 # Text to speech
 tts:
