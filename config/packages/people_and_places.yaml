@@ -40,12 +40,6 @@ zone:
     radius: 220
     icon: mdi:briefcase
 
-  - name: Greg's House
-    latitude: !secret zone_greg_house_latitude
-    longitude: !secret zone_greg_house_longitude
-    radius: 125
-    icon: mdi:home
-
   - name: University
     latitude: !secret zone_university_latitude
     longitude: !secret zone_university_longitude
