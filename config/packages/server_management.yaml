@@ -173,4 +173,3 @@ automation:
           message: "Sonarr Still has no access to the VPN"
           data:
             group: "VPN_Restart"
-      

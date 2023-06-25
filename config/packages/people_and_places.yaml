@@ -298,6 +298,31 @@ automation:
           data:
             group: "Crown Rewards"
 
+  - alias: Wedding - Notify Us When Someone Responds To The Wedding SaveDate
+    id: wedding_notify_us_when_someone_responds_to_the_wedding_savedate
+    trigger:
+      - platform: webhook
+        webhook_id: !secret wedding_savedate_webhook_id
+        allowed_methods:
+          - POST
+        local_only: true
+    action:
+      - service: notify.mobile_app_michael_s_galaxy_s10
+        data:
+          title: "A Wedding Guest Has Responded"
+          message: "{{ trigger.json.person }} has saved the date!"
+          data:
+            group: "Wedding"
+            color: "#ff00c8"
+            notification_icon: "mdi:heart"
+      # - service: notify.mobile_app_lauras_iphone
+      #   data:
+      #     title: "RSVP Received"
+      #     message: "{{ trigger.json.person }} will be coming to your wedding!"
+      #     data:
+      #       title: "A Wedding Guest Has Responded"
+      #       message: "{{ trigger.json.person }} has saved the date!"
+
 person:
   - name: Michael
     id: michael
