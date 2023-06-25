@@ -339,7 +339,7 @@ automation:
     id: theatre_room_lights_turn_on_lights_when_motion_detected
     trigger: 
       - platform: state
-        entity_id: binary_sensor.theatre_motion
+        entity_id: binary_sensor.theatre_room_motion
         to: 'on'
     condition:
       condition: and 
