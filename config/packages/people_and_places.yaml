@@ -220,24 +220,9 @@ automation:
             for:
               minutes: 5
     action:
-      - service: light.turn_on
+      - service: scene.turn_on
         target:
-          entity_id: light.living_room_table_lamp
-        data:
-          rgb_color:
-            - 255
-            - 206
-            - 64
-          brightness: 165
-      - service: light.turn_on
-        data:
-          brightness_pct: 50
-          rgb_color:
-            - 255
-            - 63
-            - 15
-        target:
-          entity_id: light.living_room_tv_led_strip_local
+          entity_id: scene.living_room_soft_lighting
       - service: light.turn_on
         entity_id:
         - light.kitchen_island
@@ -318,13 +303,13 @@ automation:
             group: "Wedding"
             color: "#ff00c8"
             notification_icon: "mdi:heart"
-      # - service: notify.mobile_app_lauras_iphone
-      #   data:
-      #     title: "RSVP Received"
-      #     message: "{{ trigger.json.person }} will be coming to your wedding!"
-      #     data:
-      #       title: "A Wedding Guest Has Responded"
-      #       message: "{{ trigger.json.person }} has saved the date!"
+      - service: notify.mobile_app_lauras_iphone
+        data:
+          title: "RSVP Received"
+          message: "{{ trigger.json.person }} will be coming to your wedding!"
+          data:
+            title: "A Wedding Guest Has Responded"
+            message: "{{ trigger.json.person }} has saved the date!"
 
 person:
   - name: Michael

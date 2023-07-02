@@ -1,3 +1,42 @@
+scene:
+  - name: Living Room - Soft Lighting
+    icon: "mdi:globe-light"
+    entities:
+      light.genio_bulb_lantern_pink:
+        state: "on"
+        rgb_color:
+          - 255
+          - 0
+          - 225
+        brightness_pct: 25
+      light.genio_bulb_lantern_purple:
+        state: "on"
+        rgb_color:
+          - 255
+          - 0
+          - 250
+        brightness_pct: 25
+      light.living_room_table_lamp:
+        state: "on"
+        rgb_color:
+          - 255
+          - 206
+          - 64
+        brightness: 165
+      light.living_room_tv_led_strip_local:
+        state: "on"
+        rgb_color:
+          - 255
+          - 63
+          - 15
+        brightness_pct: 50
+      light.living_room:
+        state: "off"
+      light.dining_room: 
+        state: "off"
+      light.kitchen_ceiling_light:
+        state: "off"
+
 automation: 
   - alias: Dining Room - Toggle Dining Room Table Lamp With Button
     id: dining_room_toggle_dining_room_table_lamp_with_button
@@ -84,6 +123,22 @@ automation:
                   - 255
               target:
                 entity_id: light.living_room_tv_led_strip_local
+
+  - alias: Living Room - Turn On Soft Lights At Night
+    id: living_room_turn_on_soft_lights_at_night
+    mode: single
+    trigger:
+      - platform: sun
+        event: sunset
+    condition:
+      #Only run when we are home
+      - condition: state
+        entity_id: alarm_control_panel.alarm_com
+        state: 'disarmed' 
+    action:
+      - service: scene.turn_on
+        target:
+          entity_id: scene.living_room_soft_lighting
 
 script:
   turn_off_living_room_tv:
