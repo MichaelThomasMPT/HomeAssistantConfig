@@ -446,52 +446,6 @@ automation:
         data:
           entity_id: climate.ac
 
-  - alias: Temperature - Office Button Trigger - On
-    id: temperature_office_button_trigger_on
-    #TODO: Perhaps for the winter make this also trigger the office heater
-    trigger:
-      - platform: event
-        event_type: zha_event
-        event_data: 
-          device_ieee: !secret zha_laura_office_aircon_button
-          command: "on"
-    action:
-      - choose:
-        - conditions: #If aircon office zone off or aircon off in general
-            - condition: or
-              conditions:
-              - condition: state
-                entity_id: switch.aircon_zone_bed23
-                state: 'off'
-              - condition: state
-                entity_id: climate.ac
-                state: 'off'
-          sequence:
-            - service: script.flash_office_lamp
-              data: 
-                colour: "green"
-            - service: script.aircon_fan_office
-        default: #If fan is already running in the office, instead blast cold for 10 min
-          - service: script.flash_office_lamp
-            data: 
-              colour: "blue"
-          - service: script.aircon_blast_cold_for_ten_minutes
-
-  - alias: Temperature - Office Button Trigger - Off
-    id: temperature_office_button_trigger_off
-    trigger:
-      - platform: event
-        event_type: zha_event
-        event_data: 
-          device_ieee: !secret zha_laura_office_aircon_button
-          command: "off"
-    action:
-      - service: script.flash_office_lamp
-        data: 
-          colour: "white"
-      - service: climate.turn_off
-        entity_id: climate.ac
-
   - alias: Temperature - Theatre Button Trigger - On
     id: temperature_theatre_button_trigger_on
     #TODO: Perhaps for the winter make this also trigger the theatre heater

@@ -144,32 +144,6 @@ automation:
       - service: scene.turn_on
         entity_id: scene.office_lamp_original_state
 
-  - alias: Office - Mute Office Speakers When Michael Is In A Meeting
-    id: office_mute_office_speakers_when_michael_is_in_a_meeting
-    trigger: 
-      - platform: state
-        entity_id: binary_sensor.michael_in_meeting
-        to: "on"
-    action:
-      - service: media_player.volume_mute
-        data:
-          is_volume_muted: true
-        target:
-          entity_id: 
-            - media_player.office_google_home
-            - media_player.office_pc_speakers
-      - wait_for_trigger:
-          - platform: state
-            entity_id: binary_sensor.michael_in_meeting
-            to: "off"
-      - service: media_player.volume_mute
-        data:
-          is_volume_muted: false
-        target:
-          entity_id: 
-            - media_player.office_google_home
-            - media_player.office_pc_speakers
-
   - alias: Office - Blinds Open In The Morning
     id: office_blinds_open_in_the_morning
     trigger: 
@@ -235,6 +209,68 @@ automation:
           entity_id: cover.office_blinds
         data:
           position: '{{ states("input_number.office_blinds_height") }}'
+
+  - alias: Office - Mute Office Speakers When Michael Is In A Meeting
+    id: office_mute_office_speakers_when_michael_is_in_a_meeting
+    trigger: 
+      - platform: state
+        entity_id: binary_sensor.michael_in_meeting
+        to: "on"
+    action:
+      - service: media_player.volume_mute
+        data:
+          is_volume_muted: true
+        target:
+          entity_id: 
+            - media_player.office_google_home
+            - media_player.office_pc_speakers
+      - wait_for_trigger:
+          - platform: state
+            entity_id: binary_sensor.michael_in_meeting
+            to: "off"
+      - service: media_player.volume_mute
+        data:
+          is_volume_muted: false
+        target:
+          entity_id: 
+            - media_player.office_google_home
+            - media_player.office_pc_speakers
+
+  - alias: Office - Mute Office Speaker When Laura Is In A Meeting
+    id: office_mute_office_speaker_when_laura_is_in_a_meeting
+    mode: restart
+    trigger:
+      - platform: event
+        event_type: zha_event
+        event_data: 
+          device_ieee: !secret zha_laura_office_aircon_button
+          #command: "on"
+    action:
+      - service: media_player.volume_mute
+        data:
+          is_volume_muted: true
+        target:
+          entity_id: 
+            - media_player.office_google_home
+            - media_player.office_pc_speakers
+      - choose:
+          - conditions:
+              - "{{ trigger.event.data.command == 'off' }}"
+            sequence:
+              - delay:
+                  minutes: 30
+          - conditions:
+              - "{{ trigger.event.data.command == 'on' }}"
+            sequence:
+              - delay:
+                  minutes: 60
+      - service: media_player.volume_mute
+        data:
+          is_volume_muted: false
+        target:
+          entity_id: 
+            - media_player.office_google_home
+            - media_player.office_pc_speakers
 
 script:
   flash_office_lamp:
