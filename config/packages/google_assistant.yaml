@@ -57,6 +57,7 @@ cloud:
         - group.aircon_vents
         - cover.theatre_blinds
         - media_player.theatre_room_tv
+        - climate.alfresco_heater
       exclude_entities:
         - light.theatre_room
         - light.theatre_room_2

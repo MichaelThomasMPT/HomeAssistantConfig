@@ -16,7 +16,7 @@ scene:
           - 0
           - 250
         brightness_pct: 25
-      light.living_room_table_lamp:
+      light.dining_room_table_lamp:
         state: "on"
         rgb_color:
           - 255
