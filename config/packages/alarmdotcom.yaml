@@ -71,7 +71,7 @@ automation:
       - service: notify.mobile_app_lauras_iphone
         data:
           message: Don't forget to disarm the alarm!
-      - service: script.piper_speak_notification 
+      - service: script.custom_speak_notification 
         data:
           message_to_speak: "{{ chatgpt_response.text }}"
           media_player: media_player.kitchen_google_home_hub

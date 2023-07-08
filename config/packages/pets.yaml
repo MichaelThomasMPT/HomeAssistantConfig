@@ -238,7 +238,7 @@ automation:
               else state_attr("binary_sensor.dinner", "friendly_name") if states("binary_sensor.dinner") == "on"
             }}!
         response_variable: "chatgpt_response"
-      - service: script.piper_speak_notification 
+      - service: script.custom_speak_notification 
         data:
           message_to_speak: "{{ chatgpt_response.text }}"
           media_player: media_player.all_rooms
@@ -266,7 +266,7 @@ automation:
               else state_attr("binary_sensor.dinner", "friendly_name") if states("binary_sensor.dinner") == "on"
             }}, don't trust her! 
         response_variable: "chatgpt_response"
-      - service: script.piper_speak_notification 
+      - service: script.custom_speak_notification 
         data:
           message_to_speak: "{{ chatgpt_response.text }}"
           media_player: media_player.all_rooms

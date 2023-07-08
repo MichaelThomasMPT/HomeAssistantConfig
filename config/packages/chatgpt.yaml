@@ -54,7 +54,7 @@ script:
       - stop: "Prompt was converted."
         response_variable: "response_message"
 
-  piper_speak_notification:
+  custom_speak_notification:
     alias: "Piper - Speak Notification"
     fields:
       message_to_speak:

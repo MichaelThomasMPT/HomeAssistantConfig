@@ -117,7 +117,7 @@ automation:
       - condition: state
         entity_id: media_player.kitchen_google_home_hub
         state: 'off' #Only use text-to-speech on Google Home Hub if it's not already in use, so it doesn't stop any music from playing
-      - service: script.piper_speak_notification 
+      - service: script.custom_speak_notification 
         data:
           message_to_speak: "{{ chatgpt_response.text }}"
           media_player: media_player.kitchen_google_home_hub
