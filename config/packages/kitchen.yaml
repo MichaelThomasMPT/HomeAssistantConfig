@@ -104,19 +104,23 @@ automation:
           for:
             minutes: 4
     action:
+      - service: script.chatgpt_reword_message
+        data:
+          prompt: "The coffee machine was left closed."
+        response_variable: "chatgpt_response"
       - service: notify.mobile_app_michael_s_galaxy_s10
         data:
-          message: The coffee machine was left closed.
+          message: "{{ chatgpt_response.text }}"
       - service: notify.mobile_app_lauras_iphone
         data:
-          message: The coffee machine was left closed.
+          message: "{{ chatgpt_response.text }}"
       - condition: state
         entity_id: media_player.kitchen_google_home_hub
         state: 'off' #Only use text-to-speech on Google Home Hub if it's not already in use, so it doesn't stop any music from playing
-      - service: tts.google_translate_say
+      - service: script.piper_speak_notification 
         data:
-          entity_id: media_player.kitchen_google_home_hub
-          message: The coffee machine was left closed.
+          message_to_speak: "{{ chatgpt_response.text }}"
+          media_player: media_player.kitchen_google_home_hub
 
   - alias: Kitchen - Toggle Scullery Lights When Motion Detected
     id: kitchen_toggle_scullery_lights_when_motion_detected

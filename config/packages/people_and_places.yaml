@@ -74,9 +74,13 @@ automation:
         entity_id: binary_sensor.workday_sensor
         state: "on"
     action:
+      - service: script.chatgpt_reword_message
+        data:
+          prompt: "Laura is leaving work."
+        response_variable: "chatgpt_response"
       - service: notify.mobile_app_michael_s_galaxy_s10
         data:
-          message: Laura is leaving work.
+          message: "{{ chatgpt_response.text }}"
 
   - alias: Location - Notify Laura If Michael Leaving Work
     id: location_notify_laura_if_michael_leaving_work
@@ -93,9 +97,13 @@ automation:
         entity_id: binary_sensor.workday_sensor
         state: "on"
     action:
+      - service: script.chatgpt_reword_message
+        data:
+          prompt: "Michael is leaving work."
+        response_variable: "chatgpt_response"
       - service: notify.mobile_app_lauras_iphone
         data:
-          message: Michael is leaving work.
+          message: "{{ chatgpt_response.text }}"
 
   #Notify when someone comes homes
   - alias: Location - Notify When Someone Comes Home
@@ -114,9 +122,13 @@ automation:
           - binary_sensor.front_door
         to: "on"
     action:
+      - service: script.chatgpt_reword_message
+        data:
+          prompt: "Someone has come home."
+        response_variable: "chatgpt_response"
       - service: notify.mobile_app_michael_s_galaxy_s10
         data:
-          message: Someone has come home.
+          message: "{{ chatgpt_response.text }}"
       - service: automation.turn_off
         entity_id:
           - automation.location_notify_when_someone_comes_home
@@ -139,9 +151,13 @@ automation:
         entity_id: binary_sensor.michael_work_laptop
         state:  "on" #Laptop is still plugged in to desk
     action:
+      - service: script.chatgpt_reword_message
+        data:
+          prompt: "Did you forget to bring your work laptop with you?"
+        response_variable: "chatgpt_response"
       - service: notify.mobile_app_michael_s_galaxy_s10
         data:
-          message: Did you forget to bring your work laptop with you?
+          message: "{{ chatgpt_response.text }}"
 
   - alias: Location - Remind Michael To Pay For Train Parking
     id: location_remind_michael_to_pay_for_train_parking
@@ -167,9 +183,13 @@ automation:
     action:
       - delay:
           minutes: 2
+      - service: script.chatgpt_reword_message
+        data:
+          prompt: "Don't forget to pay for parking! "
+        response_variable: "chatgpt_response"
       - service: notify.mobile_app_michael_s_galaxy_s10
         data:
-          message: Don't forget to pay for parking! 
+          message: "{{ chatgpt_response.text }}"
           data:
             color: '#FFA000'
             ttl: 0
@@ -189,9 +209,13 @@ automation:
       - condition: time
         before: "15:00:00"
     action:
+      - service: script.chatgpt_reword_message
+        data:
+          prompt: "Don't forget to pay for parking!"
+        response_variable: "chatgpt_response"
       - service: notify.mobile_app_lauras_iphone
         data:
-          message: Don't forget to pay for parking! 
+          message: "{{ chatgpt_response.text }}"
 
   - alias: Location - Fade Lights On When Arriving Home After Dark
     id: location_fade_lights_on_when_disarming_after_dark
@@ -248,9 +272,13 @@ automation:
         entity_id: binary_sensor.workday_sensor
         state: "on"
     action:
+      - service: script.chatgpt_reword_message
+        data:
+          prompt: "Don't forget to remove your lunch from the work fridge!"
+        response_variable: "chatgpt_response"
       - service: notify.mobile_app_lauras_iphone
         data:
-          message: Don't forget to remove your lunch from the work fridge!
+          message: "{{ chatgpt_response.text }}"
       - delay: 
           minutes: 15 #prevents reminding multiple times too quickly 
 
@@ -279,10 +307,14 @@ automation:
       - condition: template
         value_template: '{{ trigger.calendar_event.location is search(".*Crown (Metropol )?Perth.*", ignorecase=True) }}'
     action:
+      - service: script.chatgpt_reword_message
+        data:
+          prompt: "Don't forget your 'Crown Rewards Card'. You may need it when you go to {{trigger.calendar_event.summary}}."
+        response_variable: "chatgpt_response"
       - service: notify.mobile_app_michael_s_galaxy_s10
         data:
           title: "Remember Your Crown Rewards Card"
-          message: "You may need it when you go to {{trigger.calendar_event.summary}}."
+          message: "{{ chatgpt_response.text }}"
           data:
             group: "Crown Rewards"
 
@@ -305,11 +337,8 @@ automation:
             notification_icon: "mdi:heart"
       - service: notify.mobile_app_lauras_iphone
         data:
-          title: "RSVP Received"
-          message: "{{ trigger.json.person }} will be coming to your wedding!"
-          data:
-            title: "A Wedding Guest Has Responded"
-            message: "{{ trigger.json.person }} has saved the date!"
+          title: "A Wedding Guest Has Responded"
+          message: "{{ trigger.json.person }} has saved the date!"
 
 person:
   - name: Michael

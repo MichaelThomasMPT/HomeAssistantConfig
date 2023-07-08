@@ -211,10 +211,14 @@ automation:
       - service: switch.turn_off
         target:
           entity_id: switch.alfresco_heater
+      - service: script.chatgpt_reword_message
+        data:
+          prompt: "The patio heater was left on for 4 hours, so I switched it off"
+        response_variable: "chatgpt_response"
       - service: notify.mobile_app_michael_s_galaxy_s10
         data:
-          message: It had been on for 4 hours.
-          title: The Patio Heater Was Switched Off
+          message: "{{ chatgpt_response.text }}"
+          title: Patio Heater Switched Off
           data:
             group: Patio heater
             actions:
@@ -230,9 +234,13 @@ automation:
         for: 
           hours: 2
     action:
+      - service: script.chatgpt_reword_message
+        data:
+          prompt: "The patio heater has been on for 2 hours. Should it be?"
+        response_variable: "chatgpt_response"
       - service: notify.mobile_app_michael_s_galaxy_s10
         data:
-          message: The patio heater has been on for 2 hours. Should it be?
+          message: "{{ chatgpt_response.text }}"
           title: Patio Heater Is On
           data:
             group: Patio heater

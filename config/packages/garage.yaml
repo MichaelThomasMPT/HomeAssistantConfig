@@ -88,9 +88,13 @@ automation:
           for:
             minutes: 5
     action:
+      - service: script.chatgpt_reword_message
+        data:
+          prompt: "Garage door was left open."
+        response_variable: "chatgpt_response"
       - service: notify.mobile_app_michael_s_galaxy_s10
         data:
-          message: Garage door was left open.
+          message: "{{ chatgpt_response.text }}"
           data:
             image: /api/camera_proxy/camera.garage
             actions:
@@ -170,9 +174,13 @@ automation:
           entity_id: cover.garage_door
           state: 'open'
     action:
+      - service: script.chatgpt_reword_message
+        data:
+          prompt: "Garage door was left open."
+        response_variable: "chatgpt_response"
       - service: notify.mobile_app_michael_s_galaxy_s10
         data:
-          message: Garage door was left open.
+          message: "{{ chatgpt_response.text }}"
           data:
             image: /api/camera_proxy/camera.garage_camera
             actions:

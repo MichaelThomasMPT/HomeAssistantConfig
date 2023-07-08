@@ -56,10 +56,13 @@ automation:
         for:
           minutes: 10
     action:
+      - service: script.chatgpt_reword_message
+        data:
+          prompt: "{{ trigger.entity_id }} has become unavailable."
+        response_variable: "chatgpt_response"
       - service: notify.mobile_app_michael_s_galaxy_s10
         data:
-          message: >
-            {{ trigger.entity_id }} has become unavailable.
+          message: "{{ chatgpt_response.text }}"
           data:
             group: Camera Unavailable
 

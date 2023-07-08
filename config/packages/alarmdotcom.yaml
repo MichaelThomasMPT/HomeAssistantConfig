@@ -21,9 +21,16 @@ automation:
           entity_id: alarm_control_panel.alarm_com
           state: 'disarmed'
     action:
+      - service: script.chatgpt_reword_message
+        data:
+          prompt: "The house alarm was not set and nobody is home."
+        response_variable: "chatgpt_response"
       - service: notify.mobile_app_michael_s_galaxy_s10
         data:
-          message: The house alarm was not set and nobody is home.
+          message: "{{chatgpt_response.text}}"
+      - service: notify.mobile_app_lauras_iphone
+        data:
+          message: "{{chatgpt_response.text}}"
 
   #If the alarm was in armed_home mode for more than 5 minutes and then it stays armed for more than
   #one minute after coming home, remind us to disarm the alarm
@@ -48,9 +55,13 @@ automation:
       - condition: state
         entity_id: alarm_control_panel.alarm_com
         state: 'armed_home'
+      - service: script.chatgpt_reword_message
+        data:
+          prompt: "Don't forget to disarm the alarm!"
+        response_variable: "chatgpt_response"
       - service: notify.mobile_app_michael_s_galaxy_s10
         data:
-          message: Don't forget to disarm the alarm!
+          message: "{{ chatgpt_response.text }}"
           title: Alarm is armed!
           data:
             group: Disarm Alarm
@@ -60,10 +71,10 @@ automation:
       - service: notify.mobile_app_lauras_iphone
         data:
           message: Don't forget to disarm the alarm!
-      - service: tts.google_translate_say
+      - service: script.piper_speak_notification 
         data:
-          entity_id: media_player.kitchen_google_home_hub
-          message: Don't forget to disarm the alarm!
+          message_to_speak: "{{ chatgpt_response.text }}"
+          media_player: media_player.kitchen_google_home_hub
           
   - alias: Alarm System - Turn Off House When Alarm Is Set
     id: alarm_system_turn_off_house_when_alarm_is_set

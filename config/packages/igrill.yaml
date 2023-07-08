@@ -330,9 +330,14 @@ automation:
           An unknown probe
         {% endif %}
     action:
-      - service: notify.kitchen_google_home_hub 
+      - service: script.chatgpt_reword_message
         data:
-          message: "Your food is ready! {{probe_name}} has reached its target temperature."
+          prompt: "Your food is ready! {{probe_name}} has reached its target temperature."
+        response_variable: "chatgpt_response"
+      - service: script.piper_speak_notification 
+        data:
+          message_to_speak: "{{ chatgpt_response.text }}"
+          media_player: media_player.all_rooms
 
   - alias: "iGrill - Cast Dashboard to Living Room TV When Probe Connected"
     id: igrill_cast_dashboard_to_living_room_tv_when_probe_connected

@@ -23,9 +23,13 @@ automation:
         entity_id: var.mail_was_delivered_today
         state: 'False'
     action:
+      - service: script.chatgpt_reword_message
+        data:
+          prompt: "You have mail - the post was delivered"
+        response_variable: "chatgpt_response"
       - service: notify.mobile_app_michael_s_galaxy_s10
         data:
-          message: You have mail!
+          message: "{{ chatgpt_response.text }}"
           data:
             actions:
               - action: "mail_wasnt_delivered" 

@@ -53,9 +53,13 @@ automation:
         entity_id: input_boolean.guest_mode
         state: "on"
     action:
+      - service: script.chatgpt_reword_message
+        data:
+          prompt: "Guest mode is on. Should it be turned off?"
+        response_variable: "chatgpt_response"
       - service: notify.mobile_app_michael_s_galaxy_s10
         data:
-          message: Guest mode is on. Should it be turned off?
+          message: "{{ chatgpt_response.text }}"
           data:
             actions:
               - action: "deactivate_guest_mode" 

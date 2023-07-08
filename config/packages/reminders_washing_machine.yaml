@@ -55,9 +55,13 @@ automation:
       - service: input_boolean.turn_on
         data:
           entity_id: input_boolean.washing_machine_notify_michael
+      - service: script.chatgpt_reword_message
+        data:
+          prompt: "Washing machine notifications switched on for Michael."
+        response_variable: "chatgpt_response"
       - service: notify.mobile_app_michael_s_galaxy_s10
         data:
-          message: Washing machine notifications switched on for Michael.
+          message: "{{ chatgpt_response.text }}"
           data:
             timeout: 60
 

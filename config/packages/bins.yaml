@@ -86,9 +86,13 @@ automation:
         - condition: template
           value_template: '{{ (states.var.bins_were_moved_today.state) == "False" }}'
     action:
+      - service: script.chatgpt_reword_message
+        data:
+          prompt: "Don't forget to take the bins out!"
+        response_variable: "chatgpt_response"
       - service: notify.mobile_app_michael_s_galaxy_s10
         data:
-          message: Don't forget to take the bins out!
+          message: "{{ chatgpt_response.text }}"
           data:
             group: Bins
 
@@ -120,8 +124,12 @@ automation:
         - condition: template
           value_template: '{{ (states.var.bins_were_moved_today.state) == "False" }}'
     action:
+      - service: script.chatgpt_reword_message
+        data:
+          prompt: "Don't forget to bring the bins back in!"
+        response_variable: "chatgpt_response"
       - service: notify.mobile_app_michael_s_galaxy_s10
         data:
-          message: Don't forget to bring the bins back in!
+          message: "{{ chatgpt_response.text }}"
           data:
             group: Bins

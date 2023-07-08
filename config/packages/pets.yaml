@@ -173,15 +173,19 @@ automation:
       - condition: state
         entity_id: input_boolean.dog_needs_feeding
         state:  'on'
-      - service: notify.mobile_app_michael_s_galaxy_s10
+      - service: script.chatgpt_reword_message
         data:
-          message: >-
+          prompt: >-
             Don't forget to feed the dog her 
             {{ 
               state_attr("binary_sensor.breakfast", "friendly_name") if states("binary_sensor.breakfast") == "on" 
               else state_attr("binary_sensor.lunch", "friendly_name") if states("binary_sensor.lunch") == "on"
               else state_attr("binary_sensor.dinner", "friendly_name") if states("binary_sensor.dinner") == "on"
             }}!
+        response_variable: "chatgpt_response"
+      - service: notify.mobile_app_michael_s_galaxy_s10
+        data:
+          message: "{{ chatgpt_response.text }}"
           data:
             actions:
               - action: 'dog_was_already_fed'
@@ -202,15 +206,19 @@ automation:
       - condition: state
         entity_id: input_boolean.dog_needs_feeding
         state:  'on'
-      - service: notify.mobile_app_lauras_iphone
+      - service: script.chatgpt_reword_message
         data:
-          message: >-
+          prompt: >-
             Don't forget to feed the dog her 
             {{ 
               state_attr("binary_sensor.breakfast", "friendly_name") if states("binary_sensor.breakfast") == "on" 
               else state_attr("binary_sensor.lunch", "friendly_name") if states("binary_sensor.lunch") == "on"
               else state_attr("binary_sensor.dinner", "friendly_name") if states("binary_sensor.dinner") == "on"
             }}!
+        response_variable: "chatgpt_response"
+      - service: notify.mobile_app_lauras_iphone
+        data:
+          message: "{{ chatgpt_response.text }}"
     # Alert Google
   - alias: Pets - Alert The House If Dog Not Fed
     id: pets_dog_not_fed_alert_house
@@ -220,16 +228,20 @@ automation:
         to: 'on'
         for: '03:00:00'
     action:
-      - service: tts.google_translate_say
+      - service: script.chatgpt_reword_message
         data:
-          entity_id: media_player.all_rooms
-          message: >-
+          prompt: >-
             Don't forget to feed the dog her 
             {{ 
               state_attr("binary_sensor.breakfast", "friendly_name") if states("binary_sensor.breakfast") == "on" 
               else state_attr("binary_sensor.lunch", "friendly_name") if states("binary_sensor.lunch") == "on"
               else state_attr("binary_sensor.dinner", "friendly_name") if states("binary_sensor.dinner") == "on"
             }}!
+        response_variable: "chatgpt_response"
+      - service: script.piper_speak_notification 
+        data:
+          message_to_speak: "{{ chatgpt_response.text }}"
+          media_player: media_player.all_rooms
     # Make Sure Dog Isn't Fed Twice
   - alias: Pets - Make Sure Dog Doesn't Get Fed Twice
     id: pets_make_sure_dog_doesnt_get_fed_twice
@@ -244,15 +256,19 @@ automation:
         state: 'off'
         for: '00:05:00' #avoid triggering if opening and closing in the one feeding, such as when refilling the container
     action:
-      - service: tts.google_translate_say
+      - service: script.chatgpt_reword_message
         data:
-          entity_id: media_player.all_rooms
-          message: >-
+          prompt: >-
             The dog has already been fed her
             {{ 
               state_attr("binary_sensor.breakfast", "friendly_name") if states("binary_sensor.breakfast") == "on" 
               else state_attr("binary_sensor.lunch", "friendly_name") if states("binary_sensor.lunch") == "on"
               else state_attr("binary_sensor.dinner", "friendly_name") if states("binary_sensor.dinner") == "on"
             }}, don't trust her! 
+        response_variable: "chatgpt_response"
+      - service: script.piper_speak_notification 
+        data:
+          message_to_speak: "{{ chatgpt_response.text }}"
+          media_player: media_player.all_rooms
       - delay: 
           seconds: 60 #avoid multiple triggers in quick succession when putting the lid back on

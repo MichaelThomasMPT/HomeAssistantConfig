@@ -137,10 +137,14 @@ automation:
         entity_id: sensor.processor_temperature
         above: 90
     action:
+      - service: script.chatgpt_reword_message
+        data:
+          prompt: "The server is getting hot. Processor temperature: {{ states('sensor.processor_temperature') }}, cupboard temperature: {{ states('sensor.server_cupboard_temperature') }}"
+        response_variable: "chatgpt_response"
       - service: notify.mobile_app_michael_s_galaxy_s10
         data:
           title: "WARNING: The server is getting hot!"
-          message: "Processor temperature: {{ states('sensor.processor_temperature') }}, cupboard temperature: {{ states('sensor.server_cupboard_temperature') }}"
+          message: "{{ chatgpt_response.text }}"
 
   - alias: Server Management - Restart VPN if Sonarr disconnected for too long
     id: server_management_restart_vpn_if_sonarr_disconnected_for_too_long
@@ -151,10 +155,14 @@ automation:
         for:
           minutes: 20
     action:
+      - service: script.chatgpt_reword_message
+        data:
+          prompt: "'Sonarr' had lost conenction to the VPN."
+        response_variable: "chatgpt_response"
       - service: notify.mobile_app_michael_s_galaxy_s10
         data:
           title: "The VPN was automatically restarted"
-          message: "Sonarr had lost conenction to the VPN."
+          message: "{{ chatgpt_response.text }}"
           data:
             group: "VPN_Restart"
       - service: rest_command.restart_server_vpn
@@ -167,9 +175,13 @@ automation:
       - condition: state
         entity_id: binary_sensor.sonarr_vpn_status
         state: "off"
+      - service: script.chatgpt_reword_message
+        data:
+          prompt: "'Sonarr' still has no access to the VPN"
+        response_variable: "chatgpt_response"
       - service: notify.mobile_app_michael_s_galaxy_s10
         data:
           title: "The VPN restart was not successful"
-          message: "Sonarr Still has no access to the VPN"
+          message: "{{ chatgpt_response.text }}"
           data:
             group: "VPN_Restart"

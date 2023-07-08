@@ -12,17 +12,21 @@ automation:
     action:
       - alias: "Only announce between 9am and 9pm"
         wait_template: "{{ now().hour < 21 and now().hour >= 9 }}"
+      - service: script.chatgpt_reword_message
+        data:
+          prompt: "{{ notification_message }}"
+        response_variable: "chatgpt_response"
       - service: notify.mobile_app_michael_s_galaxy_s10
         data:
           title: "{{ notification_title }}"
-          message: "{{ notification_message }}"
+          message: "{{ chatgpt_response.text }}"
           data:
             group: "3D Printer"
             image: /api/camera_proxy/camera.ender_3_s1
       - condition: state
         entity_id: media_player.kitchen_google_home_hub
         state: "off" # Only use text-to-speech on Google Home Hub if it's not already in use, so it doesn't stop any music from playing
-      - service: tts.google_translate_say
+      - service: script.piper_speak_notification 
         data:
-          entity_id: media_player.all_rooms
-          message: "{{ notification_message }}"
+          message_to_speak: "{{ chatgpt_response.text }}"
+          media_player: media_player.all_rooms
