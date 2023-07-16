@@ -19,7 +19,8 @@ automation:
           \ - How much time remaining until their first meeting\n  - Anything that may
           be special or unique, such as celebrating a birthday.\n- Do not acknowledge that this
           is a message for Michael; just jump straight into the message.\n- Keep your response to
-          under 500 characters.\n- If there is a Formula 1 Grand Prix on today, make sure to mention it.\n- If you have any spare characters, throw in a fun fact."
+          under 500 characters.\n- If there is a Formula 1 Grand Prix on today, make sure to mention
+          it.\n" #- If you have any spare characters, throw in a niche fact."
     - alias: Fetch Calendar Agenda - Laura & Mickey
       service: calendar.list_events
       data:
@@ -86,7 +87,7 @@ automation:
           event.descripton }}\n    {% endif -%}\n    {%- if event.location is defined
           %}\n      Location: {{ event.location }}\n    {% endif -%}\n  {%- endfor %}\n{%-
           else %}\n  - No upcoming events.\n{%- endif %}"
-        agent_id: 40c18e266306e0a526b16e6292d0dce3
+        agent_id: 8ea1099bde50f057dc4e4300f24c77d5 #Mission Impossible
       response_variable: agent
     - alias: Send notification
       service: notify.pushbullet
@@ -104,17 +105,18 @@ automation:
         weather_entity: weather.banjup
         zone_entity: zone.home
         calendar_duration: 18:00:00
-        prompt: "Please generate text for a notification that will be sent to Laura's\nsmartphone
-          with helpful information.\n\nYou are a helpful personal agent that generates
-          text for the user:\n- Your answers are helpful, friendly, warm, insightful.\n-
-          Your answers are not technical, and do not include Home Assistant internal
-          details such as entities in responses.\n- Your messages help the user prepare
-          for their day, for example:\n  - Making note of unusual weather for the location
-          and time of year (but not mundane details like \"0% chance of precipitation\")\n
-          \ - How much time remaining until their first meeting\n  - Anything that may
-          be special or unique, such as celebrating a birthday.\n- Do not acknowledge that this
-          is a message for Laura; just jump straight into the message.\n- Keep your response to
-          under 500 characters.\n- If there is a Formula 1 Grand Prix on today, make sure to mention it.\n- If you have any spare characters, throw in a fun fact."
+        prompt: "You are a helpful personal agent that generates text for the user:\n
+          - Your answers are helpful, friendly, warm, insightful.\n
+          - Your answers are not technical, and do not include Home Assistant internal details such as entities in responses.\n
+          - Your messages help the user prepare for their day, for example:\n
+            - Making note of unusual weather for the location and time of year (but not mundane details like \"0% chance of precipitation\")\n
+            - How much time remaining until their first meeting\n
+            - Anything that may be special or unique, such as celebrating a birthday.\n
+          - Do not acknowledge that this is a message for Laura; just jump straight into the message.\n
+          - Keep your response to under 500 characters.\n
+          - If there is a Formula 1 Grand Prix on today, make sure to mention it.\n
+          - If you want to put a newline in the message, use \\n\n"
+          #- If you have any spare characters, throw in a niche fact."
     - alias: Fetch Calendar Agenda - Laura & Mickey
       service: calendar.list_events
       data:
@@ -153,13 +155,12 @@ automation:
           event.descripton }}\n    {% endif -%}\n    {%- if event.location is defined
           %}\n      Location: {{ event.location }}\n    {% endif -%}\n  {%- endfor %}\n{%-
           else %}\n  - No upcoming events.\n{%- endif %}"
-        agent_id: 40c18e266306e0a526b16e6292d0dce3
+        agent_id: 8ea1099bde50f057dc4e4300f24c77d5 #Mission Impossible
       response_variable: agent
     - alias: Send notification
-      service: notify.mobile_app_lauras_iphone
+      service: script.notify_laura
       data:
-        title: '{{ now().strftime(''%A'') }} Agenda'
-        message: '{{ agent.response.speech.plain.speech }}'
+        message_for_laura: '{{ agent.response.speech.plain.speech }}'
 
 script:
   chatgpt_reword_message:
@@ -169,12 +170,12 @@ script:
         description: "What do you want ChatGPT to reword?"
         example: "This is a notification for Michael."
     variables:
-      chatgpt_agent: fa9853df43e878e14409d52eafc2447f #generic Aussie. TODO: Convert this to a field with a defaulted value
+      chatgpt_agent: 8ea1099bde50f057dc4e4300f24c77d5 #Mission Impossible 
     sequence:
       - alias: Conversation Agent Notification Text
         service: conversation.process
         data:
-          text: "Please reword the following in your own words: {{ prompt }}"
+          text: "Please reword the following in your own words, keeping responses brief: {{ prompt }}"
           agent_id: >-
             {{ chatgpt_agent }}
         response_variable: "chatgpt_message"
