@@ -85,6 +85,3 @@ automation:
         data:
           entity_id: var.mail_was_delivered_today
           value: False
-      - service: light.turn_off
-        data:
-          entity_id: light.office_lamp

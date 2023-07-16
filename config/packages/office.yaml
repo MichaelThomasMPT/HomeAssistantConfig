@@ -280,6 +280,75 @@ automation:
             - media_player.office_google_home
             - media_player.office_pc_speakers
 
+  - alias: Office - Turn On Light When Motion Detected
+    id: office_turn_on_light_when_motion_detected
+    mode: restart
+    trigger:
+      # motion detected
+      - platform: state
+        entity_id: binary_sensor.office_presence_sensor_moving_target
+        to: "on"
+        from: "off"
+    condition:
+      # only run if lights are off
+      - condition: state
+        entity_id: 
+          - light.office_ceiling
+          - light.office_lamp
+        state: "off"
+    action:
+      - choose:
+          - conditions:
+              - condition: state #from sunset until sunrise
+                entity_id: sun.sun
+                state: "below_horizon"
+            sequence:
+              - service: light.turn_on
+                data:
+                  color_temp: 350
+                  brightness_pct: 30
+                target:
+                  entity_id: light.office_lamp
+        default:
+          - service: light.turn_on
+            target:
+              entity_id: light.office_ceiling
+
+  - alias: Office - Turn Off Lights When No Presence Detected
+    id: office_turn_off_light_when_no_presence_detected
+    mode: restart
+    trigger:
+      # no presence detected for 5 mintues
+      - platform: state
+        entity_id: binary_sensor.office_presence_sensor_presence
+        to: "off"
+        for:
+          minutes: 5
+    condition:
+      # only run if lights are in the state set by the "turn" on automation 
+      # (ie. not coloured with a notification), or if they are off
+      - condition: or
+        conditions:
+          - condition: and
+            conditions:
+              - condition: state
+                entity_id: light.office_lamp
+                attribute: color_mode
+                state: "color_temp"
+              - condition: state
+                entity_id: light.office_lamp
+                attribute: color_temp
+                state: 350
+          - condition: state
+            entity_id: light.office_lamp
+            state: "off"
+    action:
+      - service: light.turn_off
+        target:
+          entity_id:
+            - light.office_ceiling
+            - light.office_lamp
+
 script:
   flash_office_lamp:
     fields:
