@@ -461,3 +461,30 @@ automation:
           seconds: 10
       - service: switch.turn_on
         entity_id: switch.theatre_led_strip_smart_plug
+
+  - alias: Theatre Room - Fade Lights Back In When Plex Finished
+    id: theatre_room_fade_lights_back_in_when_plex_finished
+    trigger:
+      - platform: state
+        entity_id: media_player.plex_plex_for_lg_lg_75uk6500ptb
+        from: "play"
+        to: "idle"
+        for:
+          minutes: 1
+      - platform: state
+        entity_id: media_player.plex_plex_for_lg_lg_75uk6500ptb
+        from: "paused"
+        to: "idle"
+        for:
+          minutes: 1
+    condition:
+      - condition: numeric_state
+        entity_id: light.theatre_room_left_lamp
+        attribute: brightness
+        below: 20
+      - condition: numeric_state
+        entity_id: light.theatre_room_right_lamp
+        attribute: brightness
+        below: 20
+    action:
+      - service: script.movie_has_finished
