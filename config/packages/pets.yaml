@@ -272,3 +272,26 @@ automation:
           media_player: media_player.all_rooms
       - delay: 
           seconds: 60 #avoid multiple triggers in quick succession when putting the lid back on
+
+  - alias: Pets - Turn On Living Room Light Briefly When Dog Uses Dog Door
+    id: pets_turn_on_living_room_light_briefly_when_dog_uses_dog_door
+    mode: restart #always on for at least 30 seconds from latest door push
+    trigger:
+    - platform: state
+      entity_id:
+      - binary_sensor.dog_door
+    condition:
+      - condition: state #from sunset until sunrise
+        entity_id: sun.sun
+        state: "below_horizon"
+      - condition: time
+        before: "07:00:00"
+    action:
+    - service: light.turn_on
+      target:
+        entity_id: light.living_room
+    - delay:
+        seconds: 30
+    - service: light.turn_off
+      target:
+        entity_id: light.living_room
