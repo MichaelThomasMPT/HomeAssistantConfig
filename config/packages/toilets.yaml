@@ -1,17 +1,4 @@
 automation:
-  - alias: Toilets - Turn Off Ensuite Toilet Light After Thirty Min
-    id: toilets_turn_off_ensuite_toilet_light_after_thirty_min
-    trigger:
-      - platform: state
-        entity_id: light.ensuite_toilet_light_and_fan
-        to: 'on'
-        for:
-          minutes: 30
-    action:
-      - service: switch.turn_off
-        data:
-          entity_id: light.ensuite_toilet_light_and_fan
-
   - alias: Toilets - Turn Off Main Toilet Light After Thirty Min
     id: toilets_turn_off_main_toilet_light_after_thirty_min
     trigger:
@@ -21,6 +8,113 @@ automation:
         for:
           minutes: 30
     action:
-      - service: switch.turn_off
+      - service: light.turn_off
         data:
           entity_id: light.main_toilet_light_and_fan
+
+  - alias: Toilets - Turn Off Ensuite Toilet Light After Thirty Min
+    id: toilets_turn_off_ensuite_toilet_light_after_thirty_min
+    trigger:
+      - platform: state
+        entity_id: light.ensuite_toilet_light_and_fan
+        to: 'on'
+        for:
+          minutes: 30
+    action:
+      - service: light.turn_off
+        data:
+          entity_id: light.ensuite_toilet_light_and_fan
+
+  - alias: Toilets - Turn On Main Toilet Light When Door Opened Or Closed
+    id: toilets_turn_on_main_toilet_light_when_door_opened_or_closed
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.main_toilet_door_sensor
+    condition:
+        # Don't turn it on if it was just turned off
+      - condition: state
+        entity_id: light.main_toilet_light_and_fan
+        state: "off"
+        for:
+          minutes: 1
+    action:
+      - service: light.turn_on
+        data:
+          entity_id: light.main_toilet_light_and_fan
+      - delay:
+          seconds: 5
+        # If door opened again within a couple of minutes, turn light off again
+      - wait_for_trigger:
+          - platform: state
+            entity_id: binary_sensor.main_toilet_door_sensor
+            to: "on"
+        timeout:
+          minutes: 3
+        continue_on_timeout: false #Don't continue the automation if the door wasn't opened within a minute
+      - service: light.turn_off
+        target:
+          entity_id: light.main_toilet_light_and_fan
+
+  - alias: Toilets - Turn On Ensuite Toilet Light When Door Opened Or Closed
+    id: toilets_turn_on_ensuite_toilet_light_when_door_opened_or_closed
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.ensuite_toilet_door_sensor
+    condition:
+        # Don't turn it on if it was just turned off
+      - condition: state
+        entity_id: light.ensuite_toilet_light_and_fan
+        state: "off"
+        for:
+          minutes: 1
+    action:
+      - service: light.turn_on
+        data:
+          entity_id: light.ensuite_toilet_light_and_fan
+      - delay:
+          seconds: 5
+        # If door opened again within a couple of minutes, turn light off again
+      - wait_for_trigger:
+          - platform: state
+            entity_id: binary_sensor.main_toilet_door_sensor
+            to: "on"
+        timeout:
+          minutes: 3
+        continue_on_timeout: false #Don't continue the automation if the door wasn't opened within a minute
+      - service: light.turn_off
+        target:
+          entity_id: light.main_toilet_light_and_fan
+
+  - alias: Toilets - Turn Off Main Toilet Light When Door Opened For 5 Minutes
+    id: toilets_turn_off_main_toilet_light_when_door_opened_for_5_minutes
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.main_toilet_door_sensor
+        to: "on"
+        for:
+          minutes: 5
+    condition:
+      - condition: state
+        entity_id: light.main_toilet_light_and_fan
+        state: "on"
+    action:
+      - service: light.turn_off
+        data:
+          entity_id: light.main_toilet_light_and_fan
+
+  - alias: Toilets - Turn Off Ensuite Toilet Light When Door Opened For 5 Minutes
+    id: toilets_turn_off_ensuite_toilet_light_when_door_opened_for_5_minutes
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.ensuite_toilet_door_sensor
+        to: "on"
+        for:
+          minutes: 5
+    condition:
+      - condition: state
+        entity_id: light.ensuite_toilet_light_and_fan
+        state: "on"
+    action:
+      - service: light.turn_off
+        data:
+          entity_id: light.ensuite_toilet_light_and_fan
