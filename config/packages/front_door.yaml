@@ -93,8 +93,33 @@ automation:
         entity_id: sun.sun
         state: "below_horizon"
     action:
-      - service: "{% if states.binary_sensor.side_hall_motion.state == 'on' -%} light.turn_on {%- else -%} light.turn_off {%- endif %}"
-        entity_id: light.side_hall
+      - choose:
+          - conditions:
+              - condition: state
+                entity_id: binary_sensor.side_hall_motion
+                state: "off"
+            sequence:
+              #Turn off lights when no motion
+              - service: light.turn_off
+                target:
+                  entity_id: light.side_hall
+          - conditions:
+              - condition: time
+                before: "20:30:00"
+            sequence:
+                #Early evening, full brightness
+              - service: light.turn_on
+                target:
+                  entity_id: light.side_hall
+                data:
+                  brightness_pct: 100
+        default:
+            #Night time, low brightness
+          - service: light.turn_on
+            target:
+              entity_id: light.side_hall
+            data:
+              brightness_pct: 30
 
   - alias: Front Door - Turn On Front Porch Light When Ordering Food Delivery
     id: front_door_turn_on_front_porch_light_when_ordering_food_delivery
