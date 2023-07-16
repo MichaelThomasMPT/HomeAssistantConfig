@@ -25,15 +25,6 @@ binary_sensor:
       - binary_sensor.michael_desktop_in_meeting
       - binary_sensor.michael_work_in_meeting 
 
-input_number:
-  office_blinds_height:
-    name: Office Blinds Height
-    min: 0
-    max: 100
-    step: 10
-    unit_of_measurement: "%"
-    icon: mdi:roller-shade
-
 automation:
   - alias: Front Hall - Turn On Hallway Light If PC Turned Off At Night
     id: front_hall_turn_on_hallway_light_if_pc_turned_off_at_night
@@ -156,35 +147,33 @@ automation:
     id: office_blinds_open_in_the_morning
     trigger: 
       - platform: time
-        at: 
-          - '08:00:00'
+        at: "08:30:00"
     condition:
-      - condition: state  # from sunset until sunrise
+      - condition: state
         entity_id: alarm_control_panel.alarm_com
-        state: 'disarmed'
+        state: "disarmed"
     action:
-      - service: input_number.set_value
+      - service: number.set_value
         data:
-          value: 100
+          value: 100 #fully open
         target:
-          entity_id: input_number.office_blinds_height
+          entity_id: number.office_blinds_height_pct
 
   - alias: Office - Blinds Mid At Lunch Time
     id: office_blinds_mid_at_lunch_time
     trigger: 
       - platform: time
-        at: 
-          - '12:30:00'
+        at: "12:30:00"
     condition:
-      - condition: state  # from sunset until sunrise
+      - condition: state
         entity_id: alarm_control_panel.alarm_com
-        state: 'disarmed'
+        state: "disarmed"
     action:
-      - service: input_number.set_value
+      - service: number.set_value
         data:
-          value: 40
+          value: 35 #where the metal bar is
         target:
-          entity_id: input_number.office_blinds_height
+          entity_id: number.office_blinds_height_pct
 
   - alias: Office - Blinds Close When Required
     id: office_blinds_close_when_required
@@ -196,27 +185,53 @@ automation:
           - "armed_home"
           - "armed_away"
       - platform: time
-        at: 
-          - '23:30:00'
+        at: "23:30:00"
     action:
-      - service: input_number.set_value
+      - service: number.set_value
         data:
-          value: 0
+          value: 18 #as closed as can go without hitting the dog bed
         target:
-          entity_id: input_number.office_blinds_height
+          entity_id: number.office_blinds_height_pct
 
-  - alias: Office - Blinds Set Height Manually
-    id: office_blinds_set_height_manually
+  - alias: Office - Blinds Open When Arriving Home
+    id: office_blinds_open_when_arriving_home
     trigger: 
       - platform: state
         entity_id: 
-          - input_number.office_blinds_height
+          - alarm_control_panel.alarm_com
+        to: "disarmed"
     action:
-      - service: cover.set_cover_position
-        target:
-          entity_id: cover.office_blinds
-        data:
-          position: '{{ states("input_number.office_blinds_height") }}'
+      - choose:
+          - conditions:
+              - condition: time
+                after: "23:30:00"
+                before: "08:30:00"
+            sequence:
+            - service: number.set_value
+              data:
+                value: 18 #as closed as can go without hitting the dog bed
+              target:
+                entity_id: number.office_blinds_height_pct
+          - conditions:
+              - condition: time
+                after: "08:30:00"
+                before: "12:30:00"
+            sequence:
+            - service: number.set_value
+              data:
+                value: 100 #fully open
+              target:
+                entity_id: number.office_blinds_height_pct
+          - conditions:
+              - condition: time
+                after: "12:30:00"
+                before: "23:30:00"
+            sequence:
+            - service: number.set_value
+              data:
+                value: 35 #where the metal bar is
+              target:
+                entity_id: number.office_blinds_height_pct
 
   - alias: Office - Mute Office Speakers When Michael Is In A Meeting
     id: office_mute_office_speakers_when_michael_is_in_a_meeting
