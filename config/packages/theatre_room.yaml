@@ -243,19 +243,15 @@ script:
           - light.theatre_room_left_lamp
           - light.theatre_room_right_lamp
         data:
-          rgb_color: [255,255,255]
-          brightness_pct: 100
+          color_temp: 350
+          brightness_pct: 75
           transition: 60
       - delay: #wait for the lamps to finish
           seconds: 60
       - service: light.turn_on
-        entity_id: light.theatre_room_ceiling
-        data:
-          brightness_pct: 1
-      - service: light.turn_on
         entity_id: light.theatre_room_tv_cabinet_led_strip
         data:
-          color_temp: 250
+          color_temp: 350
           brightness_pct: 1
 
 automation:
@@ -368,14 +364,20 @@ automation:
   - alias: Theatre Room Lights - Turn Off Lamps After No Activity
     id: theatre_room_lights_turn_off_lamps_after_no_activity
     trigger:
-      platform: time_pattern
-      minutes: '/1' #run every minute
-    condition:
-      - condition: state
+      - platform: state
         entity_id: binary_sensor.theatre_room_occupancy
-        state: 'off'
+        to: 'off'
         for:
           minutes: 10
+    condition:
+      - condition:
+        conditions:
+          - condition: state
+            entity_id: light.theatre_room_left_lamp
+            state: 'on'
+          - condition: state
+            entity_id: light.theatre_room_right_lamp
+            state: 'on'
     action:
       - service: script.done_with_the_theatre_room
 
