@@ -9,7 +9,7 @@ views:
             title: Garage
             image: https://demo.home-assistant.io/stub_config/kitchen.png
             entities:
-              - entity: light.garage
+              - entity: light.garage_light
             camera_image: camera.garage_camera
             entity: camera.garage_camera
           - camera_view: auto
@@ -87,12 +87,14 @@ views:
             show_name: true
             show_state: false
             columns: 4
-          - type: picture-entity
-            entity: camera.ender_3_s1
+          - camera_view: auto
+            type: picture-glance
+            image: https://demo.home-assistant.io/stub_config/kitchen.png
+            entities:
+              - entity: light.office_lamp
+            title: Ender 3 S1
             camera_image: camera.ender_3_s1
-            camera_view: live
-            show_state: false
-            columns: 4
+            entity: camera.ender_3_s1
         columns: 3
         square: false
 title: Security Cameras

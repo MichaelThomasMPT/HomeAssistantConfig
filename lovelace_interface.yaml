@@ -30,9 +30,22 @@ views:
             type: button
             tap_action:
               action: navigate
+              navigation_path: /lovelace/subview-bathrooms
+            name: Bathrooms
+            icon: mdi:shower
+            show_state: false
+          - show_name: true
+            show_icon: true
+            type: button
+            tap_action:
+              action: navigate
               navigation_path: /security-cameras
             name: Cameras
             icon: mdi:cctv
+      - square: true
+        columns: 2
+        type: grid
+        cards:
           - show_name: true
             show_icon: true
             type: button
@@ -41,10 +54,6 @@ views:
               navigation_path: /lovelace/subview-entry
             name: Entry
             icon: mdi:door
-      - square: true
-        columns: 2
-        type: grid
-        cards:
           - show_name: true
             show_icon: true
             type: button
@@ -69,6 +78,10 @@ views:
               navigation_path: /lovelace/subview-garden
             name: Garden
             icon: mdi:flower
+      - square: true
+        columns: 2
+        type: grid
+        cards:
           - show_name: true
             show_icon: true
             type: button
@@ -78,10 +91,6 @@ views:
             name: Kitchen
             icon: mdi:chef-hat
             show_state: false
-      - square: true
-        columns: 2
-        type: grid
-        cards:
           - show_name: true
             show_icon: true
             type: button
@@ -106,6 +115,10 @@ views:
               navigation_path: /lovelace/subview-master-suite
             name: Master Suite
             icon: mdi:bed
+      - square: true
+        columns: 2
+        type: grid
+        cards:
           - show_name: true
             show_icon: true
             type: button
@@ -114,10 +127,6 @@ views:
               navigation_path: /lovelace/subview-music
             name: Music
             icon: mdi:music
-      - square: true
-        columns: 2
-        type: grid
-        cards:
           - show_name: true
             show_icon: true
             type: button
@@ -142,6 +151,10 @@ views:
               navigation_path: /lovelace/subview-server-and-network
             name: Server & Network
             icon: mdi:server-network
+      - square: true
+        columns: 2
+        type: grid
+        cards:
           - show_name: true
             show_icon: true
             type: button
@@ -150,10 +163,6 @@ views:
               navigation_path: /lovelace/subview-theatre-room
             name: Theatre
             icon: mdi:television-classic
-      - square: true
-        columns: 2
-        type: grid
-        cards:
           - show_name: true
             show_icon: true
             type: button
@@ -513,9 +522,34 @@ views:
       - type: vertical-stack
         title: Lights
         cards:
-          - type: tile
-            entity: light.living_room
-            name: Living Room
+          - type: horizontal-stack
+            cards:
+              - type: tile
+                entity: light.living_room
+                name: Living
+                vertical: true
+              - type: tile
+                entity: light.dining_room
+                name: Dining
+                vertical: true
+              - type: tile
+                entity: light.kitchen_lights
+                name: Kitchen
+                vertical: true
+          - type: horizontal-stack
+            cards:
+              - type: tile
+                entity: light.genio_bulb_lantern_purple
+                name: Purple Lantern
+                vertical: true
+                features:
+                  - type: light-brightness
+              - type: tile
+                entity: light.genio_bulb_lantern_pink
+                name: Pink Lantern
+                vertical: true
+                features:
+                  - type: light-brightness
           - features:
               - type: light-brightness
             type: tile
@@ -580,9 +614,6 @@ views:
                     icon_height: 30px
                     icon: mdi:television-classic
                     name: TV
-          - type: tile
-            entity: light.dining_room
-            name: Dining Room
           - features:
               - type: light-brightness
             type: tile
@@ -590,9 +621,6 @@ views:
             name: Dining Room Lamp
             tap_action:
               action: toggle
-          - type: tile
-            entity: light.kitchen_lights
-            name: Kitchen
           - type: conditional
             conditions:
               - entity: input_boolean.enable_christmas_automations
@@ -943,6 +971,10 @@ views:
         cards:
           - type: entities
             entities:
+              - entity: light.office_ceiling
+                hide_when_off: true
+                name: Ceiling
+                toggle: true
               - entity: light.office_lamp
                 hide_when_off: true
                 name: Lamp
@@ -1134,7 +1166,7 @@ views:
         icon_tap_action:
           action: more-info
       - type: tile
-        entity: light.garage
+        entity: light.garage_light
         name: Garage Light
       - show_state: false
         show_name: true
@@ -1177,6 +1209,18 @@ views:
             entity: light.alfresco_ceiling_lights
           - type: tile
             entity: light.garden_flood_lights
+      - type: vertical-stack
+        title: Alfresco Heater
+        cards:
+          - type: entities
+            entities:
+              - entity: switch.alfresco_heater
+                icon: ''
+                secondary_info: last-changed
+              - entity: select.alfresco_temperature
+                secondary_info: none
+                icon: mdi:thermometer
+            state_color: true
       - type: vertical-stack
         title: Doors
         cards:
@@ -1760,4 +1804,50 @@ views:
     subview: true
     badges: []
     cards: []
+  - title: Bathrooms
+    path: subview-bathrooms
+    icon: mdi:shower
+    subview: true
+    badges: []
+    cards:
+      - type: vertical-stack
+        cards:
+          - type: tile
+            entity: light.bathroom
+            name: Main Bathroom Lights
+            vertical: false
+            features:
+              - type: light-brightness
+          - type: horizontal-stack
+            cards:
+              - type: tile
+                entity: light.main_toilet_light_and_fan
+                vertical: true
+              - type: tile
+                entity: light.ensuite_toilet_light_and_fan
+                vertical: true
+          - type: tile
+            features:
+              - type: light-brightness
+            entity: light.ensuite_led_strip
+            name: Ensuite LED Strip
+          - type: horizontal-stack
+            cards:
+              - type: tile
+                entity: light.ensuite_light
+                name: Ensuite Ceiling
+                vertical: true
+              - type: tile
+                entity: switch.ensuite_fan
+                name: Ensuite Fan
+                vertical: true
+          - show_name: true
+            show_icon: true
+            type: button
+            tap_action:
+              action: toggle
+            entity: script.bathroom_set_bath_time_lighting
+            name: Bath Time!
+            icon: mdi:bathtub-outline
+            show_state: true
 title: My Home

@@ -193,24 +193,18 @@ views:
         entities:
           - entity: input_number.igrill_ambient_alert_low_temp
           - entity: input_number.igrill_ambient_alert_high_temp
-          - entity: sensor.igrill_ambient_alert_temp
           - entity: input_number.igrill_probe_1_target_temp
-          - entity: sensor.igrill_target_alert_temp_probe_1
           - entity: input_number.igrill_probe_2_target_temp
-          - entity: sensor.igrill_target_alert_temp_probe_2
           - entity: input_number.igrill_probe_3_target_temp
-          - entity: sensor.igrill_target_alert_temp_probe_3
           - entity: automation.igrill_google_assistant_notify_when_food_is_ready
             name: Google Home Alerts
             icon: mdi:google-home
         state_color: false
       - type: glance
         entities:
-          - entity: binary_sensor.raspberry_pi_bluetooth_hub
-            name: Bluetooth Hub
-          - entity: switch.rpi_bluetooth_hub_smart_plug_power
-            name: Hub Power Switch
           - entity: sensor.igrill_battery
+          - entity: binary_sensor.igrill_connection_status
+            name: iGrill Connection
         title: Technical Info
         state_color: true
       - type: entities
@@ -330,7 +324,6 @@ views:
               - entity: sensor.igrill_probe_3
               - entity: sensor.igrill_probe_4
                 name: iGrill Ambient
-            refresh_interval: 0
             hours_to_show: 8
             title: Last 8 Hours
           - show_state: false
