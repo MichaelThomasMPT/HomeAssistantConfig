@@ -1,0 +1,69 @@
+automation:
+  - alias: Bathroom - Turn On Bathroom Light When Motion
+    id: bathroom_turn_on_bathroom_light_when_motion
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.bathroom_motion
+        to: 'on'
+    condition:
+      - condition: state #from sunset until sunrise
+        entity_id: sun.sun
+        state: "below_horizon"
+      - condition: state
+        entity_id: light.bathroom
+        state: "off"
+    action:
+      - choose:
+        #Early evening, full brightness
+          - conditions:
+              - condition: time
+                before: "20:30:00"
+            sequence: 
+              - service: light.turn_on
+                target:
+                  entity_id: light.bathroom
+                data:
+                  brightness_pct: 100
+        #Late night, low brightness
+        default:
+          - service: light.turn_on
+            target:
+              entity_id: light.bathroom
+            data:
+              brightness_pct: 25
+
+  - alias: Bathroom - Turn Off Bathroom Light When No Motion
+    id: bathroom_turn_on_bathroom_light_with_motion
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.bathroom_motion
+        to: 'off'
+    action:
+      - service: light.turn_off
+        target:
+          entity_id: light.bathroom
+
+script:
+  bathroom_set_bath_time_lighting:
+    alias: "Bathroom - Set Bath Time Lighting"
+    sequence:
+      - service: light.turn_on
+        data:
+          brightness_pct: 25
+        target:
+          entity_id: light.bathroom
+      - service: automation.turn_off
+        target:
+          entity_id:
+            - automation.bathroom_turn_off_bathroom_light_when_no_motion
+            - automation.bathroom_turn_on_bathroom_light_when_motion
+      - delay:
+          hours: 2
+      - service: light.turn_off
+        target:
+          entity_id: light.bathroom
+      - service: automation.turn_on
+        target:
+          entity_id:
+            - automation.bathroom_turn_off_bathroom_light_when_no_motion
+            - automation.bathroom_turn_on_bathroom_light_when_motion
