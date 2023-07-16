@@ -1,38 +1,9 @@
 template:
-  - sensor: 
-      #iGrill will be available as long as there is an update every 5 minutes
-      #For the first 5 minutes and 30 seconds after a restart, disable iGrill to avoid notifications
-      #Also, if the state of all iGrill sensors is unknown, treat it as disconnected
-      state: >
-        {% if (as_timestamp(now()) - as_timestamp(states('sensor.uptime'))) | timestamp_custom("%H:%M:%S", false) <= '00:05:30' or
-        (     
-              (as_timestamp(now()) - as_timestamp(states.sensor.igrill_v2_temp_1.last_changed)) | timestamp_custom("%H:%M:%S", false) >= '00:05:00' 
-          and (as_timestamp(now()) - as_timestamp(states.sensor.igrill_v2_temp_2.last_changed)) | timestamp_custom("%H:%M:%S", false) >= '00:05:00' 
-          and (as_timestamp(now()) - as_timestamp(states.sensor.igrill_v2_temp_3.last_changed)) | timestamp_custom("%H:%M:%S", false) >= '00:05:00' 
-          and (as_timestamp(now()) - as_timestamp(states.sensor.igrill_v2_temp_4.last_changed)) | timestamp_custom("%H:%M:%S", false) >= '00:05:00' 
-          and (as_timestamp(now()) - as_timestamp(states.sensor.igrill_v2_battery.last_changed)) | timestamp_custom("%H:%M:%S", false) >= '00:00:05' 
-        ) or (
-              states("sensor.igrill_v2_temp_1") in ('unknown', 'unavailable')
-          and states("sensor.igrill_v2_temp_2") in ('unknown', 'unavailable')  
-          and states("sensor.igrill_v2_temp_3") in ('unknown', 'unavailable')
-          and states("sensor.igrill_v2_temp_4") in ('unknown', 'unavailable')
-          and states("sensor.igrill_v2_battery") in ('unknown', 'unavailable')
-        )
-        %}
-          disconnected
-        {% else %}
-          connected
-        {% endif %}
-      name: iGrill Status
   - sensor:
       state: >
         {{states('sensor.igrill_v2_temp_1') | int}}
       availability: >
-        {% if ( states('sensor.igrill_v2_temp_1') | int <= 0 ) or ( is_state('sensor.igrill_status', 'disconnected') ) %}
-        False
-        {% else %}
-        True
-        {% endif %}
+        {{ states('binary_sensor.igrill_connection_status') }}
       unit_of_measurement: °C
       state_class: measurement
       name: iGrill Probe 1
@@ -40,11 +11,7 @@ template:
       state: >
         {{states('sensor.igrill_v2_temp_2') | int}}
       availability: >
-        {% if ( states('sensor.igrill_v2_temp_2') | int <= 0 ) or ( is_state('sensor.igrill_status', 'disconnected') ) %}
-        False
-        {% else %}
-        True
-        {% endif %}
+        {{ states('binary_sensor.igrill_connection_status') }}
       unit_of_measurement: °C
       state_class: measurement
       name: iGrill Probe 2
@@ -52,11 +19,7 @@ template:
       state: >
         {{states('sensor.igrill_v2_temp_3') | int}}
       availability: >
-        {% if ( states('sensor.igrill_v2_temp_3') | int <= 0 ) or ( is_state('sensor.igrill_status', 'disconnected') ) %}
-        False
-        {% else %}
-        True
-        {% endif %}
+        {{ states('binary_sensor.igrill_connection_status') }}
       unit_of_measurement: °C
       state_class: measurement
       name: iGrill Probe 3
@@ -64,11 +27,7 @@ template:
       state: >
         {{states('sensor.igrill_v2_temp_4') | int}}
       availability: >
-        {% if ( states('sensor.igrill_v2_temp_4') | int <= 0 ) or ( is_state('sensor.igrill_status', 'disconnected') ) %}
-        False
-        {% else %}
-        True
-        {% endif %}
+        {{ states('binary_sensor.igrill_connection_status') }}
       unit_of_measurement: °C
       state_class: measurement
       name: iGrill Probe 4
@@ -76,19 +35,17 @@ template:
       state: >
         {{ states('sensor.igrill_v2_battery') | int }}
       availability: >
-        {% if ( states('sensor.igrill_v2_temp_1') | int <= 0 ) or ( is_state('sensor.igrill_status', 'disconnected') ) %}
-        False
-        {% else %}
-        True        
-        {% endif %}
+        {{ states('binary_sensor.igrill_connection_status') }}
       name: iGrill Battery
       unit_of_measurement: "%"
       state_class: measurement
   - sensor:
       unique_id: igrill_ambient_alert_temp
+      # check that igrill is connected, and ambient probe is connected (temp>0), and whether temp outside of acceptable range
       state: >
         {%
-          if states('sensor.igrill_probe_4') != "unavailable"
+          if is_state('binary_sensor.igrill_connection_status', 'on')
+          and ( states('sensor.igrill_probe_4') | int) > 0 )
           and (
             (states('sensor.igrill_probe_4') | int) < (states('input_number.igrill_ambient_alert_low_temp') | int) 
             or (states('sensor.igrill_probe_4') | int) > (states('input_number.igrill_ambient_alert_high_temp') | int) 
@@ -102,8 +59,10 @@ template:
   - sensor:
       unique_id: igrill_target_alert_temp_probe_1
       state: >
-        {% if states('sensor.igrill_probe_1') != "unavailable"
-            and (states('sensor.igrill_probe_1') | int) >= (states('input_number.igrill_probe_1_target_temp') | int) %}
+        {% 
+          if is_state('binary_sensor.igrill_connection_status', 'on')
+          and (states('sensor.igrill_probe_1') | int) >= (states('input_number.igrill_probe_1_target_temp') | int) 
+        %}
           Alert
         {% else %}
           Normal
@@ -112,8 +71,10 @@ template:
   - sensor:
       unique_id: igrill_target_alert_temp_probe_2
       state: >
-        {% if states('sensor.igrill_probe_2') != "unavailable"
-            and (states('sensor.igrill_probe_2') | int) >= (states('input_number.igrill_probe_2_target_temp') | int) %}
+        {% 
+          if is_state('binary_sensor.igrill_connection_status', 'on')
+          and (states('sensor.igrill_probe_2') | int) >= (states('input_number.igrill_probe_2_target_temp') | int)
+        %}
           Alert
         {% else %}
           Normal
@@ -122,8 +83,10 @@ template:
   - sensor:
       unique_id: igrill_target_alert_temp_probe_3
       state: >
-        {% if states('sensor.igrill_probe_3') != "unavailable"
-            and (states('sensor.igrill_probe_3') | int) >= (states('input_number.igrill_probe_3_target_temp') | int) %}
+       {% 
+          if is_state('binary_sensor.igrill_connection_status', 'on')
+          and (states('sensor.igrill_probe_3') | int) >= (states('input_number.igrill_probe_3_target_temp') | int)
+        %}
           Alert
         {% else %}
           Normal
@@ -275,24 +238,22 @@ automation:
     id: igrill_alert_when_probe_availability_changes
     trigger:
       - platform: state
-        entity_id: 
-          - sensor.igrill_status
-        to: "disconnected"
-        from: "connected"
+        entity_id: binary_sensor.igrill_connection_status
+        to: "off"
+        from: "on"
         for:
           seconds: 10
       - platform: state
-        entity_id: 
-          - sensor.igrill_status
-        to: "connected"
-        from: "disconnected"
+        entity_id: binary_sensor.igrill_connection_status
+        to: "on"
+        from: "off"
         for:
           seconds: 10
     variables:
       availability_text: >
-        {% if trigger.to_state.state == "connected" %}
+        {% if trigger.to_state.state == "on" %}
           has reconnected
-        {% elif trigger.to_state.state == "disconnected" %}
+        {% elif trigger.to_state.state == "off" %}
           has disconnected
         {% else %}
           requires attention
@@ -344,10 +305,9 @@ automation:
     trigger:
       #if any value changes, it must be connected
       - platform: state
-        entity_id: 
-          - sensor.igrill_status
-        to: "connected"
-        from: "disconnected"
+        entity_id: binary_sensor.igrill_connection_status
+        to: "on"
+        from: "off"
         for:
           seconds: 10
     condition:
@@ -362,10 +322,10 @@ automation:
     id: igrill_turn_off_living_room_tv_when_probe_disconnected
     trigger:
       - platform: state
-        entity_id: sensor.igrill_status
-        to: 'disconnected'
+        entity_id: sensor.igrill_connection_status
+        to: 'off'
         for: 
-          minutes: 5
+          minutes: 2
     action:
       - service: switch.turn_off
         data: {}
