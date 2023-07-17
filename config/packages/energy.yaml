@@ -4,7 +4,7 @@ template:
   - sensor:
       name: "Living Room Soundbar: Electric Consumption [kWh]"
       state: >-
-        {{ float(states('sensor.living_room_soundbar_smart_plug_power')) / 1000 }}
+        {{ (states('sensor.living_room_soundbar_smart_plug_power') | float(0)) / 1000 }}
       icon: mdi:flash
       unit_of_measurement: 'kWh'
       state_class: 'total_increasing'
