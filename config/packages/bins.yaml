@@ -95,6 +95,13 @@ automation:
           message: "{{ chatgpt_response.text }}"
           data:
             group: Bins
+      - alias: "Check if TV is on before notifying it"
+        condition: state
+        entity_id: media_player.theatre_room_tv
+        state: "on"
+      - service: notify.theatre_room_tv
+        data:
+          message: "{{ chatgpt_response.text }}"
 
   - alias: Bins - Notify If Bins Not Brought Back In
     id: bins_notify_if_bins_not_brought_back_in
@@ -133,3 +140,10 @@ automation:
           message: "{{ chatgpt_response.text }}"
           data:
             group: Bins
+      - alias: "Check if TV is on before notifying it"
+        condition: state
+        entity_id: media_player.theatre_room_tv
+        state: "on"
+      - service: notify.theatre_room_tv
+        data:
+          message: "{{ chatgpt_response.text }}"

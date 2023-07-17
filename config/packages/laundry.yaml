@@ -220,6 +220,13 @@ automation:
           message: "{{ chatgpt_response.text }}"
           data:
             group: "Washing Line"
+      - alias: "Check if TV is on before notifying it"
+        condition: state
+        entity_id: media_player.theatre_room_tv
+        state: "on"
+      - service: notify.theatre_room_tv
+        data:
+          message: "{{ chatgpt_response.text }}"
 
   - alias: Laundry - Notify If There Is Washing Already On The Line And It Will Rain Tomorrow
     id: laundry_notify_if_there_is_washing_already_on_the_line_and_it_will_rain_tomorrow
@@ -255,6 +262,13 @@ automation:
           message: "{{ chatgpt_response.text }}"
           data:
             group: "Washing Line"
+      - alias: "Check if TV is on before notifying it"
+        condition: state
+        entity_id: media_player.theatre_room_tv
+        state: "on"
+      - service: notify.theatre_room_tv
+        data:
+          message: "{{ chatgpt_response.text }}"
 
   - alias: Laundry - Notify If There Is Washing Already On The Line And It Is Starting To Rain
     id: laundry_notify_if_there_is_washing_already_on_the_line_and_it_is_starting_to_rain
@@ -299,6 +313,13 @@ automation:
         data:
           message_to_speak: "{{ chatgpt_response.text }}"
           media_player: media_player.all_rooms
+      - alias: "Check if TV is on before notifying it"
+        condition: state
+        entity_id: media_player.theatre_room_tv
+        state: "on"
+      - service: notify.theatre_room_tv
+        data:
+          message: "{{ chatgpt_response.text }}"
 
 alert:
   laundry_humidity_alert:
@@ -310,5 +331,6 @@ alert:
     skip_first: false
     notifiers:
       - mobile_app_michael_s_galaxy_s10
+      - theatre_room_tv
     data:
       group: Laundry Humidity

@@ -242,9 +242,11 @@ automation:
         entity_id: sensor.igrill_ambient_alert_temp
         to: 'Alert'
     action:
+      - variables:
+          message_text: "iGrill ambient temp outside limits. Currently {{ states('sensor.igrill_probe_4') }} C"
       - service: notify.mobile_app_michael_s_galaxy_s10
         data:
-          message: "iGrill ambient temp outside limits. Currently {{ states('sensor.igrill_probe_4') }} C"
+          message: "{{ message_text }}"
           data:
             group: iGrill Ambient
             tag: igrill_ambient
@@ -252,6 +254,13 @@ automation:
             ttl: 0
             priority: high
             clickAction: "/lovelace-cooking/0"
+      - alias: "Check if TV is on before notifying it"
+        condition: state
+        entity_id: media_player.theatre_room_tv
+        state: "on"
+      - service: notify.theatre_room_tv
+        data:
+          message: "{{ message_text }}"
 
   - alias: "iGrill - Monitor Grill Ambient Temperature - Normal"
     id: igrill_monitor_grill_ambient_temperature_normal
@@ -260,9 +269,11 @@ automation:
         entity_id: sensor.grill_alert_temp
         to: 'Normal'
     action:
+      - variables:
+          message_text: "iGrill ambient within limits. Currently {{ states('sensor.igrill_probe_4') }} C"
       - service: notify.mobile_app_michael_s_galaxy_s10
         data:
-          message: "iGrill ambient within limits. Currently {{ states('sensor.igrill_probe_4') }} C"
+          message: "{{ message_text }}"
           data:
             group: iGrill Ambient
             tag: igrill_ambient
@@ -270,6 +281,13 @@ automation:
             ttl: 0
             priority: normal
             clickAction: "/lovelace-cooking/0"
+      - alias: "Check if TV is on before notifying it"
+        condition: state
+        entity_id: media_player.theatre_room_tv
+        state: "on"
+      - service: notify.theatre_room_tv
+        data:
+          message: "{{ message_text }}"
 
   - alias: "iGrill - Alert When Probe Availability Changes"
     id: igrill_alert_when_probe_availability_changes
@@ -298,15 +316,24 @@ automation:
           requires attention
         {% endif %}
     action:
+      - variables:
+          message_text: "Your iGrill device {{ availability_text }}."
       - service: notify.mobile_app_michael_s_galaxy_s10
         data:
-          message: "Your iGrill device {{ availability_text }}."
+          message: "{{ message_text }}"
           data:
             group: iGrill Probe Availability
             color: 'purple'
             ttl: 0
             priority: high
             clickAction: "/lovelace-cooking/0"
+      - alias: "Check if TV is on before notifying it"
+        condition: state
+        entity_id: media_player.theatre_room_tv
+        state: "on"
+      - service: notify.theatre_room_tv
+        data:
+          message: "{{ message_text }}"
 
   - alias: "iGrill - Google Assistant Notify When Food Is Ready"
     id: igrill_google_assistant_notify_when_food_is_ready
@@ -338,6 +365,13 @@ automation:
         data:
           message_to_speak: "{{ chatgpt_response.text }}"
           media_player: media_player.all_rooms
+      - alias: "Check if TV is on before notifying it"
+        condition: state
+        entity_id: media_player.theatre_room_tv
+        state: "on"
+      - service: notify.theatre_room_tv
+        data:
+          message: "{{ chatgpt_response.text }}"
 
   - alias: "iGrill - Cast Dashboard to Living Room TV When Probe Connected"
     id: igrill_cast_dashboard_to_living_room_tv_when_probe_connected

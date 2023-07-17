@@ -102,6 +102,13 @@ automation:
                 title: "Close Garage Door"
               - action: "stop_garage_notifications"
                 title: "Stop Notifications"
+      - alias: "Check if TV is on before notifying it"
+        condition: state
+        entity_id: media_player.theatre_room_tv
+        state: "on"
+      - service: notify.theatre_room_tv
+        data:
+          message: "{{ chatgpt_response.text }}"
 
   #When "Close Garage Door" button on notification is pressed, do what it says!                 
   - alias: Garage - Close the garage when notification action is tapped

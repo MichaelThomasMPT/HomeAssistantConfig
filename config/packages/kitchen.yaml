@@ -209,6 +209,7 @@ alert:
     notifiers:
       - mobile_app_michael_s_galaxy_s10
       - mobile_app_lauras_iphone
+      - theatre_room_tv
     data:
       group: Drinks Fridge Door
       color: 'red'
@@ -227,6 +228,7 @@ alert:
     notifiers:
       - mobile_app_michael_s_galaxy_s10
       - mobile_app_lauras_iphone
+      - theatre_room_tv
     data:
       group: Kitchen Sink Leak
       color: 'red'
@@ -246,6 +248,7 @@ alert:
     notifiers:
       - mobile_app_michael_s_galaxy_s10
       - mobile_app_lauras_iphone
+      - theatre_room_tv
     data:
       group: Fridges
       color: 'red'

@@ -224,6 +224,13 @@ automation:
             actions:
               - action: "turn_alfresco_heater_on" 
                 title: "Hey, I was still using that!"
+      - alias: "Check if TV is on before notifying it"
+        condition: state
+        entity_id: media_player.theatre_room_tv
+        state: "on"
+      - service: notify.theatre_room_tv
+        data:
+          message: "{{ chatgpt_response.text }}"
 
   - alias: Garden - Notify Michael If Alfresco Heater On For Two Hours 
     id: garden_notify_micahel_if_alfresco_heater_on_for_two_hours
@@ -247,6 +254,13 @@ automation:
             actions:
               - action: "turn_alfresco_heater_off" 
                 title: "Nah, turn it off"
+      - alias: "Check if TV is on before notifying it"
+        condition: state
+        entity_id: media_player.theatre_room_tv
+        state: "on"
+      - service: notify.theatre_room_tv
+        data:
+          message: "{{ chatgpt_response.text }}"
 
   - alias: Garden - Turn Off Alfresco Heater On Notification Action
     id: garden_turn_off_alfresco_heater_on_notifcation_action
