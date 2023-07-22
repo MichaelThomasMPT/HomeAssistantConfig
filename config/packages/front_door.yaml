@@ -46,7 +46,7 @@ automation:
     mode: single
     trigger:
       - platform: state
-        entity_id: binary_sensor.front_porch_motion
+        entity_id: binary_sensor.doorbell_person
         from: "off"
         to: "on"
     condition:
@@ -64,7 +64,7 @@ automation:
           - light.front_porch_light
       - wait_for_trigger: #wait for no motion, or 10 minutes, whichever is first
           - platform: state
-            entity_id: binary_sensor.front_porch_motion
+            entity_id: binary_sensor.doorbell_person
             to: "off"
         timeout:
           minutes: 10
@@ -72,6 +72,32 @@ automation:
       - service: scene.turn_on #return front porch light to its previous state
         data:
           entity_id: scene.front_porch_light_saved_state
+
+  - alias: Front Door - When Doorbell Is Rung After Dark, Turn On Entry Hall Light
+    id: front_door_when_doorbell_is_rung_after_dark_turn_on_entry_hall_light
+    mode: single
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.doorbell_visitor
+        to: 'on'
+    condition:
+      - condition: state  # from sunset until sunrise
+        entity_id: sun.sun
+        state: 'below_horizon'
+    action:
+      - service: scene.create
+        data:
+          scene_id: doorbell_entry_hall_previous_lights_state
+          snapshot_entities:
+            - light.entry_hall_lights
+      - service: light.turn_on
+        entity_id:
+          - light.entry_hall_lights
+      - delay:
+          minutes: 5
+      - service: scene.apply
+        data:
+          scene_id: doorbell_entry_hall_previous_lights_state
 
   - alias: Front Door - Turn Off Porch Light At Sunrise
     id: front_door_turn_off_porch_light_at_sunrise
