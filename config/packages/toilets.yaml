@@ -76,14 +76,14 @@ automation:
         # If door opened again within a couple of minutes, turn light off again
       - wait_for_trigger:
           - platform: state
-            entity_id: binary_sensor.main_toilet_door_sensor
+            entity_id: binary_sensor.ensuite_toilet_door_sensor
             to: "on"
         timeout:
           minutes: 3
         continue_on_timeout: false #Don't continue the automation if the door wasn't opened within a minute
       - service: light.turn_off
         target:
-          entity_id: light.main_toilet_light_and_fan
+          entity_id: light.ensuite_toilet_light_and_fan
 
   - alias: Toilets - Turn Off Main Toilet Light When Door Opened For 5 Minutes
     id: toilets_turn_off_main_toilet_light_when_door_opened_for_5_minutes

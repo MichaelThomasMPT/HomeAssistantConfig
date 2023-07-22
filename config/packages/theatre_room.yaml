@@ -370,7 +370,7 @@ automation:
         for:
           minutes: 10
     condition:
-      - condition:
+      - condition: or
         conditions:
           - condition: state
             entity_id: light.theatre_room_left_lamp
