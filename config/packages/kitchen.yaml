@@ -31,36 +31,6 @@ binary_sensor:
           {% else %}
             mdi:dishwasher-off
           {% endif %}
-  - platform: template
-    sensors:
-      kitchen_chair_1_upright:
-        friendly_name: "Kitchen Chair 1 Upright"
-        icon_template: mdi:table-chair
-        value_template: >-
-          {{ state_attr('binary_sensor.kitchen_chair_vibration_1', 'orientation')[2] <= 0 }}
-      kitchen_chair_2_upright:
-        friendly_name: "Kitchen Chair 2 Upright"
-        icon_template: mdi:table-chair
-        value_template: >-
-          {{ state_attr('binary_sensor.kitchen_chair_vibration_2', 'orientation')[2] <= 0 }}
-      kitchen_chair_3_upright:
-        friendly_name: "Kitchen Chair 3 Upright"
-        icon_template: mdi:table-chair
-        value_template: >-
-          {{ state_attr('binary_sensor.kitchen_chair_vibration_3', 'orientation')[2] <= 0 }}
-      kitchen_chair_4_upright:
-        friendly_name: "Kitchen Chair 4 Upright"
-        icon_template: mdi:table-chair
-        value_template: >-
-          {{ state_attr('binary_sensor.kitchen_chair_vibration_4', 'orientation')[2] <= 0 }}
-      any_kitchen_chair_upright:
-        friendly_name: "Any Kitchen Chair Upright"
-        icon_template: mdi:table-chair
-        value_template: >-
-          {{  states('binary_sensor.kitchen_chair_1_upright') == 'on'  or
-              states('binary_sensor.kitchen_chair_2_upright') == 'on'  or 
-              states('binary_sensor.kitchen_chair_3_upright') == 'on'  or
-              states('binary_sensor.kitchen_chair_4_upright') == 'on'  }} 
 
 automation:
   - alias: Kitchen - Turn On Main Fridge When It Turns Itself Off
@@ -209,6 +179,7 @@ alert:
     notifiers:
       - mobile_app_michael_s_galaxy_s10
       - mobile_app_lauras_iphone
+      - theatre_room_tv
     data:
       group: Drinks Fridge Door
       color: 'red'
@@ -227,6 +198,7 @@ alert:
     notifiers:
       - mobile_app_michael_s_galaxy_s10
       - mobile_app_lauras_iphone
+      - theatre_room_tv
     data:
       group: Kitchen Sink Leak
       color: 'red'
@@ -246,6 +218,7 @@ alert:
     notifiers:
       - mobile_app_michael_s_galaxy_s10
       - mobile_app_lauras_iphone
+      - theatre_room_tv
     data:
       group: Fridges
       color: 'red'

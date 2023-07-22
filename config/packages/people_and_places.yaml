@@ -327,10 +327,12 @@ automation:
           - POST
         local_only: true
     action:
+      - variables:
+          message_text: "{{ trigger.json.person }} has saved the date!"
       - service: notify.mobile_app_michael_s_galaxy_s10
         data:
           title: "A Wedding Guest Has Responded"
-          message: "{{ trigger.json.person }} has saved the date!"
+          message: "{{ message_text }}"
           data:
             group: "Wedding"
             color: "#ff00c8"
@@ -338,7 +340,14 @@ automation:
       - service: notify.mobile_app_lauras_iphone
         data:
           title: "A Wedding Guest Has Responded"
-          message: "{{ trigger.json.person }} has saved the date!"
+          message: "{{ message_text }}"
+      - alias: "Check if TV is on before notifying it"
+        condition: state
+        entity_id: media_player.theatre_room_tv
+        state: "on"
+      - service: notify.theatre_room_tv
+        data:
+          message: "{{ message_text }}"
 
 person:
   - name: Michael
