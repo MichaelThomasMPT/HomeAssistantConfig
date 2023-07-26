@@ -73,23 +73,6 @@ automation:
         data:
           entity_id: scene.front_porch_light_saved_state
 
-  - alias: Front Door - Notify Theatre TV If Motion Detected
-    id: front_door_notify_theatre_tv_if_motion_detected
-    mode: single
-    trigger:
-      - platform: state
-        entity_id: binary_sensor.doorbell_person
-        from: "off"
-        to: "on"
-    condition:
-      - condition: state
-        entity_id: media_player.theatre_room_tv
-        state: "on"
-    action:
-      - service: notify.theatre_room_tv
-        data:
-          message: "Somebody is at the front door."
-
   - alias: Front Door - When Doorbell Is Rung After Dark, Turn On Entry Hall Light
     id: front_door_when_doorbell_is_rung_after_dark_turn_on_entry_hall_light
     mode: single
