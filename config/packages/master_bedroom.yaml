@@ -272,7 +272,7 @@ automation:
       entity_id: binary_sensor.ensuite_shower
       to: "off"
       for:
-        minutes: 10
+        minutes: 30
     action:
       - service: switch.turn_off
         entity_id: switch.ensuite_fan
