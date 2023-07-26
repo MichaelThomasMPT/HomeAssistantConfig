@@ -1,3 +1,9 @@
+# input_select:
+#   script_chatgpt_fetch_calendar_events_temporary_agenda:
+#     name: Temporary Agenda for ChatGPT Fetch Calendar Events Script 
+#     options:
+#      - Default Option
+
 automation:
   - id: 'chatgpt_send_michael_a_daily_agenda'
     alias: ChatGPT - Send Michael A Daily Agenda
@@ -209,3 +215,58 @@ script:
       #     message: "{{ message_to_speak }}"
       #   target:
       #     entity_id: "{{ tts_entity }}"
+        
+  # chatgpt_fetch_calendar_events:
+  #   alias: Fetch Calendar Agenda
+  #   fields:
+  #     calendars:
+  #       description: "A list of calendars to retrieve events for"
+  #   variables:
+  #     agenda_duration_hours: 36 #TODO make this an input field with default
+  #     output_agenda: ""
+  #   sequence:
+  #     - repeat:
+  #         count: "{{ calendars | count }}"
+  #         sequence:
+  #           - variables:
+  #               current_calendar: "{{ calendars[repeat.index - 1] }}"
+  #           - service: calendar.list_events
+  #             data:
+  #               duration:
+  #                 hours: >-
+  #                   {{ agenda_duration_hours }}
+  #             target:
+  #               entity_id: >-
+  #                 {{ current_calendar }}
+  #             response_variable: additional_agenda
+
+  #           # Append to parent output_agenda variable. Complexity is due
+  #           # to output_agenda being scoped to this repeat iteration.
+  #           - variables:
+  #               debug_template: >-
+  #                 {% for event in additional_agenda.events %}
+  #                   {{event | tojson}}
+  #                 {% endfor %}
+  #           - service: input_select.set_options
+  #             target:
+  #               entity_id: input_select.script_chatgpt_fetch_calendar_events_temporary_agenda
+  #             data:
+  #               options: >-
+  #                   {%- set ns = namespace(combined_event_list=[]) -%}
+  #                   {% if repeat.index == 1 %}
+  #                     {% set ns.combined_event_list = [] %}
+  #                   {% else %}
+  #                     {% set ns.combined_event_list = state_attr('input_select.script_chatgpt_fetch_calendar_events_temporary_agenda','options') %}
+  #                   {% endif %}
+
+  #                   {% for event in additional_agenda.events %}
+  #                     {% set ns.combined_event_list = ns.combined_event_list + [(event | tojson)] %}
+  #                   {% endfor %}
+
+  #                   {% for event in ns.combined_event_list %}
+  #                   - '{{event}}'\n
+  #                   {% endfor %}
+  #     - variables:
+  #         output_agenda: "{{ state_attr('input_select.script_chatgpt_fetch_calendar_events_temporary_agenda', 'options') }}"
+  #     - stop: "Agenda list fetched."
+  #       response_variable: "output_agenda"
