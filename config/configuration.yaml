@@ -30,6 +30,5 @@ sensor: !include sensors.yaml
 automation: !include automations.yaml
 
 # Discover some devices automatically
-discovery:
 ssdp:
 zeroconf:

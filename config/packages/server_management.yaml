@@ -62,15 +62,24 @@ sensor:
       - region
       - country
     scan_interval: 30
-    value_template: "{{ value_json.ip }}"
+    value_template: >
+      {% if (value_json.ip | length) == 0 %}
+        None
+      {% else %}
+        {{ value_json.ip }}
+      {% endif %}
 
 template:
   - sensor:
       - name: "NAS VPN Geographical Location"
         state: >
-          {{  state_attr('sensor.nas_vpn_location', 'city') + ', ' 
+          {% if (states('sensor.nas_vpn_location') | length) == 0 %}
+            None
+          {% else %}
+            {{  state_attr('sensor.nas_vpn_location', 'city') + ', ' 
             + state_attr('sensor.nas_vpn_location', 'region') + ', ' 
             + state_attr('sensor.nas_vpn_location', 'country') }}
+          {% endif %}
 
 #Change the Synology NAS/Theatre Room TV VPN Connection
 shell_command:
@@ -82,11 +91,11 @@ shell_command:
     ssh {{ nas_ssh_connection_string }} 'bash /volume1/NAS\ Config/VPN\ Scripts/connecttovpn.sh NordVPN_UK'
   nas_vpn_connect_usa: >
     ssh {{ nas_ssh_connection_string }} 'bash /volume1/NAS\ Config/VPN\ Scripts/connecttovpn.sh NordVPN_USA'
-  
+
 script:
   nas_vpn_connect:
     alias: Connect NAS VPN
-    fields: 
+    fields:
       vpnCountry:
         name: VPN & Country
         description: "The VPN and Country to connect to"
@@ -103,25 +112,25 @@ script:
               {{ vpnCountry == "None" }}
             sequence:
               - service: shell_command.nas_vpn_disconnect
-                data: 
+                data:
                   nas_ssh_connection_string: !secret nas_ssh_connection_string
           - conditions: >
               {{ vpnCountry == "NordVPN - Japan" }}
             sequence:
               - service: shell_command.nas_vpn_connect_japan
-                data: 
+                data:
                   nas_ssh_connection_string: !secret nas_ssh_connection_string
           - conditions: >
               {{ vpnCountry == "NordVPN - UK" }}
             sequence:
               - service: shell_command.nas_vpn_connect_uk
-                data: 
+                data:
                   nas_ssh_connection_string: !secret nas_ssh_connection_string
           - conditions: >
               {{ vpnCountry == "NordVPN - USA" }}
             sequence:
               - service: shell_command.nas_vpn_connect_usa
-                data: 
+                data:
                   nas_ssh_connection_string: !secret nas_ssh_connection_string
     mode: single
 
@@ -151,7 +160,7 @@ automation:
     trigger:
       - platform: state
         entity_id: binary_sensor.sonarr_vpn_status
-        to:  "off"
+        to: "off"
         for:
           minutes: 20
     action:

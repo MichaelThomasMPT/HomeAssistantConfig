@@ -45,7 +45,7 @@ template:
       state: >
         {%
           if is_state('binary_sensor.igrill_connection_status', 'on')
-          and ( states('sensor.igrill_probe_4') | int) > 0 )
+          and (( states('sensor.igrill_probe_4') | int) > 0 )
           and (
             (states('sensor.igrill_probe_4') | int) < (states('input_number.igrill_ambient_alert_low_temp') | int) 
             or (states('sensor.igrill_probe_4') | int) > (states('input_number.igrill_ambient_alert_high_temp') | int) 

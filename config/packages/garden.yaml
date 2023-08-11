@@ -203,14 +203,14 @@ automation:
     id: garden_turn_off_alfresco_heater_after_four_hours
     trigger:
       - platform: state
-        entity_id: switch.alfresco_heater
-        to: 'on'
+        entity_id: climate.alfresco_heater
+        to: 'heat'
         for: 
           hours: 4
     action:
-      - service: switch.turn_off
+      - service: climate.turn_off
         target:
-          entity_id: switch.alfresco_heater
+          entity_id: climate.alfresco_heater
       - service: script.chatgpt_reword_message
         data:
           prompt: "The patio heater was left on for 4 hours, so I switched it off"
@@ -236,8 +236,8 @@ automation:
     id: garden_notify_micahel_if_alfresco_heater_on_for_two_hours
     trigger:
       - platform: state
-        entity_id: switch.alfresco_heater
-        to: 'on'
+        entity_id: climate.alfresco_heater
+        to: 'heat'
         for: 
           hours: 2
     action:
@@ -270,9 +270,9 @@ automation:
       event_data:
         action: turn_alfresco_heater_off
     action:
-      - service: switch.turn_off
+      - service: climate.turn_off
         data:
-          entity_id: switch.alfresco_heater
+          entity_id: climate.alfresco_heater
           
   - alias: Garden - Turn On Alfresco Heater On Notification Action
     id: garden_turn_on_alfresco_heater_on_notifcation_action

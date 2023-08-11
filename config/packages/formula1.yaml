@@ -1,6 +1,3 @@
-sensor:
-  - platform: formulaone_api
-
 input_boolean:
   formula_one_avoid_spoilers:
     name: Avoid F1 Spoilers?
