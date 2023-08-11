@@ -217,3 +217,22 @@ automation:
       - service: light.turn_off
         target:
           entity_id: light.front_porch_light
+
+  - alias: Front Door - Send Michael Doorbell Notification
+    id: front_door_send_michael_doorbell_notification
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.doorbell_visitor
+        to: 'on'
+    action:
+      - service: notify.mobile_app_michael_s_galaxy_s10
+        data:
+          title: "Doorbell Rung"
+          message: "Somebody is at the door! "
+          data:
+            group: "Doorbell"
+            image: /api/camera_proxy/camera.doorbell_main
+            color: 'red'
+            ttl: 0
+            priority: high
+            clickAction: "entityId:camera.doorbell_sub"
