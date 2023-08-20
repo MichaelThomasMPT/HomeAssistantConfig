@@ -22,12 +22,20 @@ views:
             entity: camera.side_path
           - camera_view: auto
             type: picture-glance
+            title: Doorbell
+            image: camera.doorbell_sub
+            entities:
+              - entity: light.front_porch_light
+            camera_image: camera.doorbell_sub
+            entity: camera.doorbell_main
+          - camera_view: auto
+            type: picture-glance
             title: Living Room
             image: https://demo.home-assistant.io/stub_config/kitchen.png
             entities:
               - entity: switch.living_room_camera_privacy
             camera_image: camera.living_room_camera_hd
-            entity: camera.living_room_camera_sd
+            entity: camera.living_room_camera_hd
           - camera_view: auto
             type: picture-glance
             title: Alfresco
@@ -79,14 +87,6 @@ views:
                     icon: mdi:dog-side
                     name: Dog Door
                     show_last_changed: true
-          - type: picture-entity
-            entity: camera.last_front_door_motion
-            name: Last Motion
-            camera_image: camera.last_front_door_motion
-            camera_view: live
-            show_name: true
-            show_state: false
-            columns: 4
           - camera_view: auto
             type: picture-glance
             image: https://demo.home-assistant.io/stub_config/kitchen.png

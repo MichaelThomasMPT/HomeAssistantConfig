@@ -782,6 +782,12 @@ views:
             name: LED Strip
             features:
               - type: light-brightness
+          - type: tile
+            entity: light.entry_hall_lights
+            name: Hallway
+            icon: mdi:ceiling-light
+            features:
+              - type: light-brightness
           - type: horizontal-stack
             cards:
               - show_name: true
@@ -994,6 +1000,9 @@ views:
             entity: cover.office_blinds
             features:
               - type: cover-open-close
+          - type: glance
+            entities:
+              - entity: number.office_blinds_height_pct
       - type: vertical-stack
         title: Meeting Status
         cards:
