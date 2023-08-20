@@ -3,6 +3,7 @@ wake_on_lan: # enables `wake_on_lan` integration
 script:
   #Trigger the Hue lights scene for movie watching
   set_movie_lighting:
+    alias: Movie Lighting Scene
     sequence:
     - service: script.turn_off_all_lights 
       data: 
@@ -18,7 +19,23 @@ script:
       data:
         hs_color: >-
             {{ [(range(0, 360) | random),100] }}
-    alias: Movie Lighting Scene
+
+  set_dim_theatre_lighting:
+    alias: Dim Theathre Lighting Scene
+    sequence:
+    - service: hue.hue_activate_scene
+      data: 
+        group_name: "Theatre Room"
+        scene_name: "Movie Watching"
+    - service: light.turn_off
+      data:
+        entity_id: light.entry_hall_lights
+    - service: light.turn_on
+      target: 
+        entity_id: light.theatre_room_tv_cabinet_led_strip
+      data:
+        hs_color: >-
+            {{ [(range(0, 360) | random),100] }}
 
   #Trigger the Hue lights scene for movie watching
   set_tv_dinner_lighting:
@@ -359,7 +376,21 @@ automation:
           for:
             minutes: 2 #the lights weren't just turned off
     action:
-      - service: script.set_tv_dinner_lighting
+      - choose:
+          # During meal times, set brighter lighting
+          - conditions:
+              - condition: template
+                value_template: >-
+                  {{ 
+                    ( now().hour >= 13 and now().hour <= 14 )
+                    or
+                    ( now().hour >= 18 and now().hour <= 19 )
+                  }}
+            sequence:
+              - service: script.set_tv_dinner_lighting
+        # At other times, make the lighting dimmed
+        default:
+          - service: script.set_dim_theatre_lighting
 
   - alias: Theatre Room Lights - Turn Off Lamps After No Activity
     id: theatre_room_lights_turn_off_lamps_after_no_activity
