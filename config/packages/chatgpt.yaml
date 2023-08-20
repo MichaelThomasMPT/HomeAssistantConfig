@@ -20,7 +20,8 @@ automation:
           be special or unique, such as celebrating a birthday.\n- Do not acknowledge that this
           is a message for Michael; just jump straight into the message.\n- Keep your response to
           under 500 characters.\n- If there is a Formula 1 Grand Prix on today, make sure to mention
-          it.\n" #- If you have any spare characters, throw in a niche fact."
+          it; if there isn't one on, then don't mention Formula 1 at all.\n"
+          #- If you have any spare characters, throw in a niche fact."
     - alias: Fetch Calendar Agenda - Laura & Mickey
       service: calendar.list_events
       data:
@@ -170,7 +171,7 @@ script:
         description: "What do you want ChatGPT to reword?"
         example: "This is a notification for Michael."
     variables:
-      chatgpt_agent: 8ea1099bde50f057dc4e4300f24c77d5 #Mission Impossible 
+      chatgpt_agent: 2792980d09bc1af85eb70dd28427115b #Jedi Master 
     sequence:
       - alias: Conversation Agent Notification Text
         service: conversation.process
