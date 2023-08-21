@@ -33,6 +33,7 @@ automation:
             tag: dog_door
             color: 'green'
             ttl: 0
+            notification_icon: "mdi:dog-side"
       - delay:
           minutes: 1
 
@@ -187,6 +188,7 @@ automation:
         data:
           message: "{{ chatgpt_response.text }}"
           data:
+            notification_icon: "mdi:dog-side"
             actions:
               - action: 'dog_was_already_fed'
                 title: The Dog Was Already Fed

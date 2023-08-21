@@ -65,6 +65,7 @@ automation:
           message: "{{ chatgpt_response.text }}"
           data:
             group: Camera Unavailable
+            notification_icon: "mdi:cctv-off"
 
   - alias: Security Cameras - Sync Surveillance Station Home Mode With Alarm Status
     id: security_cameras_sync_surveillance_station_home_mode_with_alarm_status

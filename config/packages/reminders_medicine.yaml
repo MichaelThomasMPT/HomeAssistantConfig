@@ -114,6 +114,7 @@ alert:
     data:
       group: Medicine
       tag: medicine-reminders
+      notification_icon: "mdi:pill"
       actions:
         - action: "medicine_reminder_michael_finished" 
           title: "I've Taken It"

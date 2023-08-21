@@ -68,6 +68,8 @@ automation:
       - service: notify.mobile_app_michael_s_galaxy_s10
         data:
           message: "{{ chatgpt_response.text }}"
+          data:
+            notification_icon: "mdi:printer"
 
   - alias: Office - When Colour Ink Low, Add To List
     id: office_when_colour_ink_low_add_to_list
@@ -90,6 +92,8 @@ automation:
       - service: notify.mobile_app_michael_s_galaxy_s10
         data:
           message: "{{ chatgpt_response.text }}"
+          data:
+            notification_icon: "mdi:printer"
 
   - alias: Office - Toggle Lamp With Laura's Switch
     id: office_toggle_lamp_with_laura_switch

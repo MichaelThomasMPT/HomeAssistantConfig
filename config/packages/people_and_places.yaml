@@ -81,6 +81,8 @@ automation:
       - service: notify.mobile_app_michael_s_galaxy_s10
         data:
           message: "{{ chatgpt_response.text }}"
+          data:
+            notification_icon: "mdi:face-woman"
 
   - alias: Location - Notify Laura If Michael Leaving Work
     id: location_notify_laura_if_michael_leaving_work
@@ -129,6 +131,8 @@ automation:
       - service: notify.mobile_app_michael_s_galaxy_s10
         data:
           message: "{{ chatgpt_response.text }}"
+          data:
+            notification_icon: "mdi:door"
       - service: automation.turn_off
         entity_id:
           - automation.location_notify_when_someone_comes_home
@@ -158,6 +162,8 @@ automation:
       - service: notify.mobile_app_michael_s_galaxy_s10
         data:
           message: "{{ chatgpt_response.text }}"
+          data:
+            notification_icon: "mdi:laptop"
 
   - alias: Location - Remind Michael To Pay For Train Parking
     id: location_remind_michael_to_pay_for_train_parking
@@ -194,6 +200,7 @@ automation:
             color: '#FFA000'
             ttl: 0
             priority: high
+            notification_icon: "mdi:car"
 
   - alias: Location - Remind Laura To Pay For Train Parking
     id: location_remind_laura_to_pay_for_train_parking
@@ -317,6 +324,7 @@ automation:
           message: "{{ chatgpt_response.text }}"
           data:
             group: "Crown Rewards"
+            notification_icon: "mdi:crown-circle"
 
   - alias: Wedding - Notify Us When Someone Responds To The Wedding SaveDate
     id: wedding_notify_us_when_someone_responds_to_the_wedding_savedate

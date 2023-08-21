@@ -219,7 +219,8 @@ automation:
         data:
           message: "{{ chatgpt_response.text }}"
           data:
-            group: "Washing Line"
+            group: "Washing Line" 
+            notification_icon: "mdi:hanger"
       - alias: "Check if TV is on before notifying it"
         condition: state
         entity_id: media_player.theatre_room_tv
@@ -262,6 +263,7 @@ automation:
           message: "{{ chatgpt_response.text }}"
           data:
             group: "Washing Line"
+            notification_icon: "mdi:hanger"
       - alias: "Check if TV is on before notifying it"
         condition: state
         entity_id: media_player.theatre_room_tv
@@ -303,6 +305,7 @@ automation:
             color: "red"
             ttl: 0
             priority: high
+            notification_icon: "mdi:hanger"
       - condition: time # Don't send any house-wide announcements after 10pm as people might be trying to sleep
         before: "22:00:00"
         after: "08:00:00"

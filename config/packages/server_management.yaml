@@ -154,6 +154,7 @@ automation:
         data:
           title: "WARNING: The server is getting hot!"
           message: "{{ chatgpt_response.text }}"
+          notification_icon: "mdi:thermometer-alert"
 
   - alias: Server Management - Restart VPN if Sonarr disconnected for too long
     id: server_management_restart_vpn_if_sonarr_disconnected_for_too_long
@@ -174,6 +175,7 @@ automation:
           message: "{{ chatgpt_response.text }}"
           data:
             group: "VPN_Restart"
+            notification_icon: "mdi:earth"
       - service: rest_command.restart_server_vpn
       - delay:
           minutes: 5
@@ -194,3 +196,4 @@ automation:
           message: "{{ chatgpt_response.text }}"
           data:
             group: "VPN_Restart"
+            notification_icon: "mdi:earth-off"

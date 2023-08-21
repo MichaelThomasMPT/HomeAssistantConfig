@@ -64,6 +64,7 @@ automation:
           message: "{{ chatgpt_response.text }}"
           data:
             timeout: 60
+            notification_icon: "mdi:washing-machine"
 
   - alias: Washing Machine - Turn On Washing Machine Notifications For Laura
     id: washing_machine_turn_on_washing_machine_notifications_for_laura
@@ -126,6 +127,7 @@ alert:
       - mobile_app_michael_s_galaxy_s10
     data:
       group: Washing Machine
+      notification_icon: "mdi:pill"
       actions:
         - action: "mute_washing_machine_notifications_until_home"
           title: "Mute Until I'm Home"
