@@ -241,3 +241,28 @@ automation:
             notification_icon: "mdi:doorbell-video"
             car_ui: true
             sticky: true
+
+  - alias: Front Door - Notify Michael If Person Detected
+    id: front_door_notify_michael_if_person_detected
+    mode: single
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.doorbell_person
+        from: "off"
+        to: "on"
+    action:
+      - service: notify.mobile_app_michael_s_galaxy_s10
+        data:
+          message: "Someone might be at the door..."
+          data:
+            group: "Doorbell Motion"
+            image: /api/camera_proxy/camera.doorbell_main
+            color: 'red'
+            ttl: 0
+            priority: high
+            clickAction: "entityId:camera.doorbell_sub"
+            vibrationPattern: "100, 1000, 100, 1000, 100, 1000, 100"
+            channel: "Motion"
+            notification_icon: "mdi:doorbell-video"
+            car_ui: true
+            sticky: true
