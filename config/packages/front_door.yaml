@@ -202,6 +202,7 @@ automation:
           message: The front porch light was turned on for your delivery driver.
           data:
             group: food_delivery
+            notification_icon: "mdi:outdoor-lamp"
             actions:
               - action: "food_delivery_switch_off_light" 
                 title: "Switch It Off"
