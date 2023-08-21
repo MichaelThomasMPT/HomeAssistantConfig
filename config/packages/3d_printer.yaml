@@ -23,6 +23,7 @@ automation:
           data:
             group: "3D Printer"
             image: /api/camera_proxy/camera.ender_3_s1
+            notification_icon: "mdi:printer-3d"
       - condition: state
         entity_id: media_player.kitchen_google_home_hub
         state: "off" # Only use text-to-speech on Google Home Hub if it's not already in use, so it doesn't stop any music from playing

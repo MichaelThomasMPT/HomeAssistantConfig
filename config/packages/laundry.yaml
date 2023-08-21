@@ -336,4 +336,5 @@ alert:
       - mobile_app_michael_s_galaxy_s10
       - theatre_room_tv
     data:
+      notification_icon: "mdi:water-percent-alert"
       group: Laundry Humidity

@@ -221,6 +221,7 @@ automation:
           title: Patio Heater Switched Off
           data:
             group: Patio heater
+            notification_icon: "mdi:patio-heater"
             actions:
               - action: "turn_alfresco_heater_on" 
                 title: "Hey, I was still using that!"
@@ -251,6 +252,7 @@ automation:
           title: Patio Heater Is On
           data:
             group: Patio heater
+            notification_icon: "mdi:patio-heater"
             actions:
               - action: "turn_alfresco_heater_off" 
                 title: "Nah, turn it off"

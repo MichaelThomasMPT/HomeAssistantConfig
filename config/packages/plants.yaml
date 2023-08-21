@@ -89,3 +89,4 @@ alert:
       - mobile_app_michael_s_galaxy_s10
     data:
       group: MiFlora
+      notification_icon: "mdi:flower"

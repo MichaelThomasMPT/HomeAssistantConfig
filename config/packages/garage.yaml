@@ -96,7 +96,8 @@ automation:
         data:
           message: "{{ chatgpt_response.text }}"
           data:
-            image: /api/camera_proxy/camera.garage
+            image: /api/camera_proxy/camera.garage_camera
+            notification_icon: "mdi:garage-alert-variant"
             actions:
               - action: "close_garage"
                 title: "Close Garage Door"
@@ -165,6 +166,7 @@ automation:
         data:
           message: Garage door cannot be reached.
           data:
+            notification_icon: "mdi:garage-alert-variant"
             image: /api/camera_proxy/camera.garage_camera
           
   #if not closing garage when leaving home, send a notification. 
@@ -190,6 +192,7 @@ automation:
           message: "{{ chatgpt_response.text }}"
           data:
             image: /api/camera_proxy/camera.garage_camera
+            notification_icon: "mdi:garage-alert-variant"
             actions:
               - action: "close_garage"
                 title: "Close Garage Door"
@@ -241,4 +244,4 @@ alert:
       color: 'red'
       ttl: 0
       priority: high
-    
+      notification_icon: "mdi:garage-alert-variant"

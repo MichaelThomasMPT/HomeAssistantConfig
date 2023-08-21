@@ -95,6 +95,7 @@ automation:
           message: "{{ chatgpt_response.text }}"
           data:
             group: Bins
+            notification_icon: "mdi:trash-can-outline"
       - alias: "Check if TV is on before notifying it"
         condition: state
         entity_id: media_player.theatre_room_tv
@@ -140,6 +141,7 @@ automation:
           message: "{{ chatgpt_response.text }}"
           data:
             group: Bins
+            notification_icon: "mdi:trash-can-outline"
       - alias: "Check if TV is on before notifying it"
         condition: state
         entity_id: media_player.theatre_room_tv

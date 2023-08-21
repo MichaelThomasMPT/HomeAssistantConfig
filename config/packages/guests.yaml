@@ -61,6 +61,7 @@ automation:
         data:
           message: "{{ chatgpt_response.text }}"
           data:
+            notification_icon: "mdi:account-group"
             actions:
               - action: "deactivate_guest_mode" 
                 title: "Deactive Guest Mode"

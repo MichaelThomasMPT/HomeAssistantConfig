@@ -211,6 +211,7 @@ automation:
         data:
           message: "{{ message_text }}"
           data:
+            notification_icon: "mdi:grill"
             group: iGrill Ambient
             tag: igrill_ambient
             color: 'red'
@@ -238,6 +239,7 @@ automation:
         data:
           message: "{{ message_text }}"
           data:
+            notification_icon: "mdi:grill"
             group: iGrill Ambient
             tag: igrill_ambient
             color: 'green'
@@ -283,6 +285,7 @@ automation:
         data:
           message: "{{ message_text }}"
           data:
+            notification_icon: "mdi:grill"
             group: iGrill Probe Availability
             color: 'purple'
             ttl: 0
@@ -385,6 +388,7 @@ alert:
     notifiers:
       - mobile_app_michael_s_galaxy_s10
     data:
+      notification_icon: "mdi:grill"
       group: iGrill Probe 1
       color: '#fc8403'
       ttl: 0
@@ -401,6 +405,7 @@ alert:
     notifiers:
       - mobile_app_michael_s_galaxy_s10
     data:
+      notification_icon: "mdi:grill"
       group: iGrill Probe 2
       color: '#fc8403'
       ttl: 0
@@ -417,6 +422,7 @@ alert:
     notifiers:
       - mobile_app_michael_s_galaxy_s10
     data:
+      notification_icon: "mdi:grill"
       group: iGrill Probe 3
       color: '#fc8403'
       ttl: 0

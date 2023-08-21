@@ -36,3 +36,4 @@ automation:
             tag: backups
             color: 'red'
             ttl: 0
+            notification_icon: "mdi:shield-home"

@@ -81,6 +81,8 @@ automation:
       - service: notify.mobile_app_michael_s_galaxy_s10
         data:
           message: "{{ chatgpt_response.text }}"
+          data:
+            notification_icon: "mdi:coffee"
       - service: notify.mobile_app_lauras_iphone
         data:
           message: "{{ chatgpt_response.text }}"
@@ -181,6 +183,7 @@ alert:
       - mobile_app_lauras_iphone
       - theatre_room_tv
     data:
+      notification_icon: "mdi:fridge-industrial-alert-outline"
       group: Drinks Fridge Door
       color: 'red'
       ttl: 0
@@ -200,6 +203,7 @@ alert:
       - mobile_app_lauras_iphone
       - theatre_room_tv
     data:
+      notification_icon: "mdi:water-alert"
       group: Kitchen Sink Leak
       color: 'red'
       ttl: 0
@@ -220,6 +224,7 @@ alert:
       - mobile_app_lauras_iphone
       - theatre_room_tv
     data:
+      notification_icon: "mdi:fridge-industrial-alert-outline"
       group: Fridges
       color: 'red'
       ttl: 0

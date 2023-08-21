@@ -28,6 +28,8 @@ automation:
       - service: notify.mobile_app_michael_s_galaxy_s10
         data:
           message: "{{chatgpt_response.text}}"
+          data: 
+            notification_icon: "mdi:shield-home"
       - service: notify.mobile_app_lauras_iphone
         data:
           message: "{{chatgpt_response.text}}"
@@ -68,6 +70,7 @@ automation:
             color: 'red'
             ttl: 0
             priority: high
+            notification_icon: "mdi:shield-home"
       - service: notify.mobile_app_lauras_iphone
         data:
           message: Don't forget to disarm the alarm!
@@ -115,6 +118,8 @@ automation:
       - service: notify.mobile_app_michael_s_galaxy_s10
         data:
           message: A door was left open when the house alarm was set.
+          data:
+            notification_icon: "mdi:shield-home"
       - service: notify.mobile_app_lauras_iphone
         data:
           message: A door was left open when the house alarm was set.
