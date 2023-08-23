@@ -382,7 +382,7 @@ automation:
               - condition: template
                 value_template: >-
                   {{ 
-                    ( now().hour >= 13 and now().hour <= 14 )
+                    ( now().hour >= 12 and now().hour <= 13 )
                     or
                     ( now().hour >= 18 and now().hour <= 19 )
                   }}
