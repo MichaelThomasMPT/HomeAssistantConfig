@@ -267,3 +267,5 @@ automation:
             notification_icon: "mdi:doorbell-video"
             car_ui: true
             sticky: true
+      - delay:
+          minutes: 2 #Don't notify again straight away
