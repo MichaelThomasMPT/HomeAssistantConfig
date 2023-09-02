@@ -1,4 +1,19 @@
 automation:
+  - alias: Security Cameras - Turn On Infra-red When Turned Off
+    id: security_cameras_turn_on_infra_red_when_turned_off
+    trigger:
+      - platform: state
+        entity_id:
+          - light.alfresco_infra_red_lights_in_night_mode
+          - light.backyard_infra_red_lights_in_night_mode
+        to: 'off'
+    action:
+      - service: light.turn_on
+        target:
+          entity_id:
+            - light.alfresco_infra_red_lights_in_night_mode
+            - light.backyard_infra_red_lights_in_night_mode
+
   - alias: Security Cameras - Turn Off Living Room Camera Privacy Mode When Leaving House
     id: security_cameras_turn_off_living_room_camera_privacy_mode_when_leaving_house
     trigger:
