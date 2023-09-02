@@ -1,6 +1,6 @@
 input_boolean:
   dog_needs_feeding:
-    name: Remind Me To Take Medicine
+    name: Dog Needs Feeding
     icon: mdi:dog
 binary_sensor:
   - platform: tod
