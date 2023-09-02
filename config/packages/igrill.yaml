@@ -373,9 +373,6 @@ automation:
         target:
           entity_id: media_player.living_room_chromecast
 
-
-
-
 alert:
   igrill_temperature_alert_probe_1:
     title: Probe 1 Temperature Alert

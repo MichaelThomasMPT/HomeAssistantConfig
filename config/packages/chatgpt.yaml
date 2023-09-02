@@ -182,8 +182,8 @@ script:
         response_variable: "chatgpt_message"
       - variables:
           response_message:
-            text: "{{ chatgpt_message.response.speech.plain.speech }}"
-      - stop: "Prompt was converted."
+            text: "{{ chatgpt_message.response.speech.plain.speech if chatgpt_message.response.speech.plain.speech != '' else prompt }}" #If conversion not successful, use original prompt
+      - stop: "Prompt conversion compelted."
         response_variable: "response_message"
 
   custom_speak_notification:
