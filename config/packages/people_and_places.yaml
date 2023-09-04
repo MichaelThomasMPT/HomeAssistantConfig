@@ -40,12 +40,6 @@ zone:
     radius: 220
     icon: mdi:briefcase
 
-  - name: University
-    latitude: !secret zone_university_latitude
-    longitude: !secret zone_university_longitude
-    radius: 900
-    icon: mdi:school
-
   - name: Local Train Station
     latitude: !secret zone_local_train_station_latitude
     longitude: !secret zone_local_train_station_longitude

@@ -1166,37 +1166,78 @@ views:
     subview: true
     badges: []
     cards:
-      - features:
-          - type: cover-open-close
-        type: tile
-        entity: cover.garage_door
-        tap_action:
-          action: more-info
-        icon_tap_action:
-          action: more-info
-      - type: tile
-        entity: light.garage_light
-        name: Garage Light
-      - show_state: false
-        show_name: true
-        camera_view: auto
-        type: picture-entity
-        entity: camera.garage_camera
-        image: https://demo.home-assistant.io/stub_config/bedroom.png
-        name: Garage Camera
-        camera_image: camera.garage_camera
-      - show_name: true
-        show_icon: true
-        show_state: true
-        type: glance
-        entities:
-          - entity: binary_sensor.garage_door_external
-            name: External
-          - entity: binary_sensor.garage_door_internal
-            name: Internal
-          - entity: cover.garage_door
-            name: Roller
-        title: Doors
+      - type: custom:stack-in-card
+        mode: vertical
+        cards:
+          - show_name: true
+            show_icon: true
+            show_state: true
+            type: glance
+            entities:
+              - entity: binary_sensor.garage_door_external
+                name: External
+              - entity: binary_sensor.garage_door_internal
+                name: Internal
+              - entity: cover.garage_door
+                name: Roller
+            title: Doors
+          - features:
+              - type: cover-open-close
+            type: tile
+            entity: cover.garage_door
+            tap_action:
+              action: more-info
+            icon_tap_action:
+              action: more-info
+          - type: tile
+            entity: light.garage_light
+            name: Garage Light
+          - show_state: false
+            show_name: true
+            camera_view: auto
+            type: picture-entity
+            entity: camera.garage
+            image: https://demo.home-assistant.io/stub_config/bedroom.png
+            name: Garage Camera
+            camera_image: camera.garage
+      - type: custom:stack-in-card
+        title: Fuel Watch - Overview
+        mode: vertical
+        cards:
+          - type: history-graph
+            entities:
+              - entity: sensor.lowest_fuel_price
+            hours_to_show: 192
+          - type: map
+            entities:
+              - entity: zone.home
+              - entity: binary_sensor.cheapest_fuel_station
+            dark_mode: true
+            default_zoom: 13
+      - type: custom:stack-in-card
+        title: Fuel Watch - Prices
+        mode: vertical
+        cards:
+          - type: markdown
+            content: Today
+          - type: custom:list-card
+            columns:
+              - field: title
+                title: Location
+              - field: address
+                title: Address
+            entity: sensor.rss_fuel_watch_ulp
+            feed_attribute: entries
+          - type: markdown
+            content: Tomorrow
+          - type: custom:list-card
+            columns:
+              - field: title
+                title: Location
+              - field: address
+                title: Address
+            entity: sensor.rss_fuel_watch_ulp_tomorrow
+            feed_attribute: entries
   - theme: Backend-selected
     title: Garden
     path: subview-garden
@@ -1495,8 +1536,8 @@ views:
             entities:
               - entity: light.washing_line_lights
             title: Washing Line
-            camera_image: camera.side_path
-            entity: camera.side_path
+            camera_image: camera.side_path_camera
+            entity: camera.side_path_camera
       - type: vertical-stack
         title: Details
         cards:

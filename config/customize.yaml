@@ -103,3 +103,6 @@ person.laura:
 sensor.daily_solar_energy:
   unit_of_measurement: kWh
   device_class: energy
+
+binary_sensor.cheapest_fuel_station:
+  entity_picture: /local/images/fuel.jpg

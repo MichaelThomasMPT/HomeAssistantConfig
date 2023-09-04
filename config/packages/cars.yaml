@@ -8,4 +8,64 @@
 #       model: "2015 CX-5"
 #       suggested_area: "garage"
 #     icon: mdi:car
-    
+
+template:
+  - sensor:
+      - name: "Lowest Fuel Price"
+        unit_of_measurement: "c"
+        state: >
+          {% set cheapest = (state_attr('sensor.rss_fuel_watch_ulp','entries') | first) %}
+          {{ cheapest['price'] }}
+  - binary_sensor:          
+      - name: Cheapest Fuel Station
+        state: true
+        device_class: "presence"
+        icon: mdi:gas-station
+        attributes:
+          latitude: >
+            {% set cheapest = (state_attr('sensor.rss_fuel_watch_ulp','entries') | first) %}
+            {{ cheapest['latitude'] }}
+          longitude: >
+            {% set cheapest = (state_attr('sensor.rss_fuel_watch_ulp','entries') | first) %}
+            {{ cheapest['longitude'] }}
+
+sensor:
+  - platform: feedparser
+    name: RSS Fuel Watch ULP
+    feed_url: 'http://www.fuelwatch.wa.gov.au/fuelwatch/fuelWatchRSS?Product=1&Suburb=Cockburn+Central'
+    show_topn: 10
+    date_format: '%a, %b %d %I:%M %p'
+    inclusions:
+      - title
+      - description
+      - price
+      - link
+      - item
+      - brand
+      - date
+      - trading-name
+      - location
+      - address
+      - latitude
+      - longitude
+    exclusions:
+      - language
+
+  - platform: feedparser
+    name: RSS Fuel Watch ULP Tomorrow
+    feed_url: 'http://www.fuelwatch.wa.gov.au/fuelwatch/fuelWatchRSS?Product=1&Suburb=Cockburn+Central&Day=Tomorrow'
+    show_topn: 10
+    date_format: '%a, %b %d %I:%M %p'
+    inclusions:
+      - title
+      - description
+      - price
+      - link
+      - item
+      - brand
+      - date
+      - trading-name
+      - location
+      - address
+    exclusions:
+      - language
