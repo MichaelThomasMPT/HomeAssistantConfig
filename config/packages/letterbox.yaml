@@ -32,7 +32,7 @@ automation:
           message: "{{ chatgpt_response.text }}"
           data:
             sticky: true
-            image: /api/camera_proxy/camera.doorbell_main
+            image: /api/camera_proxy/camera.driveway_camera
             notification_icon: "mdi:mailbox"
             actions:
               - action: "mail_wasnt_delivered" 
