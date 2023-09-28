@@ -284,11 +284,17 @@ automation:
           - conditions:
               - "{{ trigger.event.data.command == 'off' }}"
             sequence:
+              - service: notify.mobile_app_lauras_iphone
+                data:
+                  message: "Muting office speaker for 30 minutes."
               - delay:
                   minutes: 30
           - conditions:
               - "{{ trigger.event.data.command == 'on' }}"
             sequence:
+              - service: notify.mobile_app_lauras_iphone
+                data:
+                  message: "Muting office speaker for 60 minutes."
               - delay:
                   minutes: 60
       - service: media_player.volume_mute
