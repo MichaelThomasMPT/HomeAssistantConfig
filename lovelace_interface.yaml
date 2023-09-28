@@ -1083,15 +1083,17 @@ views:
         type: glance
         title: Doorbell
         entities:
-          - entity: sensor.ring_last_ding
+          - entity: binary_sensor.doorbell_visitor
             name: Last Ding
-          - entity: sensor.ring_last_motion
+            show_last_changed: true
+          - entity: binary_sensor.doorbell_motion
             name: Last Motion
+            show_last_changed: true
       - show_state: true
         show_name: true
         camera_view: live
         type: picture-entity
-        entity: camera.last_front_door_motion
+        entity: camera.doorbell_person
         image: https://demo.home-assistant.io/stub_config/bedroom.png
   - theme: Backend-selected
     title: Formula One
@@ -1465,7 +1467,7 @@ views:
               target:
                 entity_id: select.house_phone_assist_pipeline
               data:
-                option: Generic OpenAI
+                option: Generic OpenAI (Aussie)
             entity: select.house_phone_assist_pipeline
             icon: mdi:face-man
             name: Generic Aussie
@@ -1495,6 +1497,32 @@ views:
             entity: select.house_phone_assist_pipeline
             icon: mdi:home-assistant
             name: Home Assistant
+          - show_name: true
+            show_icon: true
+            type: button
+            tap_action:
+              action: call-service
+              service: select.select_option
+              target:
+                entity_id: select.house_phone_assist_pipeline
+              data:
+                option: HASS-Aware OpenAI
+            entity: select.house_phone_assist_pipeline
+            icon: mdi:home-plus-outline
+            name: HASS-Aware OpenAI
+          - show_name: true
+            show_icon: true
+            type: button
+            tap_action:
+              action: call-service
+              service: select.select_option
+              target:
+                entity_id: select.house_phone_assist_pipeline
+              data:
+                option: Jedi Master
+            entity: select.house_phone_assist_pipeline
+            icon: mdi:star
+            name: Jedi Master
   - theme: Backend-selected
     title: Laundry
     path: subview-laundry
