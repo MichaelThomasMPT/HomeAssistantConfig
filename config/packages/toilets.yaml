@@ -34,7 +34,9 @@ automation:
         # Don't turn it on if it was just turned off
       - condition: state
         entity_id: light.main_toilet_light_and_fan
-        state: "off"
+        state: 
+          - "off"
+          - "unavailable"
         for:
           minutes: 1
     action:
@@ -64,7 +66,9 @@ automation:
         # Don't turn it on if it was just turned off
       - condition: state
         entity_id: light.ensuite_toilet_light_and_fan
-        state: "off"
+        state:
+          - "off"
+          - "unavailable"
         for:
           minutes: 1
     action:
