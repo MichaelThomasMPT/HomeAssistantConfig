@@ -1207,6 +1207,8 @@ views:
           - type: history-graph
             entities:
               - entity: sensor.lowest_fuel_price
+              - entity: sensor.local_fuel_price
+                name: Ampol Cockburn Price
             hours_to_show: 192
           - type: map
             entities:
@@ -1220,6 +1222,15 @@ views:
         cards:
           - type: markdown
             content: Today
+          - type: entities
+            entities:
+              - entity: sensor.local_fuel_price
+                icon: mdi:gas-station-outline
+                name: Ampol Cockburn Central
+                type: custom:secondaryinfo-entity-row
+                secondary_info: >-
+                  Price premium: [[ sensor.local_fuel_price.attributes.premium
+                  ]] cents per litre
           - type: custom:list-card
             columns:
               - field: title

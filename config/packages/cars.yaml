@@ -16,6 +16,29 @@ template:
         state: >
           {% set cheapest = (state_attr('sensor.rss_fuel_watch_ulp','entries') | first) %}
           {{ cheapest['price'] }}
+      - name: "Local Fuel Price"
+        unit_of_measurement: "c"
+        state: >
+          {{ 
+              state_attr('sensor.rss_fuel_watch_ulp','entries')
+              | selectattr("trading-name","equalto", "Ampol Foodary Cockburn Central") 
+              | map(attribute='price') 
+              | first() 
+          }}
+        attributes:
+          premium: >
+            {{ 
+                ( states('sensor.local_fuel_price') | float | round(1, 'common') )
+              - ( states('sensor.lowest_fuel_price') | float | round(1, 'common') )
+            }}
+      - name: "Local Fuel Premium"
+        unit_of_measurement: "c"
+        state: >
+            {{ 
+                ( states('sensor.local_fuel_price') | float | round(1, 'common') )
+              - ( states('sensor.lowest_fuel_price') | float | round(1, 'common') )
+            }}
+
   - binary_sensor:          
       - name: Cheapest Fuel Station
         state: true
