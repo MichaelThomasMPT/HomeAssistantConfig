@@ -58,7 +58,44 @@ automation:
       target:
         entity_id: camera.backyard_camera
       data:
-        filename: '/tmp/GardenTimeLapse/backyard_timelapse_{{ now().strftime("%Y%m%d") }}.jpg'
+        filename: '/tmp/GardenTimeLapse/backyard/backyard_timelapse_{{ now().strftime("%Y%m%d") }}.jpg'
+
+  - alias: Security Cameras - Take Snapshot Of Alfresco Every Day
+    id: security_cameras_take_snapshot_of_alfresco_every_day
+    trigger:
+      - platform: time
+        at: "13:15:00"
+    action:
+      service: camera.snapshot
+      target:
+        entity_id: camera.alfresco_camera
+      data:
+        filename: '/tmp/GardenTimeLapse/alfresco/alfresco_timelapse_{{ now().strftime("%Y%m%d") }}.jpg'
+
+  - alias: Security Cameras - Take Snapshot Of Front Garden Every Day
+    id: security_cameras_take_snapshot_of_front_garden_every_day
+    trigger:
+      - platform: time
+        at: "13:15:00"
+    action:
+      service: camera.snapshot
+      target:
+        entity_id: camera.driveway_camera
+      data:
+        filename: '/tmp/GardenTimeLapse/front/frontyard_timelapse_{{ now().strftime("%Y%m%d") }}.jpg'
+
+  - alias: Security Cameras - Save Photos of Dogs
+    id: security_cameras_save_photos_of_dogs
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.driveway_dog_occupancy
+        to: 'on'
+    action:
+      service: camera.snapshot
+      target:
+        entity_id: camera.driveway_dog
+      data:
+        filename: '/tmp/DogPhotos/dog_{{ as_timestamp(now()) | int }}.jpg'
 
   - alias: Security Cameras - Notify Michael If Security Cameras Disconnect
     id: security_cameras_notify_michael_if_security_cameras_disconnect
