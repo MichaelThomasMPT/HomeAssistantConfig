@@ -93,6 +93,21 @@ shell_command:
     ssh {{ nas_ssh_connection_string }} 'bash /volume1/NAS\ Config/VPN\ Scripts/connecttovpn.sh NordVPN_USA'
 
 script:
+  update_shelly_devices:
+    alias: Update Shelly Devices
+    sequence:
+      - service: update.install
+        target:
+          entity_id:
+            - update.shelly1pm_d8bfc019b9fe_firmware_update
+            - update.shelly1pm_d8bfc019bfae_firmware_update
+            - update.shelly1pm_d8bfc01a1071_firmware_update
+            - update.shelly_em3_energy_monitor_firmware_update
+            - update.bathroom_firmware_update
+            - update.ensuite_toilet_light_and_fan_firmware_update
+            - update.main_toilet_light_and_fan_firmware_update
+            - update.office_ceiling_lights_firmware_update
+
   nas_vpn_connect:
     alias: Connect NAS VPN
     fields:
