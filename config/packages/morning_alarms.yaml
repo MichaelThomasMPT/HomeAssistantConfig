@@ -24,13 +24,22 @@ script:
 automation:
   - alias: "Morning Alarms - September Twenty-First"
     id: morning_alarms_september_twenty_first
+    mode: single
     trigger:
       - platform: time
         at: 
           - '08:00:00'
+      - platform: zone
+        entity_id: 
+          - person.laura
+          - person.michael
+        zone: zone.home
+        event: enter
     condition:
       - condition: template
         value_template:  >-
           {{ '%02d' % now().month + '-%02d' % now().day == '09-21' }}
     action:
+      - delay:
+          minutes: 5
       - service: script.morning_alarms_if_today_is_special_play_music 
