@@ -34,8 +34,8 @@ scene:
         state: "off"
       light.dining_room: 
         state: "off"
-      light.kitchen_ceiling_light:
-        state: "off"
+      # light.kitchen_ceiling_light:
+      #   state: "off"
 
 automation: 
   - alias: Dining Room - Toggle Dining Room Table Lamp With Button
