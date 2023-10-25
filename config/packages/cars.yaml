@@ -10,6 +10,10 @@
 #     icon: mdi:car
 
 template:
+  - binary_sensor:
+      - name: "Michael Phone Is Docked In The Car"
+        state: "{{states('binary_sensor.michael_s_galaxy_s10_is_charging') and 'FC:35:E6:53:2C:C9 (Mazda)' in state_attr('sensor.michael_s_galaxy_s10_bluetooth_connection', 'connected_paired_devices')}}"
+      
   - sensor:
       - name: "Lowest Fuel Price"
         unit_of_measurement: "c"
@@ -28,8 +32,10 @@ template:
         attributes:
           premium: >
             {{ 
-                ( states('sensor.local_fuel_price') | float | round(1, 'common') )
-              - ( states('sensor.lowest_fuel_price') | float | round(1, 'common') )
+                (
+                  ( states('sensor.local_fuel_price') | float | round(1, 'common') )
+                - ( states('sensor.lowest_fuel_price') | float | round(1, 'common') )
+                ) | round(1)
             }}
       - name: "Local Fuel Premium"
         unit_of_measurement: "c"
@@ -92,3 +98,18 @@ sensor:
       - address
     exclusions:
       - language
+
+
+automation:
+  - alias: Driving - Launch Google Maps When Phone Connects To Car
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.michael_phone_is_docked_in_the_car
+        from: "off"
+        to: "on"
+    action:
+      - service: notify.mobile_app_michael_s_galaxy_s10
+        data:
+          message: "command_launch_app"
+          data:
+            package_name: "com.google.android.apps.maps"
