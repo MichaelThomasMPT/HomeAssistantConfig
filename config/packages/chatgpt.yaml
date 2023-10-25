@@ -88,7 +88,7 @@ automation:
           event.descripton }}\n    {% endif -%}\n    {%- if event.location is defined
           %}\n      Location: {{ event.location }}\n    {% endif -%}\n  {%- endfor %}\n{%-
           else %}\n  - No upcoming events.\n{%- endif %}"
-        agent_id: 2792980d09bc1af85eb70dd28427115b #Jedi Master
+        agent_id: 40c56445ddb43e3665d8831f99dc7a6c #Pirate
       response_variable: agent
     - alias: Send notification
       service: notify.pushbullet
@@ -156,7 +156,7 @@ automation:
           event.descripton }}\n    {% endif -%}\n    {%- if event.location is defined
           %}\n      Location: {{ event.location }}\n    {% endif -%}\n  {%- endfor %}\n{%-
           else %}\n  - No upcoming events.\n{%- endif %}"
-        agent_id: 2792980d09bc1af85eb70dd28427115b #Jedi Master
+        agent_id: 40c56445ddb43e3665d8831f99dc7a6c #Pirate
       response_variable: agent
     - alias: Send notification
       service: script.notify_laura
@@ -171,7 +171,7 @@ script:
         description: "What do you want ChatGPT to reword?"
         example: "This is a notification for Michael."
     variables:
-      chatgpt_agent: 2792980d09bc1af85eb70dd28427115b #Jedi Master 
+      chatgpt_agent: 40c56445ddb43e3665d8831f99dc7a6c #Pirate
     sequence:
       - alias: Conversation Agent Notification Text
         service: conversation.process
