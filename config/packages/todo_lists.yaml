@@ -1,8 +1,3 @@
-# Todoist To-Do and Shopping Lists 
-calendar:
-  - platform: todoist
-    token: !secret todoist_api_key
-
 var:
   show_shopping_list_house_stuff:
     friendly_name: Show House Stuff Shopping List
@@ -23,8 +18,8 @@ script:
               {% endif %}
 
 automation:
-  - alias: Todoist - Add Item To Todo List Via Voice
-    id: todoist_add_item_to_todo_list_via_voice
+  - alias: Todo List - Add Item To Todo List Via Voice
+    id: todolist_add_item_to_todo_list_via_voice
     trigger:
       - platform: conversation
         command:
@@ -37,8 +32,8 @@ automation:
           due_date_string: today
           content: "{{ trigger.slots.todotask }}"
 
-  - alias: Todoist - Add Item To Shopping List Via Voice
-    id: todoist_add_item_to_shopping_list_via_voice
+  - alias: Todo List - Add Item To Shopping List Via Voice
+    id: todolist_add_item_to_shopping_list_via_voice
     trigger:
       - platform: conversation
         command:
