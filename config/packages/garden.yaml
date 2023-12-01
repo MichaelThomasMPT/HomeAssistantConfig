@@ -287,3 +287,21 @@ automation:
       - service: switch.turn_on
         data:
           entity_id: switch.alfresco_heater
+
+alert:
+  garden_bird_bath_is_empty:
+    title: The Bird Bath Is Empty
+    name: Make sure to refill it to keep the wildlife happy.
+    entity_id: binary_sensor.bird_bath_water_sensor_moisture
+    state: "off"
+    repeat: 
+      - 1440 #24 hours between alerts once started
+    can_acknowledge: false
+    notifiers:
+      - mobile_app_michael_s_galaxy_s10
+      - mobile_app_lauras_iphone
+    data:
+      notification_icon: "mdi:bird"
+      group: Bird Bath
+      color: '#0900bd'
+      ttl: 0
