@@ -1,23 +1,82 @@
-sensor:
-  - platform: fitbit
-    clock_format: 12H
-    unit_system: metric
-    monitored_resources:
-      - "activities/calories"
-      - "activities/distance"
-      - "activities/minutesFairlyActive"
-      - "activities/minutesLightlyActive"
-      - "activities/minutesSedentary"
-      - "activities/minutesVeryActive"
-      - "activities/steps"
-      - "activities/tracker/activityCalories"
-      - "activities/tracker/calories"
-      - "activities/tracker/distance"
-      - "activities/tracker/minutesFairlyActive"
-      - "activities/tracker/minutesLightlyActive"
-      - "activities/tracker/minutesSedentary"
-      - "activities/tracker/minutesVeryActive"
-      - "activities/tracker/steps"
-      - "body/bmi"
-      - "body/fat"
-      - "body/weight"
+input_boolean:
+  fitness_reminder_add_calories:
+    name: Remind Michael To Log Calories To Fitbit
+    icon: mdi:hamburger
+    initial: false
+
+automation:
+  - alias: Fitness - Activate Michael Reminder When Food Needs Logging
+    id: fitness_activate_michael_reminder_when_food_needs_logging
+    trigger:
+      - platform: time
+        at: 
+          - '20:00:00'
+    condition:
+      - condition: numeric_state
+        entity_id: sensor.calories_in
+        below: 1600
+    action:
+      - service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.fitness_reminder_add_calories
+
+  - alias: Fitness - Deactivate Michael Reminder Once Calories Are Added
+    id: fitness_deactivate_michael_reminder_once_calories_are_added
+    trigger:
+      - platform: event
+        event_type: mobile_app_notification_action
+        event_data:
+          action: calories_reminder_finished
+      - platform: numeric_state
+        entity_id: sensor.calories_in
+        above: 1600
+    action:
+      - service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.fitness_reminder_add_calories
+      - service: notify.mobile_app_michael_s_galaxy_s10
+        data:
+          message: "clear_notification"
+          data:
+            tag: "calories-reminders"
+
+
+  - alias: Fitness - Pause Michael Calories Notifications Until Home
+    id: fitness_pause_michael_calories_notifications_until_home
+    trigger:
+      platform: event
+      event_type: mobile_app_notification_action
+      event_data:
+        action: calories_reminder_mute_until_home
+    condition:
+      - condition: state
+        entity_id: person.michael
+        state: 'not_home'
+    action:
+      - service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.fitness_reminder_add_calories
+      - wait_template: "{{ is_state('person.michael', 'home') }}"
+      - service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.fitness_reminder_add_calories
+
+alert:
+  calories_reminder:
+    name: Remember to log today's food.
+    entity_id: input_boolean.fitness_reminder_add_calories
+    state: 'on'
+    repeat: 60
+    can_acknowledge: true
+    skip_first: false
+    notifiers:
+      - mobile_app_michael_s_galaxy_s10
+    data:
+      group: Calories
+      tag: calories-reminders
+      notification_icon: "mdi:hamburger"
+      actions:
+        - action: "calories_reminder_finished" 
+          title: "I've Done It"
+        - action: "calories_reminder_mute_until_home" 
+          title: "Mute Until I'm Home"
