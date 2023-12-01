@@ -297,3 +297,21 @@ automation:
     - service: light.turn_off
       target:
         entity_id: light.living_room
+alert:
+  pets_dog_bowl_is_empty:
+    title: The Dog Bowl Is Empty
+    name: Make sure to refill it before the pets get thirsty!
+    entity_id: binary_sensor.dog_bowl_water_sensor_moisture
+    state: "off"
+    repeat: 
+      - 30 #minutes between alerts once started
+    can_acknowledge: false
+    notifiers:
+      - mobile_app_michael_s_galaxy_s10
+      - mobile_app_lauras_iphone
+    data:
+      notification_icon: "mdi:water-alert"
+      group: Dog Bowl
+      color: '#0900bd'
+      ttl: 0
+      priority: high
