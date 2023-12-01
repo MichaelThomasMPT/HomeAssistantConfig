@@ -30,6 +30,10 @@ scene:
           - 63
           - 15
         brightness_pct: 50
+      light.curtain_left:
+        state: "on"
+        effect: "1 Peachy Soft Tra" #nice soft light
+        brightness_pct: 15
       light.living_room:
         state: "off"
       light.dining_room: 

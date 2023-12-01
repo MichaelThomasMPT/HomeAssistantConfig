@@ -76,6 +76,12 @@ script:
           effect: Music
         target:
           entity_id: light.living_room_tv_led_strip_local
+      - service: light.turn_on
+        data:
+          brightness_pct: 100
+          effect: 0 Rainbow
+        target:
+          entity_id: light.curtain_left
       - service: hue.hue_activate_scene
         data: 
           group_name: "Theatre Room"

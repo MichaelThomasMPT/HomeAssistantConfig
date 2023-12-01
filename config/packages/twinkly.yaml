@@ -1,0 +1,13 @@
+automation:
+  - alias: Twinkly - Keep Curtain Brightness In Sync
+    id: twinkly_keep_curtain_brightness_in_sync
+    trigger:
+      platform: state
+      entity_id: light.curtain_left
+      attribute: brightness
+    action:
+      - service: light.turn_on
+        data:
+          brightness: "{{ state_attr('light.curtain_left', 'brightness') }}"
+        target:
+          entity_id: light.curtain_right

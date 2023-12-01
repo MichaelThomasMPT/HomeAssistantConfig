@@ -522,6 +522,18 @@ views:
       - type: vertical-stack
         title: Lights
         cards:
+          - show_name: true
+            show_icon: true
+            type: button
+            tap_action:
+              action: call-service
+              service: scene.turn_on
+              target:
+                entity_id: scene.living_room_soft_lighting
+            entity: scene.living_room_soft_lighting
+            name: Soft Night Lighting
+            icon_height: 30px
+            icon: mdi:lightbulb-night-outline
           - type: horizontal-stack
             cards:
               - type: tile
@@ -553,13 +565,67 @@ views:
           - features:
               - type: light-brightness
             type: tile
+            entity: light.curtain_left
+            vertical: true
+            state_content:
+              - effect
+              - brightness
+            show_entity_picture: false
+            tap_action:
+              action: more-info
+            icon_tap_action:
+              action: toggle
+          - type: horizontal-stack
+            cards:
+              - type: horizontal-stack
+                cards:
+                  - show_name: true
+                    show_icon: true
+                    type: button
+                    tap_action:
+                      action: call-service
+                      service: light.turn_on
+                      target:
+                        entity_id: light.curtain_left
+                      data:
+                        effect: 0 Rainbow
+                        brightness_pct: 100
+                    entity: light.curtain_left
+                    icon_height: 30px
+                    icon: mdi:party-popper
+                    name: Party
+                  - show_name: true
+                    show_icon: true
+                    type: button
+                    tap_action:
+                      action: call-service
+                      service: light.turn_on
+                      data:
+                        brightness_pct: 15
+                        effect: 1 Peachy Soft Tra
+                      target:
+                        entity_id: light.curtain_left
+                    entity: light.curtain_left
+                    icon_height: 30px
+                    icon: mdi:moon-waning-crescent
+                    name: Night
+          - features:
+              - type: light-brightness
+            type: tile
+            entity: light.dining_room_table_lamp
+            name: Dining Room Lamp
+            tap_action:
+              action: toggle
+          - features:
+              - type: light-brightness
+            type: tile
             entity: light.living_room_tv_led_strip_local
             name: Living Room TV LED Strip
             tap_action:
-              action: toggle
+              action: more-info
             icon: mdi:led-strip
             icon_tap_action:
-              action: more-info
+              action: toggle
           - type: horizontal-stack
             cards:
               - type: horizontal-stack
@@ -614,13 +680,6 @@ views:
                     icon_height: 30px
                     icon: mdi:television-classic
                     name: TV
-          - features:
-              - type: light-brightness
-            type: tile
-            entity: light.dining_room_table_lamp
-            name: Dining Room Lamp
-            tap_action:
-              action: toggle
           - type: conditional
             conditions:
               - entity: input_boolean.enable_christmas_automations
@@ -1625,6 +1684,18 @@ views:
             entity: script.turn_off_all_lights
             name: Turn Off All Lights
             icon_height: 30px
+          - show_name: true
+            show_icon: true
+            type: button
+            tap_action:
+              action: call-service
+              service: scene.turn_on
+              target:
+                entity_id: scene.living_room_soft_lighting
+            entity: scene.living_room_soft_lighting
+            name: Soft Night Lighting
+            icon_height: 30px
+            icon: mdi:lightbulb-night-outline
           - type: custom:auto-entities
             entities:
               - switch.christmas_tree_power
@@ -1633,6 +1704,11 @@ views:
                 - domain: light
               exclude:
                 - state: unavailable
+                - entity_id: light.curtain_right
+                - entity_id: light.scullery_esp32_status_led
+                - entity_id: light.master_bedroom_wir_multisensor_basic
+                - entity_id: light.washing_line_light_1
+                - entity_id: light.washing_line_light_2
             sort:
               method: friendly_name
             card:
