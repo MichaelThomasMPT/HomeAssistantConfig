@@ -135,4 +135,4 @@ automation:
           random_song: true
           shuffle: true
           start_volume: 50
-          entity_id: media_player.central_living_speakers
+          entity_id: media_player.all_rooms

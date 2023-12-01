@@ -121,7 +121,7 @@ automation:
           message: "This is a fake doorbell to desensitise the dog."
       - service: media_player.play_media
         data:
-          entity_id: media_player.central_living_speakers
+          entity_id: media_player.central_living
           media_content_id: '/local/sounds/doorbell.mp3'
           media_content_type: 'audio/mp3'
 
@@ -297,6 +297,7 @@ automation:
     - service: light.turn_off
       target:
         entity_id: light.living_room
+
 alert:
   pets_dog_bowl_is_empty:
     title: The Dog Bowl Is Empty
