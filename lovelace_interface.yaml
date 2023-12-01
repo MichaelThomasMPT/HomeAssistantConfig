@@ -5,6 +5,26 @@ views:
     badges: []
     cards:
       - square: true
+        type: grid
+        cards:
+          - type: custom:clock-weather-card
+            entity: weather.banjup
+            sun_entity: sun.sun
+            temperature_sensor: sensor.outdoor_temp
+            weather_icon_type: line
+            animated_icon: true
+            forecast_days: 7
+            locale: en-AU
+            time_format: 12
+            date_pattern: P
+            hide_today_section: false
+            hide_forecast_section: false
+            hide_clock: false
+            hide_date: false
+            hourly_forecast: false
+            use_browser_time: true
+        columns: 1
+      - square: true
         columns: 2
         type: grid
         cards:
@@ -1113,6 +1133,8 @@ views:
               - entity: binary_sensor.michael_pc
               - entity: sensor.canon_ts3300_series
                 name: Canon Printer
+              - entity: sensor.office_temperature
+                name: Temperature
             columns: 2
   - theme: Backend-selected
     title: Entry
