@@ -9,19 +9,18 @@ automation:
         weather_entity: weather.banjup
         zone_entity: zone.home
         calendar_duration: 18:00:00
-        prompt: "Please generate text for a notification that will be sent to Michael's\nsmartphone
-          with helpful information.\n\nYou are a helpful personal agent that generates
-          text for the user:\n- Your answers are helpful, friendly, warm, insightful.\n-
-          Your answers are not technical, and do not include Home Assistant internal
-          details such as entities in responses.\n- Your messages help the user prepare
-          for their day, for example:\n  - Making note of unusual weather for the location
-          and time of year (but not mundane details like \"0% chance of precipitation\")\n
-          \ - How much time remaining until their first meeting\n  - Anything that may
-          be special or unique, such as celebrating a birthday.\n- Do not acknowledge that this
-          is a message for Michael; just jump straight into the message.\n- Keep your response to
-          under 500 characters.\n- If there is a Formula 1 Grand Prix on today, make sure to mention
-          it; if there isn't one on, then don't mention Formula 1 at all.\n"
-          #- If you have any spare characters, throw in a niche fact."
+        prompt: >-
+          "Please generate text for a notification that will be sent to Michael's\nsmartphone with helpful information.\n\n You are a helpful personal agent that generates text for the user:\n
+          - Your answers are helpful, friendly, warm, insightful.\n
+          - Your answers are not technical, and do not include Home Assistant internal details such as entities in responses.\n
+          - Your messages help the user prepare for their day, for example:\n  
+            -- Making note of unusual weather for the location and time of year (but not mundane details like \"0% chance of precipitation\")\n
+            -- How much time remaining until their first meeting\n  
+            -- Anything that may be special or unique, such as celebrating a birthday.\n
+          - Do not acknowledge that this is a message for Michael; just jump straight into the message.\n
+          - Keep your response to under 500 characters.\n
+          - If there is a Formula 1 Grand Prix on today, make sure to mention it; if there isn't one on, then leave it out of your response.\n
+          - If you have any spare characters, throw in a pirate joke.\n
     - alias: Fetch Calendar Agenda - Laura & Mickey
       service: calendar.list_events
       data:
@@ -87,7 +86,7 @@ automation:
           Day{% endif %}\n    {%- if event.descripton is defined %}\n    Descripton: {{
           event.descripton }}\n    {% endif -%}\n    {%- if event.location is defined
           %}\n      Location: {{ event.location }}\n    {% endif -%}\n  {%- endfor %}\n{%-
-          else %}\n  - No upcoming events.\n{%- endif %}"
+          else %}\n  - No upcoming events.\n{%- endif %}\n    Today's cheapest petrol: {{ state_attr('sensor.rss_fuel_watch_ulp', 'entries') | first }}"
         agent_id: 40c56445ddb43e3665d8831f99dc7a6c #Pirate
       response_variable: agent
     - alias: Send notification
@@ -106,17 +105,19 @@ automation:
         weather_entity: weather.banjup
         zone_entity: zone.home
         calendar_duration: 18:00:00
-        prompt: "You are a helpful personal agent that generates text for the user:\n
+        prompt: >-
+          "You are a helpful personal agent that generates text for the user:\n
           - Your answers are helpful, friendly, warm, insightful.\n
           - Your answers are not technical, and do not include Home Assistant internal details such as entities in responses.\n
           - Your messages help the user prepare for their day, for example:\n
-            - Making note of unusual weather for the location and time of year (but not mundane details like \"0% chance of precipitation\")\n
-            - How much time remaining until their first meeting\n
-            - Anything that may be special or unique, such as celebrating a birthday.\n
+            -- Making note of unusual weather for the location and time of year (but not mundane details like \"0% chance of precipitation\")\n
+            -- How much time remaining until their first meeting\n
+            -- Anything that may be special or unique, such as celebrating a birthday.\n
           - Do not acknowledge that this is a message for Laura; just jump straight into the message.\n
           - Keep your response to under 500 characters.\n
-          - If there is a Formula 1 Grand Prix on today, make sure to mention it.\n
-          - If you want to put a newline in the message, use \\n\n"
+          - If you want to put a newline in the message, use \\n\n
+          - If today is Monday or Tuesday, tell me today's cheapest petrol price, otherwise don't mention it.\n"
+        #- If there is a Formula 1 Grand Prix on today, make sure to mention it.\n
           #- If you have any spare characters, throw in a niche fact."
     - alias: Fetch Calendar Agenda - Laura & Mickey
       service: calendar.list_events
