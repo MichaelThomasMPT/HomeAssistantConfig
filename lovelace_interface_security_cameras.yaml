@@ -2,24 +2,9 @@ views:
   - panel: true
     badges: []
     cards:
-      - type: grid
+      - square: false
+        type: grid
         cards:
-          - camera_view: auto
-            type: picture-glance
-            title: Garage
-            image: https://demo.home-assistant.io/stub_config/kitchen.png
-            entities:
-              - entity: light.garage_light
-            camera_image: camera.garage_camera
-            entity: camera.garage_camera
-          - camera_view: auto
-            type: picture-glance
-            title: Side Path
-            image: https://demo.home-assistant.io/stub_config/kitchen.png
-            entities:
-              - entity: light.washing_line_lights
-            camera_image: camera.side_path
-            entity: camera.side_path
           - camera_view: auto
             type: picture-glance
             title: Doorbell
@@ -30,12 +15,48 @@ views:
             entity: camera.doorbell_main
           - camera_view: auto
             type: picture-glance
+            title: Driveway
+            image: https://demo.home-assistant.io/stub_config/kitchen.png
+            entities:
+              - entity: cover.garage_door
+            camera_image: camera.driveway_camera
+            entity: camera.driveway_camera
+            aspect_ratio: '4:3'
+          - camera_view: auto
+            type: picture-glance
+            title: Garage
+            image: https://demo.home-assistant.io/stub_config/kitchen.png
+            entities:
+              - entity: light.garage_light
+            camera_image: camera.garage
+            entity: camera.garage
+            aspect_ratio: '4:3'
+          - camera_view: auto
+            type: picture-glance
+            title: Side Path
+            image: https://demo.home-assistant.io/stub_config/kitchen.png
+            entities:
+              - entity: light.washing_line_lights
+            camera_image: camera.side_path_camera
+            entity: camera.side_path_camera
+            aspect_ratio: '4:3'
+          - camera_view: auto
+            type: picture-glance
             title: Living Room
             image: https://demo.home-assistant.io/stub_config/kitchen.png
             entities:
               - entity: switch.living_room_camera_privacy
             camera_image: camera.living_room_camera_hd
             entity: camera.living_room_camera_hd
+            aspect_ratio: '4:3'
+          - camera_view: auto
+            type: picture-glance
+            image: https://demo.home-assistant.io/stub_config/kitchen.png
+            entities:
+              - entity: light.office_lamp
+            title: Ender 3 S1
+            camera_image: camera.ender_3_s1
+            entity: camera.ender_3_s1
           - camera_view: auto
             type: picture-glance
             title: Alfresco
@@ -45,6 +66,7 @@ views:
               - entity: light.alfresco_fairy_lights
             camera_image: camera.alfresco_camera
             entity: camera.alfresco_camera
+            aspect_ratio: '4:3'
           - camera_view: auto
             type: picture-glance
             image: https://demo.home-assistant.io/stub_config/kitchen.png
@@ -53,6 +75,7 @@ views:
             title: Backyard
             camera_image: camera.backyard_camera
             entity: camera.backyard_camera
+            aspect_ratio: '4:3'
           - square: false
             columns: 3
             type: grid
@@ -87,14 +110,5 @@ views:
                     icon: mdi:dog-side
                     name: Dog Door
                     show_last_changed: true
-          - camera_view: auto
-            type: picture-glance
-            image: https://demo.home-assistant.io/stub_config/kitchen.png
-            entities:
-              - entity: light.office_lamp
-            title: Ender 3 S1
-            camera_image: camera.ender_3_s1
-            entity: camera.ender_3_s1
-        columns: 3
-        square: false
+        columns: 4
 title: Security Cameras
