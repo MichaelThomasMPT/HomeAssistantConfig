@@ -1,7 +1,10 @@
 automation:
-  - alias: Toilets - Turn Off Main Toilet Light After Thirty Min
-    id: toilets_turn_off_main_toilet_light_after_thirty_min
+  - alias: Toilets - Turn Off Main Toilet Light When Required
+    id: toilets_turn_off_main_toilet_light_when_required
     trigger:
+      - platform: state
+        entity_id: binary_sensor.main_toilet_door_sensor
+        to: 'on'
       - platform: state
         entity_id: light.main_toilet_light_and_fan
         to: 'on'
@@ -11,10 +14,17 @@ automation:
       - service: light.turn_off
         data:
           entity_id: light.main_toilet_light_and_fan
+      - condition: state #from sunset until sunrise
+        entity_id: sun.sun
+        state: "below_horizon"
+      - service: script.front_door_set_correct_side_hall_lighting_level
 
-  - alias: Toilets - Turn Off Ensuite Toilet Light After Thirty Min
-    id: toilets_turn_off_ensuite_toilet_light_after_thirty_min
+  - alias: Toilets - Turn Off Ensuite Toilet Light When Required
+    id: toilets_turn_off_ensuite_toilet_light_when_required
     trigger:
+      - platform: state
+        entity_id: binary_sensor.ensuite_toilet_door_sensor
+        to: 'on'
       - platform: state
         entity_id: light.ensuite_toilet_light_and_fan
         to: 'on'

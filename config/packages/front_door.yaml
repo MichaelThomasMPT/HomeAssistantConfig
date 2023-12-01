@@ -1,3 +1,26 @@
+script:
+  front_door_set_correct_side_hall_lighting_level:
+    alias: "Front Door - Set Correct Side Hall Lighting Level"
+    sequence:
+      - choose:
+          - conditions:
+              - condition: time
+                before: "20:30:00"
+            sequence:
+                #Early evening, full brightness
+              - service: light.turn_on
+                target:
+                  entity_id: light.side_hall
+                data:
+                  brightness_pct: 100
+        default:
+            #Night time, low brightness
+          - service: light.turn_on
+            target:
+              entity_id: light.side_hall
+            data:
+              brightness_pct: 30
+
 automation:
   - alias: Front Door - Toggle Porch Light With Central Switch
     id: front_door_toggle_porch_light_with_central_switch
@@ -146,23 +169,9 @@ automation:
               - service: light.turn_off
                 target:
                   entity_id: light.side_hall
-          - conditions:
-              - condition: time
-                before: "20:30:00"
-            sequence:
-                #Early evening, full brightness
-              - service: light.turn_on
-                target:
-                  entity_id: light.side_hall
-                data:
-                  brightness_pct: 100
         default:
-            #Night time, low brightness
-          - service: light.turn_on
-            target:
-              entity_id: light.side_hall
-            data:
-              brightness_pct: 30
+          #Turn on lights to the correct lighting level
+          - service: script.front_door_set_correct_side_hall_lighting_level
 
   - alias: Front Door - Turn On Front Porch Light When Ordering Food Delivery
     id: front_door_turn_on_front_porch_light_when_ordering_food_delivery
