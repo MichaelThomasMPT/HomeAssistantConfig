@@ -52,7 +52,6 @@ cloud:
         - switch.aircon_zone_living
         - switch.aircon_zone_master
         - switch.aircon_zone_theatre
-        - switch.christmas_tree_power
         - switch.living_room_tv
         - group.aircon_vents
         - cover.theatre_blinds
@@ -69,7 +68,7 @@ cloud:
         - climate.refrigerator_fridge
         - switch.alfresco_heater
     entity_config:
-      switch.christmas_tree_power:
+      light.christmas_tree:
         name: Christmas Tree
         aliases:
           - Christmas Tree

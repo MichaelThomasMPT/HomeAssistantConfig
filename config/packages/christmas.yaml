@@ -25,14 +25,14 @@ automation:
         for:
           minutes: 5
     condition:
-      - condition: and
+      - condition: not
         conditions:
           - condition: state
             entity_id: person.michael
-            state: 'not_home'
+            state: 'home'
           - condition: state
             entity_id: person.laura
-            state: 'not_home'
+            state: 'home'
     action: 
       - service: input_boolean.turn_on
         target:
@@ -66,8 +66,8 @@ automation:
         entity_id: input_boolean.enable_christmas_automations
         state: 'on'
     action:
-      - entity_id: switch.christmas_tree_power
-        service: switch.turn_on
+      - entity_id: light.christmas_tree
+        service: light.turn_on
 
   - alias: Christmas - Automatically Turn On Tree Lights At Night
     id: christmas_automatically_turn_on_tree_lights_at_night
@@ -85,8 +85,8 @@ automation:
         entity_id: 'alarm_control_panel.alarm_com'
         state: 'disarmed' #we're home
     action:
-      - entity_id: switch.christmas_tree_power
-        service: switch.turn_on
+      - entity_id: light.christmas_tree
+        service: light.turn_on
 
   - alias: Christmas - Automatically Turn Off Tree Lights
     id: christmas_automatically_turn_off_tree_lights
@@ -110,8 +110,8 @@ automation:
         entity_id: input_boolean.enable_christmas_automations
         state: 'on'
     action:
-      - entity_id: switch.christmas_tree_power
-        service: switch.turn_off
+      - entity_id: light.christmas_tree
+        service: light.turn_on
 
   - alias: Christmas - Automatically Play Music When Arriving Home During The Day
     id: christmas_automatically_play_music_when_arriving_home
@@ -131,8 +131,62 @@ automation:
     action:
       - service: spotcast.start
         data:
-          uri: 'spotify:playlist:37i9dQZF1DWZv6UE8BMPO0'
+          uri: spotify:playlist:37i9dQZF1EIfJuAtBY3e9v
           random_song: true
           shuffle: true
           start_volume: 50
-          entity_id: media_player.all_rooms
+          device_name: "All Rooms"
+
+  - alias: Christmas - Automatically Turn On Tree Lights At Night
+    id: christmas_automatically_turn_on_tree_lights_at_night
+    trigger:
+      - platform: sun
+        event: sunset
+    condition:
+      - condition: state
+        entity_id: input_boolean.holiday_mode
+        state: "off" #don't run if on holiday
+      - condition: state
+        entity_id: input_boolean.enable_christmas_automations
+        state: 'on'
+      - condition: state
+        entity_id: 'alarm_control_panel.alarm_com'
+        state: 'disarmed' #we're home
+    action:
+      - entity_id: light.christmas_tree
+        service: light.turn_on
+
+  - alias: Christmas - Rotate Christmas Lights Effects Every Hour
+    id: christmas_rotate_christmas_lights_effects_every_hour
+    trigger:
+      - platform: state
+        entity_id: light.christmas_tree
+        attribute: effect
+        for:
+          minutes: 60
+    condition:
+      - condition: state
+        entity_id: input_boolean.enable_christmas_automations
+        state: 'on'
+      - condition: state
+        entity_id: light.christmas_tree
+        state: 'on'
+    action:
+      - service: script.christmas_random_tree_light_effect
+
+script:
+  christmas_random_tree_light_effect:
+    icon: 'mdi:string-lights'
+    description: 'Randomise the Christmas tree light effect.'
+    sequence:
+      - entity_id: light.christmas_tree
+        service: light.turn_on
+        data:
+          effect: >-
+            {{
+              state_attr('light.christmas_tree', 'effect_list')
+              | reject('==',  state_attr('light.christmas_tree', 'effect_list'))
+              | reject('==', '8 Soft and slow b')
+              | list
+              | random
+            }}
