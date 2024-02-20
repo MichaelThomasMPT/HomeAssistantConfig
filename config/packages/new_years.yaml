@@ -1,0 +1,87 @@
+script:
+  new_years_play_countdown_on_curtain_lights:
+    icon: 'mdi:timer'
+    description: 'New Years - Play Countdown On Curtain Lights'
+    sequence:
+      - parallel:
+          ### MUSIC ###
+          - sequence: 
+            - service: spotcast.start
+              data:
+                uri: spotify:track:0DiWol3AO6WpXZgp0goxAV #Daft Punk's One More Time
+                start_volume: 60
+                device_name: Central Living
+          ### LIGHTS OFF ###
+          - sequence:
+            - delay:
+                seconds: 17
+            - service: light.turn_off
+              target:
+                entity_id:
+                  - light.dining_room
+                  - light.living_room
+                  - light.kitchen_ceiling_light
+                  - light.kitchen_island
+                  - light.kitchenette_lights
+                  - light.entry_hall_lights
+          ### COUNTDOWN LIGHTS ###
+          - sequence:
+            - delay:
+                seconds: 24.5
+            - service: light.turn_on
+              target:
+                entity_id: light.christmas_tree
+              data:
+                effect: "13 Happy New Year"
+          ### FIREWORKS ###
+          - sequence:
+            - delay:
+                seconds: 36
+            - service: light.turn_on
+              target:
+                entity_id: light.christmas_tree
+              data:
+                effect: "1 Fireworks"
+          ### PARTY LIGHTS ###
+          - sequence:
+            - delay:
+                seconds: 95.5
+            - service: light.turn_on
+              target:
+                entity_id: light.christmas_tree
+              data:
+                effect: "0 Rainbow"
+            - service: light.turn_on
+              target:
+                entity_id: light.living_room_tv_led_strip_local
+              data:
+                effect: "Music"
+
+automation:
+  - alias: New Years - Play Countdown On Curtain Lights
+    id: new_years_play_countdown_on_curtain_lights
+    trigger:
+      - platform: time
+        at: "23:59:26"
+    condition:
+      - condition: template
+        value_template:  >-
+          {{ '%02d' % now().month + '-%02d' % now().day == '12-31' }}
+    action:
+      - service: script.new_years_play_countdown_on_curtain_lights
+
+  - alias: New Years - Play Pre-Song So Spotcast Connects To Speakers
+    id: new_years_play_pre-song_so_spotcast_connects_to_speakers
+    trigger:
+      - platform: time
+        at: "23:56:24"
+    condition:
+      - condition: template
+        value_template:  >-
+          {{ '%02d' % now().month + '-%02d' % now().day == '12-31' }}
+    action:
+      - service: spotcast.start
+        data:
+          uri: spotify:track:11C4y2Yz1XbHmaQwO06s9f #Dua Lipa's Dance The Night Away
+          start_volume: 50
+          device_name: Central Living
