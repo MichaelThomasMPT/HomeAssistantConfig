@@ -1,168 +1,188 @@
+# input_select:
+#   script_chatgpt_fetch_calendar_events_temporary_agenda:
+#     name: Temporary Agenda for ChatGPT Fetch Calendar Events Script
+#     options:
+#      - Default Option
+
+
 automation:
-  - id: 'chatgpt_send_michael_a_daily_agenda'
+  - id: "chatgpt_send_michael_a_daily_agenda"
     alias: ChatGPT - Send Michael A Daily Agenda
     trigger:
       platform: time
       at: 07:45:00
     action:
-    - variables:
-        weather_entity: weather.banjup
-        zone_entity: zone.home
-        calendar_duration: 18:00:00
-        prompt: >-
-          "Please generate text for a notification that will be sent to Michael's\nsmartphone with helpful information.\n\n You are a helpful personal agent that generates text for the user:\n
-          - Your answers are helpful, friendly, warm, insightful.\n
-          - Your answers are not technical, and do not include Home Assistant internal details such as entities in responses.\n
-          - Your messages help the user prepare for their day, for example:\n  
-            -- Making note of unusual weather for the location and time of year (but not mundane details like \"0% chance of precipitation\")\n
-            -- How much time remaining until their first meeting\n  
-            -- Anything that may be special or unique, such as celebrating a birthday.\n
-          - Do not acknowledge that this is a message for Michael; just jump straight into the message.\n
-          - Keep your response to under 500 characters.\n
-          - If there is a Formula 1 Grand Prix on today, make sure to mention it; if there isn't one on, then leave it out of your response.\n
-          - If you have any spare characters, throw in a pirate joke.\n
-    - alias: Fetch Calendar Agenda - Laura & Mickey
-      service: calendar.list_events
-      data:
-        duration: "{{ calendar_duration }}"
-      target:
-        entity_id: calendar.laura_mickey
-      response_variable: agenda_laura_mickey
-    - alias: Fetch Calendar Agenda - Personal
-      service: calendar.list_events
-      data:
-        duration: "{{ calendar_duration }}"
-      target:
-        entity_id: calendar.personal
-      response_variable: agenda_personal
-    - alias: Fetch Calendar Agenda - Work
-      service: calendar.list_events
-      data:
-        duration: "{{ calendar_duration }}"
-      target:
-        entity_id: calendar.michael_thomas_vixtechnology_com
-      response_variable: agenda_work
-    - alias: Fetch Calendar Agenda - Formula 1
-      service: calendar.list_events
-      data:
-        duration: "{{ calendar_duration }}"
-      target:
-        entity_id: calendar.formula_1
-      response_variable: agenda_formula_1
-    - alias: Conversation Agent Notification Text
-      service: conversation.process
-      data:
-        text: "{{ prompt }}\n\nTime: {{ now() }}\n{%- if zone_entity is defined %}\nLatitude: {{ state_attr(zone_entity,
-          'latitude') | round(1) }}\nLongitude: {{ state_attr(zone_entity, 'longitude')
-          | round(1) }}\n{% endif %}\n\n{%- if weather_entity is defined %}\n{%- set forecast
-          = state_attr(weather_entity, 'forecast')[0] %}\n{%- set temperature_unit = state_attr(weather_entity,
-          'temperature_unit') -%}\nWeather: {{ forecast.condition }} ({{ forecast.temperature
-          }}{{ temperature_unit }}, {{ forecast.precipitation }}% precipitation)\n{%-
-          endif %}\n\nCalendar \"{{ state_attr('calendar.laura_mickey', 'friendly_name') }}\"
-          events for the next {{ calendar_duration.hours }}:\n{%- if agenda_laura_mickey.events %}\n
-          \ {%- for event in agenda_laura_mickey.events %}\n  - Summary: {{ event.summary }}\n    Start-End:
-          {% if event.start is defined %}{{ event.start }} to {{ event.end }}{% else %}All
-          Day{% endif %}\n    {%- if event.descripton is defined %}\n    Descripton: {{
-          event.descripton }}\n    {% endif -%}\n    {%- if event.location is defined
-          %}\n      Location: {{ event.location }}\n    {% endif -%}\n  {%- endfor %}\n{%-
-          else %}\n  - No upcoming events.\n{%- endif %}\n\nCalendar \"{{ state_attr('calendar.personal', 'friendly_name') }}\"
-          events for the next {{ calendar_duration.hours }}:\n{%- if agenda_personal.events %}\n
-          \ {%- for event in agenda_personal.events %}\n  - Summary: {{ event.summary }}\n    Start-End:
-          {% if event.start is defined %}{{ event.start }} to {{ event.end }}{% else %}All
-          Day{% endif %}\n    {%- if event.descripton is defined %}\n    Descripton: {{
-          event.descripton }}\n    {% endif -%}\n    {%- if event.location is defined
-          %}\n      Location: {{ event.location }}\n    {% endif -%}\n  {%- endfor %}\n{%-
-          else %}\n  - No upcoming events.\n{%- endif %}\n\nCalendar \"{{ state_attr('calendar.michael_thomas_vixtechnology_com', 'friendly_name') }}\"
-          events for the next {{ calendar_duration.hours }}:\n{%- if agenda_work.events %}\n
-          \ {%- for event in agenda_work.events %}\n  - Summary: {{ event.summary }}\n    Start-End:
-          {% if event.start is defined %}{{ event.start }} to {{ event.end }}{% else %}All
-          Day{% endif %}\n    {%- if event.descripton is defined %}\n    Descripton: {{
-          event.descripton }}\n    {% endif -%}\n    {%- if event.location is defined
-          %}\n      Location: {{ event.location }}\n    {% endif -%}\n  {%- endfor %}\n{%-
-          else %}\n  - No upcoming events.\n{%- endif %}\n\nCalendar \"{{ state_attr('calendar.formula_1', 'friendly_name') }}\"
-          events for the next {{ calendar_duration.hours }}:\n{%- if agenda_formula_1.events %}\n
-          \ {%- for event in agenda_formula_1.events %}\n  - Summary: {{ event.summary }}\n    Start-End:
-          {% if event.start is defined %}{{ event.start }} to {{ event.end }}{% else %}All
-          Day{% endif %}\n    {%- if event.descripton is defined %}\n    Descripton: {{
-          event.descripton }}\n    {% endif -%}\n    {%- if event.location is defined
-          %}\n      Location: {{ event.location }}\n    {% endif -%}\n  {%- endfor %}\n{%-
-          else %}\n  - No upcoming events.\n{%- endif %}\n    Today's cheapest petrol: {{ state_attr('sensor.rss_fuel_watch_ulp', 'entries') | first }}"
-        agent_id: 40c56445ddb43e3665d8831f99dc7a6c #Pirate
-      response_variable: agent
-    - alias: Send notification
-      service: notify.pushbullet
-      data:
-        title: '{{ now().strftime(''%A'') }} Agenda'
-        message: '{{ agent.response.speech.plain.speech }}'
+      - variables:
+          weather_entity: weather.banjup
+          zone_entity: zone.home
+          calendar_duration_hours: 18
+          prompt: >-
+            "Please generate text for a notification that will be sent to Michael's\nsmartphone with helpful information.\n\n You are a helpful personal agent that generates text for the user:\n
+            - Your answers are helpful, friendly, warm, insightful.\n
+            - Your answers are not technical, and do not include Home Assistant internal details such as entities in responses.\n
+            - Your messages help the user prepare for their day, for example:\n  
+              -- Making note of unusual weather for the location and time of year (but not mundane details like \"0% chance of precipitation\")\n
+              -- How much time remaining until their first meeting\n  
+              -- Anything that may be special or unique, such as celebrating a birthday.\n
+            - Do not acknowledge that this is a message for Michael; just jump straight into the message.\n
+            - Keep your response to under 500 characters.\n
+            - If today is Monday or Tuesday, tell me today's cheapest petrol price, otherwise don't mention it.\n
+          # - If you have any spare characters, throw in a Christmas cracker joke.\n
+          # - If there is a Formula 1 Grand Prix on today, make sure to mention it; if there isn't one on, then leave it out of your response.\n
+      - alias: Fetch weather forecast
+        service: weather.get_forecasts
+        target:
+          entity_id: weather.banjup
+        data:
+          type: daily
+        response_variable: weather_forecast
+      - alias: Fetch Calendar Agendas
+        service: calendar.get_events
+        data:
+          duration:
+            hours: "{{ calendar_duration_hours }}"
+        target:
+          entity_id:
+            - calendar.laura_mickey
+            - calendar.personal
+            - calendar.michael_thomas_vixtechnology_com
+            #- calendar.formula_1
+        response_variable: agenda_today
+      - alias: Conversation Agent Notification Text
+        service: conversation.process
+        data:
+          text: >-
+            {{ prompt }}\n
+            Time: {{ now() }}\n
+            {%- if zone_entity is defined %}\n
+            Latitude: {{ state_attr(zone_entity,'latitude') | round(1) }}\n
+            Longitude: {{ state_attr(zone_entity, 'longitude')| round(1) }}\n
+            {% endif %}\n
+            {%- if weather_forecast is defined %}\n
+            {%- set forecast = weather_forecast[weather_entity]['forecast'][0] %}\n
+            {%- set temperature_unit = state_attr(weather_entity, 'temperature_unit') -%}\n
+            Weather: {{ forecast.condition }} ({{ forecast.temperature}}{{ temperature_unit }}, {{ forecast.precipitation }}% precipitation)\n
+            {%- endif %}\n
+            Calendar events for the next {{ calendar_duration_hours }} hours:\n
+            {%- for event in agenda_today['calendar.laura_mickey']['events'] %}\n
+              - Summary: {{ event.summary }}\n
+                Start-End:\n
+                      {% if event.start is defined %}{{ event.start }} to {{ event.end }}{% else %}All Day{% endif %}\n
+                {%- if event.descripton is defined %}\n
+                Descripton: {{ event.descripton }}\n
+                {% endif -%}\n
+                {%- if event.location is defined %}\n
+                  Location: {{ event.location }}\n
+                {% endif -%}\n
+            {%- endfor %}\n
+            {%- for event in agenda_today['calendar.personal']['events'] %}\n
+              - Summary: {{ event.summary }}\n
+                Start-End:\n
+                      {% if event.start is defined %}{{ event.start }} to {{ event.end }}{% else %}All Day{% endif %}\n
+                {%- if event.descripton is defined %}\n
+                Descripton: {{ event.descripton }}\n
+                {% endif -%}\n
+                {%- if event.location is defined %}\n
+                  Location: {{ event.location }}\n
+                {% endif -%}\n
+            {%- endfor %}\n
+            {%- for event in agenda_today['calendar.michael_thomas_vixtechnology_com']['events'] %}\n
+              - Summary: {{ event.summary }}\n
+                Start-End:\n
+                      {% if event.start is defined %}{{ event.start }} to {{ event.end }}{% else %}All Day{% endif %}\n
+                {%- if event.descripton is defined %}\n
+                Descripton: {{ event.descripton }}\n
+                {% endif -%}\n
+                {%- if event.location is defined %}\n
+                  Location: {{ event.location }}\n
+                {% endif -%}\n
+            {%- endfor %}\n
+            \n
+            Today's cheapest petrol: {{ state_attr('sensor.rss_fuel_watch_ulp', 'entries') | first }}
+          agent_id: 4fa03cf261717b10d7df1b96889b63f6 #Artemis
+        response_variable: agent
+      - alias: Send notification
+        service: notify.pushbullet
+        data:
+          title: "{{ now().strftime('%A') }} Agenda"
+          message: "{{ agent.response.speech.plain.speech }}"
 
-  - id: 'chatgpt_send_laura_a_daily_agenda'
+  - id: "chatgpt_send_laura_a_daily_agenda"
     alias: ChatGPT - Send Laura A Daily Agenda
     trigger:
       platform: time
       at: 07:45:00
     action:
-    - variables:
-        weather_entity: weather.banjup
-        zone_entity: zone.home
-        calendar_duration: 18:00:00
-        prompt: >-
-          "You are a helpful personal agent that generates text for the user:\n
-          - Your answers are helpful, friendly, warm, insightful.\n
-          - Your answers are not technical, and do not include Home Assistant internal details such as entities in responses.\n
-          - Your messages help the user prepare for their day, for example:\n
-            -- Making note of unusual weather for the location and time of year (but not mundane details like \"0% chance of precipitation\")\n
-            -- How much time remaining until their first meeting\n
-            -- Anything that may be special or unique, such as celebrating a birthday.\n
-          - Do not acknowledge that this is a message for Laura; just jump straight into the message.\n
-          - Keep your response to under 500 characters.\n
-          - If you want to put a newline in the message, use \\n\n
-          - If today is Monday or Tuesday, tell me today's cheapest petrol price, otherwise don't mention it.\n"
-        #- If there is a Formula 1 Grand Prix on today, make sure to mention it.\n
-          #- If you have any spare characters, throw in a niche fact."
-    - alias: Fetch Calendar Agenda - Laura & Mickey
-      service: calendar.list_events
-      data:
-        duration: "{{ calendar_duration }}"
-      target:
-        entity_id: calendar.laura_mickey
-      response_variable: agenda_laura_mickey
-    - alias: Fetch Calendar Agenda - Formula 1
-      service: calendar.list_events
-      data:
-        duration: "{{ calendar_duration }}"
-      target:
-        entity_id: calendar.formula_1
-      response_variable: agenda_formula_1
-    - alias: Conversation Agent Notification Text
-      service: conversation.process
-      data:
-        text: "{{ prompt }}\n\nTime: {{ now() }}\n{%- if zone_entity is defined %}\nLatitude: {{ state_attr(zone_entity,
-          'latitude') | round(1) }}\nLongitude: {{ state_attr(zone_entity, 'longitude')
-          | round(1) }}\n{% endif %}\n\n{%- if weather_entity is defined %}\n{%- set forecast
-          = state_attr(weather_entity, 'forecast')[0] %}\n{%- set temperature_unit = state_attr(weather_entity,
-          'temperature_unit') -%}\nWeather: {{ forecast.condition }} ({{ forecast.temperature
-          }}{{ temperature_unit }}, {{ forecast.precipitation }}% precipitation)\n{%-
-          endif %}\n\nCalendar \"{{ state_attr('calendar.laura_mickey', 'friendly_name') }}\"
-          events for the next {{ calendar_duration.hours }}:\n{%- if agenda_laura_mickey.events %}\n
-          \ {%- for event in agenda_laura_mickey.events %}\n  - Summary: {{ event.summary }}\n    Start-End:
-          {% if event.start is defined %}{{ event.start }} to {{ event.end }}{% else %}All
-          Day{% endif %}\n    {%- if event.descripton is defined %}\n    Descripton: {{
-          event.descripton }}\n    {% endif -%}\n    {%- if event.location is defined
-          %}\n      Location: {{ event.location }}\n    {% endif -%}\n  {%- endfor %}\n{%-
-          else %}\n  - No upcoming events.\n{%- endif %}\n\nCalendar \"{{ state_attr('calendar.formula_1', 'friendly_name') }}\"
-          events for the next {{ calendar_duration.hours }}:\n{%- if agenda_formula_1.events %}\n
-          \ {%- for event in agenda_formula_1.events %}\n  - Summary: {{ event.summary }}\n    Start-End:
-          {% if event.start is defined %}{{ event.start }} to {{ event.end }}{% else %}All
-          Day{% endif %}\n    {%- if event.descripton is defined %}\n    Descripton: {{
-          event.descripton }}\n    {% endif -%}\n    {%- if event.location is defined
-          %}\n      Location: {{ event.location }}\n    {% endif -%}\n  {%- endfor %}\n{%-
-          else %}\n  - No upcoming events.\n{%- endif %}"
-        agent_id: 40c56445ddb43e3665d8831f99dc7a6c #Pirate
-      response_variable: agent
-    - alias: Send notification
-      service: script.notify_laura
-      data:
-        message_for_laura: '{{ agent.response.speech.plain.speech }}'
+      - variables:
+          weather_entity: weather.banjup
+          zone_entity: zone.home
+          calendar_duration_hours: 18
+          prompt: >-
+            "You are a helpful personal agent that generates text for the user:\n
+            - Your answers are helpful, friendly, warm, insightful.\n
+            - Your answers are not technical, and do not include Home Assistant internal details such as entities in responses.\n
+            - Your messages help the user prepare for their day, for example:\n
+              -- Making note of unusual weather for the location and time of year (but not mundane details like \"0% chance of precipitation\")\n
+              -- How much time remaining until their first meeting\n
+              -- Anything that may be special or unique, such as celebrating a birthday.\n
+            - Do not acknowledge that this is a message for Laura; just jump straight into the message.\n
+            - Keep your response to under 500 characters.\n
+            - If you want to put a newline in the message, use \\n\n
+            - If today is Monday or Tuesday, tell me today's cheapest petrol price, otherwise don't mention it.\n
+            - If you have any spare characters, throw in a Christmas cracker joke."
+          #- If there is a Formula 1 Grand Prix on today, make sure to mention it.\n
+      - alias: Fetch weather forecast
+        service: weather.get_forecasts
+        target:
+          entity_id: weather.banjup
+        data:
+          type: daily
+        response_variable: weather_forecast
+      - alias: Fetch Calendar Agendas
+        service: calendar.get_events
+        data:
+          duration:
+            hours: "{{ calendar_duration_hours }}"
+        target:
+          entity_id:
+            - calendar.laura_mickey
+            #- calendar.formula_1
+        response_variable: agenda_today
+      - alias: Conversation Agent Notification Text
+        service: conversation.process
+        data:
+          text: >-
+            {{ prompt }}\n
+            Time: {{ now() }}\n
+            {%- if zone_entity is defined %}\n
+            Latitude: {{ state_attr(zone_entity,'latitude') | round(1) }}\n
+            Longitude: {{ state_attr(zone_entity, 'longitude')| round(1) }}\n
+            {% endif %}\n
+            {%- if weather_forecast is defined %}\n
+            {%- set forecast = weather_forecast[weather_entity]['forecast'][0] %}\n
+            {%- set temperature_unit = state_attr(weather_entity, 'temperature_unit') -%}\n
+            Weather: {{ forecast.condition }} ({{ forecast.temperature}}{{ temperature_unit }}, {{ forecast.precipitation }}% precipitation)\n
+            {%- endif %}\n
+            Calendar events for the next {{ calendar_duration_hours }} hours:\n
+            {%- for event in agenda_today['calendar.laura_mickey']['events'] %}\n
+              - Summary: {{ event.summary }}\n
+                Start-End:\n
+                      {% if event.start is defined %}{{ event.start }} to {{ event.end }}{% else %}All Day{% endif %}\n
+                {%- if event.descripton is defined %}\n
+                Descripton: {{ event.descripton }}\n
+                {% endif -%}\n
+                {%- if event.location is defined %}\n
+                  Location: {{ event.location }}\n
+                {% endif -%}\n
+            {%- endfor %}\n
+            \n
+            Today's cheapest petrol: {{ state_attr('sensor.rss_fuel_watch_ulp', 'entries') | first }}
+          agent_id: 4fa03cf261717b10d7df1b96889b63f6 #Artemis
+        response_variable: agent
+      - alias: Send notification
+        service: script.notify_laura
+        data:
+          message_for_laura: "{{ agent.response.speech.plain.speech }}"
 
 script:
   chatgpt_reword_message:
@@ -172,7 +192,7 @@ script:
         description: "What do you want ChatGPT to reword?"
         example: "This is a notification for Michael."
     variables:
-      chatgpt_agent: 40c56445ddb43e3665d8831f99dc7a6c #Pirate
+      chatgpt_agent: 4fa03cf261717b10d7df1b96889b63f6 #Artemis
     sequence:
       - alias: Conversation Agent Notification Text
         service: conversation.process
