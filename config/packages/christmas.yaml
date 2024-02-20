@@ -65,25 +65,9 @@ automation:
       - condition: state
         entity_id: input_boolean.enable_christmas_automations
         state: 'on'
-    action:
-      - entity_id: light.christmas_tree
-        service: light.turn_on
-
-  - alias: Christmas - Automatically Turn On Tree Lights At Night
-    id: christmas_automatically_turn_on_tree_lights_at_night
-    trigger:
-      - platform: sun
-        event: sunset
-    condition:
-      - condition: state
-        entity_id: input_boolean.holiday_mode
-        state: "off" #don't run if on holiday
-      - condition: state
-        entity_id: input_boolean.enable_christmas_automations
-        state: 'on'
-      - condition: state
-        entity_id: 'alarm_control_panel.alarm_com'
-        state: 'disarmed' #we're home
+      - condition: state #from sunset until sunrise
+        entity_id: sun.sun
+        state: "below_horizon"
     action:
       - entity_id: light.christmas_tree
         service: light.turn_on
@@ -111,7 +95,9 @@ automation:
         state: 'on'
     action:
       - entity_id: light.christmas_tree
-        service: light.turn_on
+        service: light.turn_off
+      - entity_id: light.esp_christmas_garland_garland_lights
+        service: light.turn_off
 
   - alias: Christmas - Automatically Play Music When Arriving Home During The Day
     id: christmas_automatically_play_music_when_arriving_home
@@ -131,7 +117,7 @@ automation:
     action:
       - service: spotcast.start
         data:
-          uri: spotify:playlist:37i9dQZF1EIfJuAtBY3e9v
+          uri: spotify:playlist:37i9dQZF1DX9BVquKzFnCW
           random_song: true
           shuffle: true
           start_volume: 50
@@ -154,6 +140,8 @@ automation:
         state: 'disarmed' #we're home
     action:
       - entity_id: light.christmas_tree
+        service: light.turn_on
+      - entity_id: light.esp_christmas_garland_garland_lights
         service: light.turn_on
 
   - alias: Christmas - Rotate Christmas Lights Effects Every Hour
