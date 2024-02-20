@@ -118,10 +118,10 @@ automation:
       #proceed to turn on the aircon in the master bedroom for 60 min if the aircon was already on in there
       - condition: template
         value_template: "{{ aircon_was_running_master_bedroom or aircon_was_running_living_room }}"
-      - service: input_number.set_value
-        data:
-          entity_id: input_number.aircon_countdown_timer
-          value: 60
+      # - service: input_number.set_value
+      #   data:
+      #     entity_id: input_number.aircon_countdown_timer
+      #     value: 60
       - delay:
           seconds: 3
       - service: switch.turn_off
