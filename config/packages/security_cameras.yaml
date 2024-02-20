@@ -6,7 +6,7 @@ automation:
         entity_id:
           - light.alfresco_infra_red_lights_in_night_mode
           - light.backyard_infra_red_lights_in_night_mode
-        to: 'off'
+        to: "off"
     action:
       - service: light.turn_on
         target:
@@ -19,12 +19,12 @@ automation:
     trigger:
       - platform: state
         entity_id: alarm_control_panel.alarm_com
-        from: 'disarmed'
-        to: 'armed_away'
+        from: "disarmed"
+        to: "armed_away"
       - platform: state
         entity_id: alarm_control_panel.alarm_com
-        from: 'disarmed'
-        to: 'armed_home'
+        from: "disarmed"
+        to: "armed_home"
     action:
       - service: switch.turn_off
         target:
@@ -36,13 +36,13 @@ automation:
           option: Central Room
         target:
           entity_id: select.living_room_camera_move_to_preset
- 
+
   - alias: Security Cameras - Turn On Living Room Camera Privacy Mode When Arriving Home
     id: security_cameras_turn_on_living_room_camera_privacy_mode_when_arriving_home
     trigger:
       - platform: state
         entity_id: alarm_control_panel.alarm_com
-        to: 'disarmed'
+        to: "disarmed"
     action:
       - service: switch.turn_on
         target:
@@ -89,13 +89,13 @@ automation:
     trigger:
       - platform: state
         entity_id: binary_sensor.driveway_dog_occupancy
-        to: 'on'
+        to: "on"
     action:
       service: camera.snapshot
       target:
         entity_id: camera.driveway_dog
       data:
-        filename: '/tmp/DogPhotos/dog_{{ as_timestamp(now()) | int }}.jpg'
+        filename: "/tmp/DogPhotos/dog_{{ as_timestamp(now()) | int }}.jpg"
 
   - alias: Security Cameras - Notify Michael If Security Cameras Disconnect
     id: security_cameras_notify_michael_if_security_cameras_disconnect
@@ -104,7 +104,7 @@ automation:
         entity_id:
           - camera.alfresco_camera
           - camera.backyard_camera
-        to: 'unavailable'
+        to: "unavailable"
         for:
           minutes: 10
     action:
@@ -126,33 +126,34 @@ automation:
         entity_id: alarm_control_panel.alarm_com
     action:
       - choose:
-        - conditions:
-            - condition: state
-              entity_id: alarm_control_panel.alarm_com
-              state: 
-                - 'armed_home'
-                - 'armed_away'
-          sequence:
-            - service: switch.turn_off
-              target:
-                entity_id: switch.homenas_home_mode
-        - conditions:
-            - condition: state
-              entity_id: alarm_control_panel.alarm_com
-              state: 'disarmed'
-          sequence:
-            - service: switch.turn_on
-              target:
-                entity_id: switch.homenas_home_mode
+          - conditions:
+              - condition: state
+                entity_id: alarm_control_panel.alarm_com
+                state:
+                  - "armed_home"
+                  - "armed_away"
+            sequence:
+              - service: switch.turn_off
+                target:
+                  entity_id: switch.homenas_home_mode
+          - conditions:
+              - condition: state
+                entity_id: alarm_control_panel.alarm_com
+                state: "disarmed"
+            sequence:
+              - service: switch.turn_on
+                target:
+                  entity_id: switch.homenas_home_mode
 
   - alias: Security Cameras - Alert Michael When Car In Driveway
     id: security_cameras_alert_michael_when_car_in_driveway
+    mode: single
     trigger:
       - platform: state
-        entity_id: binary_sensor.driveway_car_occupancy
+        entity_id: binary_sensor.driveway_only_car_occupancy
         to: "on"
       - platform: state
-        entity_id: binary_sensor.driveway_motorcycle_occupancy
+        entity_id: binary_sensor.driveway_only_motorcycle_occupancy
         to: "on"
     action:
       - service: notify.mobile_app_michael_s_galaxy_s10
@@ -161,7 +162,7 @@ automation:
           data:
             group: "Driveway"
             image: /api/camera_proxy/camera.driveway_camera
-            color: 'red'
+            color: "red"
             ttl: 0
             priority: high
             clickAction: "entityId:camera.driveway_camera"
@@ -170,16 +171,19 @@ automation:
             notification_icon: "mdi:car-info"
             car_ui: true
             sticky: true
+      #don't notify me again too quickly
+      - delay:
+          seconds: 30
 
   - alias: Security Cameras - Alert TV When Car In Driveway
     id: security_cameras_alert_tv_when_car_in_driveway
     mode: single
     trigger:
       - platform: state
-        entity_id: binary_sensor.driveway_car_occupancy
+        entity_id: binary_sensor.driveway_only_car_occupancy
         to: "on"
       - platform: state
-        entity_id: binary_sensor.driveway_motorcycle_occupancy
+        entity_id: binary_sensor.driveway_only_motorcycle_occupancy
         to: "on"
     condition:
       - condition: state
@@ -189,3 +193,6 @@ automation:
       - service: notify.theatre_room_tv
         data:
           message: "There is a car in the driveway."
+      #don't notify me again too quickly
+      - delay:
+          seconds: 30
