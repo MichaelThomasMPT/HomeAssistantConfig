@@ -1,24 +1,4 @@
 binary_sensor:
-  - platform: ping
-    host: !secret device_michael_pc_ip_address
-    name: Michael PC
-    count: 2
-    scan_interval: 5
-  - platform: ping
-    host: !secret device_laura_pc_ip_address
-    name: Laura PC
-    count: 2
-    scan_interval: 5
-  - platform: ping
-    host: !secret device_michael_work_laptop_ip_address
-    name: Michael Work Laptop
-    count: 2
-    scan_interval: 5
-  - platform: ping
-    host: !secret device_laura_work_laptop_ip_address
-    name: Laura Work Laptop
-    count: 2
-    scan_interval: 5
   - platform: group
     name: Michael In Meeting
     entities:

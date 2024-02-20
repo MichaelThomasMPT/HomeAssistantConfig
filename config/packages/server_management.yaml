@@ -29,31 +29,7 @@ sensor:
     name: healthcheckio
     resource: !secret healthcheckio_ping_location
     scan_interval: 300
-
-  - platform: systemmonitor
-    resources:
-      - type: memory_use
-      - type: memory_free
-      - type: memory_use_percent
-      - type: swap_use_percent
-      - type: swap_use
-      - type: swap_free
-      - type: network_in
-        arg: eno1
-      - type: network_out
-        arg: eno1
-      - type: throughput_network_in
-        arg: eno1
-      - type: throughput_network_out
-        arg: eno1
-      - type: packets_in
-        arg: eno1
-      - type: packets_out
-        arg: eno1
-      - type: processor_use
-      - type: processor_temperature
-      - type: last_boot
-
+    
   - platform: command_line
     name: NAS VPN Location
     command: ssh -i /config/ssh/id_rsa -o 'StrictHostKeyChecking=no' root@192.168.1.222 -p 222 'curl ipinfo.io'

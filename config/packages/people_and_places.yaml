@@ -384,12 +384,3 @@ person:
     device_trackers:
       - device_tracker.lauras_iphone
       - device_tracker.phone_ping_laura
-    
-device_tracker:
-  - platform: ping
-    hosts:
-      phone_ping_laura: !secret device_laura_phone_ip_address
-    consider_home: 0:20 
-  - platform: ping
-    hosts:
-      phone_ping_michael: !secret device_michael_phone_ip_address
