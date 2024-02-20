@@ -160,8 +160,8 @@ script:
             49
           {%- elif doneness | lower == "medium rare" -%}
             54
-          {%- elif doneness | lower == "medium" -%}
-            60
+          {%- elif doneness | lower == "brisket" -%}
+            91
           {%- endif %}
         {% elif meat | lower == "lamb" -%}
           {% if doneness | lower == "rare" -%}
