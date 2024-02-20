@@ -322,29 +322,54 @@ automation:
         webhook_id: !secret wedding_savedate_webhook_id
         allowed_methods:
           - POST
-        local_only: true
+        local_only: false
     action:
       - variables:
-          message_text: "{{ trigger.json.person }} has saved the date!"
-      - service: notify.mobile_app_michael_s_galaxy_s10
-        data:
-          title: "A Wedding Guest Has Responded"
-          message: "{{ message_text }}"
-          data:
-            group: "Wedding"
-            color: "#ff00c8"
-            notification_icon: "mdi:heart"
-      - service: notify.mobile_app_lauras_iphone
-        data:
-          title: "A Wedding Guest Has Responded"
-          message: "{{ message_text }}"
-      - alias: "Check if TV is on before notifying it"
-        condition: state
-        entity_id: media_player.theatre_room_tv
-        state: "on"
-      - service: notify.theatre_room_tv
-        data:
-          message: "{{ message_text }}"
+          message_text: >-
+            {% if (trigger.json.person2 is not defined) or (trigger.json.person2 is none) or ( (trigger.json.person2 | trim) == "") %}
+              {{ trigger.json.person1 }} has saved the date!
+            {% else %}
+              {{ trigger.json.person1 | trim }} and {{ trigger.json.person2 | trim }} have saved the date!
+            {% endif %}
+      - parallel:
+          - sequence: #Notify Michael
+              - service: notify.mobile_app_michael_s_galaxy_s10
+                data:
+                  title: "A Wedding Guest Has Responded"
+                  message: "{{ message_text }}"
+                  data:
+                    group: "Wedding"
+                    color: "#ff00c8"
+                    notification_icon: "mdi:heart"
+          - sequence: #Notify Laura
+              - service: notify.mobile_app_lauras_iphone
+                data:
+                  title: "A Wedding Guest Has Responded"
+                  message: "{{ message_text }}"
+          - sequence: #Notify TV if it is on
+              - alias: "Check if TV is on before notifying it"
+                condition: state
+                entity_id: media_player.theatre_room_tv
+                state: "on"
+              - service: notify.theatre_room_tv
+                data:
+                  message: "{{ message_text }}"
+          - sequence: #Change curtains to love heart briefly, then back again
+              - service: scene.create
+                data:
+                  scene_id: curtain_original_state
+                  snapshot_entities:
+                    - light.curtain_left
+              - service: light.turn_on
+                target:
+                  entity_id: light.curtain_left
+                data:
+                  effect: "7 Heart"
+              - delay:
+                  seconds: 20
+              - service: scene.turn_on
+                data:
+                  entity_id: scene.curtain_original_state
 
 person:
   - name: Michael
