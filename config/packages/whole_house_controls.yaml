@@ -1,49 +1,56 @@
 script:
   turn_off_all_lights:
-    icon: 'mdi:lightbulb-group-off'
-    description: 'Turn off all the lights in the house, optionally excluding a set of lights in the process (excluded lights will remain in their current state).'
+    icon: "mdi:lightbulb-group-off"
+    description: "Turn off all the lights in the house, optionally excluding a set of lights in the process (excluded lights will remain in their current state)."
     fields:
       excluded_lights:
-        description: 'A comma-separated list of lights to exclude from turning off (ie. leave in their current state), or blank to turn off all lights'
+        description: "A comma-separated list of lights to exclude from turning off (ie. leave in their current state), or blank to turn off all lights"
         example: "['light.garage_light', 'light.front_porch_light'] or []"
     sequence:
       - service: light.turn_off
-        data_template: 
+        data_template:
           entity_id: "{{ states.light | rejectattr('entity_id','in', excluded_lights) | map(attribute='entity_id') | list | join(', ') }}"
       - delay:
-          seconds: 5  #in case any lights didn't turn off fully (eg. those on a double switch), try again
+          seconds: 5 #in case any lights didn't turn off fully (eg. those on a double switch), try again
       - service: light.turn_off
-        data_template: 
+        data_template:
           entity_id: "{{ states.light | rejectattr('entity_id','in', excluded_lights) | map(attribute='entity_id') | list | join(', ') }}"
 
   turn_off_whole_house:
-    icon: 'mdi:home-minus-outline'
-    description: 'Turn off everything in the house, optionally excluding a set of lights in the process (excluded lights will remain in their current state).'
+    icon: "mdi:home-minus-outline"
+    description: "Turn off everything in the house, optionally excluding a set of lights in the process (excluded lights will remain in their current state)."
     fields:
       excluded_lights:
-        description: 'A comma-separated list of lights to exclude from turning off (ie. leave in their current state), or blank to turn off all lights'
+        description: "A comma-separated list of lights to exclude from turning off (ie. leave in their current state), or blank to turn off all lights"
         example: "['light.garage_light', 'light.front_porch_light'] or []"
       turn_off_aircon:
-        description: 'Leave the aircon on or turn it off (boolean)'
+        description: "Leave the aircon on or turn it off (boolean)"
         example: true
     sequence:
-      - service: script.turn_off_all_lights
-        data:
-          excluded_lights: "{{ excluded_lights }}"
-      - service: media_player.turn_off #tv & speakers
-        entity_id: all
-      - service: switch.turn_off
-        entity_id: switch.living_room_tv_smart_plug
-      - service: cover.close_cover
-        entity_id: cover.theatre_blinds
-      - service: climate.turn_off
-        entity_id: climate.alfresco_heater
-      # only proceed if requesting to turn off the aircon
-      - condition: template
-        value_template: "{{ turn_off_aircon }}" 
-      - service: script.aircon_turn_off_all_zones
-      - service: climate.turn_off
-        entity_id: climate.ac
+      - parallel:
+          - sequence:
+              - service: script.turn_off_all_lights
+                data:
+                  excluded_lights: "{{ excluded_lights }}"
+          - sequence:
+              - service: media_player.turn_off #tv & speakers
+                entity_id: all
+          - sequence:
+              - service: switch.turn_off
+                entity_id: switch.living_room_tv_smart_plug
+          - sequence:
+              - service: cover.close_cover
+                entity_id: cover.theatre_blinds
+          - sequence:
+              - service: climate.turn_off
+                entity_id: climate.alfresco_heater
+          - sequence:
+              # only proceed if requesting to turn off the aircon
+              - condition: template
+                value_template: "{{ turn_off_aircon }}"
+              - service: script.aircon_turn_off_all_zones
+              - service: climate.turn_off
+                entity_id: climate.ac
 
   set_party_lights:
     alias: "Whole House - Set Party Lights"
@@ -53,7 +60,7 @@ script:
       - service: light.turn_on
         entity_id: light.alfresco_fairy_lights
       - service: light.turn_on
-        entity_id: 
+        entity_id:
           - light.kitchen_island
           - light.living_room
           - light.dining_room
@@ -65,7 +72,7 @@ script:
         data:
           brightness_pct: 7
       - service: light.turn_on
-        entity_id: 
+        entity_id:
           - light.scullery_light
           - light.pantry_light
           - light.side_hall
@@ -83,7 +90,7 @@ script:
         target:
           entity_id: light.curtain_left
       - service: hue.hue_activate_scene
-        data: 
+        data:
           group_name: "Theatre Room"
           scene_name: "Party Lights"
       - delay: 3
@@ -138,6 +145,6 @@ automation:
     trigger:
       - platform: sun
         event: sunrise
-        offset: "+03:00:00" #should be enough time for any stragglers to wake up! 
+        offset: "+03:00:00" #should be enough time for any stragglers to wake up!
     action:
       - service: script.reset_party_lights
