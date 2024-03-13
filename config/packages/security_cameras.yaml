@@ -155,6 +155,10 @@ automation:
       - platform: state
         entity_id: binary_sensor.driveway_only_motorcycle_occupancy
         to: "on"
+    condition:
+      - condition: state
+        entity_id: cover.garage_door
+        state: "closed"
     action:
       - service: notify.mobile_app_michael_s_galaxy_s10
         data:
@@ -189,6 +193,9 @@ automation:
       - condition: state
         entity_id: media_player.theatre_room_tv
         state: "on"
+      - condition: state
+        entity_id: cover.garage_door
+        state: "closed"
     action:
       - service: notify.theatre_room_tv
         data:
