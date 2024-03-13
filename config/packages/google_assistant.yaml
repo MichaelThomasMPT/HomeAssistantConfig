@@ -67,6 +67,7 @@ cloud:
         - climate.refrigerator_freezer
         - climate.refrigerator_fridge
         - switch.alfresco_heater
+        - vacuum.robo_buddy
     entity_config:
       light.christmas_tree:
         name: Christmas Tree
