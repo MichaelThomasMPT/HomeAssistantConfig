@@ -221,6 +221,9 @@ automation:
         - condition: state  # from sunset until sunrise
           entity_id: sun.sun
           state: 'below_horizon'
+        - condition: state
+          entity_id: media_player.theatre_room_tv
+          state: 'off'
     action:
       - service: light.turn_on
         entity_id:
