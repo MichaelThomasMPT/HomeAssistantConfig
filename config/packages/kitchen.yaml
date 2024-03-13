@@ -9,6 +9,11 @@ light:
     entities:
       - light.kitchen_ceiling_light
       - light.kitchen_island
+  - platform: group
+    name: Scullery LEDs
+    entities:
+      - light.scullery_leds_large_light
+      - light.scullery_leds_small_light
 
 sensor:
   - platform: history_stats
@@ -102,11 +107,23 @@ automation:
       - platform: state
         entity_id: binary_sensor.scullery_ep1_occupancy
     action:
-      - service: "{% if states.binary_sensor.scullery_ep1_pir.state == 'on' or states.binary_sensor.scullery_ep1_occupancy.state == 'on' -%}light.turn_on{%- else -%}light.turn_off{%- endif %}"
-        entity_id: 
-          - light.scullery_light
-          - light.pantry_light
-
+      - choose:
+          - conditions:
+              - condition: template
+                value_template: "{{  states.binary_sensor.scullery_ep1_pir.state == 'on' or states.binary_sensor.scullery_ep1_occupancy.state == 'on' }}"
+            sequence:
+              - service: light.turn_on
+                target:
+                  entity_id: light.scullery_leds
+                data:
+                  brightness_pct: 1
+        default:
+            #No motion detected, turn off the lights
+          - service: light.turn_off
+            entity_id: 
+              - light.kitchenette_lights
+              - light.scullery_leds 
+      
   - alias: Kitchen - Turn On Lights Using Island Switch
     id: kitchen_turn_on_lights_using_island_switch
     trigger: 
