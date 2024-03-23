@@ -39,6 +39,9 @@ automation:
       - condition: template
         value_template:  >-
           {{ '%02d' % now().month + '-%02d' % now().day == '09-21' }}
+      - condition: state
+        entity_id: input_boolean.holiday_mode
+        state: "off" #don't run if on holiday
     action:
       - delay:
           minutes: 5

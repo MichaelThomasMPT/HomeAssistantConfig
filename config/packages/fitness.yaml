@@ -52,6 +52,9 @@ automation:
       - condition: state
         entity_id: person.michael
         state: 'not_home'
+      - condition: state
+        entity_id: input_boolean.holiday_mode
+        state: "off" #not allowed to disable until home if I'm on holiday
     action:
       - service: input_boolean.turn_off
         data:

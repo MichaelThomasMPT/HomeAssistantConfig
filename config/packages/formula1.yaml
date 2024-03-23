@@ -18,6 +18,9 @@ automation:
         before: "21:00:00"
       - condition: time
         after: "08:00:00"
+      - condition: state
+        entity_id: input_boolean.holiday_mode
+        state: "off" #don't run if on holiday
     action:
       - service: media_player.play_media
         data:

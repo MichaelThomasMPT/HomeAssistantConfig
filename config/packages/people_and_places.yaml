@@ -53,6 +53,43 @@ zone:
     icon: mdi:dice-6
 
 automation:
+  - alias: Location - Turn On Presence Simulation At Night When On Holiday
+    id: location_turn_on_presence_simulation_when_on_holiday
+    trigger:
+      - id: "sunset"
+        platform: sun
+        event: sunset
+      - id: "sunrise"
+        platform: sun
+        event: sunrise
+    condition:
+      - platform: state
+        entity_id: input_boolean.holiday_mode
+        state: "on"
+    action:
+      - service: "{{ 'switch.turn_on' if trigger.id == 'sunset' else 'switch.turn_off' }}"
+        target:
+          entity_id: switch.holiday_mode_presence_simulation
+
+  - alias: Location - Remind Me To Turn Off Holiday Mode When Arriving Home
+    id: location_remind_me_to_turn_off_holiday_mode_when_arriving_home
+    trigger:
+      - platform: zone
+        entity_id: device_tracker.michael_galaxy_s10
+        zone: zone.home
+        event: enter
+    condition:
+      - condition: state
+        entity_id: input_boolean.holiday_mode
+        state: "on"
+    action:
+      - service: notify.mobile_app_michael_s_galaxy_s10
+        data:
+          message: "Welcome home! Don't forget to disable Holiday Mode."
+          data:
+            notification_icon: "mdi:caravan"
+    
+
   - alias: Location - Notify Michael If Laura Leaving Work
     id: location_notify_michael_if_laura_leaving_work
     trigger:
