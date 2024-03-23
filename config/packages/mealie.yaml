@@ -1,0 +1,117 @@
+sensor:
+  #Sensor to view items which are on any Mealie shopping list
+  - platform: rest
+    name: Mealie Shopping List Items
+    resource_template: !secret mealie_shopping_items_api_endpoint
+    headers:
+      Authorization: !secret mealie_api_token
+    params:
+      perPage: 1
+      queryFilter: checked=false
+      orderBy: food.name
+      orderDirection: asc
+
+    #As long as the request contains "total", the API was successfully reached
+    availability: >
+      {{ value_json['total'] }}
+
+    #Extract the ingredient data in the following format: "food quantity unit" eg. "apples 1.5 kilogram", or "None" if no items in the list
+    value_template: >
+      {% if value_json['total'] > 0 %}
+        {% if value_json['items'][0]['quantity'] > 0 %}
+          {{ value_json['items'][0]['food']['name'] }} - {{ (value_json['items'][0]['quantity'] | round(3) | string).rstrip('0').rstrip('.') }} {{ value_json['items'][0]['unit']['name'] }}
+        {% else %}
+          {{ value_json['items'][0]['food']['name'] }}
+        {% endif %}
+      {% else %}
+        Empty List
+      {% endif %}
+
+    #Extract the ingredient's ID for use to delete through the API later on
+    json_attributes_path: "$.items.0"
+    json_attributes:
+      - id
+
+rest_command:
+  #Command to delete a Mealing shopping list item
+  mealie_delete_from_shopping_list:
+    url: >
+      {{ url }}/{{ state_attr('sensor.mealie_shopping_list_items', 'id') }}
+    method: delete
+    headers:
+      Authorization:  !secret mealie_api_token
+
+automation:
+  #Automation to regularly refresh the "Mealie Shopping List Items" sensor 
+  - id: mealie_update_rest_sensors
+    alias: "Mealie - Update Rest Sensors"
+    initial_state: "on"
+    trigger:
+      - platform: time_pattern
+        seconds: "/10" #CHANGEME: How often do you want to check for updates in Mealie?
+    action:
+      - service: homeassistant.update_entity
+        data:
+          entity_id:
+            - sensor.mealie_shopping_list_items
+
+  #Automation to transfer items from the Mealie shopping list to another list of your choice
+  - id: mealie_transfer_shopping_list
+    alias: "Mealie - Transfer Shopping List"
+    description: "When shopping list items are added to the Mealie shopping list, transfer them to an alternative list."
+    mode: queued
+    max: 10
+    initial_state: "on"
+    variables:
+      target_shopping_list: todo.groceries_list #CHANGEME: entity ID of your shopping list
+      notify_service: notify.mobile_app_michael_s_galaxy_s10 #CHANGEME: where to be notified if items fail to delete from Mealie shopping list
+    trigger:
+      - id: "regular_trigger"
+        platform: state
+        entity_id: sensor.mealie_shopping_list_items
+      - id: "fallback_trigger"
+        platform: time_pattern
+        minutes: "/10"
+    condition:
+      - condition: not
+        conditions:
+          - condition: state
+            entity_id: sensor.mealie_shopping_list_items
+            state: "Empty List"
+    action:
+      - alias: "Ensure shopping list item isn't now 'Empty List'"
+        condition: not
+        conditions:
+          - condition: state
+            entity_id: sensor.mealie_shopping_list_items
+            state: "Empty List"
+
+      - alias: "Add shopping list item to target list"
+        service: todo.add_item
+        target:
+          entity_id: "{{ target_shopping_list }}"
+        data:
+          item: "{{ states('sensor.mealie_shopping_list_items') }}"
+          description: Imported From Mealie
+
+      - alias: "Delete shopping list item from Mealie"
+        service: rest_command.mealie_delete_from_shopping_list
+        data:
+          url: !secret mealie_shopping_items_api_endpoint
+        response_variable: mealie_delete_response
+
+      - alias: "Notify if item failed to delete from Mealie"
+        if: "{{ mealie_delete_response['status'] != 200 }}"
+        then:
+          - service: "{{ notify_service }}"
+            data:
+              title: "Failed to delete item from Mealie list"
+              message: "{{ mealie_delete_response['content'] }}"
+              data:
+                notification_icon: "mdi:food-off"
+                
+      - alias: "Refresh Mealie shopping list items sensor, in case more items need processing"
+        service: homeassistant.update_entity
+        data:
+          entity_id:
+            - sensor.mealie_shopping_list_items
