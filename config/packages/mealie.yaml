@@ -15,19 +15,28 @@ sensor:
     availability: >
       {{ value_json['total'] }}
 
-    #Extract the ingredient data in the following format: "food quantity unit" eg. "apples 1.5 kilogram", or "None" if no items in the list
+    #Extract the ingredient data in the following format: "food - quantity unit" eg. "apples - 1.5 kilogram", or "Empty List" if no items are left in the list
     value_template: >
-      {% if value_json['total'] > 0 %}
-        {% if value_json['items'][0]['quantity'] > 0 %}
-          {{ value_json['items'][0]['food']['name'] }} - {{ (value_json['items'][0]['quantity'] | round(3) | string).rstrip('0').rstrip('.') }} {{ value_json['items'][0]['unit']['name'] }}
-        {% else %}
-          {{ value_json['items'][0]['food']['name'] }}
-        {% endif %}
-      {% else %}
+      {# If no items in list, return "Empty List" #}
+      {% if value_json['total'] == 0 %}
         Empty List
+
+      {# If distinct food is not defined use display name instead #}
+      {% elif value_json['items'][0]['food'] == none %}
+        {{ value_json['items'][0]['display'] }}
+
+      {# If quantity is available, include it in the output #}
+      {% elif value_json['items'][0]['quantity'] > 0 %}
+        {{ value_json['items'][0]['food']['name'] }} - {{ (value_json['items'][0]['quantity'] | round(3) | string).rstrip('0').rstrip('.') }} {{ value_json['items'][0]['unit']['name'] }}
+
+      {# Otherwise, print just the food name #}
+      {% else %}
+        {{ value_json['items'][0]['food']['name'] }}
+        
       {% endif %}
 
-    #Extract the ingredient's ID for use to delete through the API later on
+
+    #Extract the ingredient's ID. Required to delete through the API later on.
     json_attributes_path: "$.items.0"
     json_attributes:
       - id
@@ -48,7 +57,7 @@ automation:
     initial_state: "on"
     trigger:
       - platform: time_pattern
-        seconds: "/10" #CHANGEME: How often do you want to check for updates in Mealie?
+        seconds: "/10" #How often do you want to check for updates in Mealie?
     action:
       - service: homeassistant.update_entity
         data:
