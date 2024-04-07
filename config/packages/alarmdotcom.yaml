@@ -95,6 +95,8 @@ automation:
         data: 
           excluded_lights: "['light.garage', 'light.garage_light', 'light.front_porch_light']" #Leave these lights on if they're already on
           turn_off_aircon: "true"
+      - service: climate.turn_off
+        entity_id: climate.ac
         
   - alias: Alarm System - Alert If Doors Left Open
     id: alarm_system_alert_if_doors_left_open
