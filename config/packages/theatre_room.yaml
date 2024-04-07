@@ -348,8 +348,8 @@ automation:
             script.turn_on_theatre_room_lights
           {% endif %} 
             
-  - alias: Theatre Room Lights - Turn On Lights When Motion Detected
-    id: theatre_room_lights_turn_on_lights_when_motion_detected
+  - alias: Theatre Room - Turn On Lights When Motion Detected
+    id: theatre_room_turn_on_lights_when_motion_detected
     trigger: 
       - platform: state
         entity_id: binary_sensor.theatre_room_motion
@@ -392,14 +392,14 @@ automation:
         default:
           - service: script.set_dim_theatre_lighting
 
-  - alias: Theatre Room Lights - Turn Off Lamps After No Activity
-    id: theatre_room_lights_turn_off_lamps_after_no_activity
+  - alias: Theatre Room - Turn Off Everything After No Activity
+    id: theatre_room_turn_off_everything_after_no_activity
     trigger:
       - platform: state
         entity_id: binary_sensor.theatre_room_occupancy
         to: 'off'
         for:
-          minutes: 10
+          minutes: 7
     condition:
       - condition: or
         conditions:
