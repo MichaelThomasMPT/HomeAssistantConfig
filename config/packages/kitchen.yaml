@@ -103,27 +103,78 @@ automation:
     id: kitchen_toggle_scullery_lights_when_motion_detected
     trigger: 
       - platform: state
-        entity_id: binary_sensor.scullery_ep1_pir
-      - platform: state
-        entity_id: binary_sensor.scullery_ep1_occupancy
+        entity_id:
+          - binary_sensor.scullery_ep1_pir
+          - binary_sensor.scullery_ep1_occupancy
+          - binary_sensor.pantry_motion_sensor_motion
+    action:
+      - if:
+          #Turn off lights if no occupancy
+          - condition: template
+            value_template: "{{ states.binary_sensor.scullery_ep1_occupancy.state == 'off' }}"
+        then:
+          - service: light.turn_off
+            entity_id: 
+              - light.kitchenette_lights
+              - light.scullery_leds 
+        else:
+          #Motion detected, turn on the led strip
+          - service: light.turn_on
+            target:
+              entity_id: light.scullery_leds
+            data:
+              brightness_pct: 1
+          #If motion also in pantry, turn on the pantry light too
+          - if: 
+              - condition: state
+                entity_id: binary_sensor.pantry_motion_sensor_motion
+                state: "on"
+            then:
+              - service: light.turn_on
+                target:
+                  entity_id: light.pantry_light
+
+  - alias: Kitchen - Toggle Scullery Lights When Button Pressed
+    id: kitchen_toggle_scullery_lights_when_button_pressed
+    mode: restart
+    trigger: 
+      - platform: event
+        event_type: zha_event
+        event_data: 
+          device_ieee: !secret zha_scullery_light_switch
     action:
       - choose:
           - conditions:
               - condition: template
-                value_template: "{{  states.binary_sensor.scullery_ep1_pir.state == 'on' or states.binary_sensor.scullery_ep1_occupancy.state == 'on' }}"
+                value_template: "{{ trigger.event.data.command == 'off' }}"
+            sequence:
+              - service: light.turn_off
+                target:
+                  entity_id: light.kitchenette_lights
+          - conditions:
+              - condition: template
+                value_template: "{{ trigger.event.data.command == 'on'}}"
+            sequence:
+              - service: light.turn_on
+                target:
+                  entity_id: light.kitchenette_lights
+          - conditions:
+              - condition: template
+                value_template: "{{ trigger.event.data.command == 'press' and trigger.event.data.params.param1 == 257 }}"
             sequence:
               - service: light.turn_on
                 target:
                   entity_id: light.scullery_leds
                 data:
                   brightness_pct: 1
-        default:
-            #No motion detected, turn off the lights
-          - service: light.turn_off
-            entity_id: 
-              - light.kitchenette_lights
-              - light.scullery_leds 
-      
+          - conditions:
+              - condition: template
+                value_template: "{{ trigger.event.data.command == 'press' and trigger.event.data.params.param1 == 256 }}"
+            sequence:
+              - service: light.turn_off
+                target:
+                  entity_id: light.scullery_leds
+
   - alias: Kitchen - Turn On Lights Using Island Switch
     id: kitchen_turn_on_lights_using_island_switch
     trigger: 
@@ -146,7 +197,6 @@ automation:
         default:
           - service: light.turn_on
             entity_id: light.kitchen_island
-
   - alias: Kitchen - Turn Off Lights Using Island Switch
     id: kitchen_turn_off_lights_using_island_switch
     trigger: 
