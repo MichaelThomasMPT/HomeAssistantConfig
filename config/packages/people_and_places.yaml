@@ -63,11 +63,22 @@ automation:
         platform: sun
         event: sunrise
     condition:
-      - platform: state
+      - condition: state
         entity_id: input_boolean.holiday_mode
         state: "on"
     action:
       - service: "{{ 'switch.turn_on' if trigger.id == 'sunset' else 'switch.turn_off' }}"
+        target:
+          entity_id: switch.holiday_mode_presence_simulation
+    
+  - alias: Location - Turn Off Presence Simulation When Holiday Mode Deactivated
+    id: location_turn_off_presence_simulation_when_holiday_mode_deactivated
+    trigger:
+      - platform: state
+        entity_id: input_boolean.holiday_mode
+        to: "off"
+    action:
+      - service: switch.turn_off
         target:
           entity_id: switch.holiday_mode_presence_simulation
 
