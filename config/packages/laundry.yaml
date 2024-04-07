@@ -195,17 +195,20 @@ automation:
       - condition: or
         conditions:
           - condition: state
-            entity_id: binary_sensor.weather_it_is_raining_today
-            state: "on"
+            entity_id: var.weather_it_will_rain_soon
+            state: "True"
           - condition: state
-            entity_id: binary_sensor.weather_it_is_raining_tomorrow
-            state: "on"
+            entity_id: var.weather_it_will_rain_today
+            state: "True"
+          - condition: state
+            entity_id: var.weather_it_will_rain_tomorrow
+            state: "True"
     variables:
       notification_message: >-
-        {% if states('binary_sensor.weather_it_is_raining_today') == "on" -%}
-          Today's forecast is {{ states('sensor.weather_conditions_today') }} - are you sure you want to hang out the washing?
+        {% if states('var.weather_it_will_rain_today') == "True" -%}
+          Today's forecast is {{ states('var.weather_conditions_today') }} - are you sure you want to hang out the washing?
         {%- else -%}
-          Tomorrow's forecast is {{ states('sensor.weather_conditions_tomorrow') }} - are you sure you want to hang out the washing?
+          Tomorrow's forecast is {{ states('var.weather_conditions_tomorrow') }} - are you sure you want to hang out the washing?
         {%- endif %}
     action:
       - service: script.chatgpt_reword_message
@@ -235,15 +238,15 @@ automation:
       - platform: time
         at: "20:00:00"
       - platform: state
-        entity_id: binary_sensor.weather_it_will_rain_tomorrow
-        from: "off"
-        to: "on"
+        entity_id: var.weather_it_will_rain_tomorrow
+        from: "False"
+        to: "True"
     condition:
       - condition: time
         after: "20:00:00"
       - condition: state # and it will rain tomorrow
-        entity_id: binary_sensor.weather_it_will_rain_tomorrow
-        state: "on"
+        entity_id: var.weather_it_will_rain_tomorrow
+        state: "True"
       - condition: state # and there is washing already on the line
         entity_id: binary_sensor.washing_line
         state: "on"
@@ -276,9 +279,9 @@ automation:
     id: laundry_notify_if_there_is_washing_already_on_the_line_and_it_is_starting_to_rain
     trigger:
       - platform: state
-        entity_id: binary_sensor.weather_it_is_raining_today
-        from: "off"
-        to: "on"
+        entity_id: var.weather_it_will_rain_soon
+        from: "False"
+        to: "True"
     condition:
       - condition: state # there is washing already on the line
         entity_id: binary_sensor.washing_line
