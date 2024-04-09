@@ -53,6 +53,21 @@ zone:
     icon: mdi:dice-6
 
 automation:
+  - alias: Location - Turn Off Aircon When On Holiday
+    id: location_turn_off_aircon_when_on_holiday
+    trigger:
+      - platform: state
+        entity_id: climate.ac
+        from: "off"
+    condition:
+      - condition: state
+        entity_id: input_boolean.holiday_mode
+        state: "on"
+    action:
+      - service: climate.turn_off
+        target:
+          entity_id: climate.ac
+
   - alias: Location - Turn On Presence Simulation At Night When On Holiday
     id: location_turn_on_presence_simulation_when_on_holiday
     trigger:
@@ -70,7 +85,7 @@ automation:
       - service: "{{ 'switch.turn_on' if trigger.id == 'sunset' else 'switch.turn_off' }}"
         target:
           entity_id: switch.holiday_mode_presence_simulation
-    
+
   - alias: Location - Turn Off Presence Simulation When Holiday Mode Deactivated
     id: location_turn_off_presence_simulation_when_holiday_mode_deactivated
     trigger:
@@ -99,7 +114,6 @@ automation:
           message: "Welcome home! Don't forget to disable Holiday Mode."
           data:
             notification_icon: "mdi:caravan"
-    
 
   - alias: Location - Notify Michael If Laura Leaving Work
     id: location_notify_michael_if_laura_leaving_work
@@ -161,7 +175,7 @@ automation:
         entity_id: sensor.alarmdotcom_front_door
         to: "Open"
       - platform: state
-        entity_id: 
+        entity_id:
           - binary_sensor.garage_door_internal
           - binary_sensor.front_door
         to: "on"
@@ -195,7 +209,7 @@ automation:
         state: "on"
       - condition: state
         entity_id: binary_sensor.michael_work_laptop
-        state:  "on" #Laptop is still plugged in to desk
+        state: "on" #Laptop is still plugged in to desk
     action:
       - service: script.chatgpt_reword_message
         data:
@@ -214,7 +228,7 @@ automation:
       - platform: state
         entity_id:
           - sensor.michael_s_galaxy_s10_bluetooth_connection
-    variables: 
+    variables:
       mazda_mac_address: !secret mazda_bluetooth_mac_address
     condition:
       - alias: "Check whether the Mazda was just disconnected"
@@ -239,7 +253,7 @@ automation:
         data:
           message: "{{ chatgpt_response.text }}"
           data:
-            color: '#FFA000'
+            color: "#FFA000"
             ttl: 0
             priority: high
             notification_icon: "mdi:car"
@@ -250,11 +264,11 @@ automation:
     trigger:
       platform: state
       entity_id: person.laura
-      to: 'Local Train Station'
+      to: "Local Train Station"
       for:
         minutes: 1
         seconds: 30
-    condition:       
+    condition:
       - condition: time
         before: "15:00:00"
     action:
@@ -271,25 +285,25 @@ automation:
     mode: single
     trigger:
       - platform: state
-        entity_id: 
+        entity_id:
           - binary_sensor.front_door
           - binary_sensor.garage_door_internal
         from: "off"
         to: "on"
     condition:
-      - condition: state  # from sunset until sunrise
+      - condition: state # from sunset until sunrise
         entity_id: sun.sun
-        state: 'below_horizon'
+        state: "below_horizon"
       - condition: or
         conditions:
           - condition: state
             entity_id: alarm_control_panel.alarm_com
-            state: 'armed_away'
+            state: "armed_away"
             for:
               minutes: 5
           - condition: state
             entity_id: alarm_control_panel.alarm_com
-            state: 'armed_home'
+            state: "armed_home"
             for:
               minutes: 5
     action:
@@ -323,8 +337,8 @@ automation:
       - service: notify.mobile_app_lauras_iphone
         data:
           message: "{{ chatgpt_response.text }}"
-      - delay: 
-          minutes: 15 #prevents reminding multiple times too quickly 
+      - delay:
+          minutes: 15 #prevents reminding multiple times too quickly
 
   - alias: Location - Remind Me To Bring My Crown Rewards Card
     id: location_remind_me_to_bring_my_crown_rewards_card
