@@ -215,10 +215,18 @@ views:
             entity: light.kitchen_island
             features:
               - type: light-brightness
-          - type: tile
-            entity: light.scullery_light
-            features:
-              - type: light-brightness
+          - type: horizontal-stack
+            cards:
+              - features:
+                  - type: light-brightness
+                type: tile
+                entity: light.scullery_light
+                name: Scullery Ceiling
+              - features:
+                  - type: light-brightness
+                type: tile
+                entity: light.scullery_leds
+                name: Scullery LEDs
           - type: horizontal-stack
             cards:
               - type: tile
@@ -289,8 +297,40 @@ views:
             entities:
               - entity: binary_sensor.dishwasher
             hours_to_show: 48
-          - type: tile
-            entity: calendar.groceries_list
+          - type: horizontal-stack
+            cards:
+              - type: tile
+                entity: binary_sensor.dog_biscuit_box
+                name: Dog Last Fed
+                icon: mdi:dog
+                state_content: last-changed
+              - type: conditional
+                conditions:
+                  - condition: state
+                    entity: binary_sensor.dog_bowl_water_sensor_moisture
+                    state: 'on'
+                card:
+                  type: tile
+                  entity: binary_sensor.dog_bowl_water_sensor_moisture
+                  name: Dog Water Bowl
+                  show_entity_picture: false
+                  hide_state: false
+                  state_content:
+                    - state
+              - type: conditional
+                conditions:
+                  - condition: state
+                    entity: binary_sensor.dog_bowl_water_sensor_moisture
+                    state_not: 'on'
+                card:
+                  type: tile
+                  entity: binary_sensor.dog_bowl_water_sensor_moisture
+                  name: Dog Water Bowl
+                  show_entity_picture: false
+                  hide_state: false
+                  state_content:
+                    - state
+                    - last-changed
           - show_name: true
             show_icon: true
             type: button
@@ -335,6 +375,34 @@ views:
       - cards:
           - type: thermostat
             entity: climate.ac
+            features:
+              - type: climate-hvac-modes
+                hvac_modes:
+                  - 'off'
+                  - cool
+                  - heat
+                  - fan_only
+                  - dry
+          - entities:
+              - entity: switch.aircon_zone_living
+                icon: mdi:air-filter
+                name: Living Area
+              - entity: switch.aircon_zone_theatre
+                icon: mdi:air-filter
+                name: Theatre
+              - entity: switch.aircon_zone_master
+                icon: mdi:air-filter
+                name: Master Bedroom
+              - entity: switch.aircon_zone_bed23
+                icon: mdi:air-filter
+                name: Bedroom 2 & 3
+            head:
+              label: Zones
+              type: section
+            show_header_toggle: false
+            state_color: true
+            title: Zones
+            type: entities
           - card:
               cards:
                 - entities:
@@ -420,26 +488,6 @@ views:
               - entity: climate.ac
                 state_not: 'off'
             type: conditional
-          - entities:
-              - entity: switch.aircon_zone_living
-                icon: mdi:air-filter
-                name: Living Area
-              - entity: switch.aircon_zone_theatre
-                icon: mdi:air-filter
-                name: Theatre
-              - entity: switch.aircon_zone_master
-                icon: mdi:air-filter
-                name: Master Bedroom
-              - entity: switch.aircon_zone_bed23
-                icon: mdi:air-filter
-                name: Bedroom 2 & 3
-            head:
-              label: Zones
-              type: section
-            show_header_toggle: false
-            state_color: true
-            title: Zones
-            type: entities
         type: custom:stack-in-card
         title: Aircon
       - type: entities
@@ -525,7 +573,7 @@ views:
         entities:
           - entity: sensor.master_bedroom_temperature
             name: Bedroom
-          - entity: sensor.laundry_temperature
+          - entity: sensor.laundry_multisensor_air_temperature
             name: Laundry
           - entity: sensor.office_temperature
             name: Office
@@ -705,8 +753,31 @@ views:
               - entity: input_boolean.enable_christmas_automations
                 state: 'on'
             card:
+              features:
+                - type: light-brightness
               type: tile
-              entity: switch.christmas_tree_power
+              entity: light.christmas_tree
+              icon_tap_action:
+                action: toggle
+              tap_action:
+                action: more-info
+              state_content:
+                - state
+                - effect
+          - type: conditional
+            conditions:
+              - entity: input_boolean.enable_christmas_automations
+                state: 'on'
+            card:
+              type: tile
+              entity: light.esp_christmas_garland_garland_lights
+              name: Christmas Garland
+              icon_tap_action:
+                action: toggle
+              tap_action:
+                action: more-info
+              state_content:
+                - state
       - type: vertical-stack
         title: Camera Feed
         cards:
@@ -764,9 +835,6 @@ views:
                 name: Flyscreen
               - entity: binary_sensor.back_door_glass
                 name: Glass
-              - entity: binary_sensor.dog_door
-                name: Dog Flap
-                icon: mdi:dog
       - type: vertical-stack
         cards:
           - type: vertical-stack
@@ -836,6 +904,45 @@ views:
                   service: script.living_room_soundbar_mute
                 name: Volume Mute
                 icon: mdi:volume-mute
+      - type: vertical-stack
+        title: Dog
+        cards:
+          - type: horizontal-stack
+            cards:
+              - type: tile
+                entity: binary_sensor.dog_door
+                name: Dog Flap
+                icon: mdi:dog
+                state_content:
+                  - state
+                  - last-changed
+              - type: conditional
+                conditions:
+                  - condition: state
+                    entity: binary_sensor.dog_bowl_water_sensor_moisture
+                    state: 'on'
+                card:
+                  type: tile
+                  entity: binary_sensor.dog_bowl_water_sensor_moisture
+                  name: Dog Water Bowl
+                  show_entity_picture: false
+                  hide_state: false
+                  state_content:
+                    - state
+              - type: conditional
+                conditions:
+                  - condition: state
+                    entity: binary_sensor.dog_bowl_water_sensor_moisture
+                    state_not: 'on'
+                card:
+                  type: tile
+                  entity: binary_sensor.dog_bowl_water_sensor_moisture
+                  name: Dog Water Bowl
+                  show_entity_picture: false
+                  hide_state: false
+                  state_content:
+                    - state
+                    - last-changed
   - theme: Backend-selected
     title: Theatre Room
     path: subview-theatre-room
@@ -946,6 +1053,8 @@ views:
                     name: VPN
                 hours_to_show: 12
                 title: Location History
+      - type: tile
+        entity: automation.theatre_room_lights_turn_on_lights_when_motion_detected
   - theme: Backend-selected
     title: Master Suite
     path: subview-master-suite
@@ -1044,6 +1153,23 @@ views:
           - type: glance
             entities:
               - binary_sensor.ensuite_shower
+      - type: vertical-stack
+        title: Whole House
+        cards:
+          - show_name: true
+            show_icon: true
+            type: button
+            tap_action:
+              action: call-service
+              service: automation.trigger
+              target:
+                entity_id: >-
+                  automation.master_bedroom_turn_off_everything_when_going_to_bed
+              data:
+                skip_condition: true
+            entity: automation.master_bedroom_turn_off_everything_when_going_to_bed
+            icon: mdi:sleep
+            name: Turn Off Everything When Going To Bed
   - theme: Backend-selected
     title: Office
     path: subview-office
@@ -1158,6 +1284,20 @@ views:
             entity: light.entry_hall_lights
           - type: tile
             entity: light.side_hall
+          - type: conditional
+            conditions:
+              - entity: input_boolean.enable_christmas_automations
+                state: 'on'
+            card:
+              type: tile
+              entity: light.esp_christmas_garland_garland_lights
+              name: Christmas Garland
+              icon_tap_action:
+                action: toggle
+              tap_action:
+                action: more-info
+              state_content:
+                - state
       - show_name: true
         show_icon: true
         show_state: true
@@ -1446,12 +1586,40 @@ views:
       - type: vertical-stack
         title: Details
         cards:
-          - type: glance
-            entities:
-              - entity: binary_sensor.dog_biscuit_box
-                icon: mdi:dog-side
+          - type: horizontal-stack
+            cards:
+              - type: tile
+                entity: binary_sensor.dog_biscuit_box
                 name: Dog Last Fed
-                show_last_changed: true
+                icon: mdi:dog
+                state_content: last-changed
+              - type: conditional
+                conditions:
+                  - condition: state
+                    entity: binary_sensor.dog_bowl_water_sensor_moisture
+                    state: 'on'
+                card:
+                  type: tile
+                  entity: binary_sensor.dog_bowl_water_sensor_moisture
+                  name: Dog Water Bowl
+                  show_entity_picture: false
+                  hide_state: false
+                  state_content:
+                    - state
+              - type: conditional
+                conditions:
+                  - condition: state
+                    entity: binary_sensor.dog_bowl_water_sensor_moisture
+                    state_not: 'on'
+                card:
+                  type: tile
+                  entity: binary_sensor.dog_bowl_water_sensor_moisture
+                  name: Dog Water Bowl
+                  show_entity_picture: false
+                  hide_state: false
+                  state_content:
+                    - state
+                    - last-changed
           - show_name: true
             show_icon: true
             show_state: true
@@ -1727,8 +1895,6 @@ views:
               exclude:
                 - state: unavailable
                 - entity_id: light.curtain_right
-                - entity_id: light.scullery_esp32_status_led
-                - entity_id: light.master_bedroom_wir_multisensor_basic
                 - entity_id: light.washing_line_light_1
                 - entity_id: light.washing_line_light_2
             sort:

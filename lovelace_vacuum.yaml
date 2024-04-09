@@ -105,3 +105,22 @@ views:
           - template: vacuum_clean_zone
           - template: vacuum_goto
           - template: vacuum_follow_path
+      - show_name: true
+        show_icon: true
+        show_state: true
+        type: glance
+        entities:
+          - entity: sensor.robo_buddy_last_clean_area
+            name: Last Clean Area
+          - entity: sensor.robo_buddy_last_clean_duration
+            name: Last Clean Time
+          - entity: sensor.robo_buddy_last_clean_end
+            name: Last Clean Ended
+          - entity: sensor.robo_buddy_total_clean_area
+            name: Total Clean Area
+          - entity: sensor.robo_buddy_total_duration
+            name: Total Clean Time
+          - entity: sensor.robo_buddy_total_clean_count
+            name: Total Clean Count
+        columns: 3
+        title: Robo Buddy Statistics

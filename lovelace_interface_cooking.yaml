@@ -123,8 +123,8 @@ views:
                   service: script.igrill_set_alert_temperature_from_preset
                   service_data:
                     meat: beef
-                    doneness: medium
-                name: Medium
+                    doneness: brisket
+                name: Brisket
                 icon: mdi:cow
               - type: button
                 tap_action:
