@@ -119,6 +119,33 @@ automation:
             group: Camera Unavailable
             notification_icon: "mdi:cctv-off"
 
+  - alias: Security Cameras - Restart Swann DVR If Disconnected
+    id: security_cameras_restart_swann_dvr_if_disconnected
+    trigger:
+      - platform: state
+        entity_id:
+          - camera.driveway_camera
+          - camera.garage
+          - camera.side_path_camera
+        to: "unavailable"
+        for:
+          minutes: 10
+    action:
+      - service: notify.mobile_app_michael_s_galaxy_s10
+        data:
+          message: "{{ trigger.entity_id }} became unavailable so will be restarted."
+          data:
+            group: Camera Unavailable
+            notification_icon: "mdi:cctv-off"
+      - service: switch.turn_off
+        target:
+          entity_id: switch.swann_nvr_power
+      - delay:
+          seconds: 10
+      - service: switch.turn_on
+        target:
+          entity_id: switch.swann_nvr_power
+
   - alias: Security Cameras - Sync Surveillance Station Home Mode With Alarm Status
     id: security_cameras_sync_surveillance_station_home_mode_with_alarm_status
     trigger:
