@@ -539,3 +539,34 @@ automation:
         data:
           target_temperature: "{{target_temp}}"
           comfortable_temperature_max: "{{comfortable_temp}}"
+
+  - alias: Temperature - Turn Off Master Bedroom Aircon Each Morning
+    id: temperature_turn_off_master_bedroom_aircon_each_morning
+    trigger: 
+      - alias: "Each morning at 9am"
+        platform: time
+        at: '09:00:00'
+    condition:
+      - alias: "Aircon is on"
+        condition: template
+        value_template: >-
+          {{ states("climate.ac") != "off" }}
+    action:
+      - if:
+          - alias: "Master bedroom is the only aircon zone turned on"
+            condition: template
+            value_template: >-
+              {{
+                    states('switch.aircon_zone_master') == 'on'
+                and states('switch.aircon_zone_bed23') == 'off'
+                and states('switch.aircon_zone_living') == 'off'
+                and states('switch.aircon_zone_theatre') == 'off'
+              }}
+        then:
+          - service: climate.turn_off
+            target:
+              entity_id: climate.ac
+        else:
+          - service: switch.turn_off
+            target:
+              entity_id: switch.aircon_zone_master
