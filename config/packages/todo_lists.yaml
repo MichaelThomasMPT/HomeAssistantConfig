@@ -3,19 +3,27 @@ var:
     friendly_name: Show House Stuff Shopping List
     initial_value: False
 
+input_text:
+  openfoodfacts_barcode_to_scan:
+    name: Barcode To Lookup In OpenFoodFacts
+rest_command:
+  openfoodfacts_get_item_from_barcode:
+    url: "https://world.openfoodfacts.org/api/v2/product/{{ states('input_text.openfoodfacts_barcode_to_scan') }}.json"
+    method: GET
+
 script:
   toggle_var_show_shopping_list_house_stuff:
     sequence:
       - service: var.set
         data:
-            entity_id:
+          entity_id:
             - var.show_shopping_list_house_stuff
-            value_template: >-
-              {% if is_state('var.show_shopping_list_house_stuff', 'True') %}
-                False
-              {% else %}
-                True 
-              {% endif %}
+          value_template: >-
+            {% if is_state('var.show_shopping_list_house_stuff', 'True') %}
+              False
+            {% else %}
+              True 
+            {% endif %}
 
 automation:
   - alias: Todo List - Add Item To Todo List Via Voice
@@ -44,3 +52,78 @@ automation:
         data:
           project: Groceries List
           content: "{{ trigger.slots.fooditem }}"
+
+  - alias: Todo List - Add Item To Shopping List Via Barcode Scan
+    id: todolist_add_item_to_shopping_list_via_barcode_scan
+    mode: queued
+    trigger:
+      - platform: webhook
+        webhook_id: "barcode_scan"
+        allowed_methods:
+          - POST
+        local_only: true
+    action:
+      - alias: Save Barcode To Lookup
+        service: input_text.set_value
+        data:
+          entity_id: input_text.openfoodfacts_barcode_to_scan
+          value: "{{ trigger.json.barcode }}"
+      - alias: Lookup Barcode
+        service: rest_command.openfoodfacts_get_item_from_barcode
+        response_variable: openfoodfacts_response
+      - if:
+          - condition: template
+            value_template: >-
+              {{ 
+                openfoodfacts_response.content.product.product_name_en != '' or
+                openfoodfacts_response.content.product.product_name != '' or
+                openfoodfacts_response.content.product.name_en != '' or
+                openfoodfacts_response.content.product.name != ''
+              }}
+        then:
+          # Product Found
+          - service: todoist.new_task
+            data:
+              project: Groceries List
+              content: >-
+                {{
+                  openfoodfacts_response.content.product.name_en or
+                  openfoodfacts_response.content.product.product_name_en or
+                  openfoodfacts_response.content.product.name or
+                  openfoodfacts_response.content.product.product_name
+                }}
+          - service: tts.cloud_say
+            data:
+              entity_id: media_player.kitchen_google_home_hub
+              message: >-
+                Added {{
+                  openfoodfacts_response.content.product.name_en or
+                  openfoodfacts_response.content.product.product_name_en or
+                  openfoodfacts_response.content.product.name or
+                  openfoodfacts_response.content.product.product_name
+                }} to your shopping list.
+          - delay:
+              seconds: 5 #Pause to let TTS finish speaking
+        else:
+          # Product Not Found
+          - service: tts.cloud_say
+            data:
+              entity_id: media_player.kitchen_google_home_hub
+              message: "The scanned barcode was not recognised."
+          - delay:
+              seconds: 3 #Pause to let TTS finish speaking
+
+  - alias: Todo List - Barcode Scanner Has Woken Up
+    id: todolist_barcode_scanner_has_woken_up
+    mode: single
+    trigger:
+      - platform: webhook
+        webhook_id: "barcode_ready"
+        allowed_methods:
+          - POST
+        local_only: true
+    action:
+      - service: tts.cloud_say
+        data:
+          entity_id: media_player.kitchen_google_home_hub
+          message: "The barcode scanner is ready for action."
