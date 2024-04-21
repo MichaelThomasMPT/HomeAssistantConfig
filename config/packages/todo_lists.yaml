@@ -119,6 +119,17 @@ automation:
                 data:
                   item: "{{ medicine_name.text }}"
                   description: "Added on {{ now().strftime('%d %b %Y') }} via barcode scan"
+              - if:
+                  - alias: "If this is the first item added to the medicine list"
+                    condition: template
+                    value_template: "{{ states('todo.medicine_to_buy') == '1' }}"
+                then:
+                  - service: todo.add_item
+                    target:
+                      entity_id: todo.inbox
+                    data:
+                      item: "Refill medicine at pharmacy"
+                      due_date: "{{ now().strftime('%Y-%m-%d') }}"
               - service: tts.cloud_say
                 data:
                   entity_id: "media_player.kitchen_google_home_hub"
