@@ -37,10 +37,11 @@ automation:
       - condition: template #Only add it to the shopping list once
         value_template: "{{ 'Black ink (PG-645 or PG-645XL)' not in state_attr('calendar.groceries_list', 'all_tasks') }}"
     action:
-      - service: todoist.new_task
+      - service: todo.add_item
+        target:
+          entity_id: todo.groceries_list
         data:
-          content: Black ink (PG-645 or PG-645XL)
-          project: Groceries List
+          item: Black ink (PG-645 or PG-645XL)
       - service: script.chatgpt_reword_message
         data:
           prompt: "Black printer ink is running low and has been added to your shopping list."
@@ -61,10 +62,11 @@ automation:
       - condition: template #Only add it to the shopping list once
         value_template: "{{ 'Colour ink (PG-646 or PG-646XL)' not in state_attr('calendar.groceries_list', 'all_tasks') }}"
     action:
-      - service: todoist.new_task
+      - service: todo.add_item
+        target:
+          entity_id: todo.groceries_list
         data:
-          content: Colour ink (PG-646 or PG-646XL)
-          project: Groceries List
+          item: Colour ink (PG-646 or PG-646XL)
       - service: script.chatgpt_reword_message
         data:
           prompt: "Colour printer ink is running low and has been added to your shopping list."
