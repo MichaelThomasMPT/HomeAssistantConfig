@@ -12,6 +12,34 @@ rest_command:
     method: GET
 
 script:
+  try_get_medicine_from_barcode:
+    alias: "Try Get Medicine From Barcode"
+    fields:
+      scanned_barcode:
+        description: "The number of the barcode which was scanned, as a string"
+        example: "9323610009210"
+    variables:
+      medicine_barcodes:
+        "9323610009210": "Adesan (Candesartan Cilexetil 32mg)"
+        "9310488000845": "Calcium 600mg"
+        "9338475031290": "Ciclosporin 25mg"
+        "9338475031306": "Ciclosporin 50mg"
+        "5000456027199": "Forxiga (Dapagliflozin 10mg)"
+        "9315771009857": "Magnesium 500mg"
+        "9369998237272": "Resprim Forte (Sulfamethoxazole and Trimethoprim 800mg / 160mg)"
+        "9323610000675": "Resprim Forte (Sulfamethoxazole and Trimethoprim 800mg / 160mg)"
+    sequence:
+      - variables:
+          medicine_name:
+            text: >
+              {% if (scanned_barcode | string) in medicine_barcodes %}
+              {{ medicine_barcodes[(scanned_barcode | string)] }}
+              {% else %}
+              Not Found
+              {% endif %}
+      - stop: "Finished checking for medicine from barcode."
+        response_variable: "medicine_name"
+
   toggle_var_show_shopping_list_house_stuff:
     sequence:
       - service: var.set
@@ -63,16 +91,39 @@ automation:
           - POST
         local_only: true
     action:
-      - alias: Save Barcode To Lookup
+      - alias: Look up barcode in medicine list
+        service: script.try_get_medicine_from_barcode
+        response_variable: medicine_name
+        data:
+          scanned_barcode: "{{ trigger.json.barcode }}"
+      - alias: Save Barcode To Lookup In OpenFoodFacts
         service: input_text.set_value
         data:
           entity_id: input_text.openfoodfacts_barcode_to_scan
           value: "{{ trigger.json.barcode }}"
-      - alias: Lookup Barcode
+      - alias: Lookup Barcode In OpenFoodFacts
         service: rest_command.openfoodfacts_get_item_from_barcode
         response_variable: openfoodfacts_response
-      - if:
-          - condition: template
+      - choose:
+          - conditions:
+              - alias: "Scanned barcode is a known medicine"
+                condition: template
+                value_template: "{{ medicine_name.text != 'Not Found' }}"
+            sequence:
+              # Product Found
+              - service: todo.add_item
+                target:
+                  entity_id: todo.medicine_to_buy
+                data:
+                  item: "{{ medicine_name.text }}"
+                  description: "Added on {{ now().strftime('%d %b %Y') }} via barcode scan"
+              - service: tts.cloud_say
+                data:
+                  entity_id: "media_player.kitchen_google_home_hub"
+                  message: "Added {{ medicine_name.text }} to your shopping list."
+          - conditions:
+              - alias: "Scanned barcode is a known grocery product"
+                condition: template
             value_template: >-
               {{ 
                 openfoodfacts_response.content.product.product_name_en != '' or
@@ -80,18 +131,20 @@ automation:
                 openfoodfacts_response.content.product.name_en != '' or
                 openfoodfacts_response.content.product.name != ''
               }}
-        then:
+            sequence:
           # Product Found
-          - service: todoist.new_task
+              - service: todo.add_item
+                target:
+                  entity_id: todo.groceries_list
             data:
-              project: Groceries List
-              content: >-
+                  item: >-
                 {{
                   openfoodfacts_response.content.product.name_en or
                   openfoodfacts_response.content.product.product_name_en or
                   openfoodfacts_response.content.product.name or
                   openfoodfacts_response.content.product.product_name
                 }}
+                  description: "Added on {{ now().strftime('%d %b %Y') }} via barcode scan"
           - service: tts.cloud_say
             data:
               entity_id: media_player.kitchen_google_home_hub
@@ -102,16 +155,14 @@ automation:
                   openfoodfacts_response.content.product.name or
                   openfoodfacts_response.content.product.product_name
                 }} to your shopping list.
-          - delay:
-              seconds: 5 #Pause to let TTS finish speaking
-        else:
-          # Product Not Found
-          - service: tts.cloud_say
+        default:
+          - alias: "Scanned barcode is unknown"
+            service: tts.cloud_say
             data:
               entity_id: media_player.kitchen_google_home_hub
               message: "The scanned barcode was not recognised."
           - delay:
-              seconds: 3 #Pause to let TTS finish speaking
+          seconds: 5 #Pause to let TTS finish speaking
 
   - alias: Todo List - Barcode Scanner Has Woken Up
     id: todolist_barcode_scanner_has_woken_up
