@@ -21,6 +21,7 @@ script:
     variables:
       medicine_barcodes:
         "9323610009210": "Adesan (Candesartan Cilexetil 32mg)"
+        "9350299003321": "Adesan (Candesartan Cilexetil 32mg)"
         "9310488000845": "Calcium 600mg"
         "9338475031290": "Ciclosporin 25mg"
         "9338475031306": "Ciclosporin 50mg"
