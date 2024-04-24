@@ -109,28 +109,34 @@ automation:
           - binary_sensor.pantry_motion_sensor_motion
     action:
       - if:
-          #Turn off lights if no occupancy
-          - condition: template
-            value_template: "{{ states.binary_sensor.scullery_ep1_occupancy.state == 'off' }}"
+          - alias: Trigger was scullery occupancy no longer detected
+            condition: template
+            value_template: >-
+              {{
+                trigger.entity_id == "binary_sensor.scullery_ep1_occupancy"
+                and trigger.to_state.state == 'off'
+              }}
         then:
-          - service: light.turn_off
+          - alias: Turn off all lights
+            service: light.turn_off
             entity_id: 
               - light.kitchenette_lights
               - light.scullery_leds 
         else:
-          #Motion detected, turn on the led strip
-          - service: light.turn_on
+          - alias: Turn on scullery LED strip
+            service: light.turn_on
             target:
               entity_id: light.scullery_leds
             data:
               brightness_pct: 1
-          #If motion also in pantry, turn on the pantry light too
           - if: 
-              - condition: state
+              - alias: Motion detected in the pantry
+                condition: state
                 entity_id: binary_sensor.pantry_motion_sensor_motion
                 state: "on"
             then:
-              - service: light.turn_on
+              - alias: Turn pantry light on
+                service: light.turn_on
                 target:
                   entity_id: light.pantry_light
 
