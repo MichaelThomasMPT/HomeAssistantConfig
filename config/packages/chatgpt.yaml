@@ -179,10 +179,9 @@ automation:
             Today's cheapest petrol: {{ state_attr('sensor.rss_fuel_watch_ulp', 'entries') | first }}
           agent_id: 4fa03cf261717b10d7df1b96889b63f6 #Artemis
         response_variable: agent
-      - alias: Send notification
-        service: script.notify_laura
+      - service: notify.mobile_app_lauras_iphone
         data:
-          message_for_laura: "{{ agent.response.speech.plain.speech }}"
+          message: "{{ agent.response.speech.plain.speech }}"
 
 script:
   chatgpt_reword_message:
