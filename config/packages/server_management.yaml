@@ -24,12 +24,7 @@ rest_command:
       X-API-KEY: !secret radarr_api_key
     method: POST
 
-sensor:
-  - platform: rest
-    name: healthcheckio
-    resource: !secret healthcheckio_ping_location
-    scan_interval: 300
-    
+sensor:  
   - platform: command_line
     name: NAS VPN Location
     command: ssh -i /config/ssh/id_rsa -o 'StrictHostKeyChecking=no' root@192.168.1.222 -p 222 'curl ipinfo.io'

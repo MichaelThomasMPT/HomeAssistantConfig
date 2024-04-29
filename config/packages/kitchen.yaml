@@ -19,10 +19,10 @@ sensor:
   - platform: history_stats
     name: Coffees Made Today
     entity_id: binary_sensor.coffee_machine
-    state: 'off'
+    state: "off"
     type: count
-    start: '{{ now().replace(hour=0, minute=0, second=0) }}'
-    end: '{{ now() }}'
+    start: "{{ now().replace(hour=0, minute=0, second=0) }}"
+    end: "{{ now() }}"
 
 binary_sensor:
   - platform: template
@@ -44,7 +44,7 @@ automation:
     trigger:
       - platform: state
         entity_id: switch.main_fridge_smart_plug
-        to: 'off'
+        to: "off"
     action:
       - service: switch.turn_on
         target:
@@ -57,7 +57,7 @@ automation:
     trigger:
       - platform: state
         entity_id: switch.drinks_fridge_smart_plug
-        to: 'off'
+        to: "off"
     action:
       - service: switch.turn_on
         target:
@@ -69,13 +69,13 @@ automation:
     id: kitchen_notify_if_coffee_machine_closed_for_5_minutes
     trigger:
       platform: time_pattern
-      minutes: '/5' #run every 5 minutes
+      minutes: "/5" #run every 5 minutes
     condition:
       condition: or
       conditions:
         - condition: state
           entity_id: binary_sensor.coffee_machine
-          state: 'off'
+          state: "off"
           for:
             minutes: 4
     action:
@@ -93,60 +93,86 @@ automation:
           message: "{{ chatgpt_response.text }}"
       - condition: state
         entity_id: media_player.kitchen_google_home_hub
-        state: 'off' #Only use text-to-speech on Google Home Hub if it's not already in use, so it doesn't stop any music from playing
-      - service: script.custom_speak_notification 
+        state: "off" #Only use text-to-speech on Google Home Hub if it's not already in use, so it doesn't stop any music from playing
+      - service: script.custom_speak_notification
         data:
           message_to_speak: "{{ chatgpt_response.text }}"
           media_player: media_player.kitchen_google_home_hub
 
   - alias: Kitchen - Toggle Scullery Lights When Motion Detected
     id: kitchen_toggle_scullery_lights_when_motion_detected
-    trigger: 
+    trigger:
       - platform: state
         entity_id:
           - binary_sensor.scullery_ep1_pir
           - binary_sensor.scullery_ep1_occupancy
           - binary_sensor.pantry_motion_sensor_motion
     action:
-      - if:
-          - alias: Trigger was scullery occupancy no longer detected
-            condition: template
-            value_template: >-
-              {{
-                trigger.entity_id == "binary_sensor.scullery_ep1_occupancy"
-                and trigger.to_state.state == 'off'
-              }}
-        then:
-          - alias: Turn off all lights
-            service: light.turn_off
-            entity_id: 
-              - light.kitchenette_lights
-              - light.scullery_leds 
-        else:
-          - alias: Turn on scullery LED strip
-            service: light.turn_on
-            target:
-              entity_id: light.scullery_leds
-            data:
-              brightness_pct: 1
-          - if: 
-              - alias: Motion detected in the pantry
-                condition: state
-                entity_id: binary_sensor.pantry_motion_sensor_motion
-                state: "on"
-            then:
-              - alias: Turn pantry light on
+      - choose:
+          - conditions:
+              - alias: Trigger was motion detected in the scullery
+                condition: template
+                value_template: >-
+                  {{
+                    trigger.entity_id == "binary_sensor.scullery_ep1_pir"
+                    and trigger.to_state.state == 'on'
+                  }}
+            sequence:
+              - alias: Turn on scullery LEDs
+                service: light.turn_on
+                target:
+                  entity_id: light.scullery_leds
+                data:
+                  brightness_pct: 1
+          - conditions:
+              - alias: Trigger was motion detected in the pantry
+                condition: template
+                value_template: >-
+                  {{
+                    trigger.entity_id == "binary_sensor.pantry_motion_sensor_motion"
+                    and trigger.to_state.state == 'on'
+                  }}
+            sequence:
+              - alias: Turn on pantry light
                 service: light.turn_on
                 target:
                   entity_id: light.pantry_light
+          - conditions:
+              - alias: Trigger was pantry motion no longer detected
+                condition: template
+                value_template: >-
+                  {{
+                    trigger.entity_id == "binary_sensor.pantry_motion_sensor_motion"
+                    and trigger.to_state.state == 'off'
+                  }}
+            sequence:
+              - alias: Turn off pantry light
+                service: light.turn_off
+                target:
+                  entity_id: light.pantry_light
+          - conditions:
+              - alias: Trigger was scullery occupancy no longer detected
+                condition: template
+                value_template: >-
+                  {{
+                    trigger.entity_id == "binary_sensor.scullery_ep1_occupancy"
+                    and trigger.to_state.state == 'off'
+                  }}
+            sequence:
+              - alias: Turn off all lights
+                service: light.turn_off
+                target:
+                  entity_id:
+                    - light.kitchenette_lights
+                    - light.scullery_leds
 
   - alias: Kitchen - Toggle Scullery Lights When Button Pressed
     id: kitchen_toggle_scullery_lights_when_button_pressed
     mode: restart
-    trigger: 
+    trigger:
       - platform: event
         event_type: zha_event
-        event_data: 
+        event_data:
           device_ieee: !secret zha_scullery_light_switch
     action:
       - choose:
@@ -183,20 +209,20 @@ automation:
 
   - alias: Kitchen - Turn On Lights Using Island Switch
     id: kitchen_turn_on_lights_using_island_switch
-    trigger: 
+    trigger:
       - platform: event
         event_type: zha_event
-        event_data: 
+        event_data:
           device_ieee: !secret zha_kitchen_island_lights_switch
           command: "on"
     action:
       - choose:
-        # If ceiling lights are off, turn them on
+          # If ceiling lights are off, turn them on
           - conditions:
               - condition: state
                 entity_id: light.kitchen_ceiling_light
                 state: "off"
-            sequence: 
+            sequence:
               - service: light.turn_on
                 entity_id: light.kitchen_ceiling_light
         # Otherwise turn on the kitchen island light
@@ -205,20 +231,20 @@ automation:
             entity_id: light.kitchen_island
   - alias: Kitchen - Turn Off Lights Using Island Switch
     id: kitchen_turn_off_lights_using_island_switch
-    trigger: 
+    trigger:
       - platform: event
         event_type: zha_event
-        event_data: 
+        event_data:
           device_ieee: !secret zha_kitchen_island_lights_switch
           command: "off"
     action:
       - choose:
-        # If kitchen island lights are on, turn them off
+          # If kitchen island lights are on, turn them off
           - conditions:
               - condition: state
                 entity_id: light.kitchen_island
                 state: "on"
-            sequence: 
+            sequence:
               - service: light.turn_off
                 entity_id: light.kitchen_island
         # Otherwise turn of the ceiling light
@@ -232,7 +258,7 @@ automation:
     trigger:
       - platform: state
         entity_id: switch.dishwasher_smart_plug
-        to: 'off'
+        to: "off"
     action:
       - service: switch.turn_on
         target:
@@ -243,10 +269,10 @@ automation:
 alert:
   drinks_fridge_door_alerts:
     title: Drinks Fridge Left Open
-    name: The drinks fridge door was left open! 
+    name: The drinks fridge door was left open!
     entity_id: binary_sensor.drinks_fridge_door
-    state: 'on'
-    repeat: 
+    state: "on"
+    repeat:
       - 3 #minutes to wait before the first alert
       - 1 #minues between alerts once started
     can_acknowledge: false
@@ -258,17 +284,17 @@ alert:
     data:
       notification_icon: "mdi:fridge-industrial-alert-outline"
       group: Drinks Fridge Door
-      color: 'red'
+      color: "red"
       ttl: 0
       priority: high
 
   kitchen_sink_leak_alerts:
-    title: Leak detected! 
-    name: The kitchen sink or dishwasher is leaking! 
+    title: Leak detected!
+    name: The kitchen sink or dishwasher is leaking!
     entity_id: binary_sensor.water_sensor_kitchen_sink
-    state: 'on'
-    repeat: 
-      - 1 
+    state: "on"
+    repeat:
+      - 1
     can_acknowledge: true
     skip_first: true
     notifiers:
@@ -278,7 +304,7 @@ alert:
     data:
       notification_icon: "mdi:water-alert"
       group: Kitchen Sink Leak
-      color: 'red'
+      color: "red"
       ttl: 0
       priority: high
 
@@ -286,8 +312,8 @@ alert:
     title: Main Fridge Has No Power!
     name: The main fridge's smart plug is turned off.
     entity_id: switch.main_fridge_smart_plug
-    state: 'off'
-    repeat: 
+    state: "off"
+    repeat:
       - 5 #minutes to wait before the first alert
       - 1 #minues between alerts once started
     can_acknowledge: false
@@ -299,6 +325,6 @@ alert:
     data:
       notification_icon: "mdi:fridge-industrial-alert-outline"
       group: Fridges
-      color: 'red'
+      color: "red"
       ttl: 0
       priority: high

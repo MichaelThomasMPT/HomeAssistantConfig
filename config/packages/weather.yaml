@@ -93,37 +93,6 @@ automation:
                   value: >-
                     {{ weather_forecast_daily["weather.banjup"].forecast[1].condition }}
 
-binary_sensor:
-  - platform: template
-    sensors:
-      weather_it_will_rain_tomorrow:   
-        friendly_name: "Rain Is Coming Tomorrow"
-        device_class: "moisture"
-        value_template: >-
-          {%
-              set forecast_tomorrow = 
-                state_attr('weather.treeby_house', 'forecast') 
-                | selectattr("datetime", "ge", as_timestamp(
-                    now() + timedelta(hours=24)) | timestamp_custom('%Y-%m-%d') 
-                  ) 
-                | sort(attribute="datetime")
-                | first 
-          %}
-          {{
-              forecast_tomorrow.condition in states('var.weather_rainy_conditions')
-              or forecast_tomorrow.precipitation | float > 0 
-          }}
-        availability_template: "{{ states('weather.treeby_house') != 'Unavailable' }}"
-
-      weather_it_is_raining_today:   
-        friendly_name: "It Is Raining Today"
-        device_class: "moisture"
-        value_template: >-
-          {{ 
-              states('weather.treeby_house') in states('var.weather_rainy_conditions')
-          }}
-        availability_template: "{{ states('weather.treeby_house') != 'Unavailable' }}"
-
 sensor:
   # Extract Outdoor Temperature from BOM Weather Sensor
   - platform: template
