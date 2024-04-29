@@ -1,8 +1,5 @@
-sensor:
-  #Sensor to view items which are on any Mealie shopping list
-  - platform: rest
-    name: Mealie Shopping List Items
-    resource_template: !secret mealie_shopping_items_api_endpoint
+rest:
+  - resource_template: !secret mealie_shopping_items_api_endpoint
     headers:
       Authorization: !secret mealie_api_token
     params:
@@ -10,42 +7,42 @@ sensor:
       queryFilter: checked=false
       orderBy: food.name
       orderDirection: asc
+    sensor:
+      - name: Mealie Shopping List Items
+        availability: >
+          {{ value_json['total'] }}
+        #Sensor to view items which are on any Mealie shopping list
+        #Extract the ingredient data in the following format: "food - quantity unit" eg. "apples - 1.5 kilogram", or "Empty List" if no items are left in the list
+        value_template: >
+          {# If no items in list, return "Empty List" #}
+          {% if value_json['total'] == 0 %}
+            Empty List
 
-    #As long as the request contains "total", the API was successfully reached
-    availability: >
-      {{ value_json['total'] }}
+          {# If distinct food is not defined use display name instead #}
+          {% elif value_json['items'][0]['food'] == none %}
+            {{ value_json['items'][0]['display'] }}
 
-    #Extract the ingredient data in the following format: "food - quantity unit" eg. "apples - 1.5 kilogram", or "Empty List" if no items are left in the list
-    value_template: >
-      {# If no items in list, return "Empty List" #}
-      {% if value_json['total'] == 0 %}
-        Empty List
+          {# If quantity is available, include it in the output #}
+          {% elif value_json['items'][0]['quantity'] > 0 %}
+            {{ value_json['items'][0]['food']['name'] }} - {{ (value_json['items'][0]['quantity'] | round(3) | string).rstrip('0').rstrip('.') }} {{ value_json['items'][0]['unit']['name'] if value_json['items'][0]['unit'] is not none }}
 
-      {# If distinct food is not defined use display name instead #}
-      {% elif value_json['items'][0]['food'] == none %}
-        {{ value_json['items'][0]['display'] }}
-
-      {# If quantity is available, include it in the output #}
-      {% elif value_json['items'][0]['quantity'] > 0 %}
-        {{ value_json['items'][0]['food']['name'] }} - {{ (value_json['items'][0]['quantity'] | round(3) | string).rstrip('0').rstrip('.') }} {{ value_json['items'][0]['unit']['name'] }}
-
-      {# Otherwise, print just the food name #}
-      {% else %}
-        {{ value_json['items'][0]['food']['name'] }}
-        
-      {% endif %}
-
-
-    #Extract the ingredient's ID. Required to delete through the API later on.
-    json_attributes_path: "$.items.0"
-    json_attributes:
-      - id
+          {# Otherwise, print just the food name #}
+          {% else %}
+            {{ value_json['items'][0]['food']['name'] }}
+            
+          {% endif %}
+      - name: Mealie Shopping List Item To Delete
+        availability: >
+          {{ value_json['total'] }}
+        #Extract the ingredient's ID. Required to delete through the API later on.
+        value_template: >
+          {{ value_json['items'][0]['id'] }}
 
 rest_command:
   #Command to delete a Mealing shopping list item
   mealie_delete_from_shopping_list:
     url: >
-      {{ url }}/{{ state_attr('sensor.mealie_shopping_list_items', 'id') }}
+      {{ url }}/{{ states('sensor.mealie_shopping_list_item_to_delete') }}
     method: delete
     headers:
       Authorization:  !secret mealie_api_token
@@ -63,6 +60,7 @@ automation:
         data:
           entity_id:
             - sensor.mealie_shopping_list_items
+            - sensor.mealie_shopping_list_item_to_delete
 
   #Automation to transfer items from the Mealie shopping list to another list of your choice
   - id: mealie_transfer_shopping_list
