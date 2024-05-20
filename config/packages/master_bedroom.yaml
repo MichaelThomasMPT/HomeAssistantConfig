@@ -268,11 +268,16 @@ automation:
   - alias: Ensuite - Turn Off Fan When Shower Stopped
     id: ensuite_turn_off_fan_when_shower_stopped
     trigger:
-      platform: state
-      entity_id: binary_sensor.ensuite_shower
-      to: "off"
-      for:
-        minutes: 30
+      - platform: state
+        entity_id: binary_sensor.ensuite_shower
+        to: "off"
+        for:
+          minutes: 30
+      - platform: state
+        entity_id: switch.ensuite_fan
+        to: "on"
+        for:
+          minutes: 45
     action:
       - service: switch.turn_off
         entity_id: switch.ensuite_fan
