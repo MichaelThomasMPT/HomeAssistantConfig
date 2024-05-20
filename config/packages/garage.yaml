@@ -226,6 +226,13 @@ automation:
         - condition: state
           entity_id: media_player.theatre_room_tv
           state: 'off'
+        - condition: state 
+          entity_id: alarm_control_panel.alarm_com
+          state:
+            - "armed_home"
+            - "armed_away"
+          for:
+            minutes: 5 # don't turn the light on when leaving the house, only when arriving home
     action:
       - service: light.turn_on
         entity_id:
