@@ -64,40 +64,6 @@ automation:
           entity_id: switch.drinks_fridge_smart_plug
       - delay:
           minutes: 5
-  #if coffee machine left open, send a push notification.
-  - alias: Kitchen - Notify If Coffee Machine Closed for 5 Minutes
-    id: kitchen_notify_if_coffee_machine_closed_for_5_minutes
-    trigger:
-      platform: time_pattern
-      minutes: "/5" #run every 5 minutes
-    condition:
-      condition: or
-      conditions:
-        - condition: state
-          entity_id: binary_sensor.coffee_machine
-          state: "off"
-          for:
-            minutes: 4
-    action:
-      - service: script.chatgpt_reword_message
-        data:
-          prompt: "The coffee machine was left closed."
-        response_variable: "chatgpt_response"
-      - service: notify.mobile_app_michael_s_galaxy_s10
-        data:
-          message: "{{ chatgpt_response.text }}"
-          data:
-            notification_icon: "mdi:coffee"
-      - service: notify.mobile_app_lauras_iphone
-        data:
-          message: "{{ chatgpt_response.text }}"
-      - condition: state
-        entity_id: media_player.kitchen_google_home_hub
-        state: "off" #Only use text-to-speech on Google Home Hub if it's not already in use, so it doesn't stop any music from playing
-      - service: script.custom_speak_notification
-        data:
-          message_to_speak: "{{ chatgpt_response.text }}"
-          media_player: media_player.kitchen_google_home_hub
 
   - alias: Kitchen - Toggle Scullery Lights When Motion Detected
     id: kitchen_toggle_scullery_lights_when_motion_detected
