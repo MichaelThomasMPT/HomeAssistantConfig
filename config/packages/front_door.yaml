@@ -89,6 +89,8 @@ automation:
           - platform: state
             entity_id: binary_sensor.doorbell_person
             to: "off"
+            for:
+              seconds: 30
         timeout:
           minutes: 10
         continue_on_timeout: true
