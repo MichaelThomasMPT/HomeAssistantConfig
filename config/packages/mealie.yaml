@@ -85,6 +85,11 @@ automation:
           - condition: state
             entity_id: sensor.mealie_shopping_list_items
             state: "Empty List"
+      - condition: not
+        conditions:
+          - condition: state
+            entity_id: sensor.mealie_shopping_list_items
+            state: "unavailable"
     action:
       - alias: "Ensure shopping list item isn't now 'Empty List'"
         condition: not
