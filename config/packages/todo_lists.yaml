@@ -54,7 +54,109 @@ script:
               True 
             {% endif %}
 
+  todo_list_move_incomplete_items:
+    fields:
+      source_list:
+        description: "Source list to copy from"
+      dest_list:
+        description: "Destination list to copy to"
+      subtext:
+        description: "The non-title text to add to the items"
+      due_today:
+        description: "Whether the task should have today as a due date"
+        default: "False"
+        #FIXME do something with this field, not in use yet
+    sequence:
+      - service: todo.get_items
+        data:
+          status:
+            - needs_action
+        response_variable: items
+        target:
+          entity_id: "{{ source_list }}"
+      - repeat:
+          for_each: >
+            {% set list_name = items.keys() | list %}
+            {{ items[list_name[0]]['items'] }}
+          sequence:
+            - if: 
+                - alias: "Due date is set"
+                  condition: template
+                  value_template: "{{ due_today == 'True' }}"
+              then:
+                - service: todo.add_item
+                  data:
+                    item: >
+                      {{ repeat.item.summary }}
+                    description: >
+                      {{ subtext }}
+                    due_date: "{{ now().strftime('%Y-%m-%d') }}"
+                  target:
+                    entity_id: "{{ dest_list }}"
+              else:
+                - service: todo.add_item
+                  data:
+                    item: >
+                      {{ repeat.item.summary }}
+                    description: >
+                      {{ subtext }}
+                  target:
+                    entity_id: "{{ dest_list }}"
+            - service: todo.remove_item
+              data:
+                item: >
+                  {{ repeat.item.summary }}
+              target:
+                entity_id: "{{ source_list }}"
+
 automation:
+  - alias: Todo List - Transfer Google Tasks Shopping List
+    id: todolist_transfer_google_tasks_shopping_list
+    trigger:
+      - id: "regular_trigger"
+        platform: state
+        entity_id: todo.google_keep_shopping
+      - id: "fallback_trigger"
+        platform: time_pattern
+        minutes: "/10"
+    condition:
+      - alias: "List isn't empty"
+        condition: not
+        conditions:
+          - condition: state
+            entity_id: todo.google_keep_shopping
+            state: "0"
+    action:
+      - service: script.todo_list_move_incomplete_items
+        data:
+          source_list: todo.google_keep_shopping
+          dest_list: todo.groceries_list
+          subtext: "Imported from Google Tasks"
+
+  - alias: Todo List - Transfer Google Tasks Todo List
+    id: todolist_transfer_google_tasks_todo_list
+    trigger:
+      - id: "regular_trigger"
+        platform: state
+        entity_id: todo.google_keep_to_do
+      - id: "fallback_trigger"
+        platform: time_pattern
+        minutes: "/10"
+    condition:
+      - alias: "List isn't empty"
+        condition: not
+        conditions:
+          - condition: state
+            entity_id: todo.google_keep_to_do
+            state: "0"
+    action:
+      - service: script.todo_list_move_incomplete_items
+        data:
+          source_list: todo.google_keep_to_do
+          dest_list: todo.inbox
+          subtext: "Imported from Google Tasks"
+          due_today: "True"
+
   - alias: Todo List - Add Item To Todo List Via Voice
     id: todolist_add_item_to_todo_list_via_voice
     trigger:
