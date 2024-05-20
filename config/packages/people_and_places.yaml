@@ -136,6 +136,7 @@ automation:
         response_variable: "chatgpt_response"
       - service: notify.mobile_app_michael_s_galaxy_s10
         data:
+          title: "Laura leaving work"
           message: "{{ chatgpt_response.text }}"
           data:
             notification_icon: "mdi:face-woman"
@@ -186,6 +187,7 @@ automation:
         response_variable: "chatgpt_response"
       - service: notify.mobile_app_michael_s_galaxy_s10
         data:
+          title: "Someone has come home"
           message: "{{ chatgpt_response.text }}"
           data:
             notification_icon: "mdi:door"
@@ -217,6 +219,7 @@ automation:
         response_variable: "chatgpt_response"
       - service: notify.mobile_app_michael_s_galaxy_s10
         data:
+          title: "Work laptop reminder"
           message: "{{ chatgpt_response.text }}"
           data:
             notification_icon: "mdi:laptop"
@@ -251,6 +254,7 @@ automation:
         response_variable: "chatgpt_response"
       - service: notify.mobile_app_michael_s_galaxy_s10
         data:
+          title: "Parking Payment Reminder"
           message: "{{ chatgpt_response.text }}"
           data:
             color: "#FFA000"

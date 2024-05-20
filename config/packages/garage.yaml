@@ -94,6 +94,7 @@ automation:
         response_variable: "chatgpt_response"
       - service: notify.mobile_app_michael_s_galaxy_s10
         data:
+          title: "Garage door left open"
           message: "{{ chatgpt_response.text }}"
           data:
             image: /api/camera_proxy/camera.garage_camera
@@ -189,6 +190,7 @@ automation:
         response_variable: "chatgpt_response"
       - service: notify.mobile_app_michael_s_galaxy_s10
         data:
+          title: "Garage door left open"
           message: "{{ chatgpt_response.text }}"
           data:
             image: /api/camera_proxy/camera.garage_camera

@@ -99,7 +99,7 @@ automation:
             {%- endfor %}\n
             \n
             Today's cheapest petrol: {{ state_attr('sensor.rss_fuel_watch_ulp', 'entries') | first }}
-          agent_id: 4fa03cf261717b10d7df1b96889b63f6 #Artemis
+          agent_id: 460257f8fad9ac2d596a8762cdfd01c3 #Sarcastic
         response_variable: agent
       - alias: Send notification
         service: notify.pushbullet
@@ -177,7 +177,7 @@ automation:
             {%- endfor %}\n
             \n
             Today's cheapest petrol: {{ state_attr('sensor.rss_fuel_watch_ulp', 'entries') | first }}
-          agent_id: 4fa03cf261717b10d7df1b96889b63f6 #Artemis
+          agent_id: 460257f8fad9ac2d596a8762cdfd01c3 #Sarcastic
         response_variable: agent
       - service: notify.mobile_app_lauras_iphone
         data:
@@ -191,12 +191,12 @@ script:
         description: "What do you want ChatGPT to reword?"
         example: "This is a notification for Michael."
     variables:
-      chatgpt_agent: 4fa03cf261717b10d7df1b96889b63f6 #Artemis
+      chatgpt_agent: 460257f8fad9ac2d596a8762cdfd01c3 #Sarcastic
     sequence:
       - alias: Conversation Agent Notification Text
         service: conversation.process
         data:
-          text: "Please reword the following in your own words, keeping responses brief: {{ prompt }}"
+          text: "Please reword the following in your own words, keeping responses brief. Only return your reworded response and nothing else. Prompt to reword: {{ prompt }}"
           agent_id: >-
             {{ chatgpt_agent }}
         response_variable: "chatgpt_message"

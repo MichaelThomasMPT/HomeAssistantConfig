@@ -186,6 +186,7 @@ automation:
         response_variable: "chatgpt_response"
       - service: notify.mobile_app_michael_s_galaxy_s10
         data:
+          title: "Artemis needs food"
           message: "{{ chatgpt_response.text }}"
           data:
             notification_icon: "mdi:dog-side"

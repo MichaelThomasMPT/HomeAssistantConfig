@@ -220,6 +220,7 @@ automation:
           message: "{{ chatgpt_response.text }}"
       - service: notify.mobile_app_michael_s_galaxy_s10
         data:
+          title: "It will rain soon"
           message: "{{ chatgpt_response.text }}"
           data:
             group: "Washing Line" 
@@ -263,6 +264,7 @@ automation:
       - wait_template: "{{ is_state('person.michael', 'home') }}" # wait until I'm home to notify me, as I can't do anything about it if I'm not!
       - service: notify.mobile_app_michael_s_galaxy_s10
         data:
+          title: "It will rain tomorrow"
           message: "{{ chatgpt_response.text }}"
           data:
             group: "Washing Line"
