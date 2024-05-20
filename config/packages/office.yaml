@@ -295,7 +295,9 @@ automation:
     trigger:
       # motion detected
       - platform: state
-        entity_id: binary_sensor.office_presence_sensor_moving_target
+        entity_id: 
+          - binary_sensor.office_presence_sensor_moving_target #screek presence sensor
+          - binary_sensor.office_motion #zwave multisensor over door
         to: "on"
         from: "off"
     condition:
@@ -308,20 +310,38 @@ automation:
     action:
       - choose:
           - conditions:
-              - condition: state #from sunset until sunrise
+              - alias: "Check if it's night or day"
+                condition: state #from sunset until sunrise
                 entity_id: sun.sun
                 state: "below_horizon"
             sequence:
-              - service: light.turn_on
+              - alias: "Turn on the lamp during night"
+                service: light.turn_on
                 data:
                   color_temp: 350
                   brightness_pct: 40
                 target:
                   entity_id: light.office_lamp
         default:
-          - service: light.turn_on
+          - alias: "Turn on the ceiling light during day"
+            service: light.turn_on
             target:
               entity_id: light.office_ceiling
+      - alias: "Wait one minute"
+        delay:
+          minutes: 1
+      - if:
+          - alias: "No presence was detected"
+            condition: state
+            entity_id: binary_sensor.office_presence_sensor_presence
+            state: "off"
+        then:
+          - service: light.turn_off
+            target:
+              entity_id:
+                - light.office_ceiling
+                - light.office_lamp
+
 
   - alias: Office - Turn Off Lights When No Presence Detected
     id: office_turn_off_light_when_no_presence_detected
