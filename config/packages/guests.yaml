@@ -16,8 +16,8 @@ automation:
         data:
           entity_id: 
             - automation.theatre_room_blinds_open_automatically
-            - automation.theatre_room_lights_turn_on_lights_when_motion_detected
-            - automation.theatre_room_lights_turn_off_lamps_after_no_activity
+            - automation.theatre_room_turn_on_lights_when_motion_detected
+            - automation.theatre_room_turn_off_everything_after_no_activity
             - automation.theatre_room_lights_manual_control_movie_lights
             - automation.office_blinds_close_when_required
             - automation.office_blinds_mid_at_lunch_time
@@ -35,8 +35,8 @@ automation:
         data:
           entity_id: 
             - automation.theatre_room_blinds_open_automatically
-            - automation.theatre_room_lights_turn_on_lights_when_motion_detected
-            - automation.theatre_room_lights_turn_off_lamps_after_no_activity
+            - automation.theatre_room_turn_on_lights_when_motion_detected
+            - automation.theatre_room_turn_off_everything_after_no_activity
             - automation.theatre_room_lights_manual_control_movie_lights
             - automation.office_blinds_close_when_required
             - automation.office_blinds_mid_at_lunch_time
