@@ -110,19 +110,19 @@ input_number:
     name: Probe 1 Target Temp
     initial: 62
     min: 30
-    max: 100
+    max: 120
     step: 1
   igrill_probe_2_target_temp:
     name: Probe 2 Target Temp
     initial: 62
     min: 30
-    max: 100
+    max: 120
     step: 1
   igrill_probe_3_target_temp:
     name: Probe 3 Target Temp
     initial: 62
     min: 30
-    max: 100
+    max: 120
     step: 1
 
 input_select:
