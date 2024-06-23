@@ -393,9 +393,9 @@ automation:
       - variables:
           message_text: >-
             {% if (trigger.json.person2 is not defined) or (trigger.json.person2 is none) or ( (trigger.json.person2 | trim) == "") %}
-              {{ trigger.json.person1 }} has saved the date!
+              {{ trigger.json.person1 }} has RSVP'd!
             {% else %}
-              {{ trigger.json.person1 | trim }} and {{ trigger.json.person2 | trim }} have saved the date!
+              {{ trigger.json.person1 | trim }} and {{ trigger.json.person2 | trim }} have  RSVP'd!
             {% endif %}
       - parallel:
           - sequence: #Notify Michael
@@ -407,11 +407,12 @@ automation:
                     group: "Wedding"
                     color: "#ff00c8"
                     notification_icon: "mdi:heart"
-          - sequence: #Notify Laura
-              - service: notify.mobile_app_lauras_iphone
-                data:
-                  title: "A Wedding Guest Has Responded"
-                  message: "{{ message_text }}"
+          #FIXME
+          # - sequence: #Notify Laura
+          #     - service: notify.mobile_app_lauras_iphone
+          #       data:
+          #         title: "A Wedding Guest Has Responded"
+          #         message: "{{ message_text }}"
           - sequence: #Notify TV if it is on
               - alias: "Check if TV is on before notifying it"
                 condition: state
