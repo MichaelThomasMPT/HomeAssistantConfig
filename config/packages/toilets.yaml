@@ -75,6 +75,8 @@ automation:
         timeout:
           minutes: 3
         continue_on_timeout: false #Don't continue the automation if the door wasn't opened within a minute
+      - delay:
+          seconds: 2
       - service: light.turn_off
         target:
           entity_id: light.main_toilet_light_and_fan
@@ -107,6 +109,8 @@ automation:
         timeout:
           minutes: 3
         continue_on_timeout: false #Don't continue the automation if the door wasn't opened within a minute
+      - delay:
+          seconds: 2
       - service: light.turn_off
         target:
           entity_id: light.ensuite_toilet_light_and_fan
