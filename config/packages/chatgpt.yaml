@@ -99,7 +99,7 @@ automation:
             {%- endfor %}\n
             \n
             Today's cheapest petrol: {{ state_attr('sensor.rss_fuel_watch_ulp', 'entries') | first }}
-          agent_id: 460257f8fad9ac2d596a8762cdfd01c3 #Sarcastic
+          agent_id: 01J6FBKDM74FM5RE371S0QN46K #wedding
         response_variable: agent
       - alias: Send notification
         service: notify.pushbullet
@@ -177,7 +177,7 @@ automation:
             {%- endfor %}\n
             \n
             Today's cheapest petrol: {{ state_attr('sensor.rss_fuel_watch_ulp', 'entries') | first }}
-          agent_id: 460257f8fad9ac2d596a8762cdfd01c3 #Sarcastic
+          agent_id: 01J6FBKDM74FM5RE371S0QN46K #wedding
         response_variable: agent
       - service: notify.mobile_app_lauras_iphone
         data:
@@ -191,7 +191,7 @@ script:
         description: "What do you want ChatGPT to reword?"
         example: "This is a notification for Michael."
     variables:
-      chatgpt_agent: 460257f8fad9ac2d596a8762cdfd01c3 #Sarcastic
+      chatgpt_agent: 01J6FBKDM74FM5RE371S0QN46K #wedding
     sequence:
       - alias: Conversation Agent Notification Text
         service: conversation.process
