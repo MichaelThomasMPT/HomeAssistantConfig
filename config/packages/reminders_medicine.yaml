@@ -43,7 +43,7 @@ automation:
       - service: input_boolean.turn_off
         data:
           entity_id: input_boolean.medicine_reminder_michael_toggle
-      - service: notify.mobile_app_michael_s_galaxy_s10
+      - service: notify.mobile_app_pixel_8_pro
         data:
           message: "clear_notification"
           data:
@@ -110,7 +110,7 @@ alert:
     can_acknowledge: true
     skip_first: false
     notifiers:
-      - mobile_app_michael_s_galaxy_s10
+      - mobile_app_pixel_8_pro
     data:
       group: Medicine
       tag: medicine-reminders

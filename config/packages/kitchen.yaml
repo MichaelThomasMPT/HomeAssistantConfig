@@ -244,7 +244,7 @@ alert:
     can_acknowledge: false
     skip_first: true
     notifiers:
-      - mobile_app_michael_s_galaxy_s10
+      - mobile_app_pixel_8_pro
       - mobile_app_lauras_iphone
       - theatre_room_tv
     data:
@@ -264,7 +264,7 @@ alert:
     can_acknowledge: true
     skip_first: true
     notifiers:
-      - mobile_app_michael_s_galaxy_s10
+      - mobile_app_pixel_8_pro
       - mobile_app_lauras_iphone
       - theatre_room_tv
     data:
@@ -285,7 +285,7 @@ alert:
     can_acknowledge: false
     skip_first: true
     notifiers:
-      - mobile_app_michael_s_galaxy_s10
+      - mobile_app_pixel_8_pro
       - mobile_app_lauras_iphone
       - theatre_room_tv
     data:

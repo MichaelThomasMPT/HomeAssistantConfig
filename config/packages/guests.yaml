@@ -57,7 +57,7 @@ automation:
         data:
           prompt: "Guest mode is on. Should it be turned off?"
         response_variable: "chatgpt_response"
-      - service: notify.mobile_app_michael_s_galaxy_s10
+      - service: notify.mobile_app_pixel_8_pro
         data:
           title: "Guest mode is on"
           message: "{{ chatgpt_response.text }}"

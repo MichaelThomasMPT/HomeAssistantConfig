@@ -46,7 +46,7 @@ automation:
         data:
           prompt: "Black printer ink is running low and has been added to your shopping list."
         response_variable: "chatgpt_response"
-      - service: notify.mobile_app_michael_s_galaxy_s10
+      - service: notify.mobile_app_pixel_8_pro
         data:
           title: "Printer ink low"
           message: "{{ chatgpt_response.text }}"
@@ -72,7 +72,7 @@ automation:
         data:
           prompt: "Colour printer ink is running low and has been added to your shopping list."
         response_variable: "chatgpt_response"
-      - service: notify.mobile_app_michael_s_galaxy_s10
+      - service: notify.mobile_app_pixel_8_pro
         data:
           title: "Printer ink low"
           message: "{{ chatgpt_response.text }}"

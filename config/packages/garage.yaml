@@ -92,7 +92,7 @@ automation:
         data:
           prompt: "Garage door was left open."
         response_variable: "chatgpt_response"
-      - service: notify.mobile_app_michael_s_galaxy_s10
+      - service: notify.mobile_app_pixel_8_pro
         data:
           title: "Garage door left open"
           message: "{{ chatgpt_response.text }}"
@@ -163,7 +163,7 @@ automation:
           for:
             minutes: 5
     action:
-      - service: notify.mobile_app_michael_s_galaxy_s10
+      - service: notify.mobile_app_pixel_8_pro
         data:
           message: Garage door cannot be reached.
           data:
@@ -188,7 +188,7 @@ automation:
         data:
           prompt: "Garage door was left open."
         response_variable: "chatgpt_response"
-      - service: notify.mobile_app_michael_s_galaxy_s10
+      - service: notify.mobile_app_pixel_8_pro
         data:
           title: "Garage door left open"
           message: "{{ chatgpt_response.text }}"
@@ -250,7 +250,7 @@ alert:
     can_acknowledge: true
     skip_first: true
     notifiers:
-      - mobile_app_michael_s_galaxy_s10
+      - mobile_app_pixel_8_pro
     data:
       group: Garage Camera
       color: 'red'

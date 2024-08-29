@@ -86,7 +86,7 @@ alert:
     skip_first: true
     notifiers:
       #- mobile_app_lauras_iphone
-      - mobile_app_michael_s_galaxy_s10
+      - mobile_app_pixel_8_pro
     data:
       group: MiFlora
       notification_icon: "mdi:flower"

@@ -16,7 +16,7 @@ automation:
         data:
           prompt: "{{ notification_message }}"
         response_variable: "chatgpt_response"
-      - service: notify.mobile_app_michael_s_galaxy_s10
+      - service: notify.mobile_app_pixel_8_pro
         data:
           title: "{{ notification_title }}"
           message: "{{ chatgpt_response.text }}"

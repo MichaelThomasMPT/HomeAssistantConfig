@@ -112,7 +112,7 @@ automation:
         data:
           prompt: "{{ trigger.entity_id }} has become unavailable."
         response_variable: "chatgpt_response"
-      - service: notify.mobile_app_michael_s_galaxy_s10
+      - service: notify.mobile_app_pixel_8_pro
         data:
           title: "Camera Connection Issue"
           message: "{{ chatgpt_response.text }}"
@@ -132,7 +132,7 @@ automation:
         for:
           minutes: 10
     action:
-      - service: notify.mobile_app_michael_s_galaxy_s10
+      - service: notify.mobile_app_pixel_8_pro
         data:
           message: "{{ trigger.entity_id }} became unavailable so will be restarted."
           data:
@@ -188,7 +188,7 @@ automation:
         entity_id: cover.garage_door
         state: "closed"
     action:
-      - service: notify.mobile_app_michael_s_galaxy_s10
+      - service: notify.mobile_app_pixel_8_pro
         data:
           message: "Someone has parked in the driveway..."
           data:

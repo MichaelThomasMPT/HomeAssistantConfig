@@ -215,7 +215,7 @@ automation:
         data:
           prompt: "The patio heater was left on for 4 hours, so I switched it off"
         response_variable: "chatgpt_response"
-      - service: notify.mobile_app_michael_s_galaxy_s10
+      - service: notify.mobile_app_pixel_8_pro
         data:
           message: "{{ chatgpt_response.text }}"
           title: Patio Heater Switched Off
@@ -246,7 +246,7 @@ automation:
         data:
           prompt: "The patio heater has been on for 2 hours. Should it be?"
         response_variable: "chatgpt_response"
-      - service: notify.mobile_app_michael_s_galaxy_s10
+      - service: notify.mobile_app_pixel_8_pro
         data:
           message: "{{ chatgpt_response.text }}"
           title: Patio Heater Is On
@@ -298,7 +298,7 @@ alert:
       - 1440 #24 hours between alerts once started
     can_acknowledge: false
     notifiers:
-      - mobile_app_michael_s_galaxy_s10
+      - mobile_app_pixel_8_pro
       - mobile_app_lauras_iphone
     data:
       notification_icon: "mdi:bird"

@@ -179,9 +179,9 @@ automation:
     id: front_door_turn_on_front_porch_light_when_ordering_food_delivery
     variables:
       notifying_app: 
-        package: "{{ state_attr('sensor.michael_s_galaxy_s10_last_notification', 'package') }}"
-        title: "{{ state_attr('sensor.michael_s_galaxy_s10_last_notification', 'android.title') }}"
-        text: "{{ state_attr('sensor.michael_s_galaxy_s10_last_notification', 'android.text') }}"
+        package: "{{ state_attr('sensor.pixel_8_pro_last_notification', 'package') }}"
+        title: "{{ state_attr('sensor.pixel_8_pro_last_notification', 'android.title') }}"
+        text: "{{ state_attr('sensor.pixel_8_pro_last_notification', 'android.text') }}"
       known_delivery_apps:
         com.dd.doordash: #DoorDash
           notification_text: "your order has been picked up" #Android.text
@@ -191,7 +191,7 @@ automation:
           notification_text: "Your order is on the move!" #Android.text
     trigger:
       - platform: state
-        entity_id: sensor.michael_s_galaxy_s10_last_notification #Look for new phone notiifations
+        entity_id: sensor.pixel_8_pro_last_notification #Look for new phone notiifations
     condition:
       - condition: state #from sunset until sunrise
         entity_id: sun.sun
@@ -208,7 +208,7 @@ automation:
     action:
       - service: light.turn_on
         entity_id: light.front_porch_light
-      - service: notify.mobile_app_michael_s_galaxy_s10
+      - service: notify.mobile_app_pixel_8_pro
         data:
           message: The front porch light was turned on for your delivery driver.
           data:
@@ -237,7 +237,7 @@ automation:
         entity_id: binary_sensor.doorbell_visitor
         to: 'on'
     action:
-      - service: notify.mobile_app_michael_s_galaxy_s10
+      - service: notify.mobile_app_pixel_8_pro
         data:
           title: "Doorbell Rung"
           message: "Somebody is at the door!"
@@ -263,7 +263,7 @@ automation:
         from: "off"
         to: "on"
     action:
-      - service: notify.mobile_app_michael_s_galaxy_s10
+      - service: notify.mobile_app_pixel_8_pro
         data:
           message: "Someone might be at the door..."
           data:

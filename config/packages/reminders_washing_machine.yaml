@@ -59,7 +59,7 @@ automation:
         data:
           prompt: "Washing machine notifications switched on for Michael."
         response_variable: "chatgpt_response"
-      - service: notify.mobile_app_michael_s_galaxy_s10
+      - service: notify.mobile_app_pixel_8_pro
         data:
           title: "Notifications Turned On"
           message: "{{ chatgpt_response.text }}"
@@ -125,7 +125,7 @@ alert:
     can_acknowledge: true
     skip_first: false
     notifiers:
-      - mobile_app_michael_s_galaxy_s10
+      - mobile_app_pixel_8_pro
     data:
       group: Washing Machine
       notification_icon: "mdi:washing-machine"

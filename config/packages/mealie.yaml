@@ -71,7 +71,7 @@ automation:
     initial_state: "on"
     variables:
       target_shopping_list: todo.groceries_list #CHANGEME: entity ID of your shopping list
-      notify_service: notify.mobile_app_michael_s_galaxy_s10 #CHANGEME: where to be notified if items fail to delete from Mealie shopping list
+      notify_service: notify.mobile_app_pixel_8_pro #CHANGEME: where to be notified if items fail to delete from Mealie shopping list
     trigger:
       - id: "regular_trigger"
         platform: state

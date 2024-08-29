@@ -25,7 +25,7 @@ automation:
         from: 'off'
         to: 'on'
     action:
-      - service: notify.mobile_app_michael_s_galaxy_s10
+      - service: notify.mobile_app_pixel_8_pro
         data:
           message: The dog door was used!
           data:
@@ -76,7 +76,7 @@ automation:
           id: artemis_light_switch
           event: 1001 #long press
     action:
-      - service: notify.mobile_app_michael_s_galaxy_s10
+      - service: notify.mobile_app_pixel_8_pro
         data:
           message: Artemis pushed the lights button! 
       - choose:
@@ -111,7 +111,7 @@ automation:
         entity_id: input_boolean.holiday_mode
         state: "off" #don't run if on holiday
     action:
-      - service: notify.mobile_app_michael_s_galaxy_s10
+      - service: notify.mobile_app_pixel_8_pro
         data:
           message: "This is a fake doorbell to desensitise the dog."
           data:
@@ -184,7 +184,7 @@ automation:
               else state_attr("binary_sensor.dinner", "friendly_name") if states("binary_sensor.dinner") == "on"
             }}!
         response_variable: "chatgpt_response"
-      - service: notify.mobile_app_michael_s_galaxy_s10
+      - service: notify.mobile_app_pixel_8_pro
         data:
           title: "Artemis needs food"
           message: "{{ chatgpt_response.text }}"
@@ -309,7 +309,7 @@ alert:
       - 30 #minutes between alerts once started
     can_acknowledge: false
     notifiers:
-      - mobile_app_michael_s_galaxy_s10
+      - mobile_app_pixel_8_pro
       - mobile_app_lauras_iphone
     data:
       notification_icon: "mdi:water-alert"

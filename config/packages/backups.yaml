@@ -25,7 +25,7 @@ automation:
       platform: event
       event_type: auto_backup.backup_failed
     action:
-      - service: notify.mobile_app_michael_s_galaxy_s10
+      - service: notify.mobile_app_pixel_8_pro
         data:
           title: "HA Auto-Backup Failed"
           message: |-

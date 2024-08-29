@@ -90,7 +90,7 @@ automation:
         data:
           prompt: "Don't forget to take the bins out!"
         response_variable: "chatgpt_response"
-      - service: notify.mobile_app_michael_s_galaxy_s10
+      - service: notify.mobile_app_pixel_8_pro
         data:
           title: "Bins Reminder"
           message: "{{ chatgpt_response.text }}"
@@ -137,7 +137,7 @@ automation:
         data:
           prompt: "Don't forget to bring the bins back in!"
         response_variable: "chatgpt_response"
-      - service: notify.mobile_app_michael_s_galaxy_s10
+      - service: notify.mobile_app_pixel_8_pro
         data:
           title: "Bins Reminder"
           message: "{{ chatgpt_response.text }}"

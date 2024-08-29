@@ -12,7 +12,7 @@
 template:
   - binary_sensor:
       - name: "Michael Phone Is Docked In The Car"
-        state: "{{states('binary_sensor.michael_s_galaxy_s10_is_charging') and 'FC:35:E6:53:2C:C9 (Mazda)' in state_attr('sensor.michael_s_galaxy_s10_bluetooth_connection', 'connected_paired_devices')}}"
+        state: "{{states('binary_sensor.pixel_8_pro_is_charging') and 'FC:35:E6:53:2C:C9 (Mazda)' in state_attr('sensor.pixel_8_pro_bluetooth_connection', 'connected_paired_devices')}}"
       
   - sensor:
       - name: "Lowest Fuel Price"
@@ -108,7 +108,7 @@ automation:
         from: "off"
         to: "on"
     action:
-      - service: notify.mobile_app_michael_s_galaxy_s10
+      - service: notify.mobile_app_pixel_8_pro
         data:
           message: "command_launch_app"
           data:

@@ -67,7 +67,7 @@ automation:
       # Test that we support this device and tag
       - "{{ trigger.event.data.tag_id in tags }}"
     action:
-      - service: notify.mobile_app_michael_s_galaxy_s10
+      - service: notify.mobile_app_pixel_8_pro
         data:
           message: The {{ tags[trigger.event.data.tag_id].playlist_name }} playlist will be played.
           data:

@@ -25,7 +25,7 @@ automation:
         data:
           prompt: "The house alarm was not set and nobody is home."
         response_variable: "chatgpt_response"
-      - service: notify.mobile_app_michael_s_galaxy_s10
+      - service: notify.mobile_app_pixel_8_pro
         data:
           message: "{{chatgpt_response.text}}"
           data: 
@@ -61,7 +61,7 @@ automation:
         data:
           prompt: "Don't forget to disarm the alarm!"
         response_variable: "chatgpt_response"
-      - service: notify.mobile_app_michael_s_galaxy_s10
+      - service: notify.mobile_app_pixel_8_pro
         data:
           message: "{{ chatgpt_response.text }}"
           title: Alarm is armed!
@@ -117,7 +117,7 @@ automation:
           entity_id: bindary_sensor.front_door
           state: 'on'
     action:
-      - service: notify.mobile_app_michael_s_galaxy_s10
+      - service: notify.mobile_app_pixel_8_pro
         data:
           message: A door was left open when the house alarm was set.
           data:

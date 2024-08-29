@@ -101,7 +101,7 @@ automation:
     id: location_remind_me_to_turn_off_holiday_mode_when_arriving_home
     trigger:
       - platform: zone
-        entity_id: device_tracker.michael_galaxy_s10
+        entity_id: device_tracker.home_server_intel_nuc
         zone: zone.home
         event: enter
     condition:
@@ -109,7 +109,7 @@ automation:
         entity_id: input_boolean.holiday_mode
         state: "on"
     action:
-      - service: notify.mobile_app_michael_s_galaxy_s10
+      - service: notify.mobile_app_pixel_8_pro
         data:
           message: "Welcome home! Don't forget to disable Holiday Mode."
           data:
@@ -134,7 +134,7 @@ automation:
         data:
           prompt: "Laura is leaving work."
         response_variable: "chatgpt_response"
-      - service: notify.mobile_app_michael_s_galaxy_s10
+      - service: notify.mobile_app_pixel_8_pro
         data:
           title: "Laura leaving work"
           message: "{{ chatgpt_response.text }}"
@@ -145,7 +145,7 @@ automation:
     id: location_notify_laura_if_michael_leaving_work
     trigger:
       platform: zone
-      entity_id: device_tracker.michael_galaxy_s10
+      entity_id: device_tracker.home_server_intel_nuc
       zone: zone.michael_s_work
       event: leave
     condition:
@@ -185,7 +185,7 @@ automation:
         data:
           prompt: "Someone has come home."
         response_variable: "chatgpt_response"
-      - service: notify.mobile_app_michael_s_galaxy_s10
+      - service: notify.mobile_app_pixel_8_pro
         data:
           title: "Someone has come home"
           message: "{{ chatgpt_response.text }}"
@@ -217,7 +217,7 @@ automation:
         data:
           prompt: "Did you forget to bring your work laptop with you?"
         response_variable: "chatgpt_response"
-      - service: notify.mobile_app_michael_s_galaxy_s10
+      - service: notify.mobile_app_pixel_8_pro
         data:
           title: "Work laptop reminder"
           message: "{{ chatgpt_response.text }}"
@@ -230,7 +230,7 @@ automation:
     trigger:
       - platform: state
         entity_id:
-          - sensor.michael_s_galaxy_s10_bluetooth_connection
+          - sensor.pixel_8_pro_bluetooth_connection
     variables:
       mazda_mac_address: !secret mazda_bluetooth_mac_address
     condition:
@@ -238,7 +238,7 @@ automation:
         condition: template
         value_template: >
           {{ 
-            mazda_mac_address not in state_attr('sensor.michael_s_galaxy_s10_bluetooth_connection', 'connected_paired_devices')
+            mazda_mac_address not in state_attr('sensor.pixel_8_pro_bluetooth_connection', 'connected_paired_devices')
             and mazda_mac_address in trigger.from_state.attributes['connected_paired_devices']
           }}
       - alias: "Check whether Michael is at the train station"
@@ -252,7 +252,7 @@ automation:
         data:
           prompt: "Don't forget to pay for parking! "
         response_variable: "chatgpt_response"
-      - service: notify.mobile_app_michael_s_galaxy_s10
+      - service: notify.mobile_app_pixel_8_pro
         data:
           title: "Parking Payment Reminder"
           message: "{{ chatgpt_response.text }}"
@@ -373,7 +373,7 @@ automation:
         data:
           prompt: "Don't forget your 'Crown Rewards Card'. You may need it when you go to {{trigger.calendar_event.summary}}."
         response_variable: "chatgpt_response"
-      - service: notify.mobile_app_michael_s_galaxy_s10
+      - service: notify.mobile_app_pixel_8_pro
         data:
           title: "Remember Your Crown Rewards Card"
           message: "{{ chatgpt_response.text }}"
@@ -399,7 +399,7 @@ automation:
             {% endif %}
       - parallel:
           - sequence: #Notify Michael
-              - service: notify.mobile_app_michael_s_galaxy_s10
+              - service: notify.mobile_app_pixel_8_pro
                 data:
                   title: "A Wedding Guest Has Responded"
                   message: "{{ message_text }}"
@@ -407,12 +407,11 @@ automation:
                     group: "Wedding"
                     color: "#ff00c8"
                     notification_icon: "mdi:heart"
-          #FIXME
-          # - sequence: #Notify Laura
-          #     - service: notify.mobile_app_lauras_iphone
-          #       data:
-          #         title: "A Wedding Guest Has Responded"
-          #         message: "{{ message_text }}"
+          - sequence: #Notify Laura
+              - service: notify.mobile_app_lauras_iphone
+                data:
+                  title: "A Wedding Guest Has Responded"
+                  message: "{{ message_text }}"
           - sequence: #Notify TV if it is on
               - alias: "Check if TV is on before notifying it"
                 condition: state
@@ -443,8 +442,8 @@ person:
     id: michael
     user_id: 0e77a256b08c47f7989413c4599cc865
     device_trackers:
-      - device_tracker.michael_galaxy_s10
-      - device_tracker.phone_ping_michael
+      - device_tracker.google_pixel_watch
+      - device_tracker.michael_pixel_8_pro
   - name: Laura
     id: laura
     user_id: c93d4309ba8141eabe4a306b2fb5ecc7

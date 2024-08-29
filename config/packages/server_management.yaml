@@ -136,7 +136,7 @@ automation:
         data:
           prompt: "The server is getting hot. Processor temperature: {{ states('sensor.processor_temperature') }}, cupboard temperature: {{ states('sensor.server_cupboard_temperature') }}"
         response_variable: "chatgpt_response"
-      - service: notify.mobile_app_michael_s_galaxy_s10
+      - service: notify.mobile_app_pixel_8_pro
         data:
           title: "WARNING: The server is getting hot!"
           message: "{{ chatgpt_response.text }}"
@@ -155,7 +155,7 @@ automation:
         data:
           prompt: "'Sonarr' had lost conenction to the VPN."
         response_variable: "chatgpt_response"
-      - service: notify.mobile_app_michael_s_galaxy_s10
+      - service: notify.mobile_app_pixel_8_pro
         data:
           title: "The VPN was automatically restarted"
           message: "{{ chatgpt_response.text }}"
@@ -176,7 +176,7 @@ automation:
         data:
           prompt: "'Sonarr' still has no access to the VPN"
         response_variable: "chatgpt_response"
-      - service: notify.mobile_app_michael_s_galaxy_s10
+      - service: notify.mobile_app_pixel_8_pro
         data:
           title: "The VPN restart was not successful"
           message: "{{ chatgpt_response.text }}"
