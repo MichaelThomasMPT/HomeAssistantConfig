@@ -1,0 +1,161 @@
+script:
+  murder_set_lights:
+    sequence:
+      - service: light.turn_on
+        data:
+          brightness_pct: 5
+        target:
+          entity_id: light.entry_hall_lights
+      - service: light.turn_on
+        data:
+          brightness_pct: 1
+        target:
+          entity_id: light.kitchen_island
+      - service: light.turn_on
+        data:
+          brightness_pct: 20
+          rgb_color:
+            - 255
+            - 146
+            - 38
+        target:
+          entity_id: 
+            - light.theatre_room_left_lamp
+            - light.theatre_room_right_lamp
+      - service: light.turn_on
+        data:
+          brightness_pct: 1
+          rgb_color:
+            - 255
+            - 127
+            - 0
+        target:
+          entity_id: light.theatre_room_tv_cabinet_led_strip
+      - service: light.turn_on
+        data:
+            rgb_color:
+              - 255
+              - 41
+              - 17
+        target:
+          entity_id: light.living_room_tv_led_strip_local
+      - service: light.turn_on
+        data:
+          rgb_color:
+            - 138
+            - 0
+            - 0
+        target:
+          entity_id:
+            - light.curtain_left
+            - light.curtain_right
+            - light.christmas_tree
+
+  murder_set_christmas_lights_again:
+    sequence:
+      - service: light.turn_on
+        data:
+          effect: 5 Carnival
+        target:
+          entity_id:
+            - light.curtain_right
+            - light.curtain_left
+            - light.christmas_tree
+
+  murder_enable_automations:
+    sequence:
+      - service: automation.turn_on
+        data:
+          entity_id: 
+            - automation.theatre_room_blinds_open_automatically
+            - automation.theatre_room_lights_turn_on_lights_when_motion_detected
+            - automation.theatre_room_lights_turn_off_lamps_after_no_activity
+            - automation.theatre_room_lights_manual_control_movie_lights
+            - automation.kitchen_toggle_scullery_lights_when_motion_detected
+            - automation.garden_turn_on_outdoor_lights_when_both_back_doors_are_opened
+            - automation.pets_turn_on_flood_lights_if_dog_door_is_used
+            - automation.front_hall_turn_on_hallway_light_if_pc_turned_off_at_night
+            - automation.front_door_toggle_side_hall_lights_when_motion_detected
+            - automation.front_door_turn_on_porch_light_if_motion_detected
+            - automation.kitchen_notify_if_coffee_machine_closed_for_5_minutes
+
+  murder_disable_automations:
+    sequence:
+      - service: automation.turn_off
+        data:
+          entity_id: 
+            - automation.theatre_room_blinds_open_automatically
+            - automation.theatre_room_lights_turn_on_lights_when_motion_detected
+            - automation.theatre_room_lights_turn_off_lamps_after_no_activity
+            - automation.theatre_room_lights_manual_control_movie_lights
+            - automation.kitchen_toggle_scullery_lights_when_motion_detected
+            - automation.garden_turn_on_outdoor_lights_when_both_back_doors_are_opened
+            - automation.pets_turn_on_flood_lights_if_dog_door_is_used
+            - automation.front_hall_turn_on_hallway_light_if_pc_turned_off_at_night
+            - automation.front_door_toggle_side_hall_lights_when_motion_detected
+            - automation.front_door_turn_on_porch_light_if_motion_detected
+            - automation.kitchen_notify_if_coffee_machine_closed_for_5_minutes
+
+  murder_do_the_murder:
+    sequence:
+      - parallel:
+      #0. Stop all music
+        - service: automation.turn_off
+          entity_id: automation.living_room_turn_on_tv_smart_switch_when_it_turns_itself_off
+        - service: switch.turn_off
+          entity_id: switch.living_room_tv_smart_plug
+        - service: media_player.turn_off
+          entity_id: all 
+      #1. turn off all lights
+        - service: script.turn_off_all_lights
+      #2. play gunshot and murder scream
+        - sequence: 
+          - delay:
+              seconds: 5
+          - service: media_player.volume_set
+            data:
+              entity_id: media_player.kitchen_google_home_hub
+              volume_level: 0.8
+          - service: media_player.play_media
+            data:
+              entity_id: media_player.kitchen_google_home_hub
+              media_content_id: '/local/sounds/MurderSounds.mp3'
+              media_content_type: 'audio/mp3'
+      - delay:
+          seconds: 11
+      #3. Turn on murder lights
+      - service: script.murder_set_lights
+      #4. Set fireplace going on TV
+      - service: media_player.play_media
+        data:
+          media_content_id: '
+          {
+            "app_name": "youtube",
+            "media_id": "6VB4bgiB0yA"
+          }'
+          media_content_type: cast
+        target:
+          entity_id: media_player.living_room_chromecast
+      - delay:
+          seconds: 3
+      - service: switch.turn_on
+        entity_id: switch.living_room_tv_smart_plug
+      #5. Re-enable living room tv automation
+      - service: automation.turn_on
+        entity_id: automation.living_room_turn_on_tv_smart_switch_when_it_turns_itself_off
+      #6. Turn off automations which will mess up this. Is guest mode enough? Probably not. 
+      - service: script.murder_disable_automations
+      #X. MANUAL: start music up again        
+      #X. MANUAL: light candles
+      
+
+automation:
+  - alias: Murder Mystery
+    id: murder_do_the_murder_when_button_is_pressed
+    trigger:
+      - platform: event
+        event_type: zha_event
+        event_data: 
+          device_ieee: !secret zha_murder_mystery_button #FIXME need to set this
+    action:
+      - service: script.murder_do_the_murder
