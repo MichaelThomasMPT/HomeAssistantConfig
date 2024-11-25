@@ -88,9 +88,11 @@ automation:
       event_data:
         action: mute_washing_machine_notifications_until_home
     condition:
-      - condition: state
-        entity_id: person.michael
-        state: 'not_home'
+      - condition: not
+        conditions:
+          - condition: state
+            entity_id: person.michael
+            state: 'home'
     action:
       - service: input_boolean.turn_off
         data:
