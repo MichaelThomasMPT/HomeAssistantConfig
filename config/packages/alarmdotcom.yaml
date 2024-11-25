@@ -78,54 +78,7 @@ automation:
         data:
           message_to_speak: "{{ chatgpt_response.text }}"
           media_player: media_player.kitchen_google_home_hub
-          
-  - alias: Alarm System - Turn Off House When Alarm Is Set
-    id: alarm_system_turn_off_house_when_alarm_is_set
-    trigger:
-      - platform: state
-        entity_id: alarm_control_panel.alarm_com
-        from: 'disarmed'
-        to: 'armed_away'
-      - platform: state
-        entity_id: alarm_control_panel.alarm_com
-        from: 'disarmed'
-        to: 'armed_home'
-    action:
-      - service: script.turn_off_whole_house
-        data: 
-          excluded_lights: "['light.garage', 'light.garage_light', 'light.front_porch_light']" #Leave these lights on if they're already on
-          turn_off_aircon: "true"
-      - service: climate.turn_off
-        entity_id: climate.ac
-        
-  - alias: Alarm System - Alert If Doors Left Open
-    id: alarm_system_alert_if_doors_left_open
-    trigger:
-      platform: state
-      entity_id: alarm_control_panel.alarm_com
-      to: 'armed_away'
-    condition:
-      condition: or
-      conditions:
-        - condition: state
-          entity_id: binary_sensor.back_door_glass
-          state: 'on'
-        - condition: state
-          entity_id: binary_sensor.laundry_door
-          state: 'on'
-        - condition: state
-          entity_id: bindary_sensor.front_door
-          state: 'on'
-    action:
-      - service: notify.mobile_app_pixel_8_pro
-        data:
-          message: A door was left open when the house alarm was set.
-          data:
-            notification_icon: "mdi:shield-home"
-      - service: notify.mobile_app_lauras_iphone
-        data:
-          message: A door was left open when the house alarm was set.
-
+ 
 sensor:
   - platform: template
     scan_interval: 10

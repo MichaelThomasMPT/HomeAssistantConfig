@@ -11,6 +11,10 @@ input_boolean:
   holiday_mode:
     name: Holiday Mode
     icon: mdi:palm-tree
+  michael_is_driving_home:
+    name: Michael Is Driving Home
+    icon: "mdi:car"
+    initial: false
 
 ios:
 
@@ -53,6 +57,32 @@ zone:
     icon: mdi:dice-6
 
 automation:
+  - alias: Location - Open Garage Door When Driving Home
+    id: location_open_garage_door_when_driving_home
+    trigger:
+      - platform: zone
+        entity_id: person.michael
+        zone: zone.home
+        event: enter
+    condition: 
+      - condition: state
+        entity_id: input_boolean.michael_is_driving_home
+        state: "on"
+    action:
+      - action: cover.open_cover
+        target:
+          entity_id: cover.garage_door
+      - action: input_boolean.turn_off
+        target:
+          entity_id: input_boolean.michael_is_driving_home
+      #Temporary notification as well, so I'm aware it has been done
+      - service: notify.mobile_app_pixel_8_pro
+        data:
+          message: "The garage door was opened since you arrived home."
+          data:
+            notification_icon: mdi:garage-open-variant
+      
+
   - alias: Location - Turn Off Aircon When On Holiday
     id: location_turn_off_aircon_when_on_holiday
     trigger:
@@ -101,7 +131,7 @@ automation:
     id: location_remind_me_to_turn_off_holiday_mode_when_arriving_home
     trigger:
       - platform: zone
-        entity_id: device_tracker.home_server_intel_nuc
+        entity_id: person.michael
         zone: zone.home
         event: enter
     condition:
@@ -145,7 +175,7 @@ automation:
     id: location_notify_laura_if_michael_leaving_work
     trigger:
       platform: zone
-      entity_id: device_tracker.home_server_intel_nuc
+      entity_id: person.michael
       zone: zone.michael_s_work
       event: leave
     condition:
@@ -380,62 +410,58 @@ automation:
           data:
             group: "Crown Rewards"
             notification_icon: "mdi:crown-circle"
-
-  - alias: Wedding - Notify Us When Someone Responds To The Wedding SaveDate
-    id: wedding_notify_us_when_someone_responds_to_the_wedding_savedate
+         
+  - alias: Location - Turn Off House Nobody Is Home
+    id: location_turn_off_house_when_nobody_is_home
     trigger:
-      - platform: webhook
-        webhook_id: !secret wedding_savedate_webhook_id
-        allowed_methods:
-          - POST
-        local_only: false
+      - platform: state
+        entity_id: binary_sensor.someone_home
+        from: 'true'
+        to: 'false'
+        for:
+          minutes: 2
     action:
-      - variables:
-          message_text: >-
-            {% if (trigger.json.person2 is not defined) or (trigger.json.person2 is none) or ( (trigger.json.person2 | trim) == "") %}
-              {{ trigger.json.person1 }} has RSVP'd!
-            {% else %}
-              {{ trigger.json.person1 | trim }} and {{ trigger.json.person2 | trim }} have  RSVP'd!
-            {% endif %}
-      - parallel:
-          - sequence: #Notify Michael
-              - service: notify.mobile_app_pixel_8_pro
-                data:
-                  title: "A Wedding Guest Has Responded"
-                  message: "{{ message_text }}"
-                  data:
-                    group: "Wedding"
-                    color: "#ff00c8"
-                    notification_icon: "mdi:heart"
-          - sequence: #Notify Laura
-              - service: notify.mobile_app_lauras_iphone
-                data:
-                  title: "A Wedding Guest Has Responded"
-                  message: "{{ message_text }}"
-          - sequence: #Notify TV if it is on
-              - alias: "Check if TV is on before notifying it"
-                condition: state
-                entity_id: media_player.theatre_room_tv
-                state: "on"
-              - service: notify.theatre_room_tv
-                data:
-                  message: "{{ message_text }}"
-          - sequence: #Change curtains to love heart briefly, then back again
-              - service: scene.create
-                data:
-                  scene_id: curtain_original_state
-                  snapshot_entities:
-                    - light.curtain_left
-              - service: light.turn_on
-                target:
-                  entity_id: light.curtain_left
-                data:
-                  effect: "7 Heart"
-              - delay:
-                  seconds: 20
-              - service: scene.turn_on
-                data:
-                  entity_id: scene.curtain_original_state
+      - service: script.turn_off_whole_house
+        data: 
+          excluded_lights: "['light.garage', 'light.garage_light', 'light.front_porch_light']" #Leave these lights on if they're already on
+          turn_off_aircon: "true"
+      - service: climate.turn_off
+        entity_id: climate.ac
+      #TEMPORARY: Notify Michael this has occurred
+      - service: notify.mobile_app_pixel_8_pro
+        data:
+          message: "The house was turned off because nobody was home."
+          data:
+            notification_icon: mdi:home
+        
+  - alias: Location - Alert If Doors Left Open
+    id: location_alert_if_doors_left_open
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.someone_home
+        from: 'true'
+        to: 'false'
+    condition:
+      condition: or
+      conditions:
+        - condition: state
+          entity_id: binary_sensor.back_door_glass
+          state: 'on'
+        - condition: state
+          entity_id: binary_sensor.laundry_door
+          state: 'on'
+        - condition: state
+          entity_id: bindary_sensor.front_door
+          state: 'on'
+    action:
+      - service: notify.mobile_app_pixel_8_pro
+        data:
+          message: A door was left open while nobody is home.
+          data:
+            notification_icon: "mdi:shield-home"
+      - service: notify.mobile_app_lauras_iphone
+        data:
+          message: A door was left open while nobody is home.
 
 person:
   - name: Michael
@@ -450,3 +476,14 @@ person:
     device_trackers:
       - device_tracker.lauras_iphone
       - device_tracker.phone_ping_laura
+
+binary_sensor:
+  - platform: template
+    sensors:
+      someone_home:
+        friendly_name: Someone Home
+        icon_template: >-
+          {% if is_state('binary_sensor.someone_home','on') %} mdi:home-account
+          {% else %} mdi:home-outline
+          {% endif %}
+        value_template: "{{ is_state('person.michael','home') or  is_state('person.laura','home') }}"
