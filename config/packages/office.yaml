@@ -138,8 +138,8 @@ automation:
         at: "08:30:00"
     condition:
       - condition: state
-        entity_id: alarm_control_panel.alarm_com
-        state: "disarmed"
+        entity_id: 'binary_sensor.someone_home'
+        state: 'true'
     action:
       - service: number.set_value
         data:
@@ -154,8 +154,8 @@ automation:
         at: "12:30:00"
     condition:
       - condition: state
-        entity_id: alarm_control_panel.alarm_com
-        state: "disarmed"
+        entity_id: 'binary_sensor.someone_home'
+        state: 'true'
     action:
       - service: number.set_value
         data:
@@ -167,11 +167,9 @@ automation:
     id: office_blinds_close_when_required
     trigger: 
       - platform: state
-        entity_id: 
-          - alarm_control_panel.alarm_com
-        to:
-          - "armed_home"
-          - "armed_away"
+        entity_id: binary_sensor.someone_home
+        from: 'true'
+        to: 'false'
       - platform: time
         at: "23:30:00"
     action:
@@ -185,9 +183,9 @@ automation:
     id: office_blinds_open_when_arriving_home
     trigger: 
       - platform: state
-        entity_id: 
-          - alarm_control_panel.alarm_com
-        to: "disarmed"
+        entity_id: binary_sensor.someone_home
+        from: 'false'
+        to: 'true'
     action:
       - choose:
           - conditions:

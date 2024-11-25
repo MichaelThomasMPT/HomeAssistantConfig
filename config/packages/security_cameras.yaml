@@ -18,13 +18,9 @@ automation:
     id: security_cameras_turn_off_living_room_camera_privacy_mode_when_leaving_house
     trigger:
       - platform: state
-        entity_id: alarm_control_panel.alarm_com
-        from: "disarmed"
-        to: "armed_away"
-      - platform: state
-        entity_id: alarm_control_panel.alarm_com
-        from: "disarmed"
-        to: "armed_home"
+        entity_id: binary_sensor.someone_home
+        from: 'true'
+        to: 'false'
     action:
       - service: switch.turn_off
         target:
@@ -41,8 +37,9 @@ automation:
     id: security_cameras_turn_on_living_room_camera_privacy_mode_when_arriving_home
     trigger:
       - platform: state
-        entity_id: alarm_control_panel.alarm_com
-        to: "disarmed"
+        entity_id: binary_sensor.someone_home
+        from: 'false'
+        to: 'true'
     action:
       - service: switch.turn_on
         target:

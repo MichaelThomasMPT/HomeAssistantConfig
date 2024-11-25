@@ -79,11 +79,9 @@ automation:
         event: sunrise
         offset: "-00:30:00"
       - platform: state
-        entity_id: alarm_control_panel.alarm_com
-        to: 'armed_away'
-      - platform: state
-        entity_id: alarm_control_panel.alarm_com
-        to: 'armed_home'
+        entity_id: binary_sensor.someone_home
+        to: 'false'
+        from: 'true'
       - platform: event
         event_type: deconz_event
         event_data: 
@@ -136,8 +134,8 @@ automation:
         entity_id: input_boolean.enable_christmas_automations
         state: 'on'
       - condition: state
-        entity_id: 'alarm_control_panel.alarm_com'
-        state: 'disarmed' #we're home
+        entity_id: 'binary_sensor.someone_home'
+        state: 'true'
     action:
       - entity_id: light.christmas_tree
         service: light.turn_on

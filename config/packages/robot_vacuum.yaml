@@ -272,11 +272,9 @@ automation:
     id: vacuum_run_the_roomba_when_leaving_the_house
     trigger:
       - platform: state
-        entity_id: alarm_control_panel.alarm_com
-        from: 'disarmed'
-        to: 
-          - 'armed_away'
-          - 'armed_home'
+        entity_id: binary_sensor.someone_home
+        from: 'true'
+        to: 'false'
     condition:
       - condition: state
         entity_id: input_boolean.holiday_mode
@@ -296,15 +294,14 @@ automation:
       - service: vacuum.start
         target:
           entity_id: vacuum.robo_buddy
+
   - alias: Vacuum - Send the vacuum to base when returning home
     id: vacuum_send_the_vacuum_to_base_when_returning_home
     trigger:
       - platform: state
-        entity_id: alarm_control_panel.alarm_com
-        from: 
-          - 'armed_away'
-          - 'armed_home'
-        to: 'disarmed'
+        entity_id: binary_sensor.someone_home
+        from: 'false'
+        to: 'true'
     condition:
       - condition: not
         conditions:

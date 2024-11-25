@@ -199,45 +199,6 @@ automation:
               - action: "close_garage"
                 title: "Close Garage Door"
 
-  - alias: Front Hall - Turn On Hallway Light If Garage or Front Door Opened After Sunset
-    id: front_hall_turn_on_hallway_light_if_garage_or_front_door_opened_after_sunset
-    trigger:
-      - platform: state
-        entity_id: cover.garage_door
-        to: 'open'
-      - platform: state
-        entity_id: cover.garage_door
-        to: 'opening'
-      - platform: state
-        entity_id: sensor.alarmdotcom_front_door
-        to: 'Open'
-      - platform: state
-        entity_id: binary_sensor.front_door
-        to: 'on'
-      - platform: state
-        entity_id: binary_sensor.front_screen_door
-        to: 'on'
-    condition:
-      condition: and
-      conditions:
-        - condition: state  # from sunset until sunrise
-          entity_id: sun.sun
-          state: 'below_horizon'
-        - condition: state
-          entity_id: media_player.theatre_room_tv
-          state: 'off'
-        - condition: state 
-          entity_id: alarm_control_panel.alarm_com
-          state:
-            - "armed_home"
-            - "armed_away"
-          for:
-            minutes: 5 # don't turn the light on when leaving the house, only when arriving home
-    action:
-      - service: light.turn_on
-        entity_id:
-          - light.entry_hall_lights
-
 alert:
   garage_camera_unavailable_alerts:
     title: Garage Camera Is Unavailable

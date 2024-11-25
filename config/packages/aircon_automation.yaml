@@ -520,13 +520,9 @@ automation:
     id: temperature_make_central_living_comfortable_when_arriving_home
     trigger: 
       - platform: state
-        entity_id: alarm_control_panel.alarm_com
-        to: 'disarmed'
-        from: 'armed_away'
-      - platform: state
-        entity_id: alarm_control_panel.alarm_com
-        to: 'disarmed'
-        from: 'armed_home'
+        entity_id: binary_sensor.someone_home
+        to: 'true'
+        from: 'false'
     variables: 
       target_temp: 24 #how cold the aircon should run
       comfortable_temp: 25 #considered a comfortable level

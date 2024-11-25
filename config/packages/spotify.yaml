@@ -31,21 +31,19 @@ automation:
         zone: zone.home
         event: enter
     condition:
-      - condition: state
+      - alias: "Spotify is playing"
+        condition: state
         entity_id: media_player.spotify_micker_t
-        state: 'playing'
-      - condition: or
-        conditions:
-          - condition: state
-            entity_id: alarm_control_panel.alarm_com
-            state: 'armed_away'
-            for:
-              minutes: 5
-          - condition: state
-            entity_id: alarm_control_panel.alarm_com
-            state: 'armed_home'
-            for:
-              minutes: 5
+        state: "playing"
+      - alias: "Laura is not home"
+        condition: zone
+        entity_id: person.laura
+        zone: zone.home
+      # Do not run during Christmas as the Christmas music automation overrides it
+      - alias: "Christmas automations aren't active"
+        condition: state
+        entity_id: input_boolean.enable_christmas_automations
+        state: "false"
     action:
       - alias: "Wait until garage door opens"
         wait_for_trigger:

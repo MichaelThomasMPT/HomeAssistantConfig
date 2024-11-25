@@ -314,37 +314,6 @@ automation:
         data:
           message: "{{ chatgpt_response.text }}"
 
-  - alias: Location - Turn Night Lights On When Arriving Home After Dark
-    id: location_turn_night_lights_on_when_disarming_after_dark
-    mode: single
-    trigger:
-      - platform: state
-        entity_id:
-          - binary_sensor.front_door
-          - binary_sensor.garage_door_internal
-        from: "off"
-        to: "on"
-    condition:
-      - condition: state # from sunset until sunrise
-        entity_id: sun.sun
-        state: "below_horizon"
-      - condition: or
-        conditions:
-          - condition: state
-            entity_id: alarm_control_panel.alarm_com
-            state: "armed_away"
-            for:
-              minutes: 5
-          - condition: state
-            entity_id: alarm_control_panel.alarm_com
-            state: "armed_home"
-            for:
-              minutes: 5
-    action:
-      - service: scene.turn_on
-        target:
-          entity_id: scene.living_room_soft_lighting
-
   - alias: Location - Remind Laura Not To Leave Lunch At Work
     id: location_remind_laura_not_to_leave_lunch_at_work
     mode: single #prevents reminding multiple times too quickly
