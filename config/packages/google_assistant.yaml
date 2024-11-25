@@ -66,6 +66,9 @@ cloud:
         - input_select.igrill_presets_probe
         - climate.refrigerator_freezer
         - climate.refrigerator_fridge
+        - number.refrigerator_freezer_temperature
+        - number.refrigerator_fridge_temperature
+        - switch.refrigerator_ice_plus
         - switch.alfresco_heater
         - vacuum.robo_buddy
     entity_config:
