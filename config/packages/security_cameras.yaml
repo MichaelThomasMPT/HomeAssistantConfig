@@ -148,23 +148,21 @@ automation:
     id: security_cameras_sync_surveillance_station_home_mode_with_alarm_status
     trigger:
       - platform: state
-        entity_id: alarm_control_panel.alarm_com
+        entity_id: binary_sensor.someone_home
     action:
       - choose:
           - conditions:
               - condition: state
-                entity_id: alarm_control_panel.alarm_com
-                state:
-                  - "armed_home"
-                  - "armed_away"
+                entity_id: 'binary_sensor.someone_home'
+                state: 'off'
             sequence:
               - service: switch.turn_off
                 target:
                   entity_id: switch.homenas_home_mode
           - conditions:
               - condition: state
-                entity_id: alarm_control_panel.alarm_com
-                state: "disarmed"
+                entity_id: 'binary_sensor.someone_home'
+                state: 'on'
             sequence:
               - service: switch.turn_on
                 target:
