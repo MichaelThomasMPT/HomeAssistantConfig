@@ -66,7 +66,7 @@ automation:
         event: enter
     condition: 
       - condition: state
-        entity_id: input_boolean.michael_is_driving_home
+        entity_id: binary_sensor.pixel_8_pro_android_auto #Michael is in the car
         state: "on"
     action:
       - action: cover.open_cover
