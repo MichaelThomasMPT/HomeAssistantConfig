@@ -1,67 +1,4 @@
-rest:
-  - resource_template: !secret mealie_shopping_items_api_endpoint
-    headers:
-      Authorization: !secret mealie_api_token
-    params:
-      perPage: 1
-      queryFilter: checked=false
-      orderBy: food.name
-      orderDirection: asc
-    sensor:
-      - name: Mealie Shopping List Items
-        availability: >
-          {{ value_json['total'] }}
-        #Sensor to view items which are on any Mealie shopping list
-        #Extract the ingredient data in the following format: "food - quantity unit" eg. "apples - 1.5 kilogram", or "Empty List" if no items are left in the list
-        value_template: >
-          {# If no items in list, return "Empty List" #}
-          {% if value_json['total'] == 0 %}
-            Empty List
-
-          {# If distinct food is not defined use display name instead #}
-          {% elif value_json['items'][0]['food'] == none %}
-            {{ value_json['items'][0]['display'] }}
-
-          {# If quantity is available, include it in the output #}
-          {% elif value_json['items'][0]['quantity'] > 0 %}
-            {{ value_json['items'][0]['food']['name'] }} - {{ (value_json['items'][0]['quantity'] | round(3) | string).rstrip('0').rstrip('.') }} {{ value_json['items'][0]['unit']['name'] if value_json['items'][0]['unit'] is not none }}
-
-          {# Otherwise, print just the food name #}
-          {% else %}
-            {{ value_json['items'][0]['food']['name'] }}
-            
-          {% endif %}
-      - name: Mealie Shopping List Item To Delete
-        availability: >
-          {{ value_json['total'] }}
-        #Extract the ingredient's ID. Required to delete through the API later on.
-        value_template: >
-          {{ value_json['items'][0]['id'] }}
-
-rest_command:
-  #Command to delete a Mealing shopping list item
-  mealie_delete_from_shopping_list:
-    url: >
-      {{ url }}/{{ states('sensor.mealie_shopping_list_item_to_delete') }}
-    method: delete
-    headers:
-      Authorization:  !secret mealie_api_token
-
 automation:
-  #Automation to regularly refresh the "Mealie Shopping List Items" sensor 
-  - id: mealie_update_rest_sensors
-    alias: "Mealie - Update Rest Sensors"
-    initial_state: "on"
-    trigger:
-      - platform: time_pattern
-        seconds: "/10" #How often do you want to check for updates in Mealie?
-    action:
-      - service: homeassistant.update_entity
-        data:
-          entity_id:
-            - sensor.mealie_shopping_list_items
-            - sensor.mealie_shopping_list_item_to_delete
-
   #Automation to transfer items from the Mealie shopping list to another list of your choice
   - id: mealie_transfer_shopping_list
     alias: "Mealie - Transfer Shopping List"
@@ -75,55 +12,34 @@ automation:
     trigger:
       - id: "regular_trigger"
         platform: state
-        entity_id: sensor.mealie_shopping_list_items
+        entity_id: todo.mealie_add_to_todoist
       - id: "fallback_trigger"
         platform: time_pattern
         minutes: "/10"
     condition:
-      - condition: not
-        conditions:
-          - condition: state
-            entity_id: sensor.mealie_shopping_list_items
-            state: "Empty List"
-      - condition: not
-        conditions:
-          - condition: state
-            entity_id: sensor.mealie_shopping_list_items
-            state: "unavailable"
+      - condition: numeric_state
+        entity_id: todo.mealie_add_to_todoist
+        above: 0
     action:
-      - alias: "Ensure shopping list item isn't now 'Empty List'"
-        condition: not
-        conditions:
-          - condition: state
-            entity_id: sensor.mealie_shopping_list_items
-            state: "Empty List"
-
+      - alias: "Retrieve current list items"
+        service: todo.get_items
+        target:
+          entity_id: todo.mealie_add_to_todoist
+        data:
+          status: 
+            - needs_action
+        response_variable: mealie_list_items
       - alias: "Add shopping list item to target list"
         service: todo.add_item
         target:
           entity_id: "{{ target_shopping_list }}"
         data:
-          item: "{{ states('sensor.mealie_shopping_list_items') }}"
+          item: "{{ mealie_list_items['todo.mealie_add_to_todoist']['items'][0]['summary'] }}"
           description: Imported From Mealie
 
       - alias: "Delete shopping list item from Mealie"
-        service: rest_command.mealie_delete_from_shopping_list
+        service: todo.remove_item
+        target:
+          entity_id: todo.mealie_add_to_todoist
         data:
-          url: !secret mealie_shopping_items_api_endpoint
-        response_variable: mealie_delete_response
-
-      - alias: "Notify if item failed to delete from Mealie"
-        if: "{{ mealie_delete_response['status'] != 200 }}"
-        then:
-          - service: "{{ notify_service }}"
-            data:
-              title: "Failed to delete item from Mealie list"
-              message: "{{ mealie_delete_response['content'] }}"
-              data:
-                notification_icon: "mdi:food-off"
-                
-      - alias: "Refresh Mealie shopping list items sensor, in case more items need processing"
-        service: homeassistant.update_entity
-        data:
-          entity_id:
-            - sensor.mealie_shopping_list_items
+          item: "{{ mealie_list_items['todo.mealie_add_to_todoist']['items'][0]['summary'] }}"
