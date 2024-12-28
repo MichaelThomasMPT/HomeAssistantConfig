@@ -115,7 +115,7 @@ automation:
     action:
       - service: spotcast.start
         data:
-          uri: spotify:playlist:37i9dQZF1DX9BVquKzFnCW
+          uri: spotify:playlist:5tmPOH74rppWuswKrmjFVe #Christmas Jazz
           random_song: true
           shuffle: true
           start_volume: 50
@@ -172,7 +172,7 @@ script:
             {{
               state_attr('light.christmas_tree', 'effect_list')
               | reject('==',  state_attr('light.christmas_tree', 'effect_list'))
-              | reject('==', '8 Soft and slow b')
+              | reject('==', '1 Fireworks')
               | list
               | random
             }}
