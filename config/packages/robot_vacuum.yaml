@@ -273,8 +273,8 @@ automation:
     trigger:
       - platform: state
         entity_id: binary_sensor.someone_home
-        from: 'true'
-        to: 'false'
+        from: 'on'
+        to: 'off'
     condition:
       - condition: state
         entity_id: input_boolean.holiday_mode
@@ -300,8 +300,8 @@ automation:
     trigger:
       - platform: state
         entity_id: binary_sensor.someone_home
-        from: 'false'
-        to: 'true'
+        from: 'off'
+        to: 'on'
     condition:
       - condition: not
         conditions:

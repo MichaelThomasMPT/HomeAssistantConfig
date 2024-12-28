@@ -19,8 +19,8 @@ automation:
     trigger:
       - platform: state
         entity_id: binary_sensor.someone_home
-        from: 'true'
-        to: 'false'
+        from: 'on'
+        to: 'off'
     action:
       - service: switch.turn_off
         target:
@@ -38,8 +38,8 @@ automation:
     trigger:
       - platform: state
         entity_id: binary_sensor.someone_home
-        from: 'false'
-        to: 'true'
+        from: 'off'
+        to: 'on'
     action:
       - service: switch.turn_on
         target:

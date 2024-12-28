@@ -138,7 +138,7 @@ automation:
       #Only run when we are home
       - condition: state
         entity_id: 'binary_sensor.someone_home'
-        state: 'true'
+        state: 'on'
     action:
       - service: scene.turn_on
         target:
@@ -149,8 +149,8 @@ automation:
     trigger:
       - platform: state
         entity_id: binary_sensor.someone_home
-        from: 'false'
-        to: 'true'
+        from: 'off'
+        to: 'on'
     condition:
       - condition: state  # from sunset until sunrise
         entity_id: sun.sun

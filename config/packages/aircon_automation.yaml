@@ -7,64 +7,64 @@ script:
   #Turn off all zones, with 1 second delays as it gets confused if it spams too many commands to the AC at once
   aircon_turn_off_all_zones:
     sequence:
-    - service: cover.close_cover
-      data:
-        entity_id: cover.bed_2_3
-    - delay:
-        seconds: 1
-    - service: cover.close_cover
-      data:
-        entity_id: cover.living
-    - delay:
-        seconds: 1
-    - service: cover.close_cover
-      data:
-        entity_id: cover.master_bed
-    - delay:
-        seconds: 1
-    - service: cover.close_cover
-      data:
-        entity_id: cover.theatre
-    - delay:
-        seconds: 1
+      - service: cover.close_cover
+        data:
+          entity_id: cover.bed_2_3
+      - delay:
+          seconds: 1
+      - service: cover.close_cover
+        data:
+          entity_id: cover.living
+      - delay:
+          seconds: 1
+      - service: cover.close_cover
+        data:
+          entity_id: cover.master_bed
+      - delay:
+          seconds: 1
+      - service: cover.close_cover
+        data:
+          entity_id: cover.theatre
+      - delay:
+          seconds: 1
 
   #Warm the master bedroom for 60 minutes
   aircon_warm_master:
     sequence:
-    - data:
-        entity_id: climate.ac
-        temperature: 25
-      service: climate.set_temperature
-    - data:
-        entity_id: climate.ac
-        hvac_mode: heat
-      service: climate.set_hvac_mode
-    - data:
-        entity_id: climate.ac
-      service: climate.turn_on
-    - service: script.aircon_turn_off_all_zones
-    - data:
-        entity_id: cover.master_bed
-      service: cover.open_cover
-    - delay:
-        seconds: 10
-    - data:
-        entity_id: input_number.aircon_countdown_timer
-        value: 30
-      service: input_number.set_value
+      - data:
+          entity_id: climate.ac
+          temperature: 25
+        service: climate.set_temperature
+      - data:
+          entity_id: climate.ac
+          hvac_mode: heat
+        service: climate.set_hvac_mode
+      - data:
+          entity_id: climate.ac
+        service: climate.turn_on
+      - service: script.aircon_turn_off_all_zones
+      - data:
+          entity_id: cover.master_bed
+        service: cover.open_cover
+      - delay:
+          seconds: 10
+      - data:
+          entity_id: input_number.aircon_countdown_timer
+          value: 30
+        service: input_number.set_value
     alias: Aircon Warm Master
-    
+
   #Run the fan in the master bedroom for 60 minutes
   aircon_fan_master:
     sequence:
-    - data:
-        entity_id: climate.ac
-        hvac_mode: fan_only
-      service: climate.set_hvac_mode
-    - service: script.aircon_turn_off_all_zones
-    - data:
-        entity_id: cover.master_bed
-      service: cover.open_cover
+      - data:
+          entity_id: climate.ac
+          hvac_mode: fan_only
+        service: climate.set_hvac_mode
+      - service: script.aircon_turn_off_all_zones
+      - data:
+          entity_id: cover.master_bed
+        service: cover.open_cover
     # - delay:
     #     seconds: 10
     # - data:
@@ -72,126 +72,126 @@ script:
     #     value: 120
     #   service: input_number.set_value
     alias: Aircon Fan Master
-    
+
   #Run the fan in the office
   aircon_fan_office:
     sequence:
-    - data:
-        entity_id: climate.ac
-        hvac_mode: fan_only
-      service: climate.set_hvac_mode
-    - service: script.aircon_turn_off_all_zones
-    - data:
-        entity_id: cover.bed_2_3
-      service: cover.open_cover
+      - data:
+          entity_id: climate.ac
+          hvac_mode: fan_only
+        service: climate.set_hvac_mode
+      - service: script.aircon_turn_off_all_zones
+      - data:
+          entity_id: cover.bed_2_3
+        service: cover.open_cover
     alias: Aircon Fan Office
 
   aircon_heat_office:
     sequence:
-    - data:
-        entity_id: climate.ac
-        hvac_mode: heat
-      service: climate.set_hvac_mode
-    - data:
-        entity_id: climate.ac
-        temperature: 25
-      service: climate.set_temperature
-    - service: script.aircon_turn_off_all_zones
-    - data:
-        entity_id: cover.bed_2_3
-      service: cover.open_cover
+      - data:
+          entity_id: climate.ac
+          hvac_mode: heat
+        service: climate.set_hvac_mode
+      - data:
+          entity_id: climate.ac
+          temperature: 25
+        service: climate.set_temperature
+      - service: script.aircon_turn_off_all_zones
+      - data:
+          entity_id: cover.bed_2_3
+        service: cover.open_cover
     alias: Aircon Heat Office
 
   aircon_cool_office:
     sequence:
-    - data:
-        entity_id: climate.ac
-        hvac_mode: cool
-      service: climate.set_hvac_mode
-    - data:
-        entity_id: climate.ac
-        temperature: 24
-      service: climate.set_temperature
-    - service: script.aircon_turn_off_all_zones
-    - data:
-        entity_id: cover.bed_2_3
-      service: cover.open_cover
+      - data:
+          entity_id: climate.ac
+          hvac_mode: cool
+        service: climate.set_hvac_mode
+      - data:
+          entity_id: climate.ac
+          temperature: 24
+        service: climate.set_temperature
+      - service: script.aircon_turn_off_all_zones
+      - data:
+          entity_id: cover.bed_2_3
+        service: cover.open_cover
     alias: Aircon Cool Office
 
   #Run the fan in the theatre
   aircon_fan_theatre:
     sequence:
-    - data:
-        entity_id: climate.ac
-        hvac_mode: fan_only
-      service: climate.set_hvac_mode
-    - service: script.aircon_turn_off_all_zones
-    - data:
-        entity_id: cover.theatre
-      service: cover.open_cover
+      - data:
+          entity_id: climate.ac
+          hvac_mode: fan_only
+        service: climate.set_hvac_mode
+      - service: script.aircon_turn_off_all_zones
+      - data:
+          entity_id: cover.theatre
+        service: cover.open_cover
     alias: Aircon Fan Theatre
-    
+
   #Run the aircon in the central living area
   aircon_cool_central_living:
     sequence:
-    - data:
-        entity_id: climate.ac
-        temperature: 24
-      service: climate.set_temperature
-    - data:
-        entity_id: climate.ac
-        hvac_mode: cool
-      service: climate.set_hvac_mode
-    - service: script.aircon_turn_off_all_zones
-    - data:
-        entity_id: cover.living
-      service: cover.open_cover
+      - data:
+          entity_id: climate.ac
+          temperature: 24
+        service: climate.set_temperature
+      - data:
+          entity_id: climate.ac
+          hvac_mode: cool
+        service: climate.set_hvac_mode
+      - service: script.aircon_turn_off_all_zones
+      - data:
+          entity_id: cover.living
+        service: cover.open_cover
     alias: Aircon Cool Central Living
 
   #Run the aircon in the theatre room
   aircon_cool_theatre:
     sequence:
-    - data:
-        entity_id: climate.ac
-        temperature: 24
-      service: climate.set_temperature
-    - data:
-        entity_id: climate.ac
-        hvac_mode: cool
-      service: climate.set_hvac_mode
-    - service: script.aircon_turn_off_all_zones
-    - data:
-        entity_id: cover.theatre
-      service: cover.open_cover
+      - data:
+          entity_id: climate.ac
+          temperature: 24
+        service: climate.set_temperature
+      - data:
+          entity_id: climate.ac
+          hvac_mode: cool
+        service: climate.set_hvac_mode
+      - service: script.aircon_turn_off_all_zones
+      - data:
+          entity_id: cover.theatre
+        service: cover.open_cover
     alias: Aircon Cool Theatre
 
   #Run the aircon in cool mode
   aircon_cool:
     sequence:
-    - data:
-        entity_id: climate.ac
-        temperature: 24
-      service: climate.set_temperature
-    - data:
-        entity_id: climate.ac
-        hvac_mode: cool
-      service: climate.set_hvac_mode
+      - data:
+          entity_id: climate.ac
+          temperature: 24
+        service: climate.set_temperature
+      - data:
+          entity_id: climate.ac
+          hvac_mode: cool
+        service: climate.set_hvac_mode
     alias: Aircon On
-    
+
   #Run the aircon in heat mode
   aircon_heat:
     sequence:
-    - data:
-        entity_id: climate.ac
-        temperature: 24
-      service: climate.set_temperature
-    - data:
-        entity_id: climate.ac
-        hvac_mode: heat
-      service: climate.set_hvac_mode
-    - data:
-        entity_id: climate.ac
-      service: climate.turn_on
+      - data:
+          entity_id: climate.ac
+          temperature: 24
+        service: climate.set_temperature
+      - data:
+          entity_id: climate.ac
+          hvac_mode: heat
+        service: climate.set_hvac_mode
+      - data:
+          entity_id: climate.ac
+        service: climate.turn_on
     alias: Heater On
 
   #Save the current aircon state, blast aircon for 10 min, then restore state.
@@ -216,16 +216,16 @@ script:
       - service: scene.turn_on
         data:
           entity_id: scene.aircon_saved_state
-          
+
   #Reduce the central living area temperature to a comfortable level
   aircon_make_central_living_comfortable:
     alias: Aircon Make Central Living Comfortable
-    fields: 
-      target_temperature: 
-        description: 'What temperature should the aircon run at?'
+    fields:
+      target_temperature:
+        description: "What temperature should the aircon run at?"
         example: "25"
       comfortable_temperature_max:
-        description: 'What maximum temperature should be considered comfortable enough?'
+        description: "What maximum temperature should be considered comfortable enough?"
         example: "26"
     sequence:
       #Set the comfortable temperature in a number helper
@@ -252,7 +252,7 @@ script:
           minutes: 5
       #Keep running until comfortable temperature has been reached
       - repeat:
-          while: 
+          while:
             - condition: numeric_state
               entity_id: sensor.living_room_temperature
               above: input_number.aircon_make_central_living_comfortable_temperature_max
@@ -263,18 +263,18 @@ script:
       #in case it has actually been off for hours and the temperature has just decreased in that time.
       - condition: state
         entity_id: climate.ac
-        state: 'cool' 
+        state: "cool"
       - data:
           entity_id: climate.ac
           hvac_mode: fan_only
         service: climate.set_hvac_mode
-      
+
 automation:
   - alias: Temperature - Morning Warmth
     id: temperature_morning_warmth
     trigger:
       - platform: time
-        at: '06:00:00'
+        at: "06:00:00"
     condition:
       - condition: state
         entity_id: input_boolean.holiday_mode
@@ -288,8 +288,8 @@ automation:
           - fri
       - condition: numeric_state
         entity_id: sensor.master_bedroom_temperature
-        below: '16.5'
-        value_template: '{{ state.attributes.temperature }}'
+        below: "16.5"
+        value_template: "{{ state.attributes.temperature }}"
     action:
       - service: script.aircon_warm_master
 
@@ -300,25 +300,28 @@ automation:
       minutes: "/10" #This will match every 10 minutes
     condition:
       - condition: template
-        value_template: '{{ (states.sensor.living_room_temperature.state | float) > 28.0 }}' #if the inside temperature is > 28 degrees  
+        value_template: "{{ (states.sensor.living_room_temperature.state | float) > 28.0 }}" #if the inside temperature is > 28 degrees
+
+      #FIXME need to know if artemis is home or not
       - condition: state
-        entity_id: 'alarm_control_panel.alarm_com'
-        state: 'armed_home' #dog is home
+        entity_id: binary_sensor.someone_home
+        state: "off"
+
       - condition: state
-        entity_id: 'climate.ac'
-        state: 'off' #don't run the script if the aircon is already on, as it will restart the countdown timer
+        entity_id: "climate.ac"
+        state: "off" #don't run the script if the aircon is already on, as it will restart the countdown timer
     action:
       - service: script.aircon_cool_central_living #run the aircon in the central living area
       - delay: #wait until it's up and running
-          seconds: 30 
+          seconds: 30
       - service: input_number.set_value #stop the aircon after 20 minutes
-        data_template: 
+        data_template:
           entity_id: input_number.aircon_countdown_timer
           value: 20
 
   - alias: Temperature - Warm Puppy Nights
     id: temperature_warm_puppy_nights
-    trigger: 
+    trigger:
       - platform: numeric_state
         entity_id: sensor.living_room_temperature
         below: 18
@@ -328,10 +331,10 @@ automation:
         state: "off" #don't run if on holiday
       - condition: or
         conditions:
-        - condition: time
-          after: "22:00:00"
-        - condition: time
-          before: "07:00:00"
+          - condition: time
+            after: "22:00:00"
+          - condition: time
+            before: "07:00:00"
     action:
       - service: script.aircon_turn_off_all_zones
       - delay:
@@ -339,9 +342,9 @@ automation:
       - service: cover.open_cover
         data:
           entity_id: cover.living
-      - service: script.aircon_heat 
+      - service: script.aircon_heat
       - delay: #wait until it's up and running
-          seconds: 30 
+          seconds: 30
       - service: input_number.set_value
         data:
           entity_id: input_number.aircon_countdown_timer
@@ -359,31 +362,31 @@ automation:
     trigger:
       - platform: event
         event_type: zha_event
-        event_data: 
+        event_data:
           device_ieee: !secret zha_laura_master_bedroom_button
           command: "double"
       - platform: event
         event_type: zha_event
-        event_data: 
+        event_data:
           device_ieee: !secret zha_michael_master_bedroom_button
           command: "double"
     condition:
       - condition: or
         conditions:
           - condition: template
-            value_template: '{{ (states.sensor.master_bedroom_temperature.state | float) > 22.0 }}'
+            value_template: "{{ (states.sensor.master_bedroom_temperature.state | float) > 22.0 }}"
           - condition: template
-            value_template: '{{ (states.sensor.master_wir_multisensor_air_temperature.state | float) > 22.0 }}'
+            value_template: "{{ (states.sensor.master_wir_multisensor_air_temperature.state | float) > 22.0 }}"
       - condition: or
         conditions:
-        - condition: state
-          entity_id: 'climate.ac'
-          state: 'off' #aircon is currently off
-        - condition: state
-          entity_id: 'switch.aircon_zone_master'
-          state: 'off' #master bedroom zone is off
+          - condition: state
+            entity_id: "climate.ac"
+            state: "off" #aircon is currently off
+          - condition: state
+            entity_id: "switch.aircon_zone_master"
+            state: "off" #master bedroom zone is off
     action:
-      - service: script.aircon_fan_master 
+      - service: script.aircon_fan_master
 
   - alias: Temperature - Master Bed Button Trigger - Warm
     id: temperature_master_bed_button_trigger_warm
@@ -392,55 +395,55 @@ automation:
     trigger:
       - platform: event
         event_type: zha_event
-        event_data: 
+        event_data:
           device_ieee: !secret zha_laura_master_bedroom_button
           command: "double"
       - platform: event
         event_type: zha_event
-        event_data: 
+        event_data:
           device_ieee: !secret zha_michael_master_bedroom_button
           command: "double"
     condition:
       - condition: and
         conditions:
           - condition: template
-            value_template: '{{ (states.sensor.master_bedroom_temperature.state | float) <= 22.0 }}'
+            value_template: "{{ (states.sensor.master_bedroom_temperature.state | float) <= 22.0 }}"
           - condition: template
-            value_template: '{{ (states.sensor.master_wir_multisensor_air_temperature.state | float) <= 22.0 }}'
+            value_template: "{{ (states.sensor.master_wir_multisensor_air_temperature.state | float) <= 22.0 }}"
       - condition: or
         conditions:
-        - condition: state
-          entity_id: 'climate.ac'
-          state: 'off' #aircon is currently off
-        - condition: state
-          entity_id: 'switch.aircon_zone_master'
-          state: 'off' #master bedroom zone is off
+          - condition: state
+            entity_id: "climate.ac"
+            state: "off" #aircon is currently off
+          - condition: state
+            entity_id: "switch.aircon_zone_master"
+            state: "off" #master bedroom zone is off
     action:
-      - service: script.aircon_warm_master 
+      - service: script.aircon_warm_master
 
   - alias: Temperature - Master Bed Button Trigger - Off
     id: temperature_master_bed_button_trigger_off
     trigger:
       - platform: event
         event_type: zha_event
-        event_data: 
+        event_data:
           device_ieee: !secret zha_laura_master_bedroom_button
           command: "double"
       - platform: event
         event_type: zha_event
-        event_data: 
+        event_data:
           device_ieee: !secret zha_michael_master_bedroom_button
           command: "double"
     condition:
-        #only run if aircon is not off
+      #only run if aircon is not off
       - condition: not
         conditions:
-        - condition: state
-          entity_id: 'climate.ac'
-          state: 'off' #aircon is currently on in any mode
-        - condition: state
-          entity_id: 'switch.aircon_zone_master'
-          state: 'off' #master bedroom zone is on
+          - condition: state
+            entity_id: "climate.ac"
+            state: "off" #aircon is currently on in any mode
+          - condition: state
+            entity_id: "switch.aircon_zone_master"
+            state: "off" #master bedroom zone is on
     action:
       - service: climate.turn_off
         data:
@@ -453,7 +456,7 @@ automation:
     trigger:
       - platform: event
         event_type: zha_event
-        event_data: 
+        event_data:
           device_ieee: !secret zha_theatre_aircon_button
           command: "on"
     action:
@@ -464,23 +467,23 @@ automation:
             - light.theatre_room_left_lamp
             - light.theatre_room_right_lamp
       - choose:
-        - conditions: #If aircon theatre zone off or aircon off in general
-            - condition: or
-              conditions:
-              - condition: state
-                entity_id: switch.aircon_zone_theatre
-                state: 'off'
-              - condition: state
-                entity_id: climate.ac
-                state: 'off'
-          sequence:
-            - service: light.turn_on
-              target:
-                entity_id: light.theatre_room 
-              data:
-                brightness_pct: 50
-                color_name: green
-            - service: script.aircon_fan_theatre
+          - conditions: #If aircon theatre zone off or aircon off in general
+              - condition: or
+                conditions:
+                  - condition: state
+                    entity_id: switch.aircon_zone_theatre
+                    state: "off"
+                  - condition: state
+                    entity_id: climate.ac
+                    state: "off"
+            sequence:
+              - service: light.turn_on
+                target:
+                  entity_id: light.theatre_room
+                data:
+                  brightness_pct: 50
+                  color_name: green
+              - service: script.aircon_fan_theatre
         default: #If fan is already running in the theatre, turn on the aircon instead
           - service: light.turn_on
             target:
@@ -499,7 +502,7 @@ automation:
     trigger:
       - platform: event
         event_type: zha_event
-        event_data: 
+        event_data:
           device_ieee: !secret zha_theatre_aircon_button
           command: "off"
     action:
@@ -518,12 +521,12 @@ automation:
 
   - alias: Temperature - Make Central Living Comfortable When Arriving home
     id: temperature_make_central_living_comfortable_when_arriving_home
-    trigger: 
+    trigger:
       - platform: state
         entity_id: binary_sensor.someone_home
-        to: 'true'
-        from: 'false'
-    variables: 
+        to: "on"
+        from: "off"
+    variables:
       target_temp: 24 #how cold the aircon should run
       comfortable_temp: 25 #considered a comfortable level
     condition:
@@ -538,10 +541,10 @@ automation:
 
   - alias: Temperature - Turn Off Master Bedroom Aircon Each Morning
     id: temperature_turn_off_master_bedroom_aircon_each_morning
-    trigger: 
+    trigger:
       - alias: "Each morning at 9am"
         platform: time
-        at: '09:00:00'
+        at: "09:00:00"
     condition:
       - alias: "Aircon is on"
         condition: template

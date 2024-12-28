@@ -80,8 +80,8 @@ automation:
         offset: "-00:30:00"
       - platform: state
         entity_id: binary_sensor.someone_home
-        to: 'false'
-        from: 'true'
+        from: 'on'
+        to: 'off'
       - platform: event
         event_type: deconz_event
         event_data: 
@@ -135,7 +135,7 @@ automation:
         state: 'on'
       - condition: state
         entity_id: 'binary_sensor.someone_home'
-        state: 'true'
+        state: 'on'
     action:
       - entity_id: light.christmas_tree
         service: light.turn_on

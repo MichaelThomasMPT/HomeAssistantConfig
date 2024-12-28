@@ -139,7 +139,7 @@ automation:
     condition:
       - condition: state
         entity_id: 'binary_sensor.someone_home'
-        state: 'true'
+        state: 'on'
     action:
       - service: number.set_value
         data:
@@ -155,7 +155,7 @@ automation:
     condition:
       - condition: state
         entity_id: 'binary_sensor.someone_home'
-        state: 'true'
+        state: 'on'
     action:
       - service: number.set_value
         data:
@@ -168,8 +168,8 @@ automation:
     trigger: 
       - platform: state
         entity_id: binary_sensor.someone_home
-        from: 'true'
-        to: 'false'
+        from: 'on'
+        to: 'off'
       - platform: time
         at: "23:30:00"
     action:
@@ -184,8 +184,8 @@ automation:
     trigger: 
       - platform: state
         entity_id: binary_sensor.someone_home
-        from: 'false'
-        to: 'true'
+        from: 'off'
+        to: 'on'
     action:
       - choose:
           - conditions:
