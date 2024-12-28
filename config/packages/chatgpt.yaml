@@ -99,7 +99,7 @@ automation:
             {%- endfor %}\n
             \n
             Today's cheapest petrol: {{ state_attr('sensor.rss_fuel_watch_ulp', 'entries') | first }}
-          agent_id: conversation.santa_claus_openai
+          agent_id: conversation.haiku_openai
         response_variable: agent
       - alias: Send notification
         service: notify.pushbullet
@@ -177,7 +177,7 @@ automation:
             {%- endfor %}\n
             \n
             Today's cheapest petrol: {{ state_attr('sensor.rss_fuel_watch_ulp', 'entries') | first }}
-          agent_id: conversation.santa_claus_openai
+          agent_id: conversation.haiku_openai
         response_variable: agent
       - service: notify.mobile_app_lauras_iphone
         data:
