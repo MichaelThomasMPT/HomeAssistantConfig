@@ -33,6 +33,7 @@ switch:
   - platform: template
     switches:
       aircon_zone_living: #zone z01
+        unique_id: aircon_zone_living
         value_template: "{{ is_state('cover.living', 'open') }}"
         turn_on:
           service: cover.open_cover
@@ -44,6 +45,7 @@ switch:
             entity_id: cover.living
 
       aircon_zone_theatre: #zone z02
+        unique_id: aircon_zone_theatre
         value_template: "{{ is_state('cover.theatre', 'open') }}"
         turn_on:
           service: cover.open_cover
@@ -55,6 +57,7 @@ switch:
             entity_id: cover.theatre
 
       aircon_zone_master: #zone z03
+        unique_id: aircon_zone_master
         value_template: "{{ is_state('cover.master_bed', 'open') }}"
         turn_on:
           service: cover.open_cover
@@ -66,6 +69,7 @@ switch:
             entity_id: cover.master_bed
 
       aircon_zone_bed23: #zone z04
+        unique_id: aircon_zone_bed23
         value_template: "{{ is_state('cover.bed_2_3', 'open') }}"
         turn_on:
           service: cover.open_cover

@@ -61,9 +61,9 @@ template:
 sensor:
   - platform: feedparser
     name: RSS Fuel Watch ULP
-    feed_url: 'http://www.fuelwatch.wa.gov.au/fuelwatch/fuelWatchRSS?Product=1&Suburb=Cockburn+Central'
+    feed_url: "http://www.fuelwatch.wa.gov.au/fuelwatch/fuelWatchRSS?Product=1&Suburb=Cockburn+Central"
     show_topn: 10
-    date_format: '%a, %b %d %I:%M %p'
+    date_format: "%a, %b %d %I:%M %p"
     inclusions:
       - title
       - description
@@ -82,9 +82,9 @@ sensor:
 
   - platform: feedparser
     name: RSS Fuel Watch ULP Tomorrow
-    feed_url: 'http://www.fuelwatch.wa.gov.au/fuelwatch/fuelWatchRSS?Product=1&Suburb=Cockburn+Central&Day=Tomorrow'
+    feed_url: "http://www.fuelwatch.wa.gov.au/fuelwatch/fuelWatchRSS?Product=1&Suburb=Cockburn+Central&Day=Tomorrow"
     show_topn: 10
-    date_format: '%a, %b %d %I:%M %p'
+    date_format: "%a, %b %d %I:%M %p"
     inclusions:
       - title
       - description

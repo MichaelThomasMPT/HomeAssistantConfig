@@ -19,8 +19,8 @@ automation:
     trigger:
       - platform: state
         entity_id: binary_sensor.someone_home
-        from: 'on'
-        to: 'off'
+        from: "on"
+        to: "off"
     action:
       - service: switch.turn_off
         target:
@@ -38,8 +38,8 @@ automation:
     trigger:
       - platform: state
         entity_id: binary_sensor.someone_home
-        from: 'off'
-        to: 'on'
+        from: "off"
+        to: "on"
     action:
       - service: switch.turn_on
         target:
@@ -153,16 +153,16 @@ automation:
       - choose:
           - conditions:
               - condition: state
-                entity_id: 'binary_sensor.someone_home'
-                state: 'off'
+                entity_id: "binary_sensor.someone_home"
+                state: "off"
             sequence:
               - service: switch.turn_off
                 target:
                   entity_id: switch.homenas_home_mode
           - conditions:
               - condition: state
-                entity_id: 'binary_sensor.someone_home'
-                state: 'on'
+                entity_id: "binary_sensor.someone_home"
+                state: "on"
             sequence:
               - service: switch.turn_on
                 target:
@@ -175,13 +175,19 @@ automation:
       - platform: state
         entity_id: binary_sensor.driveway_only_car_occupancy
         to: "on"
+        
       - platform: state
         entity_id: binary_sensor.driveway_only_motorcycle_occupancy
         to: "on"
     condition:
-      - condition: state
+      - alias: "Only alert if garage door is closed"
+        condition: state
         entity_id: cover.garage_door
         state: "closed"
+      - alias: "Only alert if garage door state hasn't changed in the last 90 seconds"
+        condition: template
+        value_template: >
+          {% if as_timestamp(now()) | int - as_timestamp(states.cover.garage_door.last_changed) | int > 90 %} true {% else %} false {% endif %}
     action:
       - service: notify.mobile_app_pixel_8_pro
         data:
@@ -213,12 +219,18 @@ automation:
         entity_id: binary_sensor.driveway_only_motorcycle_occupancy
         to: "on"
     condition:
-      - condition: state
+      - alias: "Only alert if garage door state hasn't changed in the last 90 seconds"
+        condition: state
         entity_id: media_player.theatre_room_tv
         state: "on"
-      - condition: state
+      - alias: "Only alert if garage door is closed"
+        condition: state
         entity_id: cover.garage_door
         state: "closed"
+      - alias: "Only alert if garage door state hasn't changed in the last 90 seconds"
+        condition: template
+        value_template: >
+          {% if as_timestamp(now()) | int - as_timestamp(states.cover.garage_door.last_changed) | int > 90 %} true {% else %} false {% endif %}
     action:
       - service: notify.theatre_room_tv
         data:
