@@ -32,7 +32,7 @@ scene:
         brightness_pct: 50
       light.curtain_left:
         state: "on"
-        effect: "1 Peachy Soft Tra" #nice soft light
+        effect: "0 Soft Warm Orang" #nice soft light
         brightness_pct: 15
       light.living_room:
         state: "off"

@@ -1,10 +1,3 @@
-binary_sensor:
-  - platform: group
-    name: Michael In Meeting
-    entities:
-      - binary_sensor.michael_desktop_in_meeting
-      - binary_sensor.michael_work_in_meeting 
-
 automation:
   - alias: Front Hall - Turn On Hallway Light If PC Turned Off At Night
     id: front_hall_turn_on_hallway_light_if_pc_turned_off_at_night

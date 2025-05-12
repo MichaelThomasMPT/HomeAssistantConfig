@@ -66,6 +66,7 @@ cloud:
         - input_select.igrill_presets_probe
         - climate.refrigerator_freezer
         - climate.refrigerator_fridge
+        - climate.alfresco_heater
         - number.refrigerator_freezer_temperature
         - number.refrigerator_fridge_temperature
         - switch.refrigerator_ice_plus

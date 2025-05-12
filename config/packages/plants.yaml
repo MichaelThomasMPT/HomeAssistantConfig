@@ -74,19 +74,19 @@ template:
         state: "{% if 'problem' in (states.plant | map(attribute='state')) %}on{% else %}off{% endif %}" #if any plant has a problem, this will be on
         device_class: battery
 
-alert:
-  plant_watering_reminder:
-    name: "Your plants needs attention"
-    title: "Your plants needs attention"
-    message: "Plants with problems:\n{% for state in states.plant %}{% if state.state == 'problem' %}{{ state.name + '\n'}}{% endif %}{% endfor %}"
-    entity_id: binary_sensor.a_plant_has_a_problem
-    state: 'on'
-    repeat: 1440 #24 hours
-    can_acknowledge: true
-    skip_first: true
-    notifiers:
-      #- mobile_app_lauras_iphone
-      - mobile_app_pixel_8_pro
-    data:
-      group: MiFlora
-      notification_icon: "mdi:flower"
+# alert:
+  # plant_watering_reminder:
+  #   name: "Your plants needs attention"
+  #   title: "Your plants needs attention"
+  #   message: "Plants with problems:\n{% for state in states.plant %}{% if state.state == 'problem' %}{{ state.name + '\n'}}{% endif %}{% endfor %}"
+  #   entity_id: binary_sensor.a_plant_has_a_problem
+  #   state: 'on'
+  #   repeat: 1440 #24 hours
+  #   can_acknowledge: true
+  #   skip_first: true
+  #   notifiers:
+  #     #- mobile_app_lauras_iphone
+  #     - mobile_app_pixel_8_pro
+  #   data:
+  #     group: MiFlora
+  #     notification_icon: "mdi:flower"

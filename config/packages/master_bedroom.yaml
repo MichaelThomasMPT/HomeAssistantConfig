@@ -116,8 +116,8 @@ automation:
           excluded_lights: "['light.master_bedroom', 'light.master_bedroom_michael_lamp', 'light.master_bedroom_laura_lamp', 'light.genio_nebula_projector', 'light.genio_nebula_projector_laser', 'light.genio_nebula_projector_tuya_cloud']" 
           turn_off_aircon: "{{ not aircon_was_running_master_bedroom }}"
       #proceed to turn on the aircon in the master bedroom for 60 min if the aircon was already on in there
-      - condition: template
-        value_template: "{{ aircon_was_running_master_bedroom or aircon_was_running_living_room }}"
+      # - condition: template
+      #   value_template: "{{ aircon_was_running_master_bedroom or aircon_was_running_living_room }}"
       # - service: input_number.set_value
       #   data:
       #     entity_id: input_number.aircon_countdown_timer
@@ -216,7 +216,7 @@ automation:
         #during the night
         - conditions:
           - condition: template
-            value_template: '{{ now().hour >= 22 or now().hour <= 6 }}'
+            value_template: '{{ now().hour >= 20 or now().hour <= 6 }}'
           sequence:
             - service: light.turn_on
               target:
