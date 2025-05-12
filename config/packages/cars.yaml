@@ -13,7 +13,7 @@ template:
   - binary_sensor:
       - name: "Michael Phone Is Docked In The Car"
         state: "{{states('binary_sensor.pixel_8_pro_is_charging') and 'FC:35:E6:53:2C:C9 (Mazda)' in state_attr('sensor.pixel_8_pro_bluetooth_connection', 'connected_paired_devices')}}"
-      
+
   - sensor:
       - name: "Lowest Fuel Price"
         unit_of_measurement: "c"
@@ -40,12 +40,27 @@ template:
       - name: "Local Fuel Premium"
         unit_of_measurement: "c"
         state: >
-            {{ 
-                ( states('sensor.local_fuel_price') | float | round(1, 'common') )
-              - ( states('sensor.lowest_fuel_price') | float | round(1, 'common') )
-            }}
+          {{ 
+              ( states('sensor.local_fuel_price') | float | round(1, 'common') )
+            - ( states('sensor.lowest_fuel_price') | float | round(1, 'common') )
+          }}
+      - name: "Cheapest Fuel Location"
+        icon: mdi:gas-station
+        state: >
+          {% set cheapest = (state_attr('sensor.rss_fuel_watch_ulp','entries') | first) %}
+          {{ cheapest["title"] }} - {{ cheapest["address"] }}
+      - name: "Local Fuel Location"
+        icon: mdi:gas-station
+        state: >
+          {% set local = (state_attr('sensor.rss_fuel_watch_ulp','entries') | selectattr("trading-name","equalto", "Ampol Foodary Cockburn Central") | first )  %}
+          {{ local["title"] }} - {{ local["address"] }}
+      - name: "Cheapest Fuel Address For Navigation"
+        icon: mdi:gas-station
+        state: >
+          {% set cheapest = (state_attr('sensor.rss_fuel_watch_ulp','entries') | first) %}
+          {{ (cheapest["address"] + " " + cheapest["location"]) | replace(" ", "+") }}
 
-  - binary_sensor:          
+  - binary_sensor:
       - name: Cheapest Fuel Station
         state: true
         device_class: "presence"
@@ -99,7 +114,6 @@ sensor:
     exclusions:
       - language
 
-
 automation:
   - alias: Driving - Launch Google Maps When Phone Connects To Car
     trigger:
@@ -113,3 +127,17 @@ automation:
           message: "command_launch_app"
           data:
             package_name: "com.google.android.apps.maps"
+
+script:
+  navigate_to_cheapest_fuel_station:
+    icon: mdi:navigation
+    alias: "Driving - Navigate To Cheapest Fuel Station"
+    sequence:
+      - service: notify.mobile_app_pixel_8_pro
+        data:
+          message: "command_activity"
+          data:
+            intent_package_name: "com.google.android.apps.maps"
+            intent_action: "android.intent.action.VIEW"
+            intent_uri: >
+              geo:0,0?q={{ states('sensor.cheapest_fuel_address_for_navigation') }}
