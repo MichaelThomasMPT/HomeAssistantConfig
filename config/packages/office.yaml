@@ -289,6 +289,7 @@ automation:
         entity_id: 
           - binary_sensor.office_presence_sensor_moving_target #screek presence sensor
           - binary_sensor.office_motion #zwave multisensor over door
+          - binary_sensor.office_presence_laura_desk_occupancy #laura's desk presence sensor
         to: "on"
         from: "off"
     condition:
@@ -324,7 +325,9 @@ automation:
       - if:
           - alias: "No presence was detected"
             condition: state
-            entity_id: binary_sensor.office_presence_sensor_presence
+            entity_id:
+              - binary_sensor.office_presence_sensor_presence #michael's desk
+              - binary_sensor.office_presence_laura_desk_occupancy #laura's desk
             state: "off"
         then:
           - service: light.turn_off
@@ -340,11 +343,19 @@ automation:
     trigger:
       # no presence detected for 5 mintues
       - platform: state
-        entity_id: binary_sensor.office_presence_sensor_presence
+        entity_id:
+          - binary_sensor.office_presence_sensor_presence #michael's desk
+          - binary_sensor.office_presence_laura_desk_occupancy #laura's desk
         to: "off"
         for:
           minutes: 5
     condition:
+      - alias: "All presence sensors detect no presence"
+        condition: state
+        entity_id:
+          - binary_sensor.office_presence_sensor_presence #michael's desk
+          - binary_sensor.office_presence_laura_desk_occupancy #laura's desk
+        state: "off"
       # only run if lights are in the state set by the "turn" on automation 
       # (ie. not coloured with a notification), or if they are off
       - condition: or

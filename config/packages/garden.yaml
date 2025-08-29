@@ -170,7 +170,8 @@ automation:
         event_data: 
           device_ieee: !secret zha_alfresco_fairy_lights_switch
     condition: 
-      - "{{ trigger.event.data.command in buttons }}"
+      - condition: template
+        value_template: "{{ trigger.event.data.command in buttons }}"
     action:
       - service: "{{ buttons[trigger.event.data.command].service_to_call }}"
         entity_id: light.alfresco_fairy_lights

@@ -19,12 +19,6 @@ input_boolean:
 ios:
 
 zone:
-  - name: Michael's Work
-    latitude: !secret zone_michael_work_latitude
-    longitude: !secret zone_michael_work_longitude
-    radius: 100
-    icon: mdi:briefcase
-
   # This will override the default home zone
   - name: Home
     latitude: !secret zone_home_latitude
@@ -171,29 +165,6 @@ automation:
           data:
             notification_icon: "mdi:face-woman"
 
-  - alias: Location - Notify Laura If Michael Leaving Work
-    id: location_notify_laura_if_michael_leaving_work
-    trigger:
-      platform: zone
-      entity_id: person.michael
-      zone: zone.michael_s_work
-      event: leave
-    condition:
-      - condition: time
-        after: "16:00:00"
-        before: "19:00:00"
-      - condition: state
-        entity_id: binary_sensor.workday_sensor
-        state: "on"
-    action:
-      - service: script.chatgpt_reword_message
-        data:
-          prompt: "Michael is leaving work."
-        response_variable: "chatgpt_response"
-      - service: notify.mobile_app_lauras_iphone
-        data:
-          message: "{{ chatgpt_response.text }}"
-
   #Notify when someone comes homes
   - alias: Location - Notify When Someone Comes Home
     id: location_notify_when_someone_comes_home
@@ -224,35 +195,6 @@ automation:
       - service: automation.turn_off
         entity_id:
           - automation.location_notify_when_someone_comes_home
-
-  - alias: Location - Notify Michael When Leaving Home Without Laptop
-    id: location_notify_michael_when_leaving_home_without_laptop
-    trigger:
-      - platform: zone
-        entity_id: person.michael
-        zone: zone.home
-        event: leave
-    condition:
-      - condition: time
-        after: "06:00:00"
-        before: "09:00:00"
-      - condition: state
-        entity_id: binary_sensor.workday_sensor
-        state: "on"
-      - condition: state
-        entity_id: binary_sensor.michael_work_laptop
-        state: "on" #Laptop is still plugged in to desk
-    action:
-      - service: script.chatgpt_reword_message
-        data:
-          prompt: "Did you forget to bring your work laptop with you?"
-        response_variable: "chatgpt_response"
-      - service: notify.mobile_app_pixel_8_pro
-        data:
-          title: "Work laptop reminder"
-          message: "{{ chatgpt_response.text }}"
-          data:
-            notification_icon: "mdi:laptop"
 
   - alias: Location - Remind Michael To Pay For Train Parking
     id: location_remind_michael_to_pay_for_train_parking

@@ -179,10 +179,21 @@ automation:
       - platform: state
         entity_id: binary_sensor.laundry_motion
         to: "off"
+      - platform: state
+        entity_id: light.laundry_led_strip
+        to: 'on'
+        for:
+          minutes: 10
+      - platform: state
+        entity_id: light.laundry_ceiling
+        to: 'on'
+        for:
+          minutes: 10
     action:
       - service: light.turn_off
         entity_id:
           - light.laundry_led_strip
+          - light.laundry_ceiling
 
   - alias: Laundry - Notify If Putting Washing Up And It Will Rain Soon
     id: laundry_notify_if_putting_washing_up_and_it_will_rain_soon

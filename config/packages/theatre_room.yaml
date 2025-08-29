@@ -159,7 +159,9 @@ script:
           source: "Plex"
       - repeat:
           sequence:
-            - service: plex.scan_for_clients #Force a refresh of the Plex LG media player
+            - action: button.press #Force a refresh of the Plex LG media player
+              target:
+                entity_id: button.homenuc_scan_clients 
             - delay:
                 seconds: 2
           until:
@@ -396,7 +398,7 @@ automation:
                     ( now().hour >= 18 and now().hour <= 19 )
                   }}
             sequence:
-              - service: script.set_tv_dinner_lighting
+              - service: script.time_for_a_tv_dinner
         # At other times, make the lighting dimmed
         default:
           - service: script.set_dim_theatre_lighting

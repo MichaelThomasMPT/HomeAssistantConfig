@@ -15,6 +15,9 @@ automation:
           - sequence:
               - delay:
                   seconds: 2
+              - condition: state # If the door is still open after 2 seconds, turn off the light
+                entity_id: binary_sensor.main_toilet_door_sensor
+                state: "on"
               - service: light.turn_off
                 data:
                   entity_id: light.main_toilet_light_and_fan

@@ -56,6 +56,7 @@ script:
             'living room': 18
             laundry: 19
             theatre: 20
+            'theatre room': 20
             bathroom: 21
             hallway: 22
             office: 24
@@ -262,10 +263,10 @@ script:
       - service: vacuum.start
         target:
           entity_id: vacuum.robo_buddy
+
 ##########################################################
 ################### Scripts for Google ###################
 ##########################################################
-
 
 automation:
   - alias: Vacuum - Run the vacuum when leaving the house
@@ -326,3 +327,32 @@ automation:
         vacuum: vacuum.robo_buddy
         camera: camera.xiaomi_cloud_map_extractor
         mode_to_handle: two_intervals
+
+##########################################################
+################ Automationsfor HA Voice ##########$######
+##########################################################
+  - alias: Vacuum - Run the vacuum via HA voice command
+    description: >-
+      This automation allows you to run the vacuum via a voice command in Home Assistant.
+      It uses the `conversation` trigger to listen for commands like "vacuum the kitchen"
+      or "mop the living room". The command will be passed to the appropriate script
+      to clean or mop the specified room.
+    triggers:
+      - trigger: conversation
+        command: "vacuum the {{ room }}"
+      - trigger: conversation
+        command: "mop the {{ room }}"
+    action:
+      - choose:
+          - conditions: "{{ trigger.idx == 0 }}"
+            sequence:
+              - service: script.vacuum_vacuum_room
+                data:
+                  room: '{{ room }}'
+        default:
+          - service: script.vacuum_mop_room
+            data:
+              room: '{{ room }}'
+##########################################################
+################ Automation for HA Voice ###############$#
+##########################################################

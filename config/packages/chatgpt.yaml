@@ -45,8 +45,7 @@ automation:
           entity_id:
             - calendar.laura_mickey
             - calendar.personal
-            - calendar.michael_thomas_vixtechnology_com
-            #- calendar.formula_1
+            - calendar.formula_1
         response_variable: agenda_today
       - alias: Conversation Agent Notification Text
         service: conversation.process
@@ -86,20 +85,9 @@ automation:
                   Location: {{ event.location }}\n
                 {% endif -%}\n
             {%- endfor %}\n
-            {%- for event in agenda_today['calendar.michael_thomas_vixtechnology_com']['events'] %}\n
-              - Summary: {{ event.summary }}\n
-                Start-End:\n
-                      {% if event.start is defined %}{{ event.start }} to {{ event.end }}{% else %}All Day{% endif %}\n
-                {%- if event.descripton is defined %}\n
-                Descripton: {{ event.descripton }}\n
-                {% endif -%}\n
-                {%- if event.location is defined %}\n
-                  Location: {{ event.location }}\n
-                {% endif -%}\n
-            {%- endfor %}\n
             \n
             Today's cheapest petrol: {{ state_attr('sensor.rss_fuel_watch_ulp', 'entries') | first }}
-          agent_id: conversation.haiku_openai
+          agent_id: conversation.mission_impossible_openai
         response_variable: agent
       - alias: Send notification
         service: notify.pushbullet
@@ -177,7 +165,7 @@ automation:
             {%- endfor %}\n
             \n
             Today's cheapest petrol: {{ state_attr('sensor.rss_fuel_watch_ulp', 'entries') | first }}
-          agent_id: conversation.haiku_openai
+          agent_id: conversation.mission_impossible_openai
         response_variable: agent
       - service: notify.mobile_app_lauras_iphone
         data:
@@ -191,7 +179,7 @@ script:
         description: "What do you want ChatGPT to reword?"
         example: "This is a notification for Michael."
     variables:
-      chatgpt_agent: conversation.haiku_openai
+      chatgpt_agent: conversation.mission_impossible_openai
     sequence:
       - alias: Conversation Agent Notification Text
         service: conversation.process
