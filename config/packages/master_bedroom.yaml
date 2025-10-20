@@ -312,19 +312,19 @@ automation:
     action:
       - service: script.run_bed_time_projector
 
-  - alias: Master Bedroom - Turn Off Projector After 30 Minutes
-    id: master_bedroom_turn_off_projector_after_30_minutes
+  - alias: Master Bedroom - Turn Off Projector After 60 Minutes
+    id: master_bedroom_turn_off_projector_after_60_minutes
     trigger:
       - platform: state
         entity_id: light.genio_nebula_projector
         to: "on"
         for:
-          minutes: 30
+          minutes: 60
       - platform: state
         entity_id: light.genio_nebula_projector_tuya_cloud
         to: "on"
         for:
-          minutes: 30
+          minutes: 60
     action:
       - service: light.turn_off
         target:

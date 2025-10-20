@@ -3,7 +3,7 @@ scrape:
     scan_interval: 86400 #24 hours
     sensor:
       - name: "Exchange Rate - AUD to YEN - Today"
-        unique_id: exchange_rate_aud_to_yen 
+        unique_id: exchange_rate_aud_to_yen_today 
         select: "#JPY > td.highlight" 
         icon: "mdi:currency-jpy"
         device_class: "monetary"
@@ -15,10 +15,11 @@ sensor:
   - platform: statistics
     name: "Exchange Rate - AUD to YEN - Maximum Last 12 Months"
     unique_id: exchange_rate_aud_to_yen_maximum_last_12_months
-    entity_id: sensor.exchange_rate_aud_to_yen
+    entity_id: sensor.exchange_rate_aud_to_yen_today
     state_characteristic: value_max
+    keep_last_sample: true
     max_age:
-      hours: 8760 #1 year
+      hours: 48 #1 year
 
 automation:
   - alias: Money - Notify If New Maximum Annual Exchange Rate For Yen
